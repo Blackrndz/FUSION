@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Remit to Addresses (Finland)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Remit to Addresses" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Data Role and Security Profiles"/>
+			<navigation name="Manage Service Provider Relationships (Customer Payments Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Payables Payment Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Procurement Service Providers)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_REMIT_TO_ADDRESS" value="Manage Remit to Addresses (Finland) - Manage Remit to Addresses"/>
+			<parameter name="REPEAT_DFF_REMIT_TO_ADDRESS" value="Manage Remit to Addresses (Finland) - Manage Remit to Addresses - DFF"/>
+		</parameters>
+		<block name="FAKE">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="Manage Remit to Addresses (Finland) - Manage Remit to Addresses" columnName="Remit-to Address Set"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="Manage Remit to Addresses (Finland) - Manage Remit to Addresses" columnName="Remit-to Address Set"/>
+			</click>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="Manage Remit to Addresses (Finland) - Manage Remit to Addresses - DFF" columnName="Field Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="Manage Remit to Addresses (Finland) - Manage Remit to Addresses - DFF" columnName="Field Value"/>
+			</click>
+		</block>
+		<block name="FI_FORMAT_ADDRESS">
+			<!--Street NAme-->
+			<executeBlock name="INPUT_ENTER_LOV">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Street Name']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_REMIT_TO_ADDRESS"/>
+                    <parameter name="COL_NAME" value="Street Name"/>
+                    <parameter name="SEARCH_1" value="Street Name"/>
+                </parameters>
+            </executeBlock>
+			<!--Create Address Line 2-->
+			<executeBlock name="INPUT_ENTER_LOV">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Address Line 2']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_REMIT_TO_ADDRESS"/>
+                    <parameter name="COL_NAME" value="Address Line 2"/>
+                    <parameter name="SEARCH_1" value="Address Line 2"/>
+                </parameters>
+            </executeBlock>
+			<!--Create City-->
+			<executeBlock name="INPUT_ENTER_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='City']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_REMIT_TO_ADDRESS"/>
+					<parameter name="COL_NAME" value="City"/>
+					<parameter name="SEARCH_1" value="City"/>
+				</parameters>
+			</executeBlock>	
+			<!--Create Postal Code-->
+			<executeBlock name="INPUT_ENTER_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Postal Code']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_REMIT_TO_ADDRESS"/>
+					<parameter name="COL_NAME" value="Postal Code"/>
+					<parameter name="SEARCH_1" value="Postal Code"/>
+				</parameters>
+			</executeBlock>
+			<!--Create Post Office-->
+			<executeBlock name="INPUT_ENTER_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Post Office']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_REMIT_TO_ADDRESS"/>
+					<parameter name="COL_NAME" value="Post Office"/>
+					<parameter name="SEARCH_1" value="Post Office"/>
+				</parameters>
+			</executeBlock>	
+			
+		</block>
+
+
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="Manage Remit to Addresses (Finland) - Manage Remit to Addresses">
+			<executeBlock navigationName="Manage Remit to Addresses (United States)" name="REMIT_TO_ADDRESS">
+				<parameters>
+					<parameter name="REPEAT_REMIT_TO_ADDRESS" value="Manage Remit to Addresses (Finland) - Manage Remit to Addresses"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="FI_FORMAT_ADDRESS"/>
+			<repeat inventoryName="Manage Remit to Addresses (Finland) - Manage Remit to Addresses - DFF">
+				<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+					<parameters>
+						<parameter name="DFF_NAME" value="Manage Remit to Addresses (Finland) - Manage Remit to Addresses - DFF"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<executeBlock navigationName="Manage Remit to Addresses (United States)" name="SAVE_AND_CLOSE_BUTTON-REMIT_TO_ADDRESS"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

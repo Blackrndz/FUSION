@@ -1,0 +1,514 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Time Allocations</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" taskName="Time Allocations" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<dependencies>
+			<navigation name="Manage Time Categories"/>
+			<navigation name="Manage Custom Time Attributes"/>
+		</dependencies> 
+		
+		<parameters>
+			<parameter name="INV_1" value="Manage Time Allocations - Time Allocation"/>
+			<parameter name="INV_2" value="Manage Time Allocations - Source"/>
+			<parameter name="INV_3" value="Manage Time Allocations - Output"/>
+			<parameter name="INV_4" value="Manage Time Allocations - Time Attribute"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Allocation Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Allocation Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_3" columnName="Allocation Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_4" columnName="Allocation Name"/>']</findElement>
+		</block>
+		
+		<block name="Search_Time_Allocations">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allocation Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Allocation Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Search Results']/..//a[text()='<valueKB inventoryName="INV_1" columnName="Allocation Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Search Results']/..//a[text()='<valueKB inventoryName="INV_1" columnName="Allocation Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<executeBlock name="VIEW_HISTORY"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_CREATE"/>
+					<pause durationInSecs="5"/>
+				</else>
+			</IfThenElse>
+		</block>	
+		<block name="VIEW_HISTORY">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Effective Start Date']/../..//*[text()='<valueKB inventoryName="INV_1" columnName="Effective Start Date"/>']</findElement>
+				</if>
+				<then>						
+					<findElement isSkipCheckDomError="true" by="xpath">//span[text()='Edit']/../../../td[2]//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+					<findElement isSkipCheckDomError="true" by="xpath">//div[@class='AFDetectExpansion']/..//*[text()='Correct']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Warning']/../../../../../../..//*[text()='Y']/..</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Warning']/../../../../../../..//*[text()='Y']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath">//span[text()='Edit']/../../../td[2]//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  							
+					<findElement isSkipCheckDomError="true" by="xpath">//div[@class='AFDetectExpansion']/..//*[text()='Update']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 
+					<pause durationInSecs="2"/>
+					<executeBlock name="UPDATE_VIEW_HISTORY"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="UPDATE_VIEW_HISTORY">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Edit Time Allocation:')]</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//div[contains(text(),'Edit Time Allocation:')]/../../../../../../..//label[text()='Effective Date']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Effective Start Date"/>
+						</parameters>
+					</executeBlock>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Edit Time Allocation:')]/../../../../../../..//button[text()='O']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 
+					<pause durationInSecs="2"/>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Error'][contains(@id,'Dlg::_ttxt')]</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Error'][contains(@id,'Dlg::_ttxt')]/../../../../../../..//button[text()='OK']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 
+							<pause durationInSecs="2"/>
+							<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Edit Time Allocation:')]/../../../../../../..//label[text()='Effective Date']/../..//a[contains(@id,'id2::glyph')]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 
+							<pause durationInSecs="2"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[@role='row']//td[contains(@class,'Select')]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="2"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Edit Time Allocation:')]/../../../../../../..//button[text()='O']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Error'][contains(@id,'Dlg::_ttxt')]</findElement>
+								</if>
+								<then>
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" value="//div[contains(text(),'Edit Time Allocation:')]/../../../../../../..//label[text()='Effective Date']/../..//input[1]"/>
+											<parameter name="INV_NAME" value="INV_1"/>
+											<parameter name="COL_NAME" value="Effective Start Date"/>
+										</parameters>
+									</executeBlock>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Edit Time Allocation:')]/../../../../../../..//button[text()='O']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>	
+		<block name="Create_Time_Allocation">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Effective Start Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Effective Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allocation Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Allocation Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="CREATE_Source">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Source']/../../../.."/>
+				</parameters>   
+			</executeBlock>
+			<findElement by="xpath">//table[@summary='Source']/../..//tr[contains(@class,'Select')]/td[1]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="UPDATE_Source">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="Create_Source">
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Allocation Type']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Allocation Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Summation Level']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Summation Level"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Time Category']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Time Category"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="CREATE_Output">
+			<executeBlock name="GLOBAL_SPECIFY_CREATE">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//table[@summary='Attributes']/../../../.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="UPDATE_Output">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="Output">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Attributes']/../..//span[text()='Hours']/../../../../../../../..//tr[contains(@class,'Selected')]//label[text()='AllocationValue']/..</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Attributes']/../..//span[text()='Hours']/../../../../../../../..//tr[contains(@class,'Selected')]//label[text()='AllocationValue']/.."/>
+							<parameter name="INV_NAME" value="INV_3"/>
+							<parameter name="COL_NAME" value="Hours"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Attributes']/../..//span[text()='Percentage']/../../../../../../../..//tr[contains(@class,'Selected')]//label[text()='AllocationValue']/..</findElement>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//table[@summary='Attributes']/../..//span[text()='Percentage']/../../../../../../../..//tr[contains(@class,'Selected')]//label[text()='AllocationValue']/.."/>
+									<parameter name="INV_NAME" value="INV_3"/>
+									<parameter name="COL_NAME" value="Percentage"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<pause durationInSecs="2"/>
+		</block>
+		
+		<block name="Search_Time_Attribute">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Attributes']/../..//span[text()='<valueKB inventoryName="INV_4" columnName="Time Attribute Name"/>']</findElement>
+				</if>
+				<then>
+				
+				</then>
+				<else>					
+					<executeBlock name="Search_Time_Attribute_View"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search_Time_Attribute_View">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Attributes']/../../../..//*[text()='View']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Attributes']/../../../..//*[text()='View']/../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[contains(@id,'AT2:_ATp:_vw::ScrollContent')]//*[text()='Columns']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[2]/div[@class='AFPopupMenuPopup']//*[text()='<valueKB inventoryName="INV_4" columnName="Time Attribute Name"/>']/..</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[2]/div[@class='AFPopupMenuPopup']//*[text()='<valueKB inventoryName="INV_4" columnName="Time Attribute Name"/>']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//button[text()='Add Time Attribute']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<executeBlock name="Create_Time_Attribute"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Create_Time_Attribute">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Add Time Attribute']/../../../../../../..//label[text()='Attribute Display Sequence']/../.."/>
+					<parameter name="INV_NAME" value="INV_4"/>
+					<parameter name="COL_NAME" value="Attribute Display Sequence"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Add Time Attribute']/../../../../../../..//label[text()='Time Attribute']/../.."/>
+					<parameter name="INV_NAME" value="INV_4"/>
+					<parameter name="COL_NAME" value="Time Attribute Name"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>	
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Add Time Attribute']/../../../../../../..//button[text()='O']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Add Time Attribute']/../../../../../../..//button[text()='O']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>					
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Add Time Attribute']/../../../../../../..//span[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Add_Value_Time_Attribute">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Attributes']//tr[contains(@class,'Select')]//tr//td[number(//span[text()='<valueKB inventoryName="INV_4" columnName="Time Attribute Name"/>']/../../@_d_index)]//input/../..//a[contains(@id,'lovIconId')]</findElement>
+				</if>
+				<then>
+					<executeBlock name="MANUAL_LOV_Time_Attribute_Value"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Attributes']//tr[contains(@class,'Select')]//tr//td[number(//span[text()='<valueKB inventoryName="INV_4" columnName="Time Attribute Name"/>']/../../@_d_index)]//input/../..//a[contains(@id,'drop')]</findElement>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH">//table[@summary='Attributes']//tr[contains(@class,'Select')]//tr//td[number(//span[text()='<valueKB inventoryName="INV_4" columnName="Time Attribute Name"/>']/../../@_d_index)]//input/../../..</parameter>
+									<parameter name="INV_NAME" value="INV_4"/>
+									<parameter name="COL_NAME" value="Time Attribute Value"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Attributes']//tr[contains(@class,'Select')]//tr//td[number(//span[text()='<valueKB inventoryName="INV_4" columnName="Time Attribute Name"/>']/../../@_d_index)]//input</findElement>
+								</if>
+								<then>
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH">//table[@summary='Attributes']//tr[contains(@class,'Select')]//tr//td[number(//span[text()='<valueKB inventoryName="INV_4" columnName="Time Attribute Name"/>']/../../@_d_index)]//input/../../..</parameter>
+											<parameter name="INV_NAME" value="INV_4"/>
+											<parameter name="COL_NAME" value="Time Attribute Value"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="MANUAL_LOV_Time_Attribute_Value">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Attributes']//tr[contains(@class,'Select')]//tr//td[number(//span[text()='<valueKB inventoryName="INV_4" columnName="Time Attribute Name"/>']/../../@_d_index)]//input/../../..</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Attributes']//tr[contains(@class,'Select')]//tr//td[number(//span[text()='<valueKB inventoryName="INV_4" columnName="Time Attribute Name"/>']/../../@_d_index)]//input/../..//a[contains(@id,'lovIconId')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//*[text()='Search...']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="5"/>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Value']/../.."/>
+							<parameter name="INV_NAME" value="INV_4"/>
+							<parameter name="COL_NAME" value="Time Attribute Value"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+							<parameter name="BUTTON_NAME" value="Search"/>
+						</parameters>
+					</executeBlock>
+					<pause durationInSecs="5"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='<valueKB inventoryName="INV_4" columnName="Time Attribute Value"/>']/../../../../../../td[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+						<parameters>
+							<parameter name="XPATH" value="//div[contains(text(),'Search and Select')]/../../../../../../.."/>
+							<parameter name="BUTTON_NAME" value="OK"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Save_Save_and_Close">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Save']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Save']/../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>					
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SAVE"/>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//span[text()='ave and Close']/../..</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//span[text()='ave and Close']/../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Confirmation']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Confirmation']/../../../../../../..//button[text()='O']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="Search_Time_Allocations"/>
+			<executeBlock name="Create_Time_Allocation"/>
+			<repeat inventoryName="INV_2">
+				<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Source']/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Source'][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Source']/../..//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Source']/../..//tr[td//td//span[text()='<valueKB inventoryName="INV_2" columnName="Processing Sequence"/>'] and td//span[text()='<valueKB inventoryName="INV_2" columnName="Allocation Type"/>'] and td//*[text()='<valueKB inventoryName="INV_2" columnName="Time Category"/>']]/td[1]</parameter>
+						<parameter name="TEMPLATE_CREATE" value="CREATE_Source"/>
+						<parameter name="TEMPLATE_UPDATE" value="UPDATE_Source"/>
+					</parameters>
+				</executeBlock>
+				<executeBlock name="Create_Source"/>
+				<repeat inventoryName="INV_3">
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Attributes']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Attributes'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Attributes']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Attributes']/../..//tr[td//td[text()='<valueKB inventoryName="INV_3" columnName="Processing Sequence"/>'] and td//span[text()='<valueKB inventoryName="INV_3" columnName="Hours"/>' or text()='<valueKB inventoryName="INV_3" columnName="Percentage"/>']]/td[1]</parameter>
+							<parameter name="TEMPLATE_CREATE" value="CREATE_Output"/>
+							<parameter name="TEMPLATE_UPDATE" value="UPDATE_Output"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Output"/>
+					<repeat inventoryName="INV_4">
+						<executeBlock name="Search_Time_Attribute"/>
+						<executeBlock name="Add_Value_Time_Attribute"/>
+					</repeat>
+				</repeat>
+			</repeat>
+			<executeBlock name="Save_Save_and_Close"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

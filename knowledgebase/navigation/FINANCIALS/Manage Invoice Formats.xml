@@ -1,0 +1,370 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Invoice Formats</name>
+    <svn>
+        <xsd:revision>$Revision: 80353 $:</xsd:revision>
+        <xsd:author>$Author: john.martin $:</xsd:author>
+        <xsd:date>$Date: 2023-03-01 14:31:18 +0700 (Wed, 01 Mar 2023) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Invoice%20Formats.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Invoice Formats.xml 80353 2023-03-01 07:31:18Z john.martin $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Invoice Formats"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Enterprise HCM Information"/>
+		</dependencies>
+        <parameters>
+            <parameter name="REPEAT_1_MAIN" value="Manage Invoice Formats - Invoice Format Header"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Invoice Formats - Invoice Format Details"/>
+        </parameters>
+		
+		<!--REPEAT_1-->
+		<block name="Search_Invoice_Format_Header">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Invoice Format Header']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath">//table[@summary='Invoice Format Header']/../../../..//a[@title='Clear All']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">(//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]/../..//input)[1]</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+            </sendKeys>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+                <parameters>
+                    <parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Invoice Format Header']/../..//div[contains(text(),'No data to display.')]"/>
+                    <parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Invoice Format Header'][@_rowcount]//tr[1]//td)[1]"/>
+                    <parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Invoice Format Header']/../..//div[contains(@id,'scroller')]"/>
+                    <parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Invoice Format Header']//td[string(//span[text()='Name']/../..//@_d_index)+1]//span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</parameter>
+					<parameter name="TEMPLATE_2_FIND_ROW">//table[@summary='Invoice Format Header']//td[string(//span[text()='Name']/../..//@_d_index)+1]//input[@value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</parameter>
+                    <parameter name="TEMPLATE_CREATE" value="Create_Invoice_Format_Header"/>
+                    <parameter name="TEMPLATE_UPDATE" value="Update_Invoice_Format_Header"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Create_Invoice_Format_Header">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//table[@summary='Invoice Format Header']/../../../.."/>
+				</parameters>   
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Invoice Format Header']/../..//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Invoice Format Header']/../..//label[text()='Format Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Format Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Invoice Format Header']/../..//label[text()='From Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="From Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Invoice Format Header']/../..//label[text()='To Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="To Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Invoice Format Header']/../..//label[text()='Grouping Option']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Grouping Option"/>
+					<parameter name="SEARCH_1" value="Grouping Option"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Invoice Format Header']//tr[contains(@class,'Select')]//td[6]//input[@disabled]</findElement>
+				</if>
+				<then/>
+				<else>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Invoice Format Header']//tr[contains(@class,'Select')]//td[6]"/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Customer Invoices"/>
+						</parameters>
+					</executeBlock>						
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Invoice Format Header']//tr[contains(@class,'Select')]//td[7]//input[@disabled]</findElement>
+				</if>
+				<then/>
+				<else>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Invoice Format Header']//tr[contains(@class,'Select')]//td[7]"/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Internal Invoices"/>
+						</parameters>
+					</executeBlock>						
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Invoice Format Header']//tr[contains(@class,'Select')]//td[8]//input[@disabled]</findElement>
+				</if>
+				<then/>
+				<else>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Invoice Format Header']//tr[contains(@class,'Select')]//td[8]"/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Fixed Format"/>
+						</parameters>
+					</executeBlock>						
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Update_Invoice_Format_Header">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" />
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">TEMPLATE_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" />
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Invoice Format Header']/../..//label[text()='Format Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Format Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Invoice Format Header']/../..//label[text()='From Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="From Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Invoice Format Header']/../..//label[text()='To Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="To Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Invoice Format Header']/../..//label[text()='Grouping Option']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Grouping Option"/>
+					<parameter name="SEARCH_1" value="Grouping Option"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Invoice Format Header']//tr[contains(@class,'Select')]//td[6]//input[@disabled]</findElement>
+				</if>
+				<then/>
+				<else>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Invoice Format Header']//tr[contains(@class,'Select')]//td[6]"/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Customer Invoices"/>
+						</parameters>
+					</executeBlock>						
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Invoice Format Header']//tr[contains(@class,'Select')]//td[7]//input[@disabled]</findElement>
+				</if>
+				<then/>
+				<else>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Invoice Format Header']//tr[contains(@class,'Select')]//td[7]"/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Internal Invoices"/>
+						</parameters>
+					</executeBlock>						
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Invoice Format Header']//tr[contains(@class,'Select')]//td[8]//input[@disabled]</findElement>
+				</if>
+				<then/>
+				<else>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Invoice Format Header']//tr[contains(@class,'Select')]//td[8]"/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Fixed Format"/>
+						</parameters>
+					</executeBlock>						
+				</else>
+			</IfThenElse>
+        </block>
+		<!--REPEAT_2-->
+		<block name="Search_Invoice_Format_Details">
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+                <parameters>
+                    <parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Invoice Format Details']/../..//div[contains(text(),'No data to display.')]"/>
+                    <parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Invoice Format Details'][@_rowcount]//tr[1]//td)[1]"/>
+                    <parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Invoice Format Details']/../..//div[contains(@id,'scroller')]"/>
+                    <parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Invoice Format Details']//td[string(//span[text()='Start Position']/../..//@_d_index)+1]//span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Position"/>']</parameter>
+					<parameter name="TEMPLATE_2_FIND_ROW">//table[@summary='Invoice Format Details']//td[string(//span[text()='Start Position']/../..//@_d_index)+1]//input[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Position"/>']</parameter>
+                    <parameter name="TEMPLATE_CREATE" value="Create_Invoice_Format_Details"/>
+                    <parameter name="TEMPLATE_UPDATE" value="Update_Invoice_Format_Details"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Create_Invoice_Format_Details">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Invoice Format Details']/../../../..//*[@title='Add Row']/a</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Invoice Format Details']/../../../..//*[@title='Add Row']/a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+						<parameters>
+							<parameter name="SPECIFY_XPATH" value="//table[@summary='Invoice Format Details']/../../../.."/>
+						</parameters>   
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Invoice Format Details']//tr[contains(@class,'Select')]/../..//label[text()='Start Position']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Start Position"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Invoice Format Details']//tr[contains(@class,'Select')]/../..//label[text()='End Position']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="End Position"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Invoice Format Details']//tr[contains(@class,'Select')]/../..//label[text()='Field Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Field Name"/>
+					<parameter name="SEARCH_1" value="Field Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Invoice Format Details']//tr[contains(@class,'Select')]/../..//label[text()='Text']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Text"/>
+				</parameters>
+			</executeBlock>					
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Invoice Format Details']//tr[contains(@class,'Select')]//td[5]//input[@disabled]</findElement>
+				</if>
+				<then/>
+				<else>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Invoice Format Details']//tr[contains(@class,'Select')]//td[5]"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Right Justify"/>
+						</parameters>
+					</executeBlock>					
+					
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+        </block>
+		<block name="Update_Invoice_Format_Details">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" />
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">TEMPLATE_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" />
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Invoice Format Details']//tr[contains(@class,'Select')]/../..//label[text()='End Position']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="End Position"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Invoice Format Details']//tr[contains(@class,'Select')]/../..//label[text()='Field Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Field Name"/>
+					<parameter name="SEARCH_1" value="Field Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Invoice Format Details']//tr[contains(@class,'Select')]/../..//label[text()='Text']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Text"/>
+				</parameters>
+			</executeBlock>			
+			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Invoice Format Details']//tr[contains(@class,'Select')]//td[5]//input[@disabled]</findElement>
+				</if>
+				<then/>
+				<else>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Invoice Format Details']//tr[contains(@class,'Select')]//td[5]"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Right Justify"/>
+						</parameters>
+					</executeBlock>					
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+        </block>
+		
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search_Invoice_Format_Header"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="Search_Invoice_Format_Details"/>
+			</repeat>
+        </repeat>
+    </fusionNavigation>
+</navigation>

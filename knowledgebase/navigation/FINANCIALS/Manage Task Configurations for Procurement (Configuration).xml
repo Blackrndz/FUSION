@@ -1,0 +1,1251 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Task Configurations for Procurement (Configuration)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Task Configurations for Procurement"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Users"/>
+			<navigation name="Manage Approval Groups"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1" value="Manage Task Configurations for Procurement - Configuration"/>
+			<parameter name="REPEAT_2" value="Manage Task Configurations for Procurement - Users Configure Error Assignees"/>
+			<parameter name="REPEAT_3" value="Manage Task Configurations for Procurement - Groups Configure Error"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1" columnName="Task Name"/>']/../..//input</findElement>
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2" columnName="Task Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_3" columnName="Task Name"/>']/../..//input</findElement>
+		</block>
+		<block name="GO_TO_TASK">
+			<findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a[@title='Go to Task']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="SAVE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Save'][contains(@class,'Disabled')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[@title='Save']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="TAB_TASK">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='Task']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//a[text()='Task'][contains(@class,'Selected')]</findElement>
+						</if>
+						<then/>
+						<else>
+							<findElement by="xpath">//a[text()='Task']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//span[text()='Configuration']/../..//a</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//span[text()='Configuration']/../..//a[contains(@class,'active')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//span[text()='Configuration']/../..//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[@title='Expand Notification Settings']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[@title='Expand Notification Settings']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="SEACH">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1" columnName="Task Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement by="xpath">//label[text()='Search']/../..//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="REPEAT_1" columnName="Task Name"/>
+					</sendKeys>
+					<findElement by="xpath">//a[@title='Search task types']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement
+                            by="xpath">//span[contains(text(),'<valueKB
+                            inventoryName="REPEAT_1" columnName="Task Name"/>')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<error message="The field 'Task Name' doesn't exist." />
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="UPDATE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Edit task'][contains(@class,'Disabled')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[@title='Edit task']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SET_CONFIGURATION">
+			<!--Allow all participants to route task to other participants-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allow all participants to route task to other participants']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1"/>
+					<parameter name="COL_NAME" value="Allow all participants to route task to other participants"/>
+				</parameters>
+			</executeBlock>
+			<!--Allow participants to edit future participants-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allow participants to edit future participants']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1"/>
+					<parameter name="COL_NAME" value="Allow participants to edit future participants"/>
+				</parameters>
+			</executeBlock>
+			<!--Allow initiator to add participants-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allow initiator to add participants']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1"/>
+					<parameter name="COL_NAME" value="Allow initiator to add participants"/>
+				</parameters>
+			</executeBlock>
+			<!--Enable Auto claim-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enable Auto Claim']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1"/>
+					<parameter name="COL_NAME" value="Enable Auto Claim"/>
+				</parameters>
+			</executeBlock>
+			<!--Complete task immediately when participant chooses-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Complete task immediately when participant chooses']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1"/>
+					<parameter name="COL_NAME" value="Complete task immediately when participant chooses"/>
+				</parameters>
+			</executeBlock>
+
+			<!--Complete task immediately when participant chooses - Approve-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1" columnName="Complete task immediately when participant chooses - Approve"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="REPEAT_1" columnName="Complete task immediately when participant chooses - Approve"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label/../..</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Complete task immediately when participant chooses']/../../following::tr[1]//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Approve']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Approve']//input[@checked]</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Approve']//input</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label/../..</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Complete task immediately when participant chooses']/../../following::tr[1]//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Approve']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Approve']//input[@checked]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Approve']//input</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+
+			<!--Complete task immediately when participant chooses - Reject-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1" columnName="Complete task immediately when participant chooses - Reject"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1" columnName="Complete task immediately when participant chooses - Reject"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label/../..</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Complete task immediately when participant chooses']/../../following::tr[1]//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Reject']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Reject']//input[@checked]</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Reject']//input</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label/../..</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Complete task immediately when participant chooses']/../../following::tr[1]//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Reject']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Reject']//input[@checked]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Reject']//input</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+
+			<!--Complete task immediately when participant chooses - ACCEPT-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1" columnName="Complete task immediately when participant chooses - ACCEPT"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="REPEAT_1" columnName="Complete task immediately when participant chooses - ACCEPT"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label/../..</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Complete task immediately when participant chooses']/../../following::tr[1]//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='ACCEPT']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='ACCEPT']//input[@checked]</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='ACCEPT']//input</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label/../..</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Complete task immediately when participant chooses']/../../following::tr[1]//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='ACCEPT']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='ACCEPT']//input[@checked]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='ACCEPT']//input</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+
+			<!--Complete task immediately when participant chooses - OK-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1" columnName="Complete task immediately when participant chooses - OK"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="REPEAT_1" columnName="Complete task immediately when participant chooses - OK"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label/../..</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Complete task immediately when participant chooses']/../../following::tr[1]//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='OK']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='OK']//input[@checked]</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='OK']//input</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label/../..</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Complete task immediately when participant chooses']/../../following::tr[1]//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='OK']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='OK']//input[@checked]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='OK']//input</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+
+			<!--Complete task immediately when participant chooses - HtOutcmeAcceptInvitation-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1" columnName="Complete task immediately when participant chooses - HtOutcmeAcceptInvitation"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="REPEAT_1" columnName="Complete task immediately when participant chooses - HtOutcmeAcceptInvitation"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label/../..</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Complete task immediately when participant chooses']/../../following::tr[1]//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='HtOutcmeAcceptInvitation']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='HtOutcmeAcceptInvitation']//input[@checked]</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='HtOutcmeAcceptInvitation']//input</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label/../..</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Complete task immediately when participant chooses']/../../following::tr[1]//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='HtOutcmeAcceptInvitation']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='HtOutcmeAcceptInvitation']//input[@checked]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='HtOutcmeAcceptInvitation']//input</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+
+			<!--Complete task immediately when participant chooses - HtOutcmeRejectInvitation-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1" columnName="Complete task immediately when participant chooses - HtOutcmeRejectInvitation"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="REPEAT_1" columnName="Complete task immediately when participant chooses - HtOutcmeRejectInvitation"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label/../..</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Complete task immediately when participant chooses']/../../following::tr[1]//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='HtOutcmeRejectInvitation']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='HtOutcmeRejectInvitation']//input[@checked]</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='HtOutcmeRejectInvitation']//input</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label/../..</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Complete task immediately when participant chooses']/../../following::tr[1]//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='HtOutcmeRejectInvitation']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='HtOutcmeRejectInvitation']//input[@checked]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='HtOutcmeRejectInvitation']//input</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+
+			<!--Complete parallel subtasks early-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Complete parallel subtasks early']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1"/>
+					<parameter name="COL_NAME" value="Complete parallel subtasks early"/>
+				</parameters>
+			</executeBlock>
+			<!--Complete parent tasks of early completing subtasks-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Complete parent tasks of early completing subtasks']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1"/>
+					<parameter name="COL_NAME" value="Complete parent tasks of early completing subtasks"/>
+				</parameters>
+			</executeBlock>
+
+			<!--Skip creator for Approval List-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Skip creator for Approval List']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1"/>
+					<parameter name="COL_NAME" value="Skip creator for Approval List"/>
+				</parameters>
+			</executeBlock>
+			<!--Assign to Creator's Manager-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[contains(text(),'Assign to Creator')]/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1"/>
+					<parameter name="COL_NAME" value="Assign to Creator's Manager"/>
+				</parameters>
+			</executeBlock>
+				
+			<!--Mandate Comments before updating these outcomes - Approve-->			
+			<!-- <IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1" columnName="Mandate Comments before updating these outcomes - Reject"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1" columnName="Mandate Comments before updating these outcomes - Reject"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label/../..</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Mandate Comments before updating these outcomes']/../../following::tr[1]//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Reject']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Reject']//input[@checked]</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Reject']//input</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label/../..</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Mandate Comments before updating these outcomes']/../../following::tr[1]//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Reject']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Reject']//input[@checked]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Reject']//input</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse> -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//span[text()='Mandate Comments before updating these outcomes']/../..//tbody/tr[td/label[text()='APPROVE'] and td[select]]"/>
+					<parameter name="INV_NAME" value="REPEAT_1"/>
+					<parameter name="COL_NAME" value="Mandate Comments before updating these outcomes - Approve"/>
+				</parameters>
+			</executeBlock>
+
+			<!--Mandate Comments before updating these outcomes - Reject-->
+			<!-- <IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1" columnName="Mandate Comments before updating these outcomes - Approve"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="REPEAT_1" columnName="Mandate Comments before updating these outcomes - Approve"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label/../..</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Mandate Comments before updating these outcomes']/../../following::tr[1]//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Approve']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Approve']//input[@checked]</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Approve']//input</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label/../..</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Mandate Comments before updating these outcomes']/../../following::tr[1]//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Approve']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Approve']//input[@checked]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Approve']//input</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse> -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//span[text()='Mandate Comments before updating these outcomes']/../..//tbody/tr[td/label[text()='REJECT'] and td[select]]"/>
+					<parameter name="INV_NAME" value="REPEAT_1"/>
+					<parameter name="COL_NAME" value="Mandate Comments before updating these outcomes - Reject"/>
+				</parameters>
+			</executeBlock>
+
+			<!--Perform update outcome only from task form-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Perform update outcome only from task form']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1"/>
+					<parameter name="COL_NAME" value="Perform update outcome only from task form"/>
+				</parameters>
+			</executeBlock>			
+			<!--Task Aggregation-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Task Aggregation']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1"/>
+					<parameter name="COL_NAME" value="Task Aggregation"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="SET_MISCELLANEOUS_USER">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+									isDisplayed="true" by="xpath">//div[text()='Identity Browser']/../../../../../../..</findElement>
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true"
+											isDisplayed="true" by="xpath">//div[text()='Configure Error Assignees']</findElement>
+						</if>
+						<then/>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath">//tr//label[text()='On Error Notify']/following::td[1]//a</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</else>
+					</IfThenElse>
+					<findElement highlightTurnedOff="true" by="xpath">//div[text()='Configure Error Assignees']/../../../../../../..//label[text()='Users']/../../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+
+
+			<findElement by="xpath">//div[text()='Identity Browser']/../../../../../../..//*[@title='Users']/../../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_2" columnName="User Name"/>
+			</sendKeys>
+			<findElement by="xpath">//div[text()='Identity Browser']/../../../../../../..//label[text()=' ID']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_2" columnName="User Name"/>
+			</sendKeys>
+			<findElement isDisplayed="true" by="xpath">//div[text()='Identity Browser']/../../../../../../..//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+                        isDisplayed="true"
+                            by="xpath">//table[@summary='Searched Items']//a[text()='<valueKB
+                            toLowerCase="true"
+                            inventoryName="REPEAT_2" columnName="User Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement
+                            by="xpath">//table[@summary='Searched Items']//a[text()='<valueKB
+                            toLowerCase="true"
+                            inventoryName="REPEAT_2" columnName="User Name"/>']/../../../../../../../../../../..//input</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<error message="The field 'User Name' doesn't exist"/>
+				</else>
+			</IfThenElse>
+
+		</block>
+		<block name="SET_MISCELLANEOUS_GROUP">
+
+
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+									isDisplayed="true" by="xpath">//div[text()='Identity Browser']/../../../../../../..</findElement>
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true"
+											isDisplayed="true" by="xpath">//div[text()='Configure Error Assignees']</findElement>
+						</if>
+						<then/>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath">//tr//label[text()='On Error Notify']/following::td[1]//a</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</else>
+					</IfThenElse>
+					<findElement highlightTurnedOff="true" by="xpath">//div[text()='Configure Error Assignees']/../../../../../../..//label[text()='Groups']/../../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="REPEAT_3" columnName="Group Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Identity Browser']/../../../../../../..//*[@title='Groups']/../../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="REPEAT_3" columnName="Group Name"/>
+					</sendKeys>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Identity Browser']/../../../../../../..//button[text()='Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true"
+                                isDisplayed="true"
+                                    by="xpath">//table[@summary='Searched Items']//a[text()='<valueKB
+                                    inventoryName="REPEAT_3" columnName="Group Name"/>']</findElement>
+						</if>
+						<then>
+							<findElement
+                                    by="xpath">//table[@summary='Searched Items']//a[text()='<valueKB
+                                    inventoryName="REPEAT_3" columnName="Group Name"/>']/../../../../../../../../../../..//input</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<error message="The field 'Group Name' doesn't exist"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="OK_COMMENT">
+			<findElement by="xpath">//div[text()='Enter Comments']/../../../../../../..//a[span[text()='OK']]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="INFORMATION">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//div[text()='Information']/../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Information']/../../../../../../..//a[span[text()='OK']]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<window action="open"/>
+		<repeat inventoryName="REPEAT_1">
+			<pause durationInSecs="2" />
+			<executeBlock name="SEACH"/>
+			<executeBlock name="UPDATE"/>
+			<executeBlock name="TAB_TASK"/>
+			<executeBlock name="SET_CONFIGURATION"/>
+			<repeat inventoryName="REPEAT_2">
+				<executeBlock name="SET_MISCELLANEOUS_USER"/>
+			</repeat>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//div[text()='Identity Browser']/../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//div[text()='Identity Browser']/../../../../../../..//span[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<repeat inventoryName="REPEAT_3">
+				<executeBlock name="SET_MISCELLANEOUS_GROUP"/>
+			</repeat>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//div[text()='Identity Browser']/../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//div[text()='Identity Browser']/../../../../../../..//span[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock name="SAVE"/>
+			<executeBlock name="OK_COMMENT"/>
+			<executeBlock name="INFORMATION"/>
+		</repeat>
+		<window action="close"/>
+    </fusionNavigation>
+</navigation>

@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Time Balance Definitions</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" taskName="Time Balance Definitions" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		
+		<dependencies>
+			<navigation name="Manage Time Categories"/>
+			<navigation name="Manage Work Day Definitions"/>
+		</dependencies> 
+		<parameters>
+			<parameter name="INV_1" value="Manage Time Balance Definitions - Time Balance Definition"/>
+			<parameter name="INV_2" value="Manage Time Balance Definitions - Time Balance Feeds"/>
+		</parameters>
+		<block name="Search_Time_Balance">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_CREATE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Time_Balance_Definition">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Reporting Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Reporting Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Entry Unit of Measure']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Entry Unit of Measure"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Balance Dimension']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Balance Dimension"/>
+					<parameter name="SEARCH_1" value="Dimension Name"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="CREATE_Balance_Feeds">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Effective Start Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Effective Start Date"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="2"/>
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@id,'t2::db')]/table/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="2"/>
+			<findElement by="xpath">//div[contains(@id,'t2::db')]/table//tr[contains(@class,'Select')]/td[1]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="UPDATE_Balance_Feeds">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="Time_Balance_Feeds">
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@id,'t2::db')]/table//tr[contains(@class,'Select')]//label[text()='Time Category Name']/../../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Time Category Name"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@id,'t2::db')]/table//tr[contains(@class,'Select')]//label[text()='Add or Subtract']/../../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Add or Subtract"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Name"/>']/../..//input</findElement>
+		</block>
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="Search_Time_Balance"/>
+			<executeBlock name="Time_Balance_Definition"/>
+			<repeat inventoryName="INV_2">
+				<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//div[contains(@id,'t2::db')]/table/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="(//div[contains(@id,'t2::db')]/table[@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//div[contains(@id,'t2::db')]/table//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//div[contains(@id,'t2::db')]/table//tr[td//td//*[text()='<valueKB inventoryName="INV_2" columnName="Time Category Name"/>'] and td//*[text()='<valueKB inventoryName="INV_2" columnName="Add or Subtract"/>'] and td//*[text()='<valueKB inventoryName="INV_2" columnName="Effective Start Date"/>']]/td[1]</parameter>
+						<parameter name="TEMPLATE_CREATE" value="CREATE_Balance_Feeds"/>
+						<parameter name="TEMPLATE_UPDATE" value="UPDATE_Balance_Feeds"/>
+					</parameters>
+				</executeBlock>
+				<executeBlock name="Time_Balance_Feeds"/>
+			</repeat>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<pause durationInSecs="5"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+			<pause durationInSecs="5"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_CONFIRMATION"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

@@ -1,0 +1,498 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Time Layout Sets (Calendar Entry Layout)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" isFailedParentLevelRecordRetry="true" taskName="Time Layout Sets" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Time Entry Layout Components (Single)"/>
+			<navigation name="Manage Time Layout Sets"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_1_REPEAT" value="Manage Time Layout Sets - Layout Sets"/>
+			<parameter name="MAIN_2_REPEAT" value="Manage Time Layout Sets - Calendar Entry Layout"/>
+			<parameter name="MAIN_3_REPEAT" value="Manage Time Layout Sets - Calendar Entry Layout (Time Card Fields)"/>
+			<parameter name="MAIN_4_REPEAT" value="Manage Time Layout Sets - Calendar Entry Layout (Drag and Drop Values)"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='']/../..//input</findElement>
+			<sendKeys isClear="true">
+				<valueKB inventoryName="MAIN_2_REPEAT" columnName="Layout Name"/>
+			</sendKeys>
+			<findElement by="xpath">//label[text()='']/../..//input</findElement>
+			<sendKeys isClear="true">
+				<valueKB inventoryName="MAIN_2_REPEAT" columnName="Layout Name"/>
+			</sendKeys>
+		</block>
+		<block name="Search_Layout_Sets">
+			<!--GLOBAL_EXPAND-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<!--BUTTON-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<!--GLOBAL_EXPAND-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<!--INPUT-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Layout Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Layout Name"/>
+				</parameters>
+			</executeBlock>
+			<!--BUTTON-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Layout Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Layout Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[text()='Warning']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[contains(@class,'Expansion')]/..//div[text()='Warning']/../../../../../../..//button[text()='Yes']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+					<executeBlock name="BT_Update_Layout_Set"/>
+				</then>
+				<else>
+					<error message="Please define the Layout."/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="BT_Update_Layout_Set">
+			<findElement by="xpath">//span[text()='Update Layout Set']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Configure_Calendar_Entry_Layout">
+			<findElement by="xpath">//table[@summary='Configure Layout']//td[text()='Calendar Entry Layout']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement isSkipCheckDomError="true" by="xpath">//tr[contains(@class,'Selected')]//img[@title='Configure Layout']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="BT_Edit_Layout">
+			<findElement by="xpath">//span[text()='Edit Layout']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		
+		<block name="CLICK_TIME_CARD_FIELD">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='Time Card Fields'][contains(@class,'Selected')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[text()='Time Card Fields']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="LK_TIME_CARD_FIELD">
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[contains(@summary,'Time Card Fields')]/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[contains(@summary,'Time Card Fields')][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[contains(@summary,'Time Card Fields')]/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Time Card Fields']//tr//input[contains(@id,'name')][@value='<valueKB inventoryName="MAIN_3_REPEAT" columnName="Name"/>']</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_TIME_CARD_FIELD"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_TIME_CARD_FIELD"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="CREATE_TIME_CARD_FIELD">
+			<findElement by="xpath">//table[contains(@summary,'Time Card Fields')]/../../../..//div[@title='Add']/a</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="2"/>
+		</block>
+		<block name="UPDATE_TIME_CARD_FIELD">
+			<findElement isSkipCheckDomError="true" by="xpath">(SCROLLBAR_GENERIC_1_FIND_ROW/../../../../../../../../..//td)[1]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="TIME_CARD_FIELD">
+			<!--Name-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Time Card Fields']//tr[contains(@class,'Selected')]//input[contains(@id,'name')]/../.."/>
+					<parameter name="INV_NAME" value="MAIN_3_REPEAT"/>
+					<parameter name="COL_NAME" value="Name"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Display Label-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Time Card Fields']//tr[contains(@class,'Selected')]//label[text()='Display Label']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_3_REPEAT"/>
+					<parameter name="COL_NAME" value="Display Label"/>
+				</parameters>
+			</executeBlock>
+			<!--Display Sequence-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Time Card Fields']//tr[contains(@class,'Selected')]//label[text()='Display Sequence']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_3_REPEAT"/>
+					<parameter name="COL_NAME" value="Display Sequence"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="DETAIL_CARD_FIELD">
+			<!--Time Entry Format-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Time Entry Format']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_2_REPEAT"/>
+					<parameter name="COL_NAME" value="Time Entry Format"/>
+				</parameters>
+			</executeBlock>
+			<!--Time Card Fields - Decimal Places-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Decimal Places']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_2_REPEAT"/>
+					<parameter name="COL_NAME" value="Time Card Fields - Decimal Places"/>
+				</parameters>
+			</executeBlock>
+			<!--Display hours slider-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Display hours slider']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_2_REPEAT"/>
+					<parameter name="COL_NAME" value="Display hours slider"/>
+				</parameters>
+			</executeBlock>
+			<!--Display time slider-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Display time slider']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_2_REPEAT"/>
+					<parameter name="COL_NAME" value="Display time slider"/>
+				</parameters>
+			</executeBlock>
+			<!--Enable entry of negative hours-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Enable entry of negative hours']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_2_REPEAT"/>
+					<parameter name="COL_NAME" value="Enable entry of negative hours"/>
+				</parameters>
+			</executeBlock>
+			<!--Enable time to span midnight-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Enable time to span midnight']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_2_REPEAT"/>
+					<parameter name="COL_NAME" value="Enable time to span midnight"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="CLICK_DRAG_AND_DROP_VALUE">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='Drag and Drop Values'][contains(@class,'Selected')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[text()='Drag and Drop Values']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="LK_DRAG_AND_DROP_VALUE">
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@title='Drag and Drop Values']/../../../../../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[@title='Drag and Drop Values']/../../../../../..//table[@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[@title='Drag and Drop Values']/../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[@title='Drag and Drop Values']/../../../../../../..//tr[//td[2]//input[@value='<valueKB inventoryName="MAIN_4_REPEAT" columnName="Name"/>'] and td[3]//input[@value='<valueKB inventoryName="MAIN_4_REPEAT" columnName="Attribute Value"/>']]</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_DRAG_AND_DROP_VALUE"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_DRAG_AND_DROP_VALUE"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="CREATE_DRAG_AND_DROP_VALUE">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[@title='Drag and Drop Values']/../../../../../..//input[contains(@id,'name')][not(@value)]</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[@title='Drag and Drop Values']/../../../../../..//input[contains(@id,'name')][not(@value)]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">//*[@title='Drag and Drop Values']/../../../../../..//div[@title='Add']/a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="UPDATE_DRAG_AND_DROP_VALUE">
+			<findElement isSkipCheckDomError="true" by="xpath">(SCROLLBAR_GENERIC_1_FIND_ROW/../../../../..//td)[1]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="DRAG_AND_DROP_VALUE">
+			<!--Name-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//*[@title='Drag and Drop Values']/../../../../../../..//tr[contains(@class,'Selected')]//input[contains(@id,'name')]/../.."/>
+					<parameter name="INV_NAME" value="MAIN_4_REPEAT"/>
+					<parameter name="COL_NAME" value="Name"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Attribute Value-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//*[@title='Drag and Drop Values']/../../../../../../..//tr[contains(@class,'Selected')]//input[contains(@id,'Attribute')]/../.."/>
+					<parameter name="INV_NAME" value="MAIN_4_REPEAT"/>
+					<parameter name="COL_NAME" value="Attribute Value"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Display Sequence-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[@title='Drag and Drop Values']/../../../../../../..//tr[contains(@class,'Selected')]//label[text()='Display Sequence']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_4_REPEAT"/>
+					<parameter name="COL_NAME" value="Display Sequence"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="DETAIL_TIME_TOTAL">
+			<!--Overtime Time Category-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Overtime Time Category']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_2_REPEAT"/>
+					<parameter name="COL_NAME" value="Overtime Time Category"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Time Totals - Decimal Places-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Decimal Places']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_2_REPEAT"/>
+					<parameter name="COL_NAME" value="Time Totals - Decimal Places"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="BT_Comfiirmation">
+			<pause durationInSecs="1"/>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//div[text()='Confirmation']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Confirmation']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="BT_Warring">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//div[text()='Warning']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Warning']/../../../../../../..//button[text()='Yes']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>		
+		<block name="BT_SAVE_AND_CLOSE">
+			<findElement by="xpath">//*[text()='Save']/../../../td[2]//a</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//div[contains(@class,'Popup')]//span[text()='S']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="ERROR">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Error']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Error']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="BT_NEXT">
+			<findElement by="xpath">//div[contains(@class,'Expansion')]/..//span[text()='x']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="BT_DELETE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='Actions']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='Actions']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Delete']</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Delete']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='Actions']/../../../../../../../../../../../..</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='Actions']/../../../../../../../../../../../..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//a[text()='Actions']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Delete']</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Delete']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a/img[@title='Delete']</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a/img[@title='Delete']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="BT_SHOW_ALL">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='View']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='View']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Columns']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Show All']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='View']/../../../../../../../../../../../..</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='View']/../../../../../../../../../../../..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//a[text()='View']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Columns']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Show All']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_1_REPEAT">
+			<executeBlock name="Search_Layout_Sets"/>
+			<pause durationInSecs="2"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Configure Layout']//td[text()='Calendar Entry Layout']</findElement>
+				</if>
+				<then>
+					<executeBlock name="Configure_Calendar_Entry_Layout"/>
+					<pause durationInSecs="5"/>
+					<executeBlock name="BT_Edit_Layout"/>
+					<pause durationInSecs="2"/>
+					<repeat inventoryName="MAIN_2_REPEAT">
+						<repeat inventoryName="MAIN_3_REPEAT">
+							<executeBlock name="CLICK_TIME_CARD_FIELD"/>
+							<executeBlock name="LK_TIME_CARD_FIELD"/>
+							<executeBlock name="TIME_CARD_FIELD"/>
+						</repeat>
+						<executeBlock name="DETAIL_CARD_FIELD"/>
+						<executeBlock name="BT_NEXT"/>
+						<pause durationInSecs="1"/>
+						<repeat inventoryName="MAIN_4_REPEAT">
+							<executeBlock name="CLICK_DRAG_AND_DROP_VALUE"/>
+							<executeBlock name="LK_DRAG_AND_DROP_VALUE"/>
+							<executeBlock name="DRAG_AND_DROP_VALUE"/>
+						</repeat>
+						<executeBlock name="BT_NEXT"/>
+						<pause durationInSecs="2"/>
+						<executeBlock name="DETAIL_TIME_TOTAL"/>
+						<findElement by="xpath">//*[text()='Edit Layout']/../../../../../../..//*[text()='S']/..</findElement>
+						<click waitForPageToFinishRendering="true"/>
+						<pause durationInSecs="2"/>
+						<executeBlock name="BT_SAVE_AND_CLOSE"/>
+						<pause durationInSecs="2"/>
+						<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+						<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_CONFIRMATION"/>
+					</repeat>
+				</then>
+				<else>
+					<error message="Configure Layout 'Calendar Entry Layout' doesn't exist."/>
+				</else>
+			</IfThenElse>
+		</repeat>
+	</fusionNavigation>
+</navigation>

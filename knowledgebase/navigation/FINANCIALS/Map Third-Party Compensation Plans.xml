@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Map Third-Party Compensation Plans</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" taskName="Map Third-Party Compensation Plans" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Map Third-Party Compensation Plans - Map Third-Party Plans"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Third-Party Plan"/>']/../..//input</findElement>
+		</block>
+		<block name="Map_Third-Part_Plans">
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Third-Party Plan']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Third-Party Plan"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Third-Party Plan Component']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Third-Party Plan Component"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Individual Compensation Plan']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Individual Compensation Plan"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Individual Compensation Plan Component']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Individual Compensation Plan Component"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="New_Row_Map">
+			<executeBlock name="GLOBAL_ADD"/>
+		</block>
+		<block name="Update_Row_Map">
+			<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Map Third-Party Plans']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Map Third-Party Plans'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Map Third-Party Plans']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Map Third-Party Plans']/../..//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Third-Party Plan"/>' or @value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Third-Party Plan"/>']/../../..//*[contains(@id,'it2') and text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Third-Party Plan Component"/>' or @value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Third-Party Plan Component"/>']/../../../td[1]</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="New_Row_Map"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Row_Map"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Map_Third-Part_Plans"/>
+			<executeBlock name="GLOBAL_SAVE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

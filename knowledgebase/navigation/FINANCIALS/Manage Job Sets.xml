@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Job Sets</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Manage Enterprise Scheduler Job Definitions and Job Sets for Financial, Supply Chain Management, and Related Applications" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<parameters>
+			<parameter name="INV_1" value="Manage Job Sets - Job Set"/>
+		</parameters>
+		
+		<block name="SEARCH">
+			<executeBlock name="TAB">
+				<parameters>
+					<parameter name="TAB_NAME" value="Manage Job Sets"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[not(@class)]/table[@class='x1jl']//tr[2]/*[1]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//div[not(@class)]/table[@class='x1jl']//tr[2]/*[2]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Display Name"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//table[@summary='Manage Job Sets']//tr[1][not(@class)]/td[1][text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath" >//a[@title='Clear All']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//div[not(@class)]/table[@class='x1jl']//tr[2]/*[1]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="From Name"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//div[not(@class)]/table[@class='x1jl']//tr[2]/*[2]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="From Display Name"/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//table[@summary='Manage Job Sets']//tr[1][not(@class)]/td[1][text()='<valueKB inventoryName="INV_1" columnName="From Name"/>']</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//table[@summary='Manage Job Sets']//tr[1][@class]/td[1]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Duplicate']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="DUPLICATE_JOB_SET">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Path']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Path"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[text()='Duplicate Job Set']/../../../../../../..//button[text()='OK']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[text()='Duplicate Job Set']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="SEARCH"/>
+			<executeBlock name="DUPLICATE_JOB_SET"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

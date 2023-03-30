@@ -1,0 +1,542 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Chart of Accounts Mappings (Account Rules)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Chart of Accounts Mappings" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="SegmentValues"/>
+			<navigation name="Manage Chart of Accounts Value Set Values (Independent)"/>
+			<navigation name="Manage Chart of Accounts Mappings (Segment Rules)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Chart of Accounts Mappings - Manage Chart of Accounts Mappings"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Chart of Accounts Mappings - Account Rules"/>
+		</parameters>
+		<block name="Go To Task">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//h1[contains(text(),'Manage Chart of Accounts Mappings')]/..</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a[@title='Go to Task']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search Name">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title="Clear All"]/../../../../..//input</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//img[@title="Query By Example"]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<findElements by="xpath" returnElementAtPosition="1">//a[@title='Clear All']/../../../../..//input</findElements>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+			</sendKeys>
+			<pause durationInSecs="2"/>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">//img[@title='Create']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Chart of Accounts Mapping">
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT_TEXTAREA">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Target Chart of Accounts']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Target Chart of Accounts"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Source Chart of Accounts']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Source Chart of Accounts"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Save and Close">
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</block>
+		<block name="Save">
+			<executeBlock name="GLOBAL_SAVE"/>
+		</block>
+		<block name="Account Rules">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[text()='Account Rules'][contains(@class,'Select')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[text()='Account Rules']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Target Account"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+				<!--
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@summary='Account Rules']/../../../..//input[@value='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Target Account"/>']</findElement>
+						</if>
+						<then>
+						</then>
+						<else>
+							<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+								<parameters>
+									<parameter name="XPATH" value="//table[@summary='Account Rules']/../../../.."/>
+								</parameters>
+							</executeBlock>
+							<pause durationInSecs="3"/>
+							<findElement by="xpath">//table[@summary='Account Rules']//input</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="2"/>
+							<findElement by="xpath">//table[@summary='Account Rules']//tr[contains(@class,'Select')]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Target Account"/>
+							</sendKeys>
+							<pause durationInSecs="5"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isDisplayed="true">//img[@title='Add Row']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//span[text()='K']/..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+
+								</else>
+							</IfThenElse>							
+							<executeBlock name="CREATE_KEY_FLEXFILTER"/>
+						</else>
+					</IfThenElse>
+					-->
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Account Rules']/../../../.."/>
+						</parameters>
+					</executeBlock>
+					<pause durationInSecs="3"/>
+					<findElement by="xpath">//table[@summary='Account Rules']//input</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+					<findElement by="xpath">//table[@summary='Account Rules']//tr[contains(@class,'Select')]//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Target Account"/>
+					</sendKeys>
+					<pause durationInSecs="5"/>
+					<findElement by="xpath">//table[@summary='Account Rules']//tr[contains(@class,'Select')]//input/../../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					
+					<findElement by="xpath">//div[text()='Key Flexfield']/../../../../../../..//span[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>		
+
+					<executeBlock name="CHECK_ERROR"/>
+										
+					
+					<!--
+					isRepeatUntilBreak="true"
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isDisplayed="true">//img[@title='Add Row']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isDisplayed="true">//img[@title='Add Row']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<findElement by="xpath">//img[@title='Add Row']/../../../../../../../../..//div[contains(@id,'eoi')]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath" isDisplayed="true">//img[@title='Add Row']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</else>
+					</IfThenElse>
+-->
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CHECK_ERROR">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Error']/../../../../../../..//*[contains(text(),'This combination is invalid:')]</findElement>
+				</if>
+				<then>
+					<error message="This combination is invalid:" />
+				</then>
+				<else>	
+				
+				</else>
+			</IfThenElse>	
+		</block>
+
+		<block name="Key Flexfilter">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Account Rules']//tr[contains(@class,'Select')]//img[contains(@id,'ACKFF_KFFButconImage1')]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Account Rules']//tr[contains(@class,'Select')]//img[contains(@id,'ACKFF_KFFButconImage1')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="ADD_KEY_FLEXFILTER">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_1"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<!-- Add Fields -->
+					<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//span[text()='Add Fields']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//td[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_1"/>']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//td[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_1"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<error message="This field doesn't exist."/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="INPUT_KEY_FLEXFILTER">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_1"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<!-- Condition -->
+					<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//td[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_1"/>']/../..//td[2]//select</findElement>
+					<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_2"/>
+					</select>
+					<!-- Value -->
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//td[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_1"/>']/../..//td[2]//input</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//td[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_1"/>']/../..//td[2]//td[2]//label[contains(text(),'<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_1"/>')]/..//a</findElement>
+								</if>
+								<then>
+									<findElements by="xpath" returnElementAtPosition="1">//div[text()='Key Flexfilter']/../../../../../../..//td[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_1"/>']/../..//td[2]//td[2]//label[contains(text(),'<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_1"/>')]/..//a</findElements>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Value']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_3"/>
+									</sendKeys>
+									<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Search']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//td[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_3"/>']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//td[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_3"/>']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<error message="The field 'Value Set' doesn't exist"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+									<findElements by="xpath" returnElementAtPosition="1">//div[text()='Key Flexfilter']/../../../../../../..//td[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_1"/>']/../..//td[2]//td[2]//label[contains(text(),'<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_1"/>')]/..//input</findElements>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_3"/>
+									</sendKeys>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<comparisons separator="OR">
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_2"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>Between</valueText>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_2"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>Not between</valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElements by="xpath" returnElementAtPosition="2">//div[text()='Key Flexfilter']/../../../../../../..//td[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_1"/>']/../..//td[2]//td[2]//label[contains(text(),'<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_1"/>')]/..//input</findElements>
+										</if>
+										<then>
+											<findElements by="xpath" returnElementAtPosition="2">//div[text()='Key Flexfilter']/../../../../../../..//td[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_1"/>']/../..//td[2]//td[2]//label[contains(text(),'<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_1"/>')]/..//input</findElements>
+											<sendKeys isClear="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="MAIN_REPEAT_2" columnName="MAIN_COLUMN_4"/>
+											</sendKeys>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CREATE_KEY_FLEXFILTER">
+			<executeBlock name="Key Flexfilter"/>
+			<executeBlock name="ADD_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field1"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="ADD_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field2"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="ADD_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field3"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="ADD_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field4"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="ADD_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field5"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="ADD_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field6"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="ADD_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field7"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="ADD_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field8"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="ADD_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field9"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="ADD_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field10"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field1"/>
+					<parameter name="MAIN_COLUMN_2" value="Field1 - Condition"/>
+					<parameter name="MAIN_COLUMN_3" value="Field1 - Value1"/>
+					<parameter name="MAIN_COLUMN_4" value="Field1 - Value2"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field2"/>
+					<parameter name="MAIN_COLUMN_2" value="Field2 - Condition"/>
+					<parameter name="MAIN_COLUMN_3" value="Field2 - Value1"/>
+					<parameter name="MAIN_COLUMN_4" value="Field2 - Value2"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field3"/>
+					<parameter name="MAIN_COLUMN_2" value="Field3 - Condition"/>
+					<parameter name="MAIN_COLUMN_3" value="Field3 - Value1"/>
+					<parameter name="MAIN_COLUMN_4" value="Field3 - Value2"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field4"/>
+					<parameter name="MAIN_COLUMN_2" value="Field4 - Condition"/>
+					<parameter name="MAIN_COLUMN_3" value="Field4 - Value1"/>
+					<parameter name="MAIN_COLUMN_4" value="Field4 - Value2"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field5"/>
+					<parameter name="MAIN_COLUMN_2" value="Field5 - Condition"/>
+					<parameter name="MAIN_COLUMN_3" value="Field5 - Value1"/>
+					<parameter name="MAIN_COLUMN_4" value="Field5 - Value2"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field6"/>
+					<parameter name="MAIN_COLUMN_2" value="Field6 - Condition"/>
+					<parameter name="MAIN_COLUMN_3" value="Field6 - Value1"/>
+					<parameter name="MAIN_COLUMN_4" value="Field6 - Value2"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field7"/>
+					<parameter name="MAIN_COLUMN_2" value="Field7 - Condition"/>
+					<parameter name="MAIN_COLUMN_3" value="Field7 - Value1"/>
+					<parameter name="MAIN_COLUMN_4" value="Field7 - Value2"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field8"/>
+					<parameter name="MAIN_COLUMN_2" value="Field8 - Condition"/>
+					<parameter name="MAIN_COLUMN_3" value="Field8 - Value1"/>
+					<parameter name="MAIN_COLUMN_4" value="Field8 - Value2"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field9"/>
+					<parameter name="MAIN_COLUMN_2" value="Field9 - Condition"/>
+					<parameter name="MAIN_COLUMN_3" value="Field9 - Value1"/>
+					<parameter name="MAIN_COLUMN_4" value="Field9 - Value2"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT_KEY_FLEXFILTER">
+				<parameters>
+					<parameter name="MAIN_COLUMN_1" value="Add Field10"/>
+					<parameter name="MAIN_COLUMN_2" value="Field10 - Condition"/>
+					<parameter name="MAIN_COLUMN_3" value="Field10 - Value1"/>
+					<parameter name="MAIN_COLUMN_4" value="Field10 - Value2"/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//span[text()='K']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="Search Name"/>
+			<executeBlock name="Chart of Accounts Mapping"/>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<executeBlock name="Account Rules"/>
+				<executeBlock name="CREATE_KEY_FLEXFILTER"/>
+				<IfThenElse>
+					<if>
+						<findElement by="xpath">//table[@summary='Account Rules']//td[text()='0']</findElement>
+					</if>
+					<then>
+						<error message="Please define 'Source Account Filter' before save"/>
+					</then>
+					<else/>
+				</IfThenElse>
+				<!--
+				<findElement by="xpath">//span[text()='Target Account']/../../../../../../../../../../../..//input</findElement>
+				<sendKeys isClear="true" waitForPageToFinishRendering="true">
+					<valueKB inventoryName="MAIN_REPEAT_2" columnName="Target Account"/>
+				</sendKeys>
+-->
+				<executeBlock name="GLOBAL_SAVE"/>
+			</repeat>
+			<executeBlock name="Save and Close"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

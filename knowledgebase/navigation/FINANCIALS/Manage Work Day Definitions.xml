@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Work Day Definitions</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" taskName="Work Day Definitions" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Work Day Definitions - Work Day Definition"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../..//input</findElement>
+		</block>
+		<block name="Search_Work_Day">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//tr//td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//tr//td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../../../../../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="GLOBAL_UPDATE"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_CREATE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Create_Work_Day">
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT_TEXTAREA">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Custom')]//label[text()='Spanning Days Rule']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Spanning Days Rule"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Grouping Threshold']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Grouping Threshold"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Tie Handling']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Tie Handling"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr//label[text()='Day Start Time']/../../../../../../../../../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Day Start Time"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="RADIO_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Day Start Time']/../../../../../../../../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Day Start Time - Option"/>
+					<parameter name="LEGEND" value="Day Start Time"/>
+					<parameter name="LABEL_RADIO" value="Day Start Time"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Confirmation">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true" highlightTurnedOff="true">//td/div[text()='Confirmation']/../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//td/div[text()='Confirmation']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search_Work_Day"/>
+			<executeBlock name="Create_Work_Day"/>
+			<executeBlock name="GLOBAL_SAVE"/>
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+			<executeBlock name="Confirmation"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

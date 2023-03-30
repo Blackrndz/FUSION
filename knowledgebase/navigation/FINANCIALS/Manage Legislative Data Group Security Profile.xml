@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Legislative Data Group Security Profile</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" taskName="Manage Legislative Data Group Security Profile" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<dependencies>
+			<navigation name="Manage Legislative Data Groups"/>
+		</dependencies>
+		<parameters>
+			<parameter name="INV_1" value="Manage Legislative Data Group Security Profile - Legislative Data Group Security Profile"/>
+			<parameter name="INV_2" value="Manage Legislative Data Group Security Profile - Legislative Data Groups"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Name"/>']/../..//input</findElement>
+		</block>
+		<block name="Search_Legislative_Data_Group_Security_Profiles">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//tr//td/div[contains(@title,'Search')]/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//tr//td/div[contains(@title,'Search')]/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//tr//td//a[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//tr//td//a[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="GLOBAL_UPDATE"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_CREATE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Legislative_Data_Group_Basic_Details">
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enabled']/../../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Enabled"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='View All']/../../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="View All"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Create_Legislative_Data_Groups">
+			<executeBlock name="GLOBAL_ADD"/>
+			
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Legislative Data Groups']//tr[contains(@class,'Select')]//input/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Legislative Data Group Name"/>
+					<parameter name="SEARCH_1" value="Legislative Data Group"/>
+				</parameters>
+			</executeBlock>			
+		</block>
+		
+		<block name="Update_Legislative_Data_Groups">
+
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="Search_Legislative_Data_Group_Security_Profiles"/>
+			<executeBlock name="Legislative_Data_Group_Basic_Details"/>
+			<repeat inventoryName="INV_2">
+				<executeBlock name="SCROLLBAR">
+					<parameters>
+						<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Legislative Data Groups']/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Legislative Data Groups'][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Legislative Data Groups']/../..//div[contains(@id,'scroller')]"/>
+						<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Legislative Data Groups']//tr//td//*[text()='<valueKB inventoryName="INV_2" columnName="Legislative Data Group Name"/>' or @value='<valueKB inventoryName="INV_2" columnName="Legislative Data Group Name"/>' or @title='<valueKB inventoryName="INV_2" columnName="Legislative Data Group Name"/>']</parameter>
+						<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Legislative_Data_Groups"/>
+						<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Legislative_Data_Groups"/>
+					</parameters>
+				</executeBlock>	
+			</repeat>
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

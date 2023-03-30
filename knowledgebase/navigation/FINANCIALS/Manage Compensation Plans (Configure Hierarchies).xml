@@ -1,0 +1,510 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Compensation Plans (Configure Hierarchies)</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Workforce Compensation Plans" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+			<navigation name="Manage Compensation Plans"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Compensation Plans - Compensation Plan"/>
+            <parameter name="REPEAT_2_MAIN" value="Manage Compensation Plans - Configure Hierarchies"/>
+        </parameters>
+        <block name="FAKE_INV">
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Plan"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Plan"/>']/../..//input</findElement>
+        </block>
+		<block name="SEARCH">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Plan']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Plan"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Workforce Compensation Plans']/../..//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Plan"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Workforce Compensation Plans']/../..//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Plan"/>']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<error message="No data. Create data in Manage Compensation Plans" />
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Configure_Hierarchies">
+			<!--Primary Hierarchy - Source-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Primary Hierarchy']/../../../../../..//label[text()='Source']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Primary Hierarchy - Source"/>
+				</parameters>
+			</executeBlock>
+			<!--Primary Hierarchy - Manager Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Primary Hierarchy']/../../../../../..//label[text()='Manager Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Primary Hierarchy - Manager Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Primary Hierarchy - Hierarchy Determination Formula-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Primary Hierarchy']/../../../../../..//label[text()='Hierarchy Determination Formula']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Primary Hierarchy - Hierarchy Determination Formula"/>
+					<parameter name="SEARCH_1" value="Formula Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Primary Hierarchy - Position Tree-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Primary Hierarchy']/../../../../../..//label[text()='Position Tree']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Primary Hierarchy - Position Tree"/>
+					<parameter name="SEARCH_1" value="Position Tree"/>
+				</parameters>
+			</executeBlock>
+			<!--Primary Hierarchy - Department Tree-->
+			<executeBlock name="MANUAL_LOV_Department_Tree"/>
+			<!--Primary Hierarchy - Missing Manager Handling-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Primary Hierarchy']/../../../../../..//label[text()='Missing Manager Handling']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Primary Hierarchy - Missing Manager Handling"/>
+				</parameters>
+			</executeBlock>
+			<!--Primary Hierarchy - Record missing relationships in batch log files-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Primary Hierarchy']/../../../../../..//label[text()='Record missing relationships in batch log files']/../../../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Primary Hierarchy - Record missing relationships in batch log files"/>
+				</parameters>
+			</executeBlock>
+			<!--Primary Hierarchy - Default Access Level-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Primary Hierarchy']/../../../../../..//label[text()='Default Access Level']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Primary Hierarchy - Default Access Level"/>
+				</parameters>
+			</executeBlock>
+			<!--Primary Hierarchy - Default Access Level Formula-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Primary Hierarchy']/../../../../../..//label[text()='Default Access Level Formula']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Primary Hierarchy - Default Access Level Formula"/>
+					<parameter name="SEARCH_1" value="Formula Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Primary Hierarchy - Refresh default access level when you run the refresh data process-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Primary Hierarchy']/../../../../../..//label[text()='Refresh default access level when you run the refresh data process']/../../../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Primary Hierarchy - Refresh default access level when you run the refresh data process"/>
+				</parameters>
+			</executeBlock>
+			<!--Secondary Hierarchy - Source-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Secondary Hierarchy']/../../../../../..//label[text()='Source']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Secondary Hierarchy - Source"/>
+				</parameters>
+			</executeBlock>
+			<!--Secondary Hierarchy - Manager Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Secondary Hierarchy']/../../../../../..//label[text()='Manager Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Secondary Hierarchy - Manager Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Secondary Hierarchy - Hierarchy Determination Formula-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Secondary Hierarchy']/../../../../../..//label[text()='Hierarchy Determination Formula']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Secondary Hierarchy - Hierarchy Determination Formula"/>
+					<parameter name="SEARCH_1" value="Formula Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Secondary Hierarchy - Position Tree-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Secondary Hierarchy']/../../../../../..//label[text()='Position Tree']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Secondary Hierarchy - Position Tree"/>
+					<parameter name="SEARCH_1" value="Position Tree"/>
+				</parameters>
+			</executeBlock>
+			<!--Secondary Hierarchy - Department Tree-->
+			<executeBlock name="MANUAL_LOV_Secondary_Department_Tree"/>
+			<!--Secondary Hierarchy - Missing Manager Handling-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Secondary Hierarchy']/../../../../../..//label[text()='Missing Manager Handling']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Secondary Hierarchy - Missing Manager Handling"/>
+				</parameters>
+			</executeBlock>
+			<!--Secondary Hierarchy - Record missing relationships in batch log files-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Secondary Hierarchy']/../../../../../..//label[text()='Record missing relationships in batch log files']/../../../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Secondary Hierarchy - Record missing relationships in batch log files"/>
+				</parameters>
+			</executeBlock>
+			<!--Secondary Hierarchy - Default Access Level-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Secondary Hierarchy']/../../../../../..//label[text()='Default Access Level']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Secondary Hierarchy - Default Access Level"/>
+				</parameters>
+			</executeBlock>
+			<!--Secondary Hierarchy - Default Access Level Formula-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Secondary Hierarchy']/../../../../../..//label[text()='Default Access Level Formula']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Secondary Hierarchy - Default Access Level Formula"/>
+					<parameter name="SEARCH_1" value="Formula Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Secondary Hierarchy - Refresh default access level when you run the refresh data process-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Secondary Hierarchy']/../../../../../..//label[text()='Refresh default access level when you run the refresh data process']/../../../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Secondary Hierarchy - Refresh default access level when you run the refresh data process"/>
+				</parameters>
+			</executeBlock>
+			<!--Reviewers - Source-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Reviewers']/../../../../../..//label[text()='Source']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Reviewers - Source"/>
+				</parameters>
+			</executeBlock>
+			<!--Reviewers - Manager Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Reviewers']/../../../../../..//label[text()='Manager Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Reviewers - Manager Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Reviewers - Hierarchy Determination Formula-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Reviewers']/../../../../../..//label[text()='Hierarchy Determination Formula']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Reviewers - Hierarchy Determination Formula"/>
+					<parameter name="SEARCH_1" value="Formula Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Reviewers - Position Tree-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Reviewers']/../../../../../..//label[text()='Position Tree']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Reviewers - Position Tree"/>
+					<parameter name="SEARCH_1" value="Position Tree"/>
+				</parameters>
+			</executeBlock>
+			<!--Reviewers - Department Tree-->
+			<executeBlock name="MANUAL_LOV_Reviewers_Department_Tree"/>
+			<!--Reviewers - Missing Manager Handling-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Reviewers']/../../../../../..//label[text()='Missing Manager Handling']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Reviewers - Missing Manager Handling"/>
+				</parameters>
+			</executeBlock>
+			<!--Reviewers - Record missing relationships in batch log files-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Reviewers']/../../../../../..//label[text()='Record missing relationships in batch log files']/../../../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Reviewers - Record missing relationships in batch log files"/>
+				</parameters>
+			</executeBlock>
+			<!--Reviewers - Default Access Level-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Reviewers']/../../../../../..//label[text()='Default Access Level']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Reviewers - Default Access Level"/>
+				</parameters>
+			</executeBlock>
+			<!--Reviewers - Default Access Level Formula-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Reviewers']/../../../../../..//label[text()='Default Access Level Formula']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Reviewers - Default Access Level Formula"/>
+					<parameter name="SEARCH_1" value="Formula Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Reviewers - Refresh default access level when you run the refresh data process-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Reviewers']/../../../../../..//label[text()='Refresh default access level when you run the refresh data process']/../../../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Reviewers - Refresh default access level when you run the refresh data process"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="MANUAL_LOV_Department_Tree">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[@title='Primary Hierarchy']/../../../../../..//label[text()='Department Tree']/../..</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//div[@title='Primary Hierarchy']/../../../../../..//label[text()='Department Tree']/../..</findElement>
+					<findElement by="xpath">//div[@title='Primary Hierarchy']/../../../../../..//label[text()='Department Tree']/../../td//span/a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<!--Search...-->
+					<findElement isDisplayed="true" by="xpath">//a[text()='Search...']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="5"/>
+					<!--Advance-->
+					<findElement by="xpath">//*[text()='d']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="3"/>
+					<!--Add Fields-->
+					<findElement by="xpath">//*[text()='Add Fields']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//td[text()='Position Tree']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<!--Position Tree-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search']/../../../../../../..//span/label[text()=' Position Tree']/../../../../../.."/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Position Tree"/>
+						</parameters>
+					</executeBlock>
+					<!--Search-->
+					<findElement by="xpath">//button[text()='Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<!--OK-->
+					<findElement by="xpath">//*[contains(text(),'Department Tree')]/../../../../../../..//*[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="3"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="MANUAL_LOV_Secondary_Department_Tree">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[@title='Secondary Hierarchy']/../../../../../..//label[text()='Department Tree']/../..</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//div[@title='Secondary Hierarchy']/../../../../../..//label[text()='Department Tree']/../..</findElement>
+					<findElement by="xpath">//div[@title='Secondary Hierarchy']/../../../../../..//label[text()='Department Tree']/../../td//span/a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<!--Search...-->
+					<findElement isDisplayed="true" by="xpath">//a[text()='Search...']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="5"/>
+					<!--Advance-->
+					<findElement by="xpath">//*[text()='d']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="3"/>
+					<!--Add Fields-->
+					<findElement by="xpath">//*[text()='Add Fields']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//td[text()='Position Tree']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<!--Position Tree-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search']/../../../../../../..//span/label[text()=' Position Tree']/../../../../../.."/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Position Tree"/>
+						</parameters>
+					</executeBlock>
+					<!--Search-->
+					<findElement by="xpath">//button[text()='Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<!--OK-->
+					<findElement by="xpath">//*[contains(text(),'Department Tree')]/../../../../../../..//*[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="3"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="MANUAL_LOV_Reviewers_Department_Tree">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[@title='Reviewers']/../../../../../..//label[text()='Department Tree']/../..</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//div[@title='Reviewers']/../../../../../..//label[text()='Department Tree']/../..</findElement>
+					<findElement by="xpath">//div[@title='Reviewers']/../../../../../..//label[text()='Department Tree']/../../td//span/a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<!--Search...-->
+					<findElement isDisplayed="true" by="xpath">//a[text()='Search...']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="5"/>
+					<!--Advance-->
+					<findElement by="xpath">//*[text()='d']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="3"/>
+					<!--Add Fields-->
+					<findElement by="xpath">//*[text()='Add Fields']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//td[text()='Position Tree']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<!--Position Tree-->
+						<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+							<parameters>
+								<parameter name="XPATH" value="//*[text()='Search']/../../../../../../..//span/label[text()=' Position Tree']/../../../../../.."/>
+								<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+								<parameter name="COL_NAME" value="Position Tree"/>
+							</parameters>
+						</executeBlock>
+					<!--Search-->
+					<findElement by="xpath">//button[text()='Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<!--OK-->
+					<findElement by="xpath">//*[contains(text(),'Department Tree')]/../../../../../../..//*[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="3"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CREATE_COMPENSATION_PLAN">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Plan']/../..//*[@title='Required']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Plan"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Create Workforce Compensation Plan']/../../../../../../..//button[text()='Create']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Create Workforce Compensation Plan']/../../../../../../..//button[text()='Create']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CONFIRMATION">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[text()='Confirmation']/../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Confirmation']/../../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="SAVE">
+			<findElement by="xpath">//*[text()='Save']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="SAVE_AND_CLOSE">
+			<findElement by="xpath">//*[text()='S']/../..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="CREATE_Task_List">
+		</block>
+		<block name="UPDATE_Task_List">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<findElement by="xpath">//table[@summary='Task List']/../..//tr[td//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Plan"/>']]//a</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		
+		<block name="GO_TO_TASK_HIERARCHIES">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Foundation']//a"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Task List']//div[text()='Configure Hierarchies']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Task List']//div[text()='Configure Hierarchies']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="SEARCH"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Create Workforce Compensation Plan']</findElement>
+				</if>
+				<then>
+					<executeBlock name="CREATE_COMPENSATION_PLAN"/>
+				</then>
+				<else/>			
+			</IfThenElse>
+			<executeBlock name="GO_TO_TASK_HIERARCHIES"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="Configure_Hierarchies"/>
+				<executeBlock name="SAVE"/>
+				<executeBlock name="CONFIRMATION"/>
+				<executeBlock name="SAVE_AND_CLOSE"/>
+			</repeat>
+		</repeat>
+    </fusionNavigation>
+</navigation>

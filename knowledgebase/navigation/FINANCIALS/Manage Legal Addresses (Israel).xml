@@ -1,0 +1,478 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Legal Addresses (Israel)</name>
+    <svn>
+        <xsd:revision>$Revision: 79637 $:</xsd:revision>
+        <xsd:author>$Author: kullada.somtragool $:</xsd:author>
+        <xsd:date>$Date: 2022-11-16 14:03:07 +0700 (Wed, 16 Nov 2022) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Legal%20Addresses%20(Israel).xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Legal Addresses (Israel).xml 79637 2022-11-16 07:03:07Z kullada.somtragool $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Legal Addresses"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Enterprise HCM Information"/>
+			<navigation name="Create Implementation Users"/>
+			
+		</dependencies>
+		<parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Legal Addresses (Israel) - Manage Legal Addresses"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Legal Addresses (Israel) - Manage Legal Addresses - DFF"/>
+        </parameters>
+		<block name="FAKE_DFF_IL">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="Manage Legal Addresses (Israel) - Manage Legal Addresses" columnName="Country"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="Manage Legal Addresses (Israel) - Manage Legal Addresses" columnName="Country"/>
+			</click>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="Manage Legal Addresses (Israel) - Manage Legal Addresses - DFF" columnName="Field Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="Manage Legal Addresses (Israel) - Manage Legal Addresses - DFF" columnName="Field Value"/>
+			</click>
+		</block>
+		
+		<block name="Search_Address">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Location"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+				</if>
+				<then>
+					<!--GLOBAL_EXPAND-->
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+							<parameter name="BUTTON_NAME" value="Reset"/>
+						</parameters>
+					</executeBlock>
+					<!--Country-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Country']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Country"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+							<parameter name="BUTTON_NAME" value="Search"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Locations']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Locations'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Locations']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="TEMPLATE_1_FIND_ROW">//tr[td//*[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location"/>']]/td[1]</parameter>
+							<parameter name="TEMPLATE_CREATE" value="CREATE_Locations"/>
+							<parameter name="TEMPLATE_UPDATE" value="UPDATE_Locations"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Locations']/../../../.."/>
+						</parameters>
+					</executeBlock>
+					<pause durationInSecs="5"/>
+					<executeBlock name="ADDRESS_IL_POPUP"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="CREATE_Locations">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Locations']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="5"/>
+			<executeBlock name="ADDRESS_IL_POPUP"/>
+		</block>
+		<block name="UPDATE_Locations">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Locations']/../../../..//div[@title='Edit']/a</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="5"/>
+			<executeBlock name="ADDRESS_IL_POPUP"/>
+		</block>
+		<block name="ADDRESS_IL_POPUP">
+			<!--Country-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Location')]/../../../../../../..//label[text()='Country']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Country"/>
+				</parameters>
+			</executeBlock>
+            <!--Address Line 1-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Location')]/../../../../../../..//label[text()='Address Line 1']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Address Line 1"/>
+				</parameters>
+			</executeBlock>
+            <!--Address Line 2-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Location')]/../../../../../../..//label[text()='Address Line 2']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Address Line 2"/>
+				</parameters>
+			</executeBlock>
+			<!--Address Line 3-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Location')]/../../../../../../..//label[text()='Address Line 3']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Address Line 3"/>
+				</parameters>
+			</executeBlock>
+            <!--City-->
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Location')]/../../../../../../..//label[text()='City']/../..//input[@value='<valueKB inventoryName="MAIN_REPEAT_1" columnName="City"/>']</findElement>
+				</if>
+				<then>
+				
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="City"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Location')]/../../../../../../..//label[text()='City']/../..//a</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Location')]/../../../../../../..//label[text()='City']/../..//a</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<findElement isSkipCheckDomError="true" by="xpath">//div[@class='AFDetectExpansion']/..//*[text()='Search...']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+									<!--GLOBAL_EXPAND-->
+									<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+										<parameters>
+											<parameter name="XPATH" value="//div[contains(text(),'City')]/../../../../../../..//*[text()='Search']/../../../.."/>
+										</parameters>
+									</executeBlock>
+									<!--BUTTON-->
+									<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+										<parameters>
+											<parameter name="XPATH" value="//div[contains(text(),'City')]/../../../../../../.."/>
+											<parameter name="BUTTON_NAME" value="Reset"/>
+										</parameters>
+									</executeBlock>
+									<!--City-->
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" value="//div[contains(text(),'City')]/../../../../../../..//label[text()='City']/../.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="City"/>
+										</parameters>
+									</executeBlock>
+									<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+										<parameters>
+											<parameter name="XPATH" value="//div[contains(text(),'City')]/../../../../../../.."/>
+											<parameter name="BUTTON_NAME" value="Search"/>
+										</parameters>
+									</executeBlock>
+									<pause durationInSecs="5"/>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'City')]/../../../../../../..//tr[td[contains(text(),'<valueKB inventoryName="MAIN_REPEAT_1" columnName="City"/>')]]/../../../../../td[1]</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'City')]/../../../../../../..//tr[td[contains(text(),'<valueKB inventoryName="MAIN_REPEAT_1" columnName="City"/>')]]/../../../../../td[1]</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+												<parameters>
+													<parameter name="XPATH" value="//div[contains(text(),'City')]/../../../../../../.."/>
+													<parameter name="BUTTON_NAME" value="OK"/>
+												</parameters>
+											</executeBlock>
+											<pause durationInSecs="2"/>
+										</then>
+										<else>
+											<error message="Data does not exist"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+									<!--City-->
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" value="//div[contains(text(),'Location')]/../../../../../../..//label[text()='City']/../.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="City"/>
+										</parameters>
+									</executeBlock>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+            <!--State-->
+            <IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Location')]/../../../../../../..//label[text()='State']/../..//input[@value='<valueKB inventoryName="MAIN_REPEAT_1" columnName="State"/>']</findElement>
+				</if>
+				<then>
+				
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="State"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Location')]/../../../../../../..//label[text()='State']/../..//a</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Location')]/../../../../../../..//label[text()='State']/../..//a</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+									<findElement isSkipCheckDomError="true" by="xpath">//div[@class='AFDetectExpansion']/..//*[text()='Search...']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+									<!--GLOBAL_EXPAND-->
+									<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+										<parameters>
+											<parameter name="XPATH" value="//div[contains(text(),'State')]/../../../../../../..//*[text()='Search']/../../.."/>
+										</parameters>
+									</executeBlock>
+									<!--BUTTON-->
+									<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+										<parameters>
+											<parameter name="XPATH" value="//div[contains(text(),'State')]/../../../../../../.."/>
+											<parameter name="BUTTON_NAME" value="Reset"/>
+										</parameters>
+									</executeBlock>
+									<!--State-->
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" value="//div[contains(text(),'State')]/../../../../../../..//label[text()='State']/../.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="State"/>
+										</parameters>
+									</executeBlock>
+									<!--BUTTON-->
+									<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+										<parameters>
+											<parameter name="XPATH" value="//div[contains(text(),'State')]/../../../../../../.."/>
+											<parameter name="BUTTON_NAME" value="Search"/>
+										</parameters>
+									</executeBlock>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'State')]/../../../../../../..//tr[td[contains(text(),'<valueKB inventoryName="MAIN_REPEAT_1" columnName="State"/>')]]/../../../../../td[1]</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'State')]/../../../../../../..//tr[td[contains(text(),'<valueKB inventoryName="MAIN_REPEAT_1" columnName="State"/>')]]/../../../../../td[1]</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<!--BUTTON-->
+											<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+												<parameters>
+													<parameter name="XPATH" value="//div[contains(text(),'State')]/../../../../../../.."/>
+													<parameter name="BUTTON_NAME" value="OK"/>
+												</parameters>
+											</executeBlock>
+											<pause durationInSecs="2"/>
+										</then>
+										<else>
+											<error message="Data does not exist"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+									<!--State-->
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" value="//div[contains(text(),'Location')]/../../../../../../..//label[text()='State']/../.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="State"/>
+										</parameters>
+									</executeBlock>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+                </else>
+            </IfThenElse>
+			<!--Postal Code-->
+            <IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Location')]/../../../../../../..//label[text()='Postal Code']/../..//input[@value='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Postal Code"/>']</findElement>
+				</if>
+				<then>
+				
+				</then>
+				<else> 
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="Postal Code"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Location')]/../../../../../../..//label[text()='Postal Code']/../..//a</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Location')]/../../../../../../..//label[text()='Postal Code']/../..//a</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<findElement isSkipCheckDomError="true" by="xpath">//div[@class='AFDetectExpansion']/..//*[text()='Search...']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+									<!--GLOBAL_EXPAND-->
+									<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+										<parameters>
+											<parameter name="XPATH" value="//div[contains(text(),'Postal Code')]/../../../../../../..//*[text()='Search']/../../../.."/>
+										</parameters>
+									</executeBlock>
+									<!--BUTTON-->
+									<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+										<parameters>
+											<parameter name="XPATH" value="//div[contains(text(),'Postal Code')]/../../../../../../.."/>
+											<parameter name="BUTTON_NAME" value="Reset"/>
+										</parameters>
+									</executeBlock>
+									<!--Postal Code-->
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" value="//div[contains(text(),'Postal Code')]/../../../../../../..//label[text()='Postal Code']/../.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="Postal Code"/>
+										</parameters>
+									</executeBlock>
+									<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+										<parameters>
+											<parameter name="XPATH" value="//div[contains(text(),'Postal Code')]/../../../../../../.."/>
+											<parameter name="BUTTON_NAME" value="Search"/>
+										</parameters>
+									</executeBlock>
+									<pause durationInSecs="5"/>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Postal Code')]/../../../../../../..//tr[td[contains(text(),'<valueKB inventoryName="MAIN_REPEAT_1" columnName="Postal Code"/>')]]/../../../../../td[1]</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Postal Code')]/../../../../../../..//tr[td[contains(text(),'<valueKB inventoryName="MAIN_REPEAT_1" columnName="Postal Code"/>')]]/../../../../../td[1]</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+												<parameters>
+													<parameter name="XPATH" value="//div[contains(text(),'Postal Code')]/../../../../../../.."/>
+													<parameter name="BUTTON_NAME" value="OK"/>
+												</parameters>
+											</executeBlock>
+											<pause durationInSecs="2"/>
+										</then>
+										<else>
+											<error message="Data does not exist"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+									<!--Postal Code-->
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" value="//div[contains(text(),'Location')]/../../../../../../..//label[text()='Postal Code']/../.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="Postal Code"/>
+										</parameters>
+									</executeBlock>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+                </else>
+			</IfThenElse>
+			<!-- Time Zone -->
+             <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(text(),'Location')]/../../../../../../..//label[text()='Time Zone']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Time Zone"/>
+                </parameters>
+            </executeBlock>
+        </block>
+		<block name="BUTTON_OK">
+			<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Location')]/../../../../../../..//*[text()='K']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+		</block>
+		
+	    <executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+        <repeat inventoryName="MAIN_REPEAT_1">
+            <executeBlock name="Search_Address"/>
+           <!--DFF-->
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+					<parameters>
+						<parameter name="DFF_NAME" value="MAIN_REPEAT_2"/>
+					</parameters>
+				</executeBlock>	
+			</repeat>
+			<executeBlock name="BUTTON_OK"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<pause durationInSecs="2"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

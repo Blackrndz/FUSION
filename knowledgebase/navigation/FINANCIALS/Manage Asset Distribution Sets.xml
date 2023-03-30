@@ -1,0 +1,806 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Asset Distribution Sets</name>
+	<svn>
+		<xsd:revision>$Revision: 79301 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2022-09-08 13:58:34 +0700 (Thu, 08 Sep 2022) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Asset%20Distribution%20Sets.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Asset Distribution Sets.xml 79301 2022-09-08 06:58:34Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Asset Distribution Sets"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Users" />
+			<navigation name="Manage Asset Locations" />
+			<navigation name="Manage Asset Books" />
+		</dependencies>	
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Asset Distribution Sets - Asset Distribution Sets"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Asset Distribution Sets - Distribution"/>
+		</parameters>
+		<block name="GO_TO_TASK">
+			<findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a[@title='Go to Task']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="SAVE_AND_CLOSE_BUTTON">
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</block>
+		<block name="SAVE_BUTTON">
+			<executeBlock name="GLOBAL_SAVE"/>
+		</block>
+		<block name="RESET_BUTTON">
+			<findElement by="xpath">//button[text()='Reset']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="SEARCH_BUTTON">
+			<findElement by="xpath">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="DONE_BUTTON">
+			<findElement by="xpath">//span[text()='o']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="CREATE_BUTTON">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//img[contains(@src,'new_ena.png')]/../../../../../../../../..//div[contains(@id,'eoi')]</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//img[contains(@src,'new_ena.png')]/../../../../../../../../..//div[contains(@id,'eoi')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//img[contains(@src,'new_ovr.png')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">//img[contains(@title,'Create')]/../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="ADD_BUTTON">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//img[contains(@src,'add_ena.png')]/../../../../../../../../..//div[contains(@id,'eoi')]</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//img[contains(@src,'add_ena.png')]/../../../../../../../../..//div[contains(@id,'eoi')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//img[@title='Add Row']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">//img[contains(@title,'Add Row')]/../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="EDIT_BUTTON">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//img[contains(@src,'new_ena.png')]/../../../../../../../../..//div[contains(@id,'eoi')]</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//img[contains(@src,'new_ena.png')]/../../../../../../../../..//div[contains(@id,'eoi')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//img[contains(@src,'update_ena.png')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">//img[contains(@title,'Edit')]/../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SEARCH_NAME">
+			<executeBlock name="RESET_BUTTON"/>
+			<findElement by="xpath">//label[text()='Book']/../..//select</findElement>
+			<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Book"/>
+			</select>
+			<findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+			</sendKeys>
+			<executeBlock name="SEARCH_BUTTON"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table[@summary='Manage Asset Distribution Sets']/../..//div[text()='No results found.']</findElement>
+				</if>
+				<then>
+					<executeBlock name="CREATE_BUTTON"/>
+					<executeBlock name="DEFINE_DISTRIBUTION_SET"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true"
+                                    by="xpath">//a[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true"
+                                    by="xpath">//a[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="UPDATE_DISTRIBUTION_SET"/>
+						</then>
+						<else>
+							<executeBlock name="CREATE_BUTTON"/>
+							<executeBlock name="DEFINE_DISTRIBUTION_SET"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SCROLLBAR_GENERIC_INNER_1">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					<IfThenElse>
+						<if>
+							<isEndOfScroll/>
+						</if>
+						<then>
+							<executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+							<break/>
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="DOWN"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...Employee Name">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+                        isDisplayed="true" setFocus="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//tr[contains(@class,'Selected')]//a[@title='Search: Employee Name']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...Employee Number">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+                        isDisplayed="true" setFocus="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//tr[contains(@class,'Selected')]//a[@title='Search: Employee Number']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Collapse_Pane">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true"
+                        highlightTurnedOff="true" by="xpath">//a//img[@title='Collapse Pane']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a//img[@title='Collapse Pane']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="scroll..TOP">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">((//table[@summary='Distribution']//tr[1]//td))[1]</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					<scroll direction="TOP"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SCROLLBAR_GENERIC_1">
+			<!-- check if there is no data found returned after the search, if so then we create a new record if applicable -->
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+				</then>
+				<else>
+					<!-- resetting the scollbar back to the Top because the form remembers where it was even when searching a new record -->
+					<executeBlock name="scroll..TOP" isRepeatUntilBreak="true"/>
+					<findElement by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<executeBlock name="SCROLLBAR_GENERIC_INNER_1" isRepeatUntilBreak="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="DEFINE_DISTRIBUTION">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+				</if>
+				<then>
+					<executeBlock name="ADD_BUTTON"/>
+					<executeBlock name="ADD_DISTRIBUTION"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true"
+                                highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true"
+                                highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="TOP"/>
+							<findElement by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<executeBlock name="ADD_BUTTON"/>
+							<executeBlock name="ADD_DISTRIBUTION"/>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="TOP"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else>
+							<findElement by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<executeBlock name="ADD_BUTTON"/>
+							<executeBlock name="ADD_DISTRIBUTION"/>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="TOP"/>
+							<pause durationInSecs="2"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="UPDATE_DISTRIBUTION">
+			<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<executeBlock name="UP_DISTRIBUTION"/>
+		</block>
+		<block name="DEFINE_DISTRIBUTION_SET">
+			<!-- Name -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!-- Description -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!-- Book -->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Book']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Book"/>
+				</parameters>
+			</executeBlock>
+			<!-- From Date Placed in Service -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='From Date Placed in Service']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="From Date Placed in Service"/>
+				</parameters>
+			</executeBlock>
+			<!-- To Date Placed in Service -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='To Date Placed in Service']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="To Date Placed in Service"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="UPDATE_DISTRIBUTION_SET">
+			<!-- Description -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!-- From Date Placed in Service -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='From Date Placed in Service']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="From Date Placed in Service"/>
+				</parameters>
+			</executeBlock>
+			<!-- To Date Placed in Service -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='To Date Placed in Service']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="To Date Placed in Service"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="ADD_DISTRIBUTION">
+			<!-- Unit Percentage -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Unit Percentage"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+				<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//table[@summary='Distribution']//tr[contains(@class,'Select')]//td[3]//input</findElement>
+				<click waitForPageToFinishRendering="true"/>
+					<findElement isSkipCheckDomError="true"
+                        isDisplayed="true" by="xpath">//table[@summary='Distribution']//tr[contains(@class,'Select')]//td[2]/span/input</findElement>
+					<sendKeys isClear="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Unit Percentage"/>
+					</sendKeys>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- Expense Account -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Expense Account"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+				<findElement isDisplayed="true" by="xpath">//table[@summary='Distribution']//tr[contains(@class,'Select')]//td[4]//input</findElement>
+				<click waitForPageToFinishRendering="true"/>
+				<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//table[@summary='Distribution']//tr[contains(@class,'Select')]//td[3]//input</findElement>
+				<sendKeys isClear="true" waitForPageToFinishRendering="true">
+					<valueKB inventoryName="MAIN_REPEAT_2" columnName="Expense Account"/>
+				</sendKeys>
+				<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Distribution']//tr[contains(@class,'Select')]//td[string(//span[text()='Depreciation Expense Account']/../..//@_d_index)+0])[1]</findElement>
+				<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				<pause durationInSecs="3"/>
+				<IfThenElse>
+					<if>
+						<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Depreciation Expense Account']/../../../../../../..//button[text()='O']</findElement>
+					</if>
+					<then>
+						<error message="Expense Account doesn't exist. Please check your data" />
+					</then>
+					<else>
+						<pause durationInSecs="1"/>
+					</else>
+				</IfThenElse>
+					<!--  <IfThenElse>
+                        <if>
+                            <findElement isDisplayed="true"
+                                    by="xpath">(//label[text()='Expense Account']/../..//input[@title=' <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Expense Account"/>'])[1]</findElement>
+                        </if>
+                        <then/>
+                        <else>
+                            <findElement isSkipCheckDomError="true"
+                                isDisplayed="true" by="xpath">(//label[text()='Expense Account']/../..//input)[1]</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Expense Account"/>
+                            </sendKeys>
+                            <findElement isSkipCheckDomError="true" by="xpath">((//table[@summary='Distribution']//tr[1]//td))[1]</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </else>
+                    </IfThenElse>
+                    <findElement isSkipCheckDomError="true" by="xpath">((//table[@summary='Distribution']//tr[1]//td))[1]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <IfThenElse>
+                        <if>
+                            <findElement isDisplayed="true" by="xpath">//div[contains(@data-afr-popupid,'kf2SPOP')]//div[text()='Expense Account']</findElement>
+                        </if>
+                        <then>
+                            <error message="The Expense Account is incorrect."/>
+                        </then>
+                        <else/>
+                    </IfThenElse>-->
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- Location -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Location"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+				<findElement isDisplayed="true" by="xpath">//table[@summary='Distribution']//tr[contains(@class,'Select')]//td[5]//input</findElement>
+				<click waitForPageToFinishRendering="true"/>
+			
+				<findElement isDisplayed="true" by="xpath">//table[@summary='Distribution']//tr[contains(@class,'Select')]//td[4]//input</findElement>
+				<sendKeys isClear="true" waitForPageToFinishRendering="true">
+					<valueKB inventoryName="MAIN_REPEAT_2" columnName="Location"/>
+				</sendKeys>
+				<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Distribution']//tr[contains(@class,'Select')]//td[string(//span[text()='Location']/../..//@_d_index)+0])[2]</findElement>
+				<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				<pause durationInSecs="3"/>
+				<IfThenElse>
+					<if>
+						<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Location']/../../../../../../..//button[text()='O']</findElement>
+					</if>
+					<then>
+						<error message="Location doesn't exist. Please check your data" />
+					</then>
+					<else>
+						<pause durationInSecs="1"/>
+					</else>
+				</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- Employee Name/Employee Number -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Employee Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Employee Number"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+				<findElement isDisplayed="true" by="xpath">//table[@summary='Distribution']//tr[contains(@class,'Select')]//td[6]//input</findElement>
+				<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="Search...Employee Name" isRepeatUntilBreak="true"/>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/../..//tr[//td[1][text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Employee Name"/>'] and //td[2][text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Employee Number"/>']]//td[2][text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Employee Number"/>']/..//td[1]</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/../..//tr[//td[1][text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Employee Name"/>'] and //td[2][text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Employee Number"/>']]//td[2][text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Employee Number"/>']/..//td[1]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+							<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Name']/../..//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Employee Name"/>
+							</sendKeys>
+							<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Search']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//div[text()='No rows to display']</findElement>
+								</if>
+								<then>
+									<error message="Data issue: The field 'Employee Name' No results found."/>
+								</then>
+								<else>
+									<findElement
+                                    by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../../..//tr[//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Employee Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Employee Number"/>']]/../../../../..//td[1]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../../..//button[text()='OK']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true"
+                                    by="xpath">//table[@summary='Distribution']//tr[contains(@class,'Select')]//td[6]//input[@value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Employee Number"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+						<findElement isDisplayed="true" by="xpath">//table[@summary='Distribution']//tr[contains(@class,'Select')]//td[5]//input</findElement>
+				<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="Search...Employee Number" isRepeatUntilBreak="true"/>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true"
+                                    isDisplayed="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Employee Number"/>']</findElement>
+								</if>
+								<then>
+									<findElement isDisplayed="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr//td[1][text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Employee Number"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="1"/>
+									<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Name']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Employee Name"/>
+									</sendKeys>
+									<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Search']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement
+                                    by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Employee Number"/>']/../../../../../..//td[1]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../../..//button[text()='OK']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Employee Name"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Employee Number"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+						<findElement isDisplayed="true" by="xpath">//table[@summary='Distribution']//tr[contains(@class,'Select')]//td[6]//input</findElement>
+				<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="Search...Employee Name" isRepeatUntilBreak="true"/>
+							<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+							<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Name']/../..//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Employee Name"/>
+							</sendKeys>
+							<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Search']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//div[text()='No rows to display']</findElement>
+								</if>
+								<then>
+									<error message="Data issue: The field 'Employee Name' No results found."/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Employee Name"/>']/../../../../../../../../..//tr[2]</findElement>
+										</if>
+										<then>
+											<IfThenElse>
+												<if>
+													<findElement
+                                    by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Employee Name"/>']</findElement>
+												</if>
+												<then>
+													<findElement
+                                    by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Employee Name"/>']/../../../../../..//td[1]</findElement>
+													<click waitForPageToFinishRendering="true"/>
+													<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../../..//button[text()='OK']</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else>
+													<error message="The Employee Name you enter have more than one Code , Please provide column Employee Number."/>
+												</else>
+											</IfThenElse>
+										</then>
+										<else>
+											<findElement
+                                    by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Employee Name"/>']/../../../../../..//td[1]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="UP_DISTRIBUTION">
+			<!-- Unit Percentage -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Unit Percentage"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+				<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//table[@summary='Distribution']//tr[contains(@class,'Select')]//td[3]//input</findElement>
+				<click waitForPageToFinishRendering="true"/>
+					<findElement isSkipCheckDomError="true"
+                        isDisplayed="true" by="xpath">//table[@summary='Distribution']//tr[contains(@class,'Select')]//td[2]/span/input</findElement>
+					<sendKeys isClear="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Unit Percentage"/>
+					</sendKeys>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- Expense Account -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Expense Account"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+				<findElement isDisplayed="true" by="xpath">//table[@summary='Distribution']//tr[contains(@class,'Select')]//td[4]//input</findElement>
+				<click waitForPageToFinishRendering="true"/>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//table[@summary='Distribution']//tr[contains(@class,'Select')]//td[3]//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Expense Account"/>
+					</sendKeys>
+					<!--  <IfThenElse>
+                        <if>
+                            <findElement isDisplayed="true"
+                                    by="xpath">(//label[text()='Expense Account']/../..//input[@title=' <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Expense Account"/>'])[1]</findElement>
+                        </if>
+                        <then/>
+                        <else>
+                            <findElement isSkipCheckDomError="true"
+                                isDisplayed="true" by="xpath">(//label[text()='Expense Account']/../..//input)[1]</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Expense Account"/>
+                            </sendKeys>
+                            <findElement isSkipCheckDomError="true" by="xpath">((//table[@summary='Distribution']//tr[1]//td))[1]</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </else>
+                    </IfThenElse>
+                    <findElement isSkipCheckDomError="true" by="xpath">((//table[@summary='Distribution']//tr[1]//td))[1]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <IfThenElse>
+                        <if>
+                            <findElement isDisplayed="true" by="xpath">//div[contains(@data-afr-popupid,'kf2SPOP')]//div[text()='Expense Account']</findElement>
+                        </if>
+                        <then>
+                            <error message="The Expense Account is incorrect."/>
+                        </then>
+                        <else/>
+                    </IfThenElse>-->
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="SEARCH_NAME"/>
+			<executeBlock name="SAVE_BUTTON"/>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<executeBlock name="Collapse_Pane"/>
+				<executeBlock name="SCROLLBAR_GENERIC_1">
+					<parameters>
+						<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Distribution']/../..//div[text()='No data to display.']"/>
+						<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="((//table[@summary='Distribution']//tr[1]//td))[1]"/>
+						<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Distribution']/../../../../..//div[contains(@id,'scroller')]"/>
+						<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Distribution']//tr[td[4]//input[@value='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Location"/>'] and td[5]//input[@value='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Employee Name"/>'] and td[6]//input[@value='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Employee Number"/>']]</parameter>
+						<parameter
+                            name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="DEFINE_DISTRIBUTION"/>
+						<parameter
+                            name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_DISTRIBUTION"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<executeBlock name="SAVE_AND_CLOSE_BUTTON"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

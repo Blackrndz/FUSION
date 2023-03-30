@@ -1,0 +1,626 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Elements (Imputed Earnings)</name>
+	<svn>
+		<xsd:revision>$Revision: 77784 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2022-02-03 12:03:34 +0700 (Thu, 03 Feb 2022) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Elements%20(Imputed%20Earnings).xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Elements (Imputed Earnings).xml 77784 2022-02-03 05:03:34Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" taskName="Elements" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<dependencies>
+			<navigation name="Manage Enterprise HCM Information"/>
+			<navigation name="Manage Currencies"/>
+			<navigation name="Manage Legislative Data Groups"/>
+			<navigation name="Manage Fast Formulas"/>
+		</dependencies>
+		<parameters>
+			<parameter name="INV_1" value="Manage Elements - Imputed Earnings"/>
+		</parameters>
+		<block name="FAKE_INV">
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Element Name"/>']/../..//input</findElement>
+		</block>
+		
+		<block name="SEARCH_ELEMENT">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Element Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Element Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Element Classification Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Primary Classification"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legislative Data Group']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Legislative Data Group"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[text()='<valueKB inventoryName="INV_1" columnName="Element Name"/>']/../../../../../../../td[1]</findElement>
+				</if>
+				<then>
+					<error message="Please define Manage Element Summary"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_CREATE"/>
+					<executeBlock name="CREATE_ELEMENT"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="CREATE_ELEMENT">
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Create Element']/../../../../../../../..//label[text()='Legislative Data Group']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Legislative Data Group"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Create Element']/../../../../../../../..//label[text()='Primary Classification']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Primary Classification"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Create Element']/../../../../../../../..//label[text()='Secondary Classification']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Secondary Classification"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Create Element']/../../../../../../../..//label[text()='Category']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Category"/>
+				</parameters>
+			</executeBlock>
+			<!--Continue-->
+			<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Create Element']/../../../../../../../..//*[text()='u']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="5"/>
+		</block>
+		<block name="ADDITIONAL_DETAILS">
+			<!--BASIC INFORMATION-->
+			<!--Element Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Element Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Reporting Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Reporting Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Reporting Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Effective Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Effective Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Effective Date"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--CURRENCY-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Currency']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<!--Input Currency-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Input Currency']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Input Currency"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Check Standard or Time Card-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_1" columnName="Category"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Standard</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<!--DURATIONS-->
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Durations']/../../.."/>
+						</parameters>
+					</executeBlock>
+					<!--Should every person eligible for the element automatically receive it?-->
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//span[label[text()='Should every person eligible for the element automatically receive it?']]//following-sibling::table[1]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Should every person eligible for the element automatically receive it?"/>
+						</parameters>
+					</executeBlock>
+					<!--What is the earliest entry date for this element?-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='What is the earliest entry date for this element?']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="What is the earliest entry date for this element?"/>
+						</parameters>
+					</executeBlock>
+					<!--What is the latest entry date for this element?-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='What is the latest entry date for this element?']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="What is the latest entry date for this element?"/>
+						</parameters>
+					</executeBlock>
+			
+					<!--STANDARD RULES-->
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Standard Rules']/../../.."/>
+						</parameters>
+					</executeBlock>
+					<!--At which employment level should this element be attached?-->
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//span[label[text()='At which employment level should this element be attached?']]//following-sibling::table[1]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="At which employment level should this element be attached?"/>
+						</parameters>
+					</executeBlock>
+					<!--Does this element recur each payroll period, or does it require explicit entry?-->
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//span[label[text()='Does this element recur each payroll period, or does it require explicit entry?']]//following-sibling::table[1]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Does this element recur each payroll period, or does it require explicit entry?"/>
+						</parameters>
+					</executeBlock>
+					<!--Process the element only once in each payroll period?-->
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//span[label[text()='Process the element only once in each payroll period?']]//following-sibling::table[1]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Process the element only once in each payroll period?"/>
+						</parameters>
+					</executeBlock>
+					<!--Can a person have more than one entry of this element in a payroll period?-->
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//span[label[text()='Can a person have more than one entry of this element in a payroll period?']]//following-sibling::table[1]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Can a person have more than one entry of this element in a payroll period?"/>
+						</parameters>
+					</executeBlock>
+					<!--Process and pay element separately or with other earnings elements?-->
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//span[label[text()='Process and pay element separately or with other earnings elements?']]//following-sibling::table[1]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Process and pay element separately or with other earnings elements?"/>
+						</parameters>
+					</executeBlock>
+					<!--Tax this earning across multiple pay periods?-->
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//span[label[text()='Tax this earning across multiple pay periods?']]//following-sibling::table[1]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Tax this earning across multiple pay periods?"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="INV_1" columnName="Category"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Time Card</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<!--DURATIONS-->
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Durations']/../../.."/>
+								</parameters>
+							</executeBlock>
+							<!--What is the earliest entry date for this element?-->
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='What is the earliest entry date for this element?']/../.."/>
+									<parameter name="INV_NAME" value="INV_1"/>
+									<parameter name="COL_NAME" value="What is the earliest entry date for this element?"/>
+								</parameters>
+							</executeBlock>
+							<!--What is the latest entry date for this element?-->
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='What is the latest entry date for this element?']/../.."/>
+									<parameter name="INV_NAME" value="INV_1"/>
+									<parameter name="COL_NAME" value="What is the latest entry date for this element?"/>
+								</parameters>
+							</executeBlock>
+							
+							<!--STANDARD RULES-->
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Standard Rules']/../../.."/>
+								</parameters>
+							</executeBlock>
+							<!--Process and pay element separately or with other earnings elements?-->
+							<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+								<parameters>
+									<parameter name="XPATH" value="//span[label[text()='Process and pay element separately or with other earnings elements?']]//following-sibling::table[1]"/>
+									<parameter name="INV_NAME" value="INV_1"/>
+									<parameter name="COL_NAME" value="Process and pay element separately or with other earnings elements?"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="ADDITIONAL_DETAILS_Pt2">
+			<!--Check Standard or Time Card-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_1" columnName="Category"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Standard</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<!--CALCULATION RULES-->
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Calculation Rules']/../../.."/>
+						</parameters>
+					</executeBlock>
+					<!--What is the calculation rule?-->
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//span[label[text()='What is the calculation rule?']]//following-sibling::table[1]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="What is the calculation rule?"/>
+						</parameters>
+					</executeBlock>
+					<!--What is the default periodicity of this element?-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='What is the default periodicity of this element?']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="What is the default periodicity of this element?"/>
+						</parameters>
+					</executeBlock>
+					<!--Periodicity Conversion Rule-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Periodicity Conversion Rule']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Periodicity Conversion Rule"/>
+						</parameters>
+					</executeBlock>
+					<!--How do you want the work units to be reported?-->
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//span[label[text()='How do you want the work units to be reported?']]//following-sibling::table[1]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="How do you want the work units to be reported?"/>
+						</parameters>
+					</executeBlock>
+					<!--Work Units Conversion Rule-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Work Units Conversion Rule']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Work Units Conversion Rule"/>
+						</parameters>
+					</executeBlock>
+			
+					<!--SPECIAL RULES-->
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Special Rules']/../../.."/>
+						</parameters>
+					</executeBlock>
+					<!--Is this element subject to proration?-->
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Proration Group']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Is this element subject to proration?"/>
+						</parameters>
+					</executeBlock>
+					<!--Proration Group-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Proration Group']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Proration Group"/>
+						</parameters>
+					</executeBlock>
+					<!--Proration Rate Conversion Rule-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Proration Rate Conversion Rule']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Proration Rate Conversion Rule"/>
+						</parameters>
+					</executeBlock>
+					<!--Proration Units-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//lable[text()='Proration Units']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Proration Units"/>
+						</parameters>
+					</executeBlock>
+					<!--Is this element subject to retroactive changes?-->
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//span[label[text()='Is this element subject to retroactive changes?']]//following-sibling::table[1]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Is this element subject to retroactive changes?"/>
+						</parameters>
+					</executeBlock>
+					<!--Retro Group-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Retro Group']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Retro Group"/>
+						</parameters>
+					</executeBlock>
+					<!--Use this element to calculate a gross amount from a specified net amount?-->
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//span[label[text()='Use this element to calculate a gross amount from a specified net amount?']]//following-sibling::table[1]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Use this element to calculate a gross amount from a specified net amount?"/>
+						</parameters>
+					</executeBlock>
+					<!--Should this element be included in the earnings calculation of the overtime base rate?-->
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//span[label[text()='Should this element be included in the earnings calculation of the overtime base rate?']]//following-sibling::table[1]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Should this element be included in the earnings calculation of the overtime base rate?"/>
+						</parameters>
+					</executeBlock>
+					<!--Should this element be included in the hours calculation of the overtime base rate?-->
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//span[label[text()='Should this element be included in the hours calculation of the overtime base rate?']]//following-sibling::table[1]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Should this element be included in the hours calculation of the overtime base rate?"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="INV_1" columnName="Category"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Time Card</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<!--CALCULATION RULES-->
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Calculation Rules']/../../.."/>
+								</parameters>
+							</executeBlock>
+							<!--What are the calculation units for reporting?-->
+							<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+								<parameters>
+									<parameter name="XPATH" value="//span[label[text()='What are the calculation units for reporting?']]//following-sibling::table[1]"/>
+									<parameter name="INV_NAME" value="INV_1"/>
+									<parameter name="COL_NAME" value="What are the calculation units for reporting?"/>
+								</parameters>
+							</executeBlock>
+							<!--Work Units Conversion Rule-->
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Work Units Conversion Rule']/../.."/>
+									<parameter name="INV_NAME" value="INV_1"/>
+									<parameter name="COL_NAME" value="Work Units Conversion Rule"/>
+								</parameters>
+							</executeBlock>
+							<!--Does this element have a default rate definition?-->
+							<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+								<parameters>
+									<parameter name="XPATH" value="//span[label[text()='Does this element have a default rate definition?']]//following-sibling::table[1]"/>
+									<parameter name="INV_NAME" value="INV_1"/>
+									<parameter name="COL_NAME" value="Does this element have a default rate definition?"/>
+								</parameters>
+							</executeBlock>
+							<!--Rate Name-->
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Rate Name']/../.."/>
+									<parameter name="INV_NAME" value="INV_1"/>
+									<parameter name="COL_NAME" value="Rate Name"/>
+								</parameters>
+							</executeBlock>
+							
+							<!--OVERTIME RULES-->
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Overtime Rules']/../../.."/>
+								</parameters>
+							</executeBlock>
+							<!--Should this element be included in the earnings calculation of the overtime base rate?-->
+							<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+								<parameters>
+									<parameter name="XPATH" value="//span[label[text()='Should this element be included in the earnings calculation of the overtime base rate?']]//following-sibling::table[1]"/>
+									<parameter name="INV_NAME" value="INV_1"/>
+									<parameter name="COL_NAME" value="Should this element be included in the earnings calculation of the overtime base rate?"/>
+								</parameters>
+							</executeBlock>
+							<!--Should this element be included in the hours calculation of the overtime base rate?-->
+							<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+								<parameters>
+									<parameter name="XPATH" value="//span[label[text()='Should this element be included in the hours calculation of the overtime base rate?']]//following-sibling::table[1]"/>
+									<parameter name="INV_NAME" value="INV_1"/>
+									<parameter name="COL_NAME" value="Should this element be included in the hours calculation of the overtime base rate?"/>
+								</parameters>
+							</executeBlock>			
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="NEXT">
+			<findElement isSkipCheckDomError="true" by="xpath">//button[span='x']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+		</block>
+		<block name="SUBMIT">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Submit']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Submit']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<!--<block name="Element_Creation">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Element Creation']</findElement>
+				</if>
+				<then>
+					<executeBlock name="CHECK_Element_Creation" isRepeatUntilBreak="true"/>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Element Creation']/../../../../../../..//button[text()='O']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<break/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="CHECK_Element_Creation">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Element Creation']/../../../../../../..//button[text()='O'][@disabled]</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<break/>
+				</else>
+			</IfThenElse>
+		</block>-->
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+        <repeat inventoryName="INV_1">
+            <executeBlock name="SEARCH_ELEMENT"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//*[contains(text(),'Basic Information')]/..</findElement>
+				</if>
+				<then>
+					<executeBlock name="ADDITIONAL_DETAILS"/>
+					<executeBlock name="NEXT"/>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//*[contains(text(),'Additional Details')]/..</findElement>
+						</if>
+						<then>
+							<executeBlock name="ADDITIONAL_DETAILS_Pt2"/>
+							<executeBlock name="NEXT"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock name="SUBMIT"/>
+			<pause durationInSecs="5"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

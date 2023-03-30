@@ -1,0 +1,1318 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Value Sets</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" defaultBatchSize="3"
+        taskName="Manage Value Sets" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Create Implementation Users"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_1_REPEAT" value="Manage Value Sets - Value Sets"/>
+		</parameters>
+		<block name="GO_TO_TASK">
+			<findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="SEARCH_BUTTON">
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="CREATE_BUTTON">
+			<executeBlock name="GLOBAL_SPECIFY_CREATE">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//*[text()='Search Results']/../../../../../../.."/>
+				</parameters>   
+			</executeBlock>
+		</block>
+		<block name="UPDATE_BUTTON">
+			<!--  <findElement by="xpath">//img[contains(@src,'update_ena.png')]/..</findElement>
+            <click waitForPageToFinishRendering="true"/> -->
+			<findElement by="xpath">//a[text()='Actions']/../..//div</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//td[text()='Edit']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="SEARCH_VALUE_SET_CODE">
+			<findElement by="xpath">//label[text()='Value Set Code']/../..//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Set Code"/>
+			</sendKeys>
+		</block>
+		<block name="WAITING SEARCH">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='No search conducted.']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<break/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SAVE_AND_CLOSE_BUTTON">
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</block>
+		<!-- Validation Type -->
+		<block name="Format Only">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Data Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Character</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Character"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Data Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Number</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Number"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Data Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Date</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Date, Date Time"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Data Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Date Time</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Date, Date Time"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Independent">
+			<executeBlock name="Security enabled"/>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Data Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Character</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Character"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Data Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Number</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Number"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Data Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Date</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Date, Date Time"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Data Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Date Time</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Date, Date Time"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Dependent">
+			<executeBlock name="Security enabled"/>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Data Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Character</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Character"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Data Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Number</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Number"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Data Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Date</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Date, Date Time"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Data Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Date Time</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Date, Date Time"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock name="Independent Value Set - Value Set Code"/>
+		</block>
+		<block name="Subset">
+			<executeBlock name="Security enabled"/>
+			<executeBlock name="Independent Value Set - Value Set Code"/>
+		</block>
+		<block name="Table">
+			<executeBlock name="Security enabled"/>
+			<!--INPUT COLUMN FROM Clause-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='FROM Clause']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="FROM Clause"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--INPUT COLUMN Value Attributes Table Alias-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Value Attributes Table Alias']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Value Attributes Table Alias"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--INPUT COLUMN Value Column Name-->
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Value Column Name']/../..</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Column Name"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Value Column Name']/../..//input</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Value Column Name']/../..//input[@value='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Column Name"/>']</findElement>
+										</if>
+										<then/>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Value Column Name']/../..//input[not(@disabled)]</findElement>
+												</if>
+												<then>
+													<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Value Column Name']/../..//input</findElement>
+													<sendKeys isClear="true" waitForPageToFinishRendering="false" isSkipCheckDomError="true">
+														<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Column Name"/>
+													</sendKeys>
+												</then>
+												<else/>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<pause durationInSecs="3"/>
+			<!--
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Value Column Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Value Column Name"/>
+				</parameters>
+			</executeBlock>	
+-->
+			<!--INPUT COLUMN Description Column Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description Column Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Description Column Name"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--INPUT COLUMN ID Column Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='ID Column Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="ID Column Name"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--INPUT COLUMN Enabled Flag Column Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enabled Flag Column Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Enabled Flag Column Name"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--INPUT COLUMN Start Date Column Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Start Date Column Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Start Date Column Name"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--INPUT COLUMN End Date Column Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='End Date Column Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="End Date Column Name"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--INPUT COLUMN WHERE Clause-->
+			<!--<executeBlock name="INPUT_TEXTAREA">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='WHERE Clause']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="WHERE Clause"/>
+				</parameters>
+			</executeBlock>-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="WHERE Clause"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='WHERE Clause']/../..//input</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='WHERE Clause']/../..//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="WHERE Clause"/>
+							</sendKeys>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='WHERE Clause']/../..//textarea</findElement>
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='WHERE Clause']/../..//textarea</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+										<valueKB inventoryName="MAIN_1_REPEAT" columnName="WHERE Clause"/>
+									</sendKeys>
+								</then>
+								<else>
+									
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+			<!--INPUT COLUMN ORDER BY Clause-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='ORDER BY Clause']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="ORDER BY Clause"/>
+				</parameters>
+			</executeBlock>	
+
+		</block>
+		<!-- Checkbox Security enabled -->
+		<block name="Security enabled">
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Security enabled']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Security enabled"/>
+				</parameters>
+			</executeBlock>
+			<!--INPUT COLUMN Data Security Resource Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Data Security Resource Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Data Security Resource Name"/>
+				</parameters>
+			</executeBlock>	
+
+		</block>
+		<block name="Character">
+			<!-- Value Subtype -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Value Subtype']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Value Subtype"/>
+				</parameters>
+			</executeBlock>	
+			<pause durationInSecs="2"/>
+			<!--Maximum Length-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Maximum Length']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Maximum Length"/>
+				</parameters>
+			</executeBlock>	
+			<pause durationInSecs="2"/>
+			<!-- Minimum Value -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Minimum Value']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Minimum Value"/>
+				</parameters>
+			</executeBlock>	
+			<pause durationInSecs="2"/>
+			<!-- Maximum Value -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Maximum Value']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Maximum Value"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--CHECKBOX Uppercase only-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Uppercase only']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Uppercase only"/>
+				</parameters>
+			</executeBlock>
+			<!--CHECKBOX Zero fill-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Zero fill']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Zero fill"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Number">
+			<!--INPUT COLUMN Precision-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Precision']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Precision"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--INPUT COLUMN Scale-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Scale']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Scale"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--INPUT COLUMN Minimum Value-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Minimum Value']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Minimum Value"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--INPUT COLUMN Maximum Value-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Maximum Value']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Maximum Value"/>
+				</parameters>
+			</executeBlock>	
+
+		</block>
+		<block name="Date, Date Time">
+			<!--INPUT COLUMN Minimum Value-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Minimum Value']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Minimum Value"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--INPUT COLUMN Minimum Value-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Maximum Value']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Maximum Value"/>
+				</parameters>
+			</executeBlock>	
+
+		</block>
+		<block name="Independent Value Set - Value Set Code">
+			<!--LOV Independent Value Set - Value Set Code-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Value Set Code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Independent Value Set - Value Set Code"/>
+					<parameter name="SEARCH_1" value="Value Set Code"/>
+				</parameters>
+			</executeBlock>
+
+		</block>
+		<block name="DEFINITION_UPDATE">
+
+			<!--   Precision-->
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//label[text()='Precision']</findElement>
+				</if>
+				<then>
+					<!--UPDATE INPUT COLUMN Precision-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Precision']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="Precision"/>
+						</parameters>
+					</executeBlock>	
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Scale-->
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//label[text()='Scale']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Scale']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="Scale"/>
+						</parameters>
+					</executeBlock>	
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Maximum Length-->
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//label[text()='Maximum Length']</findElement>
+				</if>
+				<then>
+					<!--UPDATE INPUT COLUMN Maximum Length-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Maximum Length']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="Maximum Length"/>
+						</parameters>
+					</executeBlock>	
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Minimum Value-->
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//label[text()='Minimum Value']</findElement>
+				</if>
+				<then>
+					<!--UPDATE INPUT COLUMN Minimum Value-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Minimum Value']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="Minimum Value"/>
+						</parameters>
+					</executeBlock>	
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Maximum Value-->
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//label[text()='Maximum Value']</findElement>
+				</if>
+				<then>
+					<!--UPDATE INPUT COLUMN Maximum Value-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Maximum Value']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="Maximum Value"/>
+						</parameters>
+					</executeBlock>	
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Uppercase only']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Uppercase only"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Zero fill']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Zero fill"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//label[text()='Validation Type']/../..//span[text()='Table']</findElement>
+				</if>
+				<then>
+					<!--UPDATE INPUT COLUMN FROM Clause-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='FROM Clause']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="FROM Clause"/>
+						</parameters>
+					</executeBlock>	
+
+					<!--UPDATE INPUT COLUMN Value Attributes Table Alias-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Value Attributes Table Alias']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="Value Attributes Table Alias"/>
+						</parameters>
+					</executeBlock>	
+
+					<!--UPDATE INPUT COLUMN Value Column Name-->
+					<!--
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Value Column Name']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="Value Column Name"/>
+						</parameters>
+					</executeBlock>	
+					-->
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Value Column Name']/../..</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Column Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Value Column Name']/../..//input[@value='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Column Name"/>']</findElement>
+										</if>
+										<then/>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Value Column Name']/../..//input[not(@disabled)]</findElement>
+												</if>
+												<then>
+													<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Value Column Name']/../..//input</findElement>
+													<sendKeys isClear="true" isSkipCheckDomError="true">
+														<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Column Name"/>
+													</sendKeys>
+												</then>
+												<else/>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>					
+					<pause durationInSecs="5"/>
+					
+					<!--UPDATE INPUT COLUMN Description Column Name-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Description Column Name']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="Description Column Name"/>
+						</parameters>
+					</executeBlock>	
+
+					<!--UPDATE INPUT COLUMN ID Column Name-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='ID Column Name']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="ID Column Name"/>
+						</parameters>
+					</executeBlock>	
+
+					<!--UPDATE INPUT COLUMN Enabled Flag Column Name-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Enabled Flag Column Name']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="Enabled Flag Column Name"/>
+						</parameters>
+					</executeBlock>	
+
+					<!--UPDATE INPUT COLUMN Start Date Column Name-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Start Date Column Name']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="Start Date Column Name"/>
+						</parameters>
+					</executeBlock>	
+
+					<!--UPDATE INPUT COLUMN End Date Column Name-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='End Date Column Name']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="End Date Column Name"/>
+						</parameters>
+					</executeBlock>	
+
+					<!--UPDATE INPUT COLUMN WHERE Clause-->
+					<executeBlock name="INPUT_TEXTAREA">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='WHERE Clause']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="WHERE Clause"/>
+						</parameters>
+					</executeBlock>	
+
+					<!--UPDATE INPUT COLUMN ORDER BY Clause-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='ORDER BY Clause']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="ORDER BY Clause"/>
+						</parameters>
+					</executeBlock>	
+
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CREATE_NAVIGATION">
+			<executeBlock name="CREATE_BUTTON"/>
+			<!--<Create Value Set Code>-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Value Set Code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Value Set Code"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--<Create Description>-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--LOV COLUMN Module-->
+			<executeBlock name="LOV_EQUALS">
+				<parameters>
+					<parameter name="LOV_XPATH" value="//label[text()='Module']/../.."/>
+					<!-- <parameter name="LOV_INV_NAME" value="MAIN_1_REPEAT"/>-->
+					<parameter name="LOV_COL_NAME" value="Module"/>
+					<parameter name="LOV_SEARCH_1" value="User Module Name"/>
+				</parameters>
+			</executeBlock>
+			<!--<Create Validation Type>-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Validation Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Validation Type"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--<Create Value Data Type>-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Value Data Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Value Data Type"/>
+				</parameters>
+			</executeBlock>	
+
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="Validation Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Format Only</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Format Only"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="Validation Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Independent</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Independent"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="Validation Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Dependent</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Dependent"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="Validation Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Subset</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Subset"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="Validation Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Table</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Table"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock name="GLOBAL_SAVE"/>
+			<executeBlock name="SAVE_AND_CLOSE_BUTTON"/>
+		</block>
+		<block name="UPDATE_NAVIGATION">
+			<findElement by="xpath">//tr[td[text()='<valueKB
+                    inventoryName="MAIN_1_REPEAT" columnName="Value Set Code"/>']]/../../../../..//td[1]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<executeBlock name="GLOBAL_UPDATE"/>
+			<!--UPDATE INPUT COLUMN Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--UPDATE LOV COLUMN Module-->
+			<!--LOV COLUMN Module-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Module']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Module"/>
+					<parameter name="SEARCH_1" value="User Module Name"/>
+				</parameters>
+			</executeBlock>
+
+			<executeBlock name="Security enabled"/>
+			<executeBlock name="DEFINITION_UPDATE"/>
+			<executeBlock name="GLOBAL_SAVE"/>
+			<executeBlock name="SAVE_AND_CLOSE_BUTTON"/>
+		</block>
+		<block name="Search...Independent Value Set">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Value Set Code']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...LOV COLUMN Module">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Module']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...UPDATE LOV COLUMN Module">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Module']/../..//a[@title='Search: Module']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="LOV_Search...">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<pause durationInSecs="2"/>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">LOV_XPATH//span/a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="LOV_EQUALS">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="LOV_COL_NAME"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_1_REPEAT" columnName="LOV_COL_NAME"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>""</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true"
+                                    by="xpath">LOV_XPATH//input[@value='<valueKB
+                                    inventoryName="MAIN_1_REPEAT" columnName="LOV_COL_NAME"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true"
+                                    isSkipCheckDomError="true" by="xpath">LOV_XPATH//input[not(@disabled)]</findElement>
+								</if>
+								<then>
+									<executeBlock name="LOV_Search..." isRepeatUntilBreak="true"/>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    isDisplayed="true"
+                                    isSkipCheckDomError="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr//td[1][text()='<valueKB
+                                    inventoryName="MAIN_1_REPEAT" columnName="LOV_COL_NAME"/>']</findElement>
+										</if>
+										<then>
+											<findElement
+                                    isDisplayed="true"
+                                    isSkipCheckDomError="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr//td[1][text()='<valueKB
+                                    inventoryName="MAIN_1_REPEAT" columnName="LOV_COL_NAME"/>']</findElement>
+											<click
+                                    waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+										</then>
+										<else>
+											<findElement
+                                    isDisplayed="true"
+                                    isSkipCheckDomError="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+											<click
+                                    waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<IfThenElse>
+												<if>
+													<findElement
+                                    highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/../../../..//a[contains(@title,'Expand')]</findElement>
+												</if>
+												<then>
+													<findElement by="xpath">//div[contains(@class,'Expansion')]/../../../..//a[contains(@title,'Expand')]</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else/>
+											</IfThenElse>
+											<executeBlock name="BUTTON">
+												<parameters>
+													<parameter name="BUTTON_NAME" value="d"/>
+												</parameters>
+											</executeBlock>
+											<IfThenElse>
+												<if>
+													<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='LOV_SEARCH_1']/../..//select</findElement>
+												</if>
+												<then>
+													<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='LOV_SEARCH_1']/../..//select</findElement>
+													<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+														<valueText>Equals</valueText>
+													</select>								
+												</then>
+												<else>
+													<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='LOV_SEARCH_1']/../..//input/..//div//li[text()='Equals']</findElement>
+													<click waitForPageToFinishRendering="true" isJavaScript="true" />
+												</else>
+											</IfThenElse>
+											<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='LOV_SEARCH_1']/../..//input</findElement>
+											<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="MAIN_1_REPEAT" columnName="LOV_COL_NAME"/>
+											</sendKeys>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/../../../..//a[contains(@title,'Expand')]</findElement>
+												</if>
+												<then>
+													<findElement by="xpath">//div[contains(@class,'Expansion')]/../../../..//a[contains(@title,'Expand')]</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else/>
+											</IfThenElse>
+											<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Search']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<IfThenElse>
+												<if>
+													<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1][text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="LOV_COL_NAME"/>']</findElement>
+												</if>
+												<then>
+													<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1][text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="LOV_COL_NAME"/>']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+												</then>
+												<else>
+													<error message="No results found."/>
+												</else>
+											</IfThenElse>
+											<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="MAIN_1_REPEAT" columnName="LOV_COL_NAME"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>""</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">LOV_XPATH//input[not(@disabled)]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">LOV_XPATH//input[not(@disabled)]</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_1_REPEAT" columnName="LOV_COL_NAME"/>
+									</sendKeys>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_1_REPEAT">
+			<executeBlock name="SEARCH_VALUE_SET_CODE"/>
+			<executeBlock name="SEARCH_BUTTON"/>
+			<executeBlock name="WAITING SEARCH" isRepeatUntilBreak="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//tr[td[text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Set Code"/>']]/../../../../..//td[1]</findElement>
+				</if>
+				<then>
+					<executeBlock name="UPDATE_NAVIGATION"/>
+				</then>
+				<else>
+					<executeBlock name="CREATE_NAVIGATION"/>
+				</else>
+			</IfThenElse>
+			<executeBlock name="SEARCH_VALUE_SET_CODE"/>
+			<executeBlock name="SEARCH_BUTTON"/>
+			<executeBlock name="WAITING SEARCH" isRepeatUntilBreak="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//tr[td[text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Value Set Code"/>']]/../../../../..//td[1]</findElement>
+				</if>
+				<then/>
+				<else>
+					<executeBlock name="CREATE_NAVIGATION"/>
+				</else>
+			</IfThenElse>			
+		</repeat>
+	</fusionNavigation>
+</navigation>

@@ -1,0 +1,356 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Learning Catalog (Specializations)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isIgnoreTaskSearchNavigation="true" hasScope="false" taskName="Communities" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<parameters>
+			<parameter name="INV_1" value="Learning Catalog - Specializations"/>
+			<parameter name="INV_2" value="Learning Catalog - Specialization Community Usages"/>
+			<parameter name="INV_3" value="Learning Catalog - Specializations - DFF"/>
+		</parameters>
+		
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Specialization Title"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Specialization Title"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_3" columnName="Specialization Title"/>']</findElement>
+		</block>
+		
+		<block name="Expand_navigator">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//span[contains(text(),'My Client Groups')]/../../../..//span[contains(text(),'Learning')]/../../a</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='My Client Groups']/../..//a[contains(text(),'Learning')]</findElement>
+						</if>
+						<then>
+							<pause durationInSecs="2"/>
+							<break/>
+						</then>
+						<else>
+							<findElement isSkipCheckDomError="true" by="xpath">//span[contains(text(),'My Client Groups')]/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="2"/>				
+						</else>
+					</IfThenElse>		
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="MANUAL_LEARNING">
+			<findElement isSkipCheckDomError="true" by="xpath">//a[contains(@id,'UISmmLink') or @title='Navigator']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+			<pause durationInSecs="2"/>
+			<executeBlock name="Expand_navigator" isRepeatUntilBreak="true"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='My Client Groups']/../..//a[contains(text(),'Learning')]</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//*[text()='My Client Groups']/../..//a[contains(text(),'Learning')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+					<pause durationInSecs="2"/>	
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath">//span[contains(text(),'My Client Groups')]/../../../..//span[contains(text(),'Learning')]/../../a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+					<pause durationInSecs="2"/>				
+				</else>
+			</IfThenElse>		
+			<executeBlock name="Skip_Error"/>
+			<executeBlock name="LEARNING_CATALOG"/>
+			<executeBlock name="Skip_Error"/>
+		</block>
+		
+		<block name="LEARNING_CATALOG">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[text()='Learning Catalog']/..</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath" >//div[text()='Learning Catalog']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>	
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Learning Catalog']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>				
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Skip_Error">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Error']/../../../../../../..//*[text()='OK']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Error']/../../../../../../..//*[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="Edit">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='Edit']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Edit']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="SEARCH">
+			<executeBlock name="TAB">
+				<parameters>
+					<parameter name="TAB_NAME" value="Specializations"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[@title='Collapse Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Specialization Title']/../..//td[@class='xhu']"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Specialization Title"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Publish Start Date']/../..//td[@class='xhu']"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Publish Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Specialization Title']/../../../../../../..//*[text()='<valueKB inventoryName="INV_1" columnName="Specialization Title"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Specialization Title']/../../../../../../..//*[text()='<valueKB inventoryName="INV_1" columnName="Specialization Title"/>']</findElement>
+					
+					<executeBlock name="Edit"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//*[text()='Create']/../..</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//*[text()='Create']/../..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>	
+		</block>
+			
+		<block name="CREATE_BASIC_INFO">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Title']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Specialization Title"/>
+				</parameters>
+			</executeBlock>
+			
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Short Description']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Short Description"/>
+				</parameters>
+			</executeBlock>
+		
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Publish Start Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Publish Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Publish End Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Publish End Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Minimum Expected Effort']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Minimum Expected Effort"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Maximum Expected Effort']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Maximum Expected Effort"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[@class='x1i9']//*[text()='Sections']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[@class='x1i9']//*[text()='Sections']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[@class='x1i9']//*[text()='Learning Outcomes']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[@class='x1i9']//*[text()='Learning Outcomes']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[@class='x1i9']//*[text()='Prerequisites']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[@class='x1i9']//*[text()='Prerequisites']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[@class='x1i9']//*[text()='Communities']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[@class='x1i9']//*[text()='Communities']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="CREATE_COMMUNITY_USAGE">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Add']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Add']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Search Results']/../../../../../../..//*[text()='<valueKB inventoryName="INV_2" columnName="Community Title"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Search Results']/../../../../../../..//*[text()='<valueKB inventoryName="INV_2" columnName="Community Title"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Select']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Select']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="UPDATE_COMMUNITY_USAGE">
+		
+		</block>
+		<block name="Save">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//button[text()='Save and Close']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//button[text()='Save and Close']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="back">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[contains(@id,'UPsp1:SPdonei::icon')]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[contains(@id,'UPsp1:SPdonei::icon')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+		</block>
+			
+		<executeBlock name="MANUAL_LEARNING"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="SEARCH"/>
+			<executeBlock name="CREATE_BASIC_INFO"/>
+			<repeat inventoryName="INV_2">
+				<executeBlock name="SCROLLBAR">
+					<parameters>
+						<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Title']/../../../../../../../..//*[text()='No data to display.']"/>
+						<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Title']/../../../../../../../..//*[@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Title']/../../../../../../../..//div[contains(@id,'scroller')]"/>
+						<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Title']/../../../../../../../..//*[text()='<valueKB inventoryName="INV_2" columnName="Specialization Title"/>']</parameter>
+						<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_COMMUNITY_USAGE"/>
+						<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="EDIT_COMMUNITY_USAGE"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<executeBlock name="Save"/>
+			<executeBlock name="back"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>	

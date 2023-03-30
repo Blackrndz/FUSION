@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Benefit Plans (Document Uploads)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Benefit Plans" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<dependencies>
+			<navigation name="Manage Benefit Plans (Benefit Plans)"/>
+			<navigation name="Manage Benefit Lookups"/>
+		</dependencies>
+		<parameters>
+			<parameter name="INV_0" value="Manage Benefit Plans - Benefit Plan"/>
+			<parameter name="INV_1" value="Manage Benefit Plans - Benefit Plan Details"/>
+			<parameter name="INV_2" value="Manage Benefit Plans - Document Uploads"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_0" columnName="Plan Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Plan Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Plan Name"/>']/../..//input</findElement>
+		</block>
+		<block name="Search_Plan_Name">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Plan Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_0"/>
+					<parameter name="COL_NAME" value="Plan Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Effective As-of Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Effective Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="INV_0" columnName="Plan Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="INV_0" columnName="Plan Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@title,'Basic Detail')]</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">(//a[contains(@title,'Document Uploads')])[1]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="5"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else>
+					<error message="Data does not exist. Please define data in Navigation Manage Benefit Plans (Benefit Plans)"/>
+				</else>
+			</IfThenElse>
+		</block>	
+		<block name="CREATE_Document_Uploads">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Session Effective Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Document Uploads - Start Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Warning-->
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//div[text()='Warning']/../../../../../../..//*[contains(text(),'Changing the session date cause')]</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//div[text()='Warning']/../../../../../../..//*[contains(text(),'Changing the session date cause')]/../../../../../../../../../../..//*[text()='Y']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Document Uploads']/../../../.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="UPDATE_Document_Uploads">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Document Uploads']/../../../..//*[text()='Edit']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+		</block>
+		<block name="Document_Uploads">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Document Uploads')]/../../../../../../..//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Document Uploads - Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Document Uploads')]/../../../../../../..//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Document Uploads - End Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Document Uploads')]/../../../../../../..//label[text()='Certification Type']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Certification Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Document Uploads')]/../../../../../../..//label[text()='Validity Rule']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Validity Rule"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Document Uploads')]/../../../../../../..//label[text()='Number of Days']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Number of Days"/>
+				</parameters>
+			</executeBlock>
+			<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Document Uploads')]/../../../../../../..//*[text()='K']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+		</block>
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="INV_0">
+			<repeat inventoryName="INV_1">
+				<executeBlock name="Search_Plan_Name"/>
+				<repeat inventoryName="INV_2">
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Document Uploads']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Document Uploads'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Document Uploads']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Document Uploads']/../..//tr[td//td//*[text()='<valueKB inventoryName="INV_2" columnName="Certification Type"/>'] and td//*[text()='<valueKB inventoryName="INV_2" columnName="Document Type"/>'] and td//*[text()='<valueKB inventoryName="INV_2" columnName="Validity Rule"/>']]/td[1]</parameter>
+							<parameter name="TEMPLATE_CREATE" value="CREATE_Document_Uploads"/>
+							<parameter name="TEMPLATE_UPDATE" value="UPDATE_Document_Uploads"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Document_Uploads"/>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+					<pause durationInSecs="5"/>
+				</repeat>
+				<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+			</repeat>
+		</repeat>
+	</fusionNavigation>
+</navigation>	

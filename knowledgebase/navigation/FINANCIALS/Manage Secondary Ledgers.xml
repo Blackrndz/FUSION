@@ -1,0 +1,394 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Secondary Ledgers</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="true" defaultBatchSize="3"
+        taskName="Manage Secondary Ledgers"
+        isIgnoreTaskSearchNavigation="true" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Assign Balancing Segment Values to Ledger (Primary Ledger)"/>
+        </dependencies>
+		<block name="MANUAL_SEARCH_TASK">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//*[text()='Functional Areas']</findElement>
+				</if>
+				<then>			
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[contains(text(),'Setup and Maintenance')]</findElement>
+					<click waitForPageToFinishRendering="false" isSkipCheckDomError="true" isSkipBrowserTitleChange="true" />
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>	
+
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Setup: Financials']/..</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath" setFocus="true">(//*[contains(text(),'Setup:')]/../../..//a)[1]</findElement>
+					<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>	
+					<pause durationInSecs="2"/>						
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()="Financials"]</findElement>
+					<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>		
+					<pause durationInSecs="2"/>			
+				</else>
+			</IfThenElse>			
+			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Search Tasks']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+				<valueText>###TASK_NAME###</valueText>
+			</sendKeys>		
+			<pause durationInSecs="2"/>			
+			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Search Tasks']/../../../../../..//a</findElement>
+			<click waitForPageToFinishRendering="false" isSkipCheckDomError="true" isSkipBrowserTitleChange="true" />				
+			<pause durationInSecs="5"/>	
+<!--			
+			<findElement by="xpath">//*[text()='Search Task Results']/../../../../../../..//a[text()='###TASK_NAME###']</findElement>
+			<click waitForPageToFinishRendering="true"/>	
+			<pause durationInSecs="2"/>	
+			-->
+			<pause durationInSecs="2"/>	
+		</block>
+		<block name="Scroll_Right_Scope">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//*[text()='###TASK_NAME###']/../../td[(string(//span[text()='Scope']/../../@_d_index))+1]/a</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Tasks']/../..//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="RIGHT"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		
+        <block name="DONE">
+            <findElement by="xpath" isSkipCheckDomError="true">//span[text()='o']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+        </block>
+        <block name="CREATE_BUTTON">
+            <findElement by="xpath" isSkipCheckDomError="true">//img[contains(@title,'Create')]/../..//a</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+        </block>
+        <block name="CANCEL_SCOPE">
+            <findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Scope']/../../../../../../..//span[text()='C']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+        </block>
+        <block name="SAVE_AND_CLOSE">
+            <findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select and Add: Primary Ledger']/../../../../../../..//span[text()='S']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+        </block>
+        <block name="CANCEL">
+            <findElement by="xpath">//div[text()='Select and Add: Primary Ledger']/../../../../../../..//span[text()='C']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="WAITING_OPEN_SELECT_AND_ADD">
+            <IfThenElse>
+                <if>
+                    <findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//div[contains(text(),'Select and Add:')]/../../../../../../..</findElement>
+                </if>
+                <then>
+                    <break/>
+                </then>
+                <else>
+                    <pause durationInSecs="1"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="WAITING_CLEAR_ALL_INPUT">
+            <IfThenElse>
+                <if>
+                    <findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//a[@title='Clear All']/../../../../..//input</findElement>
+                </if>
+                <then>
+                    <break/>
+                </then>
+                <else>
+                    <pause durationInSecs="1"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="WAITING_QUERY_INPUT">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" isSkipCheckDomError="true"
+                        highlightTurnedOff="true" by="xpath">//a[@title='Clear All']/../../../../..//input</findElement>
+                </if>
+                <then>
+                    <break/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[text()='Select and Add: Secondary Ledger']</findElement>
+                        </if>
+                        <then>
+                            <findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[text()='Select and Add: Secondary Ledger']/../../../../../../..//a[text()='View']</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                            <pause durationInSecs="1"/>
+                            <findElement isSkipCheckDomError="true" by="xpath">//td[text()='Query By Example']</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                            <pause durationInSecs="1"/>
+                        </then>
+                        <else>
+                            <findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//div[text()='Select and Add: Primary Ledger']/../../../../../../..//a[text()='View']</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                            <pause durationInSecs="1"/>
+                            <findElement isSkipCheckDomError="true" by="xpath">//td[text()='Query By Example']</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                            <pause durationInSecs="1"/>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="WAITING_QUERY_INPUT#2">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true"
+                        highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//a[@title='Clear All']/../../../../..//input</findElement>
+                </if>
+                <then>
+                    <break/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//h1[contains(text(),'Manage Secondary Ledgers for')]</findElement>
+                        </if>
+                        <then>
+                            <findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//h1[contains(text(),'Manage Secondary Ledgers for')]/../../../../../../../..//a[text()='View']</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                            <pause durationInSecs="1"/>
+                            <findElement isSkipCheckDomError="true" by="xpath">//td[text()='Query By Example']</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                            <pause durationInSecs="1"/>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="FIND_SECONDARY_LEDGER">
+            <IfThenElse>
+                <if>
+                    <findElement isSkipCheckDomError="true" by="xpath">//h1[contains(text(),'Manage Secondary Ledgers')]</findElement>
+                </if>
+                <then>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+                        <parameters>
+                            <parameter name="XPATH" value="//table[@summary='Secondary Ledgers']/../../../.."/>
+                        </parameters>
+                    </executeBlock>
+                    <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+                        <parameters>
+                            <parameter name="XPATH" value="//table[contains(@summary,'Secondary Ledgers')]/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[contains(@summary,'Secondary Ledgers')]/../..//div//*[text()='Name']/../../@_d_index)]"/>
+                            <parameter name="INV_NAME" value="Manage Secondary Ledgers - Secondary Ledgers"/>
+                            <parameter name="COL_NAME" value="Secondary Ledger - Name"/>
+                        </parameters>
+                    </executeBlock>
+                    <!-- <findElements returnElementAtPosition="1" isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Secondary Ledgers')]/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[contains(@summary,'Secondary Ledgers')]/../..//div//*[text()='Name']/../../@_d_index)]</findElements>
+                    <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                        <valueKB
+                            inventoryName="Manage Secondary Ledgers - Secondary Ledgers" columnName="Secondary Ledger - Name"/>
+                    </sendKeys> -->
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">//table[@summary='Secondary Ledgers']/../..//div[text()='No data to display.']</findElement>
+                        </if>
+                        <then>
+                            <executeBlock name="GLOBAL_CREATE"/>
+							<executeBlock name="SECONDARY_LEDGER"/>
+                        </then>
+                        <else>
+                            <!--<error message="You cannot create because This Secondary Ledger is already existing."/>-->
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="SAVE_AND_EDIT_TASK_LIST">
+            <findElement by="xpath">//button[text()='Save and Edit Task List']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="FIND_PRIMARY_LEDGER">
+            <executeBlock name="WAITING_OPEN_SELECT_AND_ADD" isRepeatUntilBreak="true"/>
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//a[@title='Clear All']/../../../../..//input</findElement>
+                </if>
+                <then/>
+                <else>
+                    <executeBlock name="WAITING_QUERY_INPUT" isRepeatUntilBreak="true"/>
+                    <executeBlock name="WAITING_CLEAR_ALL_INPUT" isRepeatUntilBreak="true"/>
+                </else>
+            </IfThenElse>
+            <!-- <findElements returnElementAtPosition="1" by="xpath">//a[@title='Clear All']/../../../../..//input</findElements> -->
+            <findElement isSkipCheckDomError="true" by="xpath">//input[contains(@id,'primaryLedgerNameId')]</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB
+                    inventoryName="Manage Secondary Ledgers - Secondary Ledgers" columnName="Primary Ledger"/>
+            </sendKeys>
+            <IfThenElse>
+                <if>
+                    <findElement isSkipCheckDomError="true" isDisplayed="true"
+                            by="xpath">//td[text()='<valueKB
+                            inventoryName="Manage Secondary Ledgers - Secondary Ledgers" columnName="Primary Ledger"/>']</findElement>
+                </if>
+                <then>
+                    <findElement isSkipCheckDomError="true" by="xpath">//td[text()='<valueKB
+                            inventoryName="Manage Secondary Ledgers - Secondary Ledgers" columnName="Primary Ledger"/>']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <executeBlock name="SAVE_AND_CLOSE"/>
+                </then>
+                <else>
+                    <error message="You cannot create because This Primary Ledgers is already existing."/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="SELECT_SCOPE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Manage Secondary Ledgers']/../../td[(string(//span[text()='Scope']/../../@_d_index))+1]/a</findElement>
+				</if>
+				<then>
+					<executeBlock name="Scroll_Right_Scope" isRepeatUntilBreak="true"/>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='###TASK_NAME###']/../../td[(string(//span[text()='Scope']/../../@_d_index))+1]/a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="5"/>		
+				</then>
+				<else>
+					<error message="The task doesn't exist."/>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Select Scope']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Primary Ledger']/../..//select</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Primary Ledger']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+								<valueText>Select and Add</valueText>
+							</select>								
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Primary Ledger']/../..//input/..//div//li[text()='Select and Add']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+						</else>
+					</IfThenElse>
+					<findElement by="xpath" isSkipCheckDomError="true" >//div[text()='Select Scope']/../../../../../../..//button[text()='Apply and Go to Task']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+									
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+        </block>
+        <block name="SECONDARY_LEDGER">
+			<!--Secondary Ledger - Name-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="Manage Secondary Ledgers - Secondary Ledgers"/>
+					<parameter name="COL_NAME" value="Secondary Ledger - Name"/>
+				</parameters>
+			</executeBlock>	
+          <!-- Description-->
+		   <executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="Manage Secondary Ledgers - Secondary Ledgers"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Chart of Accounts-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Chart of Accounts']/../.."/>
+					<parameter name="INV_NAME" value="Manage Secondary Ledgers - Secondary Ledgers"/>
+					<parameter name="COL_NAME" value="Chart of Accounts"/>
+				</parameters>
+			</executeBlock>	
+          <!--Accounting Calendar-->
+		  <executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Accounting Calendar']/../.."/>
+					<parameter name="INV_NAME" value="Manage Secondary Ledgers - Secondary Ledgers"/>
+					<parameter name="COL_NAME" value="Accounting Calendar"/>
+				</parameters>
+			</executeBlock>	
+         <!--  Currency-->
+		   <executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Currency']/../.."/>
+					<parameter name="INV_NAME" value="Manage Secondary Ledgers - Secondary Ledgers"/>
+					<parameter name="COL_NAME" value="Currency"/>
+				</parameters>
+			</executeBlock>	
+          <!-- Accounting Method-->
+		   <executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Accounting Method']/../.."/>
+					<parameter name="INV_NAME" value="Manage Secondary Ledgers - Secondary Ledgers"/>
+					<parameter name="COL_NAME" value="Accounting Method"/>
+				</parameters>
+			</executeBlock>	
+          <!--  Data Conversion Level-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Data Conversion Level']/../.."/>
+					<parameter name="INV_NAME" value="Manage Secondary Ledgers - Secondary Ledgers"/>
+					<parameter name="COL_NAME" value="Data Conversion Level"/>
+				</parameters>
+			</executeBlock>	
+         
+        </block>
+        <executeBlock name="MANUAL_SEARCH_TASK"/>
+        <repeat inventoryName="Manage Secondary Ledgers - Secondary Ledgers">
+            <executeBlock name="SELECT_SCOPE"/>
+            <executeBlock name="FIND_PRIMARY_LEDGER"/>
+            <executeBlock name="FIND_SECONDARY_LEDGER"/>
+            <executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Save and Close"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[contains(@class,'Expansion')]/../../..//div[text()='Error']</findElement>
+				</if>
+				<then>
+					<error message="Please see error on the Application." />
+				</then>
+				<else/>
+			</IfThenElse>
+        </repeat>
+    </fusionNavigation>
+</navigation>

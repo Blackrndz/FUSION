@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Users (Expense Information)</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" defaultBatchSize="3"
+        taskName="Manage Users" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Users"/>
+        </dependencies>
+		 <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Users - Expense Information"/>
+        </parameters>
+        <block name="Go To Task">
+            <findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+       
+	   <block name="Advanced Search">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//*[text()='Advanced Search']</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement by="xpath">//a[@title='Advanced Search']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+
+		
+		<block name="Search Name and Primary E-Mail">
+			<findElement by="xpath">//span[text()='R']/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+		    <defineVariable name="FULL_NAME" type="text"/>
+            <setVariable name="FULL_NAME" append="false">
+                <valueText/>
+            </setVariable>
+            <setVariable name="FULL_NAME" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Last Name"/>
+            </setVariable>
+            <setVariable name="FULL_NAME" append="true">, </setVariable>
+            <setVariable name="FULL_NAME" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="First Name"/>
+            </setVariable>
+
+            <findElement by="xpath">//*[text()='Advanced Search']/../../../../../../..//label[text()='Name']/../..//input</findElement>
+            <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                <valueVariable name="FULL_NAME"/>
+            </sendKeys>
+            <findElement by="xpath">//*[text()='Advanced Search']/../../../../../../..//label[text()='Keywords']/../..//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="MAIN_REPEAT_1" columnName="E-Mail"/>
+            </sendKeys>
+  
+        </block>
+        <block name="Search Button">
+            <findElement by="xpath">//span[text()='e']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+  
+
+        <block name="SAVE_AND_CLOSE">
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+            <pause durationInSecs="2"/>
+        </block>
+		<block name="Actions">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table[@style='position: relative;']//td[text()='Manage Expense Information']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<pause durationInSecs="2"/>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//a[text()='Actions']</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//a[text()='Actions']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a[text()='Actions']/../../../../../../../../../../../..</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//a[text()='Actions']/../../../../../../../../../../../..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+									<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//a[text()='Actions']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  									
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+        <block name="Manage_Expense_Information">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a[text()='Actions']</findElement>
+				</if>
+				<then>
+					<executeBlock name="Actions" isRepeatUntilBreak="true"/>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Manage Expense Information']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a[text()='Actions']/../../../../../../../../../../../..</findElement>
+						</if>
+						<then>
+							<executeBlock name="Actions" isRepeatUntilBreak="true"/>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Manage Expense Information']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   									
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		 <block name="Expenses_Information">
+		  <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Expenses Information']</findElement>
+                </if>
+                <then>
+					<findElement by="xpath">//a[@title='Expand Expenses Information']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+				</then>
+                <else/>
+            </IfThenElse>
+			<!--Default Expense Account-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Default Expense Account']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Default Expense Account"/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Default Expense Account']/../..//a</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="3"/>
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="3"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']</findElement>
+				</if>
+				<then>
+					<error message="Default Expense Account doesn't exist. Please check your data" />
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<!--Default Expense Account-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Expense Check Send-to Address']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Expense Check Send-to Address"/>
+				</parameters>
+			</executeBlock>
+		 </block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <executeBlock name="Advanced Search"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+            <executeBlock name="Search Name and Primary E-Mail"/>
+            <!--//a[contains(text(),'RAPID1, Buyer')] and //a[contains(text(),'Buyer@rapidesuite.com')]-->
+            <executeBlock name="Search Button"/>
+			
+			<IfThenElse>
+                <if>
+					<findElement by="xpath">//table[@summary='Search Results']//tr//div[div//a[text()="<valueVariable name="FULL_NAME"/>"] and div//a/b[text()="<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="E-Mail"/>"]]</findElement>
+                </if>
+                <then>
+					<findElement by="xpath">//table[@summary='Search Results']//tr//div[div//a[text()="<valueVariable name="FULL_NAME"/>"] and div//a/b[text()="<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="E-Mail"/>"]]</findElement>
+                    <click waitForPageToFinishRendering="true"/> 
+                    <executeBlock name="Manage_Expense_Information"/>
+					<executeBlock name="Expenses_Information"/>
+					<executeBlock name="SAVE_AND_CLOSE"/>
+                </then>
+                <else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@summary='Search Results']//tr//div[div//a[text()="<valueVariable name="FULL_NAME"/>"] and div//a[text()="<valueKB
+									inventoryName="MAIN_REPEAT_1" columnName="E-Mail"/>"]]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Search Results']//tr//div[div//a[text()="<valueVariable name="FULL_NAME"/>"] and div//a[text()="<valueKB
+									inventoryName="MAIN_REPEAT_1" columnName="E-Mail"/>"]]</findElement>
+							<click waitForPageToFinishRendering="true"/> 
+							<executeBlock name="Manage_Expense_Information"/>
+							<executeBlock name="Expenses_Information"/>
+							<executeBlock name="SAVE_AND_CLOSE"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+            </IfThenElse>
+            
+        </repeat>
+    </fusionNavigation>
+</navigation>

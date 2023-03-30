@@ -1,0 +1,233 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Benefit Service Areas (Service Areas)</name>
+	<svn>
+		<xsd:revision>$Revision: 77784 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2022-02-03 12:03:34 +0700 (Thu, 03 Feb 2022) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Benefit%20Service%20Areas%20(Service%20Areas).xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Benefit Service Areas (Service Areas).xml 77784 2022-02-03 05:03:34Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Benefit Service Areas" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<dependencies>
+			<navigation name="Manage Enterprise HCM Information"/>
+			<navigation name="Manage Benefit Service Areas (Postal Code Ranges)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="INV_1" value="Manage Benefit Service Areas - Service Area"/>
+			<parameter name="INV_2" value="Manage Benefit Service Areas - Add Postal Code Range"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="From Value"/>']/../..//input</findElement>
+		</block>
+		<block name="SEARCH">
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[@id='pt1:r1:0:rt:1:r2:0:dynamicRegion1:0:pt1:PZipSrv:0:AP6:showDetailItem2::disAcr']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[@id='pt1:r1:0:rt:1:r2:0:dynamicRegion1:0:pt1:PZipSrv:0:AP6:showDetailItem2::disAcr']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[@title='Collapse Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[@title='Search Results']/../../../../../..//span[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[@title='Search Results']/../../../../../..//span[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[@title='Search Results']/../../../../../..//span[text()='Edit']/../..</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[@title='Search Results']/../../../../../..//span[text()='Edit']/../..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="EDIT_SERVICE_AREA"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SPECIFY_CREATE">
+						<parameters>
+							<parameter name="SPECIFY_XPATH" value="//div[@title='Search Results']/../../../../../..//span[text()='Create']/.."/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="EDIT_SERVICE_AREA">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Edit Service Area']/../../../../../../..//*[text()='Save']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Edit Service Area']/../../../../../../..//*[text()='Save']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CREATE_SERVICE_AREA">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Create Service Area']/../../../../../../..//*[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			 <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Create Service Area']/../../../../../../..//*[text()='Service Type']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Service Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Create Service Area']/../../../../../../..//*[text()='Service Area Start Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Service Area Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Create Service Area']/../../../../../../..//*[text()='Service Area End Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Service Area End Date"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Create Service Area']/../../../../../../..//*[text()='Save']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Create Service Area']/../../../../../../..//*[text()='Save']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="EDIT_POSTAL_CODE_RANGES_IN_SERVICE_AREA">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Edit Postal Code Ranges in Service Area']/../../../../../../..//*[text()='Save']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Edit Postal Code Ranges in Service Area']/../../../../../../..//*[text()='Save']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CREATE_SELECT_AND_ADD_POSTAL_CODE_RANGE">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//span[text()='Select and Add']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//span[text()='Select and Add']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Select and Add: Postal Code Range']/../../../../../../..//label[text()='From Value']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="From Value"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Select and Add: Postal Code Range']/../../../../../../..//*[@accesskey='r']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Select and Add: Postal Code Range']/../../../../../../..//*[@accesskey='r']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Select and Add: Postal Code Range']/../../../../../../..//*[text()='Search Results']/../../../../../../..//*[text()='<valueKB inventoryName="INV_2" columnName="From Value"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Select and Add: Postal Code Range']/../../../../../../..//*[text()='Search Results']/../../../../../../..//*[text()='<valueKB inventoryName="INV_2" columnName="From Value"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//*[text()='Select and Add: Postal Code Range']/../../../../../../..//*[text()='Save']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//*[text()='Select and Add: Postal Code Range']/../../../../../../..//*[text()='Save']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//*[text()='Select and Add: Postal Code Range']/../../../../../../..//*[text()='Save']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//*[text()='Select and Add: Postal Code Range']/../../../../../../..//*[text()='Save']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>	
+			</IfThenElse>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="SEARCH"/>
+			<executeBlock name="CREATE_SERVICE_AREA"/>
+			<repeat inventoryName="INV_2">
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@title='Postal Code Ranges']/../../../../../../..//div[contains(text(),'No data to display')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Postal Code Ranges'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Postal Code Ranges']/../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[@title='Postal Code Ranges']/../../../../../../..//*[text()='<valueKB inventoryName="INV_2" columnName="From Value"/>']</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_SELECT_AND_ADD_POSTAL_CODE_RANGE"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="EDIT_POSTAL_CODE_RANGES_IN_SERVICE_AREA"/>
+				</parameters>
+			</executeBlock>
+			</repeat>
+		</repeat>
+	</fusionNavigation>
+</navigation>

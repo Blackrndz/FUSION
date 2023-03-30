@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Chart of Accounts Value Sets (Update)</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Manage Chart of Accounts Value Sets" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+        <dependencies>
+			<navigation name="Manage Chart of Accounts Value Sets"/>
+			<navigation name="Manage Data Access for Users"/>
+		</dependencies>
+		<parameters>
+            <parameter name="INV_1" value="Manage Chart of Accounts Value Sets - Manage Value Set"/>
+        </parameters>
+        <block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Value Set Code"/>']/../..//input</findElement>
+        </block>
+		<block name="Search_Value_Set">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Value Set Code']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Value Set Code"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//td[text()='<valueKB inventoryName="INV_1" columnName="Value Set Code"/>']/../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//td[text()='<valueKB inventoryName="INV_1" columnName="Value Set Code"/>']/../../../../../../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="Edit_Value_Set"/>
+				</then>
+				<else>
+					<error message="Create Data in Manage Chart of Accounts Value Sets" />
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Edit_Value_Set">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='Actions']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='Actions']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//td[text()='Edit']/..</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//td[text()='Edit']/..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Security enabled']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Security enabled"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Data Security Resource Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Data Security Resource Name"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//span[text()='S']/../..//button[contains(@id,'AP2:APscl')]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//span[text()='S']/../..//button[contains(@id,'AP2:APscl')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Save_and_Close">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//button[@accesskey='S']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//button[@accesskey='S']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="Search_Value_Set"/>
+			<executeBlock name="Save_and_Close"/>
+		</repeat>
+    </fusionNavigation>
+</navigation>

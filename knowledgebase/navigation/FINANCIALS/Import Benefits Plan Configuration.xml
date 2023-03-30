@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Import Benefits Plan Configuration</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Import Benefits Plan Configuration" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<parameters>
+			<parameter name="INV_1" value="Import Benefits Plan Configuration - Benefits Plan Configuration"/>
+		</parameters>
+		
+		 <block name="FAKE_INV">
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Import Name"/>']</findElement>
+        </block>
+		
+		<block name="SEARCH">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Import Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Import Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search Results']/../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table//*[text()='<valueKB inventoryName="INV_1" columnName="Import Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table//*[text()='<valueKB inventoryName="INV_1" columnName="Import Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_CREATE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Import_Benefit_Plan_Configuration">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Effective As-of Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Effective As-of Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Import Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Import Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Import Type']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Import Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Prefix']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Prefix"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Suffix']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Suffix"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="WAITING_CONFIRM">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Confirmation']/../../../../../../..//*[text()='OK']</findElement>
+				</if>
+				<then>
+					<break/>				
+				</then>
+				<else>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>	
+		</block>	
+		
+		<block name="Save">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//button[text()='Save']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//button[text()='Save']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>		
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SAVE"/>
+				</else>
+			</IfThenElse>
+		</block>	
+		
+		<block name="Submit">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Save']/..//*[@aria-disabled='true']</findElement>
+				</if>
+				<then>
+					<executeBlock name="GLOBAL_SAVE"/>
+					<findElement by="xpath">//*[text()='Submit']</findElement>
+					<click waitForPageToFinishRendering="true"/>	
+					<executeBlock name="WAITING_CONFIRM" isRepeatUntilBreak="true"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//*[text()='Confirmation']/../../../../../../..//*[text()='OK']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//*[text()='Confirmation']/../../../../../../..//*[text()='OK']</findElement>
+							<click waitForPageToFinishRendering="true"/>	
+						</then>
+						<else/>
+					</IfThenElse>						
+				</then>
+				<else>
+					<findElement by="xpath">//*[text()='Submit']/../..//button[text()='Cancel']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>		
+		</block>	
+			
+		<block name="Save_and_Close">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//button[text()='ave and Close']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//button[text()='ave and Close']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+				</else>
+			</IfThenElse>
+		</block>	
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="SEARCH"/>
+			<executeBlock name="Import_Benefit_Plan_Configuration"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Save']/..//*[@aria-disabled='true']</findElement>
+				</if>
+				<then>
+					<executeBlock name="Save"/>
+					<findElement by="xpath">//*[text()='Submit']</findElement>
+					<click waitForPageToFinishRendering="true"/>	
+					<executeBlock name="WAITING_CONFIRM" isRepeatUntilBreak="true"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//*[text()='Confirmation']/../../../../../../..//*[text()='OK']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//*[text()='Confirmation']/../../../../../../..//*[text()='OK']</findElement>
+							<click waitForPageToFinishRendering="true"/>	
+						</then>
+						<else/>
+					</IfThenElse>						
+				</then>
+				<else>
+					<findElement by="xpath">//*[text()='Submit']/../..//button[text()='Cancel']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</repeat>
+	</fusionNavigation>
+</navigation>

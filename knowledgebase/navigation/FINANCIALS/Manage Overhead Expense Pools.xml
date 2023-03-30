@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Overhead Expense Pools</name>
+    <svn>
+        <xsd:revision>$Revision: 78338 $:</xsd:revision>
+        <xsd:author>$Author: kullada.somtragool $:</xsd:author>
+        <xsd:date>$Date: 2022-04-19 23:38:52 +0700 (Tue, 19 Apr 2022) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Overhead%20Expense%20Pools.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Overhead Expense Pools.xml 78338 2022-04-19 16:38:52Z kullada.somtragool $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Manage Overhead Expense Pools" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+        <dependencies>
+			<navigation name="Manage Reference Data Sets"/>
+		</dependencies>
+		<parameters>
+            <parameter name="INV_1" value="Manage Overhead Expense Pools - Expense Pools"/>
+        </parameters>
+        <block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']/../..//input</findElement>
+        </block>
+		<block name="Search_Expense_Pools">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Code']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Code"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//span[text()='<valueKB inventoryName="INV_1" columnName="Code"/>']/../../../../../../../../td[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//span[text()='<valueKB inventoryName="INV_1" columnName="Code"/>']/../../../../../../../../td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="Edit_Expense_Pools"/>
+				</then>
+				<else>
+					<executeBlock name="Create_Expense_Pools"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Create_Expense_Pools">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_ADD_ROW"/>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Code']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Code"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Name']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Description']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Type']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Type"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//tr[td[number(//table[contains(@summary,'search results of expense pools')]/../..//th//span[text()='Set Name']/../../@_d_index)]]//a[contains(@id,'lov')]/../../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Set Name"/>
+					<parameter name="SEARCH_1" value="Reference Data Set Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//td[string(//span[text()='Inactive']/../..//@_d_index)+0]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Inactive"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Edit_Expense_Pools">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Name']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Description']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Type']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Type"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//td[string(//span[text()='Inactive']/../..//@_d_index)+0]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Inactive"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Save">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//span[text()='Save']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//span[text()='Save']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Save_and_Close">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[contains(@id,'commandToolbarButton1')]//span[text()='ave and Close']/../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[contains(@id,'commandToolbarButton1')]//span[text()='ave and Close']/../../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="Search_Expense_Pools"/>
+			<executeBlock name="Save"/>
+		</repeat>
+		<executeBlock name="Save_and_Close"/>
+    </fusionNavigation>
+</navigation>

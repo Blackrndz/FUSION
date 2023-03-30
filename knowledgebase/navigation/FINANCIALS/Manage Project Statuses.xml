@@ -1,0 +1,378 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Project Statuses</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Project Statuses"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Enterprise HCM Information"/>
+		</dependencies>
+        <parameters>
+            <parameter name="REPEAT_1_MAIN" value="Manage Project Statuses - Project Statuses"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Project Statuses - Status Controls"/>
+			<parameter name="REPEAT_3_MAIN" value="Manage Project Statuses - Next Allowable Statuses"/>
+        </parameters>
+		<!--REPEAT_1-->
+		<block name="Search_Project_Statuses">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Project Statuses']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath">//span[text()='Project Status']/../../../..//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_1_MAIN" columnName="Project Status"/>
+            </sendKeys>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//th[(string(//span[text()='Project Status']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//th[(string(//span[text()='Project Status']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+						<valueKB inventoryName="REPEAT_1_MAIN" columnName="Status Type"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement by="xpath">//table[@summary='Project Statuses']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Project Statuses']/../..//tr//span[text()='Project Status']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+						<valueKB inventoryName="REPEAT_1_MAIN" columnName="Status Type"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Project Statuses']//tr[td/span/span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Project Status"/>']]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Project Statuses']//tr[td/span/span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Project Status"/>']]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="Project_Statuses"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@summary='Project Statuses']/tbody/tr[1]/td[1]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Project Statuses']/tbody/tr[1]/td[1]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Project Statuses']/../../../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@summary='Project Statuses']//label[text()='Project Status']/..//input[not(@value)]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<executeBlock name="Project_Statuses"/>
+				</else>
+			</IfThenElse>
+        </block>
+        <block name="Project_Statuses">
+			<!--Project Status-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Project Statuses']//tr[contains(@class,'Select')]//label[text()='Project Status']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Project Status"/>
+				</parameters>
+			</executeBlock>
+			<!--Status Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Project Statuses']//tr[contains(@class,'Select')]//label[text()='Status Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Status Type"/>
+				</parameters>
+			</executeBlock>
+			<!--System Status-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Project Statuses']//tr[contains(@class,'Select')]//label[text()='System Status']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="System Status"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Project Statuses']//tr[contains(@class,'Select')]//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--From Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Project Statuses']//tr[contains(@class,'Select')]//label[text()='From Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="From Date"/>
+				</parameters>
+			</executeBlock>
+			<!--To Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Project Statuses']//tr[contains(@class,'Select')]//label[text()='To Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="To Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Initial Project Status-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Project Statuses']//tr[contains(@class,'Select')]//td[string(//span[text()='To Date']/../..//@_d_index)+0]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Initial Project Status"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Enable Workflow-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Project Statuses']//tr[contains(@class,'Select')]//td[string(//span[text()='Initial Project Status']/../..//@_d_index)+0]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Enable Workflow"/>
+				</parameters>
+			</executeBlock>
+			<!--Status After Change Accepted-->
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Project Statuses']//tr[contains(@class,'Select')]//label[text()='Status After Change Accepted']/../..//a</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Project Statuses']//tr[contains(@class,'Select')]//label[text()='Status After Change Accepted']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Status After Change Accepted"/>
+							<parameter name="SEARCH_1" value="Project Status"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Project Statuses']//tr[contains(@class,'Select')]//label[text()='Status After Change Accepted']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Status After Change Accepted"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			<!--Status After Change Rejected-->
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Project Statuses']//tr[contains(@class,'Select')]//label[text()='Status After Change Rejected']/../..//a</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Project Statuses']//tr[contains(@class,'Select')]//label[text()='Status After Change Rejected']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Status After Change Rejected"/>
+							<parameter name="SEARCH_1" value="Project Status"/>
+						</parameters>
+					</executeBlock>				
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Project Statuses']//tr[contains(@class,'Select')]//label[text()='Status After Change Rejected']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Status After Change Rejected"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+        </block>
+		<!--REPEAT_2-->
+		<block name="TAB_Status_Controls">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//div/div/div/div/a[text()='Status Controls'][contains(@class,'Selected')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//div/div/div/div/a[text()='Status Controls']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search_Status_Controls">
+			<executeBlock name="TAB_Status_Controls"/>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+                <parameters>
+                    <parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Status Controls']/../..//div[contains(text(),'No data to display.')]"/>
+                    <parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Status Controls'][@_rowcount]//tr[1]//td)[1]"/>
+                    <parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Status Controls']/../..//div[contains(@id,'scroller')]"/>
+                    <parameter
+                            name="TEMPLATE_1_FIND_ROW">//table[@summary='Status Controls']/../..//span[text()='<valueKB inventoryName="REPEAT_2_MAIN"
+                            columnName="Action"/>']</parameter>
+                    <parameter
+                            name="TEMPLATE_2_FIND_ROW">//table[@summary='Status Controls']/../..//td[text()='<valueKB inventoryName="REPEAT_2_MAIN"
+                            columnName="Action"/>']</parameter>
+                    <parameter name="TEMPLATE_CREATE" value="Create_Status_Controls"/>
+                    <parameter name="TEMPLATE_UPDATE" value="Update_Status_Controls"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Create_Status_Controls">
+			<error message="The field 'Action' doesn't exist."/>
+        </block>
+		<block name="Update_Status_Controls">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" />
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">TEMPLATE_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" />
+				</else>
+			</IfThenElse>
+			<!--Allow-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Status Controls']//tr[contains(@class,'Select')]/..//label[text()='Allow']/../../../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Allow"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+        </block>
+		<!--REPEAT_3-->
+		<block name="TAB_Next_Allowable_Statuses">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//div/div/div/div/a[text()='Next Allowable Statuses'][contains(@class,'Selected')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//div/div/div/div/a[text()='Next Allowable Statuses']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search_Next_Allowable_Statuses">
+			<executeBlock name="TAB_Next_Allowable_Statuses"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//label[text()='Next Allowable Status']/../..//select[@title='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Flag Next Allowable Status"/>']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Next Allowable Statuses']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Next Allowable Statuses'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Next Allowable Statuses']/../..//div[contains(@id,'scroller')]"/>
+							<parameter
+									name="TEMPLATE_1_FIND_ROW">//table[@summary='Next Allowable Statuses']/../..//span[text()='<valueKB inventoryName="REPEAT_3_MAIN"
+									columnName="Next Allowable Status"/>']</parameter>
+							<parameter
+									name="TEMPLATE_2_FIND_ROW">//table[@summary='Next Allowable Statuses']/../..//select[@title='<valueKB inventoryName="REPEAT_3_MAIN"
+									columnName="Next Allowable Status"/>']</parameter>
+							<parameter name="TEMPLATE_CREATE" value="Create_Next_Allowable_Statuses"/>
+							<parameter name="TEMPLATE_UPDATE" value="Update_Next_Allowable_Statuses"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Next Allowable Status']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+							<parameter name="COL_NAME" value="Flag Next Allowable Status"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Next Allowable Statuses']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Next Allowable Statuses'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Next Allowable Statuses']/../..//div[contains(@id,'scroller')]"/>
+							<parameter
+									name="TEMPLATE_1_FIND_ROW">//table[@summary='Next Allowable Statuses']/../..//span[text()='<valueKB inventoryName="REPEAT_3_MAIN"
+									columnName="Next Allowable Status"/>']</parameter>
+							<parameter
+									name="TEMPLATE_2_FIND_ROW">//table[@summary='Next Allowable Statuses']/../..//select[@title='<valueKB inventoryName="REPEAT_3_MAIN"
+									columnName="Next Allowable Status"/>']</parameter>
+							<parameter name="TEMPLATE_CREATE" value="Create_Next_Allowable_Statuses"/>
+							<parameter name="TEMPLATE_UPDATE" value="Update_Next_Allowable_Statuses"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+        </block>
+        <block name="Create_Next_Allowable_Statuses">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">TEMPLATE_FIRST_ROW</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">TEMPLATE_FIRST_ROW</findElement>
+					<click waitForPageToFinishRendering="true" />
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Next Allowable Statuses']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Next Allowable Statuses']//tr[contains(@class,'Select')]//label[text()='Next Allowable Status']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Next Allowable Status"/>
+				</parameters>
+			</executeBlock>
+        </block>
+		<block name="Update_Next_Allowable_Statuses">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" />
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">TEMPLATE_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" />
+				</else>
+			</IfThenElse>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="REPEAT_1_MAIN">
+            <executeBlock name="Search_Project_Statuses"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="Search_Status_Controls"/>
+			</repeat>
+			<repeat inventoryName="REPEAT_3_MAIN">
+				<executeBlock name="Search_Next_Allowable_Statuses"/>
+			</repeat>
+        </repeat>
+    </fusionNavigation>
+</navigation>

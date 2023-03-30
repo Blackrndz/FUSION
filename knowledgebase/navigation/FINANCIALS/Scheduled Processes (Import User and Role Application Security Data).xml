@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Scheduled Processes (Import User and Role Application Security Data)</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Scheduled Processes" isBatchingAllowed="false" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+			<navigation name="Manage Administrator Profile Values"/>
+		</dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Scheduled Processes - Import User and Role Application Security Data"/>
+        </parameters>
+		 <block name="FAKE_DFF">
+		 <findElement by="xpath">//label[text()='Type']/../..//input</findElement>
+		<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+			<valueKB inventoryName="MAIN_REPEAT_1" columnName="Type"/>
+		</sendKeys>
+		 </block>
+        <!--Control Block-->
+        <block name="Go To Task-Special">
+            <findElement by="xpath">//a[contains(@id,'UIShome')]</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <IfThenElse>
+                <if>
+                    <findElement setFocus="true" by="xpath">//a[text()='Tools']</findElement>
+                </if>
+                <then>
+                    <findElement setFocus="true" by="xpath">//a[text()='Tools']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <findElement setFocus="true" by="xpath">//a[text()='###TASK_NAME###']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <error message="'Navigator-Tools' not found."/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Submit">
+            <findElement by="xpath">//span[text()='m']/../..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <pause durationInSecs="2"/>
+        </block>
+        <block name="Warning">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//table[contains(@id,'confirmationPopup')]</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true" by="xpath">//table[contains(@id,'confirmationPopup')]//button[text()='OK']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Schedule New Process Button">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//a[text()='Actions']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//a[text()='Actions']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <findElement by="xpath">//table[@style='position: relative;']//td[text()='Schedule New Process']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <!-- Processing Section -->
+        <block name="Schedule New Process">
+			<executeBlock name="RADIO_INPUT">
+				<parameters>
+					<parameter name="LEGEND" value="Type"/>
+					<parameter name="LABEL_RADIO" value="Type"/>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Type"/>
+				</parameters>
+			</executeBlock>
+          
+            <executeBlock name="LOV">
+                <parameters>
+                    <parameter name="XPATH" value="//div[text()='Schedule New Process']/../../../../../../..//label[text()='Name']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Name"/>
+                    <parameter name="SEARCH_1" value="Name"/>
+                </parameters>
+            </executeBlock>
+            <findElement by="xpath">//div[text()='Schedule New Process']/../../../../../../..//button[text()='OK']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+        </block>
+		<block name="Serach_Page">
+			<findElement by="xpath">//a[contains(@id,'UIShome')]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[@data-afr-dsp-child='grid']//div[@data-afr-dsp-child='layerWrapper']</findElement>
+				</if>
+				<then>
+					<executeBlock name="Serach_Task_Layer"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//div[@data-afr-dsp-child='grid']</findElement>
+						</if>
+						<then>
+							<executeBlock name="Serach_Task_Grid"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Serach_Task_Layer">
+			<findElement by="xpath">//a[@title='Navigator']</findElement>
+			<click waitForPageToFinishRendering="true" />
+			<findElement setFocus="true" by="xpath">//span[text()='Tools']</findElement>
+			<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+			<findElement by="xpath">//span[text()='Scheduled Processes']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Serach_Task_Grid">
+			<findElement setFocus="true" by="xpath">//div[@title='Tools']</findElement>
+			<click waitForPageToFinishRendering="true" />
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[@title='Scheduled Processes']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[@title='Scheduled Processes']</findElement>
+					<click waitForPageToFinishRendering="true" />
+				</then>
+				<else>
+					<executeBlock name="Personalize_Springboard"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Personalize_Springboard">
+			<findElement setFocus="true" by="xpath">//img[@title='Personalize Springboard']</findElement>
+			<click waitForPageToFinishRendering="true" />
+			<findElement by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='Scheduled Processes']/../..//div</findElement>
+			<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+			<findElement by="xpath">//span[text()='OK']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement setFocus="true" by="xpath">//div[@title='Tools']</findElement>
+			<click waitForPageToFinishRendering="true" />
+			<findElement by="xpath">//div[@title='Scheduled Processes']</findElement>
+			<click waitForPageToFinishRendering="true" />
+		</block>		
+        <!--BEGIN REPEAT-->
+        <executeBlock name="Serach_Page"/>
+        <repeat inventoryName="MAIN_REPEAT_1">
+            <executeBlock name="Schedule New Process Button"/>
+            <executeBlock name="Schedule New Process"/>
+            <executeBlock name="Submit"/>
+            <executeBlock name="Warning"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

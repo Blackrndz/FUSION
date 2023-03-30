@@ -1,0 +1,767 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Depreciation Methods</name>
+	<svn>
+		<xsd:revision>$Revision: 80509 $:</xsd:revision>
+		<xsd:author>$Author: kissada.kiskaew $:</xsd:author>
+		<xsd:date>$Date: 2023-03-21 17:48:25 +0700 (Tue, 21 Mar 2023) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Depreciation%20Methods.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Depreciation Methods.xml 80509 2023-03-21 10:48:25Z kissada.kiskaew $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Depreciation Methods" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Data Access Set Data Access for Users"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Depreciation Methods - Manage Depreciation Methods"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Depreciation Methods - Depreciation Flat Rates"/>
+			<parameter name="MAIN_REPEAT_3" value="Manage Depreciation Methods - Depreciation Rates"/>
+			<parameter name="MAIN_REPEAT_4" value="Manage Depreciation Methods - Manage Depreciation Methods - DFF"/>
+			<parameter name="MAIN_REPEAT_5" value="Manage Depreciation Methods - Depreciation Flat Rates - DFF"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_5" columnName="Name"/>']</findElement>
+		</block>
+		
+		<!--BLOCK_UTILITY-->
+		<block name="ERROR">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//div[text()='Error']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CHECK_ERROR">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//span[contains(text(),'You must define flat rates for this depreciation method.')]</findElement>
+				</if>
+				<then>
+					<error message="You must define flat rates for this depreciation method." />
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//span[contains(text(),'The method name must be unique across method types, method type and life in periods, or method type and life in years and months.')]</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']/../../../../../../..//div[text()='Too many matching records found. Specify additional criteria to limit the number of records.']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']/../../../../../../..//button[text()='OK']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//span[contains(text(),'The method name must be unique across method types, method type and life in periods, or method type and life in years and months.')]/../../../../../../../../../../../../../../..//button[text()='OK']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" />
+									<pause durationInSecs="1"/>
+								</else>
+							</IfThenElse>						
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//span[text()='C']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//span[text()='C']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else/>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Warning']</findElement>
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//span[text()='Y']/..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<executeBlock name="CHECK_SKIP_ERROR"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="CHECK_SKIP_ERROR">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']/../../../../../../..//div[text()='Too many matching records found. Specify additional criteria to limit the number of records.']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']/../../../../../../..//button[text()='OK']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else/>
+					</IfThenElse>					
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Manual_Direction_TOP">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true" setFocus="true">//table[@summary='Depreciation Flat Rates']//label[text()='Basic Rate']/../..</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Depreciation Flat Rates']/../..//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="TOP"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<!--MAIN_REPEAT_1-->
+		<block name="SEARCH_Manage_Depreciation_Methods">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Method Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Method Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Manage Depreciation Methods']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Depreciation Methods']/../../../..//a[@title='Clear All']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Depreciation Methods']/../../../..//a[@title='Clear All']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock name="ERROR"/>
+			<!--Name-->
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Depreciation Methods']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Manage Depreciation Methods']/../..//div//*[text()='Name']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			<pause durationInSecs="1"/>
+			
+			<!--Reference Data Set-->
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//th[(string(//span[text()='Reference Data Set']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//th[(string(//span[text()='Reference Data Set']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Reference Data Set"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Depreciation Methods']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Manage Depreciation Methods']/../..//div//*[text()='Reference Data Set']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Reference Data Set"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			<pause durationInSecs="1"/>
+			
+			<!--Method Type-->
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//th[(string(//span[text()='Method Type']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//th[(string(//span[text()='Method Type']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Method Type"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Depreciation Methods']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Manage Depreciation Methods']/../..//div//*[text()='Method Type']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Method Type"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			<pause durationInSecs="1"/>
+			
+			<!--Life in Years-->
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//th[(string(//span[text()='Life in Years']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//th[(string(//span[text()='Life in Years']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Life in Years"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Depreciation Methods']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Manage Depreciation Methods']/../..//div//*[text()='Life in Years']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Life in Years"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			
+			<!--Life in Months-->
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//th[(string(//span[text()='Life in Months']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//th[(string(//span[text()='Life in Months']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Life in Months"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Depreciation Methods']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Manage Depreciation Methods']/../..//div//*[text()='Life in Months']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Life in Months"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Depreciation Methods']//tr[td[number(//table[@summary='Manage Depreciation Methods']/../..//th//span[text()='Name']/../../@_d_index)]//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Depreciation Methods']//tr[td[number(//table[@summary='Manage Depreciation Methods']/../..//th//span[text()='Name']/../../@_d_index)]//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']]//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_CREATE"/>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='OK']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[text()='OK']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+							<pause durationInSecs="2"/>	
+						</then>
+						<else/>
+					</IfThenElse>		
+				</else>
+			</IfThenElse>
+			
+			<!--<setVariable name="SEARCH" append="true">//table[@summary='Manage Depreciation Methods']//tr[td[number(//table[@summary='Manage Depreciation Methods']/../..//th//span[text()='Name']/../../@_d_index)]//a[text()='</setVariable>
+			<setVariable name="SEARCH" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+			</setVariable>
+			<setVariable name="SEARCH" append="true">']</setVariable>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Life in Years"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="SEARCH" append="true"> and </setVariable>
+					<setVariable name="SEARCH" append="true">td[number(//table[@summary='Manage Depreciation Methods']/../..//th//span[text()='Life in Years']/../../@_d_index)][text()='</setVariable>
+					<setVariable name="SEARCH" append="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Life in Years"/>
+					</setVariable>
+					<setVariable name="SEARCH" append="true">']</setVariable>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Life in Months"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="SEARCH" append="true"> and </setVariable>
+					<setVariable name="SEARCH" append="true">td[number(//table[@summary='Manage Depreciation Methods']/../..//th//span[text()='Life in Months']/../../@_d_index)][text()='</setVariable>
+					<setVariable name="SEARCH" append="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Life in Months"/>
+					</setVariable>
+					<setVariable name="SEARCH" append="true">']</setVariable>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+			<setVariable name="SEARCH" append="true">]//a</setVariable>	-->
+		</block>
+		<block name="Manage_Depreciation_Methods">
+			<!--Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Reference Data Set-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Reference Data Set']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Reference Data Set"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Method Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Method Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Method Type"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Calculation Basis-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Calculation Basis']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Calculation Basis"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Depreciation Basis Rule-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Depreciation Basis Rule']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Depreciation Basis Rule"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Straight line method-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Straight line method']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Straight line method"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Depreciate in year retired-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Depreciate in year retired']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Depreciate in year retired"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Life Options-->
+			<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+				<parameters>
+					<parameter name="XPATH" value="//fieldset/legend[text()='Life in years and months']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Life Options"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Life in Years-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//input[contains(@id,'TransLifeInYearsId')]/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Life in Years"/>
+				</parameters>
+			</executeBlock>
+		
+			<!--Life in Months-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//input[contains(@id,'TransLifeInMonthsId')]/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Life in Months"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Life in Periods-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Life in Periods']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Life in Periods"/>
+				</parameters>
+			</executeBlock>
+		
+			<!--Prorate Periods per Year-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Prorate Periods per Year']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Prorate Periods per Year"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Exclude salvage value-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Exclude salvage value']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Exclude salvage value"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Polish adjustment calculation basis-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Polish adjustment calculation basis']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Polish adjustment calculation basis"/>
+				</parameters>
+			</executeBlock>
+		</block>
+
+		<!--MAIN_REPEAT_2-->
+		<block name="Search_Depreciation_Flat_Rates">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//label[text()='Method Type']/../..//select[@title='Flat']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Depreciation Flat Rates']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Depreciation Flat Rates'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Depreciation Flat Rates']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Depreciation Flat Rates']//td[1]//span//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Basic Rate"/>']/../../..//td[2]//span//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Adjusting Rate"/>']</parameter>
+							<parameter name="TEMPLATE_CREATE" value="Create_Depreciation_Flat_Rates"/>
+							<parameter name="TEMPLATE_UPDATE" value="Update_Depreciation_Flat_Rates"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//label[text()='Method Type']/../..//span[text()='Flat']</findElement>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+								<parameters>
+									<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Depreciation Flat Rates']/../..//div[contains(text(),'No data to display.')]"/>
+									<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Depreciation Flat Rates'][@_rowcount]//tr[1]//td)[1]"/>
+									<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Depreciation Flat Rates']/../..//div[contains(@id,'scroller')]"/>
+									<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Depreciation Flat Rates']//td[1]//span//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Basic Rate"/>']/../../..//td[2]//span//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Adjusting Rate"/>']</parameter>
+									<parameter name="TEMPLATE_CREATE" value="Create_Depreciation_Flat_Rates"/>
+									<parameter name="TEMPLATE_UPDATE" value="Update_Depreciation_Flat_Rates"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Create_Depreciation_Flat_Rates">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Depreciation Flat Rates']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Manual_Direction_TOP" isRepeatUntilBreak="true"/>
+			<executeBlock name="Depreciation_Flat_Rates"/>
+		</block>
+		<block name="Update_Depreciation_Flat_Rates">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+		</block>
+		<block name="Depreciation_Flat_Rates">
+			<!--Basic Rate-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Depreciation Flat Rates']//label[text()='Basic Rate']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Basic Rate"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Adjusting Rate-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Depreciation Flat Rates']//label[text()='Adjusting Rate']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Adjusting Rate"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<!--MAIN_REPEAT_3-->
+		<block name="Search_Depreciation_Rates">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Depreciation Rates']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Depreciation Rates']/../../../..//a[@title='Clear All']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Depreciation Rates']/../../../..//a[@title='Clear All']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			
+			<!--Year-->
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Depreciation Rates']/../..//th[(string(//span[text()='Year']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Depreciation Rates']/../..//th[(string(//span[text()='Year']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true" isReplaceAnd="true">
+						<valueKB inventoryName="MAIN_REPEAT_3" columnName="Year"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Depreciation Rates']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Depreciation Rates']/../..//div//*[text()='Year']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true" isReplaceAnd="true">
+						<valueKB inventoryName="MAIN_REPEAT_3" columnName="Year"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			
+			<!--Period-->
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Depreciation Rates']/../..//th[(string(//span[text()='Period']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Depreciation Rates']/../..//th[(string(//span[text()='Period']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true" isReplaceAnd="true">
+						<valueKB inventoryName="MAIN_REPEAT_3" columnName="Period"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Depreciation Rates']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Depreciation Rates']/../..//div//*[text()='Period']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true" isReplaceAnd="true">
+						<valueKB inventoryName="MAIN_REPEAT_3" columnName="Period"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Depreciation Rates']//td[1]//span//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Year"/>']/../../..//td[2]//span//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Period"/>']</findElement>
+				</if>
+				<then/>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Depreciation Rates']/../../../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isDisplayed="true">//span[contains(text(),'The method name must be unique across method types, method type and life in periods, or method type and life in years and months.')]</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isDisplayed="true">//table[@style='position: relative;']//span[contains(text(),'enter rates because you have already entered rates for every period in this method.')]</findElement>
+								</if>
+									<then>
+										<error message="You can't enter rates because you have already entered rates for every period in this method." />
+									</then>
+									<else>
+										<IfThenElse>
+											<if>
+												<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Depreciation Rates']//td[1]//span//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Year"/>']/../../..//td[2]//span//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Period"/>']</findElement>
+											</if>
+											<then>
+												<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Depreciation Rates']//td[1]//span//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Year"/>']/../../..//td[2]//span//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Period"/>']</findElement>
+												<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+												<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Depreciation Rates']//tr[contains(@class,'Select')]//label[text()='Annual Rate']/../..//input</findElement>
+												<sendKeys isClear="true" waitForPageToFinishRendering="true">
+													<valueKB inventoryName="MAIN_REPEAT_3" columnName="Annual Rate"/>
+												</sendKeys>
+											</then>
+											<else/>
+										</IfThenElse>
+									</else>	
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="SEARCH_Manage_Depreciation_Methods"/>
+			<executeBlock name="Manage_Depreciation_Methods"/>
+			<repeat inventoryName="MAIN_REPEAT_4">
+				<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+					<parameters>
+						<parameter name="DFF_NAME" value="MAIN_REPEAT_4"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<!--<executeBlock name="SAVE"/>-->
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<IfThenElse>
+					<if>
+						<findElement by="xpath" isDisplayed="true">//span[contains(text(),'The method name must be unique across method types, method type and life in periods, or method type and life in years and months.')]</findElement>
+					</if>
+					<then/>
+					<else>
+						<executeBlock name="Search_Depreciation_Flat_Rates"/>
+						<repeat inventoryName="MAIN_REPEAT_5">
+							<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+								<parameters>
+									<parameter name="DFF_NAME" value="MAIN_REPEAT_5"/>
+								</parameters>
+							</executeBlock>
+
+							<!--<executeBlock
+								navigationName="Manage Enterprise HCM Information" name="BLOCK_LINE_ALL_SESSION_DFF">
+								<parameters>
+									<parameter name="LINE_GENERIC_DFF_BLOCK" value="//table[@summary='Depreciation Flat Rates']"/>
+									<parameter
+										name="LINE_NO_SELECT_GENERIC_DFF_BLOCK" value="//tr[td[2]//a[@title='Collapse']]"/>
+									<parameter name="INV_NAME" value="Manage Depreciation Methods - Depreciation Flat Rates - DFF"/>
+								</parameters>
+							</executeBlock>-->
+						</repeat>
+						<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+						<pause durationInSecs="1"/>
+						<IfThenElse>
+							<if>
+								<findElement highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//div[text()='Error']</findElement>
+							</if>
+							<then>
+								<IfThenElse>
+									<if>
+										<findElement highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//div[text()='Error']/../../../../../../..</findElement>
+									</if>
+									<then>
+										<findElement by="xpath">//table[@style='position: relative;']//div[text()='Error']/../../../../../../..//button[text()='OK']</findElement>
+										<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+										<pause durationInSecs="1"/>
+										<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+										<pause durationInSecs="1"/>
+									</then>
+									<else/>
+								</IfThenElse>					
+							</then>
+							<else/>
+						</IfThenElse>
+					</else>
+				</IfThenElse>	
+			</repeat>
+			<repeat inventoryName="MAIN_REPEAT_3">
+				<executeBlock name="Search_Depreciation_Rates"/>
+			</repeat>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<pause durationInSecs="1"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+			<pause durationInSecs="1"/>
+			<executeBlock name="CHECK_ERROR"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

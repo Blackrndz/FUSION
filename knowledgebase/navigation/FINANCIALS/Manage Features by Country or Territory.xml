@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Features by Country or Territory</name>
+	<svn>
+		<xsd:revision>$Revision: 80619 $:</xsd:revision>
+		<xsd:author>$Author: john.martin $:</xsd:author>
+		<xsd:date>$Date: 2023-03-30 14:05:45 +0700 (Thu, 30 Mar 2023) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Features%20by%20Country%20or%20Territory.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Features by Country or Territory.xml 80619 2023-03-30 07:05:45Z john.martin $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Features by Country or Territory" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Run Geocode Generation"/>
+			<navigation name="Configure Payroll Legislations"/>
+			<navigation name="Configure Legislations for Human Resources"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Features by Country or Territory - Features by Country or Territory"/>
+		</parameters>
+		
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Legislation Code"/>']/../..//input</findElement>
+		</block>
+		
+		<block name="Back">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(@class,'panelBack')]/../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'panelBack')]/../../../../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="Warning">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[text()='Warning']/../../../../../../..//button[text()='OK']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Warning']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="Search_Features">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Features by Country or Territory']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<!-- <IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//th[(string(//span[text()='Legislation']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Query By Example']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse> -->
+			<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Features by Country or Territory']/../../../..//a[@title='Clear All']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="1"/>
+
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'Features by Country or Territory')]/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[contains(@summary,'Features by Country or Territory')]/../..//div//*[text()='Legislation']/../../@_d_index)]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Legislation"/>
+				</parameters>
+			</executeBlock>
+			
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'Features by Country or Territory')]/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[contains(@summary,'Features by Country or Territory')]/../..//div//*[text()='Legislation Code']/../../@_d_index)]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Legislation Code"/>
+				</parameters>
+			</executeBlock>
+			
+
+		</block>
+		
+		<block name="New_Features">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Features by Country or Territory']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Features by Country or Territory']/..//tr[contains(@class,'Selected')]//label[text()='Legislation']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Legislation"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Features by Country or Territory']/..//tr[contains(@class,'Selected')]//label[text()='Selected Extension']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Selected Extension"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Features by Country or Territory']/..//tr[contains(@class,'Selected')]//label[text()='Address Style']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Address Style"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Features by Country or Territory']/..//tr[contains(@class,'Selected')]//input[@type='checkbox']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Address Validation"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="Update_Features">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Features by Country or Territory']/..//tr[contains(@class,'Selected')]//label[text()='Selected Extension']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Selected Extension"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Features by Country or Territory']/..//tr[contains(@class,'Selected')]//label[text()='Address Style']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Address Style"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Features by Country or Territory']/..//tr[contains(@class,'Selected')]//input[@type='checkbox']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Address Validation"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search_Features"/>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Features by Country or Territory']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Features by Country or Territory'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Features by Country or Territory']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Features by Country or Territory']/..//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Legislation"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_Features"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Features"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<executeBlock name="Warning"/>
+			<executeBlock name="Back"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

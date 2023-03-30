@@ -1,0 +1,1481 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Expense Audit List Membership</name>
+	<svn>
+		<xsd:revision>$Revision: 80562 $:</xsd:revision>
+		<xsd:author>$Author: phetchinda.ruangwilai $:</xsd:author>
+		<xsd:date>$Date: 2023-03-25 00:43:41 +0700 (Sat, 25 Mar 2023) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Expense%20Audit%20List%20Membership.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Expense Audit List Membership.xml 80562 2023-03-24 17:43:41Z phetchinda.ruangwilai $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+			isBatchingBasedOnRootInventoryUniqueRecords="true"
+			taskName="Manage Expense Audit List Membership"
+			isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Data Role and Security Profiles"/>
+			<navigation name="Manage Users"/>
+			<navigation name="Manage Service Provider Relationships (Customer Payments Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Payables Payment Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Procurement Service Providers)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Expense Audit List Membership - Expense Audit List Membership"/>
+		</parameters>
+		<block name="FAKE_INV_MEALM">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../..//input</findElement>
+		</block>
+		
+		<block name="Save#1">
+			<findElement isDisplayed="true" by="xpath">//*[text()='Manage Expense Audit List Membership']/../../../../../../../../../../..//span[text()='Save']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="OK_Button">
+			<findElement isDisplayed="true" by="xpath">//div[contains(@data-afr-popupid,'AP1')]//a[@accesskey='K']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Add_Row_Membership_Button">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">(//table[@summary='Manage Expense Audit List Membership']/../../../../../../..//table[@_rowcount]//tr[1]//td)[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">(//table[@summary='Manage Expense Audit List Membership']/../../../../../../..//table[@_rowcount]//tr[1]//td)[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>		
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_ADD_ROW"/>
+		</block>
+		<block name="Query_Button">
+			<IfThenElse>
+				<if>
+					<findElements highlightTurnedOff="true" by="xpath">(//table[contains(@summary,'Expense Audit List Membership')]/../../div[1]//td//input)[1]</findElements>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+						<parameters>
+							<parameter name="XPATH" value="//table[contains(@summary,'Expense Audit List Membership')]/../../../.."/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>		
+		</block>
+		<block name="Click_POP_UP_Membership_Selection">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//div[contains(@data-afr-popupid,'smc1')]//li/label/../..</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement by="xpath">(//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]//span/input)[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<break/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Check_Blank_Value">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true"
+							highlightTurnedOff="true"
+							by="xpath">//tr[td[text()='<valueKB
+								inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]//td[4]//span/input[not(@title)]</findElement>
+				</if>
+				<then>
+					<error message="DATA ISSUE : The field 'Add Membership Reason', must make at least one selection."/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+
+		<block name="Waiting_Time_Select">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]//label[text()='End Membership Reason']/..//select[not(@disabled)]</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement by="xpath">Select-1</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<!-- Process Section -->
+		<block name="Search_User_Membership">
+			<executeBlock name="Query_Button" isRepeatUntilBreak="true"/>
+			<!-- Name -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="(//table[contains(@summary,'Expense Audit List Membership')]/../../div[1]//td//input)[1]/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>				
+			<!-- Lookup Value -->
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<executeBlock name="Add_Row_Membership_Button"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search_Person_Step_1">
+			<!-- Name -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true"
+									isDisplayed="true" by="xpath">//div[contains(@data-afr-popupid,'AP1')]//label[text()='Name']/../..//input</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" by="xpath">//div[contains(@data-afr-popupid,'AP1')]//label[text()='Name']/../..//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+							</sendKeys>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" by="xpath">//div[contains(@data-afr-popupid,'AP1')]//div[text()='No results found.']</findElement>
+								</if>
+								<then>
+									<error message="DATA ISSUE : The data 'Name' doesn't existing"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<evaluateXPATHBoolean>(count(//div[contains(@data-afr-popupid,'AP1')]//td[text()='<valueKB
+														inventoryName="REPEAT_1_MAIN" columnName="Name"/>']))&gt;1</evaluateXPATHBoolean>
+										</if>
+										<then>
+											<executeBlock name="Search_Person_Step_2"/>
+										</then>
+										<else>
+											<findElement
+													isDisplayed="true"
+													by="xpath">//div[contains(@data-afr-popupid,'AP1')]//td[text()='<valueKB
+														inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<executeBlock name="OK_Button"/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Search_Person_Step_2">
+			<!-- Number -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Number"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true"
+									isDisplayed="true" by="xpath">//div[contains(@data-afr-popupid,'AP1')]//label[text()='Number']/../..//input</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" by="xpath">//div[contains(@data-afr-popupid,'AP1')]//label[text()='Number']/../..//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Number"/>
+							</sendKeys>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" by="xpath">//div[contains(@data-afr-popupid,'AP1')]//div[text()='No results found.']</findElement>
+								</if>
+								<then>
+									<error message="DATA ISSUE : The data doesn't existing"/>
+								</then>
+								<else>
+									<findElement isDisplayed="true"
+											by="xpath">//div[contains(@data-afr-popupid,'AP1')]//tr[td[text()='<valueKB
+												inventoryName="REPEAT_1_MAIN"
+												columnName="Name"/>'] and td[text()='<valueKB
+												inventoryName="REPEAT_1_MAIN" columnName="Number"/>']]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<executeBlock name="OK_Button"/>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else>
+					<error message="DATA ISSUE : The data isn't unique, please specific 'Number'."/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Membership_Reason">
+			<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+			<executeBlock name="CheckBox_Auditor_addition"/>
+			<executeBlock name="CheckBox_Allowable_monthly_amount_exceeded"/>
+			<executeBlock name="CheckBox_Allowable_number_of_expense_reports_exceeded"/>
+			<executeBlock name="CheckBox_Allowable_number_of_violations_exceeded"/>
+			<executeBlock name="CheckBox_Late_receipt_submission"/>
+			<executeBlock name="CheckBox_Leave_of_absence"/>
+			<executeBlock name="CheckBox_Termination"/>
+			<executeBlock name="CheckBox_Disproportionate_number_of_cash_expenses"/>
+			<executeBlock name="CheckBox_Expense_amounts_near_threshold"/>
+			<executeBlock name="CheckBox_High_frequency_of_same_expense_types"/>
+			<executeBlock name="CheckBox_Violates_an_undefined_policy"/>
+			<executeBlock name="Check_Blank_Value"/>
+		</block>
+		<block name="Manage_Expense_Audit_List_Membership">
+			<executeBlock name="Search_Person_Step_1"/>
+			<executeBlock name="Membership_Reason"/>
+			<!-- Start Date -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Manage Expense Audit List Membership']//label[text()='Start Date']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>	
+			<!-- End Date -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="End Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]//label[text()='End Date']/..//input[@value]</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="REPEAT_1_MAIN" columnName="End Date"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>""</valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<error message="DATA ISSUE : The field 'End Date' can not update to be BLANK."/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath">//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]//label[text()='End Date']/..//input</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath">//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]//label[text()='End Date']/..//input[@value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="End Date"/>']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement highlightTurnedOff="true" by="xpath">//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]//label[text()='End Date']/..//input</findElement>
+											<sendKeys isClear="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="REPEAT_1_MAIN" columnName="End Date"/>
+											</sendKeys>
+											<executeBlock name="Waiting_Time_Select" isRepeatUntilBreak="true">
+												<parameters>
+													<parameter name="Select-1" value="//table[@summary='Manage Expense Audit List Membership']/tbody/tr[1]/td[1]"/>
+												</parameters>
+											</executeBlock>											
+											<pause durationInSecs="3"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<pause durationInSecs="2"/>
+			<!-- End Membership Reason -->
+			<IfThenElse>
+				<if>
+					<evaluateXPATHBoolean>(//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]//label[text()='End Date']/..//input[@value] and //tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]//label[text()='End Membership Reason']/..//select[not(@disabled)])</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="End Membership Reason"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath">//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]//label[text()='End Membership Reason']/..//select</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]//label[text()='End Membership Reason']/..//*[@title='<valueKB inventoryName="REPEAT_1_MAIN" columnName="End Membership Reason"/>']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement by="xpath">//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]//label[text()='End Membership Reason']/..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueKB inventoryName="REPEAT_1_MAIN" columnName="End Membership Reason"/>
+											</select>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]//label[text()='End Membership Reason']/..//select[@title]</findElement>
+								</if>
+								<then/>
+								<else>
+									<error message="DATA ISSUE : The field 'End Membership Reason' is a required field."/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<!-- CheckBox Section -->
+
+		<block name="CheckBox_Auditor_addition">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Auditor addition"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Auditor addition"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Auditor addition']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Auditor addition']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Auditor addition']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Auditor addition']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Auditor addition']</findElement>
+										</if>
+										<then>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Auditor addition']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CheckBox_Allowable_monthly_amount_exceeded">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Allowable monthly amount exceeded"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Allowable monthly amount exceeded"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Allowable monthly amount exceeded']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Allowable monthly amount exceeded']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Allowable monthly amount exceeded']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Allowable monthly amount exceeded']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Allowable monthly amount exceeded']</findElement>
+										</if>
+										<then>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Allowable monthly amount exceeded']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CheckBox_Allowable_number_of_expense_reports_exceeded">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Allowable number of expense reports exceeded"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Allowable number of expense reports exceeded"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Allowable number of expense reports exceeded']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Allowable number of expense reports exceeded']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Allowable number of expense reports exceeded']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Allowable number of expense reports exceeded']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Allowable number of expense reports exceeded']</findElement>
+										</if>
+										<then>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Allowable number of expense reports exceeded']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CheckBox_Allowable_number_of_violations_exceeded">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Allowable number of violations exceeded"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Allowable number of violations exceeded"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Allowable number of violations exceeded']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Allowable number of violations exceeded']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Allowable number of violations exceeded']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Allowable number of violations exceeded']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Allowable number of violations exceeded']</findElement>
+										</if>
+										<then>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Allowable number of violations exceeded']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CheckBox_Late_receipt_submission">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Late receipt submission"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Late receipt submission"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Late receipt submission']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Late receipt submission']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Late receipt submission']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Late receipt submission']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Late receipt submission']</findElement>
+										</if>
+										<then>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Late receipt submission']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CheckBox_Leave_of_absence">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Leave of absence"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Leave of absence"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Leave of absence']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Leave of absence']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Leave of absence']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Leave of absence']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Leave of absence']</findElement>
+										</if>
+										<then>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Leave of absence']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CheckBox_Termination">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Termination"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Termination"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Termination']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Termination']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Termination']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Termination']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Termination']</findElement>
+										</if>
+										<then>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Termination']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CheckBox_Disproportionate_number_of_cash_expenses">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Disproportionate number of cash expenses"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Disproportionate number of cash expenses"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Disproportionate number of cash expenses']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Disproportionate number of cash expenses']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Disproportionate number of cash expenses']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Disproportionate number of cash expenses']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Disproportionate number of cash expenses']</findElement>
+										</if>
+										<then>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Disproportionate number of cash expenses']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CheckBox_Expense_amounts_near_threshold">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Expense amounts near threshold"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Expense amounts near threshold"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Expense amounts near threshold']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Expense amounts near threshold']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Expense amounts near threshold']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Expense amounts near threshold']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Expense amounts near threshold']</findElement>
+										</if>
+										<then>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Expense amounts near threshold']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CheckBox_High_frequency_of_same_expense_types">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - High frequency of same expense types"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - High frequency of same expense types"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='High frequency of same expense types']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='High frequency of same expense types']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='High frequency of same expense types']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='High frequency of same expense types']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='High frequency of same expense types']</findElement>
+										</if>
+										<then>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='High frequency of same expense types']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CheckBox_Violates_an_undefined_policy">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Violates an undefined policy"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Add Membership Reason - Violates an undefined policy"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Violates an undefined policy']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Violates an undefined policy']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Violates an undefined policy']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@class,'MenuPopup')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Click_POP_UP_Membership_Selection" isRepeatUntilBreak="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Violates an undefined policy']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    highlightTurnedOff="true" setFocus="true" by="xpath">//table[@style='position: relative;']//li[contains(@class,'Selected')]/label[text()='Violates an undefined policy']</findElement>
+										</if>
+										<then>
+											<findElement setFocus="true" by="xpath">//table[@style='position: relative;']//li/label[text()='Violates an undefined policy']//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<!--END CheckBox Section-->
+		<!--BEGIN REPEAT-->
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search_User_Membership"/>
+			<executeBlock name="Manage_Expense_Audit_List_Membership"/>
+			<executeBlock name="Save#1"/>
+		</repeat>
+		<executeBlock name="Save#1"/>
+		<!--END REPEAT-->
+	</fusionNavigation>
+</navigation>

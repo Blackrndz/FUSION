@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Target Utilization Percentages</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Target Utilization Percentages"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Job"/>
+		</dependencies>
+        <parameters>
+            <parameter name="REPEAT_1_MAIN" value="Manage Target Utilization Percentages - Target Utilization Percentages"/>
+        </parameters>
+		
+		<!--REPEAT_1-->
+		<block name="Search_Target_Utilization_Percentages">
+			<executeBlock name="SPECIFY_QUERY_BY_EXAMPLE">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Manage Project Transaction Sources']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath">//a[@title='Clear All']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//th[(string(//span[text()='Job']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_1_MAIN" columnName="Job"/>
+            </sendKeys>
+			<executeBlock name="SCROLLBAR">
+                <parameters>
+                    <parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Manage Target Utilization Percentages']/../..//div[contains(text(),'No data to display.')]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Manage Target Utilization Percentages'][@_rowcount]//tr[1]//td)[1]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Manage Target Utilization Percentages']/../..//div[contains(@id,'scroller')]"/>
+                    <parameter
+                            name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Manage Target Utilization Percentages']//tr[td/span/span[text()='<valueKB inventoryName="REPEAT_1_MAIN"
+                            columnName="Job"/>']]</parameter>
+                    <parameter
+                            name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[@summary='Manage Target Utilization Percentages']//tr[td/span/span/input[@value='<valueKB inventoryName="REPEAT_1_MAIN"
+                            columnName="Job"/>']]</parameter>
+                    <parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Target_Utilization_Percentages"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Target_Utilization_Percentages"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Create_Target_Utilization_Percentages">
+			<executeBlock name="GLOBAL_ADD"/>
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Manage Target Utilization Percentages']//label[text()='Job']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Job"/>
+					<parameter name="SEARCH_1" value="Job"/>
+				</parameters>
+			</executeBlock>
+			<!--Target Utilization (%)-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Manage Target Utilization Percentages']//label[text()='Target Utilization']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Target Utilization (%)"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_SAVE"/>
+        </block>
+		<block name="Update_Target_Utilization_Percentages">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" />
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" />
+				</else>
+			</IfThenElse>
+			<!--Target Utilization (%)-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Manage Target Utilization Percentages']//label[text()='Target Utilization']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Target Utilization (%)"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_SAVE"/>
+        </block>
+		
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="REPEAT_1_MAIN">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//label[text()='Enterprise Target Utilization Percentage']/../..//input[@value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Enterprise Target Utilization Percentage"/>']</findElement>
+				</if>
+				<then>
+					<executeBlock name="Search_Target_Utilization_Percentages"/>
+				</then>
+				<else>
+					<executeBlock name="INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Enterprise Target Utilization Percentage']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Enterprise Target Utilization Percentage"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Search_Target_Utilization_Percentages"/>
+				</else>
+			</IfThenElse>
+        </repeat>
+    </fusionNavigation>
+</navigation>

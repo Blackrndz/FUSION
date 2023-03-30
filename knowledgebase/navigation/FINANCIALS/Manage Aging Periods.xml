@@ -1,0 +1,458 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Aging Periods</name>
+    <svn>
+        <xsd:revision>$Revision: 80414 $:</xsd:revision>
+        <xsd:author>$Author: kullada.somtragool $:</xsd:author>
+        <xsd:date>$Date: 2023-03-08 20:49:28 +0700 (Wed, 08 Mar 2023) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Aging%20Periods.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Aging Periods.xml 80414 2023-03-08 13:49:28Z kullada.somtragool $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Aging Periods" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Data Role and Security Profiles"/>
+			<navigation name="Manage Service Provider Relationships (Customer Payments Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Payables Payment Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Procurement Service Providers)"/>
+        </dependencies>
+        <block name="Go To Task">
+            <findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a[@title='Go to Task']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Save">
+            <findElement by="xpath">//button[text()='Save']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Save and Close">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//span[text()='ave and Close']/../..[not(@style)]/a</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//span[text()='ave and Close']/../..[not(@style)]/a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//*[text()='S']/../../..[not(@style)]/a</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//*[text()='S']/../../..[not(@style)]/a</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+        </block>
+        <block name="First Create">
+            <findElement by="xpath">//img[@title="Create"]/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Cancel">
+            <findElement by="xpath">//span[text()='C']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Error">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//div[text()='Error']</findElement>
+                </if>
+                <then>
+                    <error message="The aging period details must have fewer than five lines."/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+		<block name="WAITING_CLEAR_ALL_INPUT">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[@title='Clear All']/../../../../..//input</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a[text()='View']</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//a/img[@title='Query By Example']</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//a/img[@title='Query By Example']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+								</then>
+								<else>
+									<findElement isSkipCheckDomError="true" by="xpath">//a[text()='View']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//td[contains(text(),'Query By Example')]</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath">//td[contains(text(),'Query By Example')]</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+										</then>
+										<else/>
+									</IfThenElse>								
+								</else>
+							</IfThenElse>						
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a[text()='View']/../../../../../../../../../../../..</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//a[text()='View']/../../../../../../../../../../../..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+									<findElement isSkipCheckDomError="true" by="xpath">//a[text()='View']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//td[contains(text(),'Query By Example')]</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath">//td[contains(text(),'Query By Example')]</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+										</then>
+										<else/>
+									</IfThenElse>									
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a/img[@title='Query By Example']</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath">//a/img[@title='Query By Example']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a/img[@title='Query By Example']/../../../../../../../..</findElement>
+												</if>
+												<then>
+													<findElement isSkipCheckDomError="true" by="xpath">//a/img[@title='Query By Example']/../../../../../../../..</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+													<findElement isSkipCheckDomError="true" by="xpath">//a/img[@title='Query By Example']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>						
+												</then>
+												<else/>
+											</IfThenElse>
+										</else>
+									</IfThenElse>						
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+        <block name="Search Aging Period">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//*[text()='Manage Aging Periods']/../../div</findElement>
+                </if>
+                <then/>
+                <else>
+                    <IfThenElse>
+                        <if>
+                           <findElement by="xpath">//*[contains(text(),'<valueKB inventoryName="Manage Aging Periods - Aging Period" columnName="Name"/>')]/../../div</findElement>
+                        </if>
+                        <then/>
+                        <else>
+                            <executeBlock name="Save and Close"/>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+            <executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+                <parameters>
+                    <parameter name="XPATH" value="//*[@summary='Aging Periods']/../../../../../../.."/>
+                </parameters>
+            </executeBlock>
+            <executeBlock name="WAITING_CLEAR_ALL_INPUT" isRepeatUntilBreak="true"/>
+            <findElement by="xpath">//a[@title='Clear All']</findElement>
+            <click waitForPageToFinishRendering="true"/>			
+            
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+						<valueKB inventoryName="Manage Aging Periods - Aging Period" columnName="Name"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement by="xpath">//table[@summary='Aging Periods']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Aging Periods']/../..//div//*[text()='Name']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+						<valueKB inventoryName="Manage Aging Periods - Aging Period" columnName="Name"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			
+           <IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//span[text()='<valueKB inventoryName="Manage Aging Periods - Aging Period" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//tr[td[1]/a//span[text()='<valueKB inventoryName="Manage Aging Periods - Aging Period" columnName="Name"/>']]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <executeBlock name="GLOBAL_UPDATE"/>
+                </then>
+                <else>
+                    <executeBlock name="GLOBAL_CREATE"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Aging Period">
+            <!--Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="Manage Aging Periods - Aging Period"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+          
+            <!--Description-->
+			<executeBlock name="INPUT_TEXTAREA">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="Manage Aging Periods - Aging Period"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>	
+           
+            <!--Active-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Active']/.."/>
+					<parameter name="INV_NAME" value="Manage Aging Periods - Aging Period"/>
+					<parameter name="COL_NAME" value="Active"/>
+				</parameters>
+			</executeBlock>
+        </block>
+        <block name="Waiting Input Period">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//*[text()='Aging Period Details']/../../../../../../..//label[text()='Column Order']/../..//input</findElement>
+                </if>
+                <then>
+                    <break/>
+                </then>
+                <else>
+                    <pause durationInSecs="1"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Search Aging Period Details">
+            <executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+                <parameters>
+                    <parameter name="XPATH" value="//*[@summary='Aging Period Details']/../../../../../../.."/>
+                </parameters>
+            </executeBlock>
+            <executeBlock name="WAITING_CLEAR_ALL_INPUT" isRepeatUntilBreak="true"/>
+            <findElement by="xpath">//a[@title='Clear All']</findElement>
+            <click waitForPageToFinishRendering="true"/>				
+           
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//th[(string(//span[text()='Column Order']/../..//preceding-sibling::*/../../../../../@_d_index))+1]//input</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//th[(string(//span[text()='Column Order']/../..//preceding-sibling::*/../../../../../@_d_index))+1]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="Manage Aging Periods - Aging Period Details" columnName="Column Order"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement by="xpath">//table[@summary='Aging Period Details']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Aging Period Details']/../..//div//*[text()='Column Order']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="Manage Aging Periods - Aging Period Details" columnName="Column Order"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                            by="xpath">//*[text()='Aging Period Details']/../../../../../../..//label[text()='Column Order']/../..//input[@value='<valueKB
+                            inventoryName="Manage Aging Periods - Aging Period Details" columnName="Column Order"/>']</findElement>
+                </if>
+                <then>
+                    <findElement
+                            by="xpath">//*[text()='Aging Period Details']/../../../../../../..//label[text()='Column Order']/../..//input[@value='<valueKB
+                            inventoryName="Manage Aging Periods - Aging Period Details" columnName="Column Order"/>']/../../..//td[1]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <findElement by="xpath">//*[text()='Aging Period Details']/../../../../../../..//img[@title="Add Row"]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Aging Period Details">
+            <!--Column Order-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Aging Period Details']/../../../../../../..//label[text()='Column Order']/.."/>
+					<parameter name="INV_NAME" value="Manage Aging Periods - Aging Period Details"/>
+					<parameter name="COL_NAME" value="Column Order"/>
+				</parameters>
+			</executeBlock>	
+            <!--Days - From-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Aging Period Details']/../../../../../../..//label[text()='From']/.."/>
+					<parameter name="INV_NAME" value="Manage Aging Periods - Aging Period Details"/>
+					<parameter name="COL_NAME" value="Days - From"/>
+				</parameters>
+			</executeBlock>
+            <!--Days - To-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Aging Period Details']/../../../../../../..//label[text()='To']/.."/>
+					<parameter name="INV_NAME" value="Manage Aging Periods - Aging Period Details"/>
+					<parameter name="COL_NAME" value="Days - To"/>
+				</parameters>
+			</executeBlock>
+            
+            <!--Column Heading - First-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Aging Period Details']/../../../../../../..//label[text()='First']/.."/>
+					<parameter name="INV_NAME" value="Manage Aging Periods - Aging Period Details"/>
+					<parameter name="COL_NAME" value="Column Heading - First"/>
+				</parameters>
+			</executeBlock>
+          
+            <!--Column Heading - Second-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Aging Period Details']/../../../../../../..//label[text()='Second']/.."/>
+					<parameter name="INV_NAME" value="Manage Aging Periods - Aging Period Details"/>
+					<parameter name="COL_NAME" value="Column Heading - Second"/>
+				</parameters>
+			</executeBlock>	
+        </block>
+        <block name="DFF_FAKE_AGING">
+            <findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="Manage Aging Periods - Aging Period - DFF" columnName="Field Name"/>']/../..//input</findElement>
+            <click isCheckbox="true" waitForPageToFinishRendering="true">
+                <valueKB
+                    inventoryName="Manage Aging Periods - Aging Period - DFF" columnName="Field Value"/>
+            </click>
+            <findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="Manage Aging Periods - Aging Period Details - DFF" columnName="Field Name"/>']/../..//input</findElement>
+            <click isCheckbox="true" waitForPageToFinishRendering="true">
+                <valueKB
+                    inventoryName="Manage Aging Periods - Aging Period Details - DFF" columnName="Field Value"/>
+            </click>
+        </block>
+       
+        <!--<executeBlock name="First Create"/>
+        <executeBlock name="Cancel"/>-->
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+        <repeat inventoryName="Manage Aging Periods - Aging Period">
+            <executeBlock name="Search Aging Period"/>
+            <executeBlock name="Aging Period"/>
+            <repeat inventoryName="Manage Aging Periods - Aging Period - DFF">
+				<executeBlock name="GLOBAL_ALL_DFF">
+					<parameters>
+						<parameter name="INV_NAME" value="Manage Aging Periods - Aging Period - DFF"/>
+					</parameters>
+				</executeBlock>
+            </repeat>
+            <repeat inventoryName="Manage Aging Periods - Aging Period Details">
+				<IfThenElse>
+					<if>
+						<findElement by="xpath">//table[@summary='Aging Period Details']/../..//div[contains(text(),'No data to display.')]</findElement>
+					</if>
+					<then>
+						<findElement by="xpath">//*[text()='Aging Period Details']/../../../../../../..//img[@title="Add Row"]</findElement>
+						<click waitForPageToFinishRendering="true"/>							
+					</then>
+					<else>
+						<executeBlock name="Search Aging Period Details"/>
+					</else>
+				</IfThenElse>			
+                
+                <executeBlock name="Waiting Input Period" isRepeatUntilBreak="true"/>
+                <executeBlock name="Aging Period Details"/>
+				
+                <repeat inventoryName="Manage Aging Periods - Aging Period Details - DFF">
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">//a[@title='Collapse']</findElement>
+                        </if>
+                        <then/>
+                        <else>
+                            <findElement by="xpath">//a[@title='Expand']</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </else>
+                    </IfThenElse>
+					<executeBlock name="GLOBAL_ALL_DFF">
+                        <parameters>
+                            <parameter name="INV_NAME" value="Manage Aging Periods - Aging Period Details - DFF"/>
+                        </parameters>
+                    </executeBlock>
+
+                    <!--<executeBlock
+                        navigationName="Manage Enterprise HCM Information" name="BLOCK_LINE_ALL_SESSION_DFF">
+                        <parameters>
+                            <parameter name="LINE_GENERIC_DFF_BLOCK" value="//*[text()='Aging Period Details']/../../../../../../.."/>
+                            <parameter
+                                name="LINE_NO_SELECT_GENERIC_DFF_BLOCK" value="//tr[td[2]//a[@title='Collapse']]"/>
+                            <parameter name="REPEAT_ALL_INV_DFF" value="Manage Aging Periods - Aging Period Details - DFF"/>
+                        </parameters>
+                    </executeBlock>-->
+                    <findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Aging Period Details')]/../../../../../../..//a[text()='View']/../..//div</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFPopupMenuContent']//td[text()='Columns']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFPopupMenuContent']//td[text()='Show All']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <pause durationInSecs="2"/>
+                </repeat>
+				<IfThenElse>
+					<if>
+						<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='Cancel']</findElement>
+					</if>
+					<then>
+						<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='Cancel']</findElement>
+						<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+						<pause durationInSecs="1"/>
+					</then>
+					<else>
+						<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+					</else>
+				</IfThenElse>
+              
+                <executeBlock name="Error"/>
+            </repeat>
+        </repeat>
+    </fusionNavigation>
+</navigation>

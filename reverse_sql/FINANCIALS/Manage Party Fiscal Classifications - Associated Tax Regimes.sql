@@ -1,0 +1,41 @@
+/* ****************************************************************************
+* $Revision:  $:
+* $Author: Nasrullah Dusenmahamad $:
+* $Date: 2017-03-17  $:
+* $HeadURL: $:
+* $Id: Manage Category Descriptive Flexfields - Context Segments $:
+* ****************************************************************************
+* Description:
+* ************************************************************************** */
+
+
+SELECT fcTypesE0.OWNER_ID_CHAR RES_PARTY_CLASSIFICATION
+,fcTypesE0.CLASSIFICATION_TYPE_LEVEL_CODE RES_LEVEL
+,fcTypesE0.CLASSIFICATION_TYPE_CODE RES_TYPE_CODE
+,fcTypeRegimesE0.TAX_REGIME_CODE RES_TAX_REGIME_CODE
+,(SELECT TAX_REGIME_NAME
+	FROM ZX_REGIMES_VL
+	WHERE TAX_REGIME_CODE = fcTypeRegimesE0.TAX_REGIME_CODE
+	) RES_TAX_REGIME_NAME
+,TO_CHAR(fcTypeRegimesE0.EFFECTIVE_FROM,'DD-Mon-YYYY') RES_START_DATE
+,TO_CHAR(fcTypeRegimesE0.EFFECTIVE_TO,'DD-Mon-YYYY') RES_END_DATE
+,fcTypeRegimesE0.LAST_UPDATED_BY RSC_LAST_UPDATED_BY
+,fcTypeRegimesE0.LAST_UPDATE_DATE RSC_LAST_UPDATE_DATE
+,fcTypeRegimesE0.CREATED_BY RSC_CREATED_BY
+,fcTypeRegimesE0.CREATION_DATE RSC_CREATION_DATE
+,NULL RSC_LEDGER_ID
+,NULL RSC_CHART_OF_ACCOUNTS_ID
+,NULL RSC_BUSINESS_UNIT_ID
+,NULL RSC_LEGAL_ENTITY_ID
+,NULL RSC_ORGANIZATION_ID
+,NULL RSC_BUSINESS_GROUP_ID
+,NULL RSC_ENTERPRISE_ID
+,NULL RSC_COUNTRY_ID
+
+FROM ZX_FC_TYPES_VL fcTypesE0
+,ZX_FC_TYPES_REG_ASSOC fcTypeRegimesE0
+WHERE fcTypesE0.CLASSIFICATION_TYPE_CATEG_CODE = 'PARTY_FISCAL_CLASS'
+AND fcTypesE0.CLASSIFICATION_TYPE_CODE = fcTypeRegimesE0.CLASSIFICATION_TYPE_CODE
+ORDER BY fcTypesE0.OWNER_ID_CHAR
+,fcTypesE0.CLASSIFICATION_TYPE_LEVEL_CODE
+,fcTypeRegimesE0.TAX_REGIME_CODE

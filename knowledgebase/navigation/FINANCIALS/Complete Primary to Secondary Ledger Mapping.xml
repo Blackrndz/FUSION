@@ -1,0 +1,841 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Complete Primary to Secondary Ledger Mapping</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="true" isIgnoreTaskSearchNavigation="true"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Complete Primary to Secondary Ledger Mapping" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Specify Ledger Options (Secondary Ledger)"/>
+		</dependencies>
+		<block name="MANUAL_SEARCH_TASK">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//*[text()='Functional Areas']</findElement>
+				</if>
+				<then>			
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[contains(text(),'Setup and Maintenance')]</findElement>
+					<click waitForPageToFinishRendering="false" isSkipCheckDomError="true" isSkipBrowserTitleChange="true" />
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>	
+
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Setup: Financials']/..</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath" setFocus="true">(//*[contains(text(),'Setup:')]/../../..//a)[1]</findElement>
+					<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>	
+					<pause durationInSecs="2"/>						
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()="Financials"]</findElement>
+					<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>		
+					<pause durationInSecs="2"/>			
+				</else>
+			</IfThenElse>			
+			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Search Tasks']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+				<valueText>###TASK_NAME###</valueText>
+			</sendKeys>		
+			<pause durationInSecs="2"/>			
+			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Search Tasks']/../../../../../..//a</findElement>
+			<click waitForPageToFinishRendering="false" isSkipCheckDomError="true" isSkipBrowserTitleChange="true" />				
+			<pause durationInSecs="2"/>	
+			<findElement by="xpath">//*[text()='Search Task Results']/../../../../../../..//a[text()='###TASK_NAME###']</findElement>
+			<click waitForPageToFinishRendering="true"/>	
+			<pause durationInSecs="2"/>					
+		</block>
+		
+		<block name="WAITING_OPEN_SELECT_AND_ADD">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Select and Add:')]/../../../../../../..</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="WAITING_CLEAR_ALL_INPUT">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//a[@title='Clear All']/../../../../..//input</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<block name="WAITING_QUERY_INPUT">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//td[text()='Query By Example']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//td[text()='Query By Example']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Select and Add:')]/../../../../../../..//a[text()='View']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SAVE_AND_CLOSE_PRIMARY_LEDGER">
+			<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select and Add: Primary Ledger']/../../../../../../..//span[text()='S']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="SAVE_AND_CLOSE_SECONDARY_LEDGER">
+			<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select and Add: Secondary Ledger']/../../../../../../..//span[text()='S']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="SAVE">
+			<executeBlock name="GLOBAL_SAVE"/>
+		</block>
+
+
+		<block name="SEARCH_PRIMARY_LEDGER">
+			<IfThenElse>
+				<if>
+					<findElement
+                            by="xpath">//label[text()='Primary Ledger']/../..//select[title='<valueKB
+                            inventoryName="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger" columnName="Primary Ledger"/>']</findElement>
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Primary Ledger']/../..//select</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Primary Ledger']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Select and Add</valueText>
+							</select>								
+						</then>
+						<else>              
+							<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Primary Ledger']/../..//input/..//div//li[text()='Select and Add']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true" />
+						</else>
+					</IfThenElse>
+					<findElement isSkipCheckDomError="true" by="xpath">//button[text()='Apply and Go to Task']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<executeBlock name="WAITING_OPEN_SELECT_AND_ADD" isRepeatUntilBreak="true"/>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true"
+                                highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//a[@title='Clear All']</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock name="WAITING_QUERY_INPUT" isRepeatUntilBreak="true"/>
+							<executeBlock name="WAITING_CLEAR_ALL_INPUT" isRepeatUntilBreak="true"/>
+						</else>
+					</IfThenElse>
+					<findElement isSkipCheckDomError="true" by="xpath" >//input[contains(@id,'primaryLedgerNameId')]</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB
+                            inventoryName="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger" columnName="Primary Ledger"/>
+					</sendKeys>
+
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true"
+                                    by="xpath">//td[text()='<valueKB
+                            inventoryName="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger" columnName="Primary Ledger"/>']</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true"
+                                    by="xpath">//td[text()='<valueKB
+                            inventoryName="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger" columnName="Primary Ledger"/>']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<executeBlock name="SAVE_AND_CLOSE_PRIMARY_LEDGER"/>
+						</then>
+						<else>
+							<error message="The field 'Primary Ledger' doesn't exist."/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+
+
+		<block name="SEARCH_SECONDARY_LEDGER">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true"
+                            by="xpath">//label[text()='Secondary Ledger']/../..//select[@title='<valueKB
+                            inventoryName="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger" columnName="Secondary Ledger"/>']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//button[text()='Apply and Go to Task']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Secondary Ledger']/../..//select</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Secondary Ledger']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Select and Add</valueText>
+							</select>								
+						</then>
+						<else>              
+							<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Secondary Ledger']/../..//input/..//div//li[text()='Select and Add']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true" />
+						</else>
+					</IfThenElse>
+					<findElement isSkipCheckDomError="true" by="xpath">//button[text()='Apply and Go to Task']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<executeBlock name="WAITING_OPEN_SELECT_AND_ADD" isRepeatUntilBreak="true"/>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true"
+                                highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//a[@title='Clear All']</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock name="WAITING_QUERY_INPUT" isRepeatUntilBreak="true"/>
+							<executeBlock name="WAITING_CLEAR_ALL_INPUT" isRepeatUntilBreak="true"/>
+						</else>
+					</IfThenElse>
+					<findElements by="xpath" isSkipCheckDomError="true" returnElementAtPosition="1">//a[@title='Clear All']/../../../../..//input</findElements>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB
+                            inventoryName="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger" columnName="Secondary Ledger"/>
+					</sendKeys>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true"
+                                    by="xpath">//div[text()='Select and Add: Secondary Ledger']/../../../../../../..//tr[td[1][text()='<valueKB
+                                    inventoryName="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger" columnName="Secondary Ledger"/>']]</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true"
+                                    by="xpath">//div[text()='Select and Add: Secondary Ledger']/../../../../../../..//tr[td[1][text()='<valueKB
+                                    inventoryName="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger" columnName="Secondary Ledger"/>']]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<executeBlock name="SAVE_AND_CLOSE_SECONDARY_LEDGER"/>
+						</then>
+						<else>
+							<error message="The field 'Secondary Ledger' doesn't exist."/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+        <block name="SKIP_ERROR_ORACLE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Error']/../../../../../../..//*[text()='OK']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Error']/../../../../../../..//*[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="false" isSkipCheckDomError="true" isSkipBrowserTitleChange="true" />				
+					<pause durationInSecs="3"/>														
+				</then>
+				<else>						
+					<pause durationInSecs="3"/>		
+				</else>
+			</IfThenElse>		
+        </block>
+
+		<block name="SELECT_SCOPE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//a[text()='###TASK_NAME###']</findElement>
+				</if>
+				<then>
+					<executeBlock name="Scroll_Right_Scope" isRepeatUntilBreak="true"/>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='###TASK_NAME###']/../../td[(string(//span[text()='Scope']/../../@_d_index))+1]/a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="5"/>
+					<executeBlock name="SEARCH_PRIMARY_LEDGER"/>
+					<executeBlock name="SEARCH_SECONDARY_LEDGER"/>
+					<executeBlock name="SKIP_ERROR_ORACLE"/>					
+				</then>
+				<else>
+					<error message="The task doesn't exist."/>
+				</else>
+			</IfThenElse>
+			<!--
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='Complete Primary to Secondary Ledger Mapping']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Complete Primary to Secondary Ledger Mapping']/../../../td[(string(//span[text()='Selected Scope']/../../@_d_index))+0]/a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="SEARCH_PRIMARY_LEDGER"/>
+					<executeBlock name="SEARCH_SECONDARY_LEDGER"/>
+					<executeBlock name="SKIP_ERROR_ORACLE"/>
+				</then>
+				<else>
+					<error message="The task doesn't exist."/>
+				</else>
+			</IfThenElse>
+			-->
+		</block>
+		<block name="Scroll_Right_Scope">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//*[text()='###TASK_NAME###']/../../td[(string(//span[text()='Scope']/../../@_d_index))+1]/a</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Tasks']/../..//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="RIGHT"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="CHART_OF_ACCOUNTS_MAPPING">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger" columnName="Chart of Accounts Mapping"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//*[text()='Chart of Accounts Mapping']</findElement>
+						</if>
+						<then>
+							<executeBlock name="SELECT_KB">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Chart of Accounts Mapping']/../.."/>
+									<parameter name="INV_NAME" value="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger"/>
+									<parameter name="COL_NAME" value="Chart of Accounts Mapping"/>
+								</parameters>
+							</executeBlock>	
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CURRENCY_CONVERSION_RULE">
+
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true">//*[text()='Currency Conversion Rules']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger" columnName="Source Representation"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<executeBlock name="SELECT_KB">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Source Representation']/../.."/>
+									<parameter name="INV_NAME" value="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger"/>
+									<parameter name="COL_NAME" value="Source Representation"/>
+								</parameters>
+							</executeBlock>	
+						</then>
+						<else/>
+					</IfThenElse>
+					<!--Default Conversion Rate Type-->
+					<executeBlock name="LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Default Conversion Rate Type']/../.."/>
+							<parameter name="INV_NAME" value="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger"/>
+							<parameter name="COL_NAME" value="Default Conversion Rate Type"/>
+							<parameter name="SEARCH_1" value="Rate Type"/>
+						</parameters>
+					</executeBlock>
+					<!--Retain Transaction Rate Type-->
+					<executeBlock name="SELECT_KB">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Retain Transaction Rate Type']/../.."/>
+							<parameter name="INV_NAME" value="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger"/>
+							<parameter name="COL_NAME" value="Retain Transaction Rate Type"/>
+						</parameters>
+					</executeBlock>	
+					<!--Missing Conversion Rate-->
+					<executeBlock name="RADIO_INPUT">
+						<parameters>
+							<parameter name="LEGEND" value="Missing Conversion Rate"/>
+							<parameter name="LABEL_RADIO" value="Missing Conversion Rate"/>
+							<parameter name="XPATH" value=""/>
+							<parameter name="INV_NAME" value="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger"/>
+							<parameter name="COL_NAME" value="Missing Conversion Rate"/>
+						</parameters>
+					</executeBlock>					
+
+
+					<IfThenElse>
+						<!-- Missing Conversion Rate = Use last rate-->
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger" columnName="Missing Conversion Rate"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Use last rate</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<executeBlock name="INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Number of Days to Find Last Rate']/../.."/>
+									<parameter name="INV_NAME" value="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger"/>
+									<parameter name="COL_NAME" value="Number of Days to Find Last Rate"/>
+								</parameters>
+							</executeBlock>	
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="JOURNAL_CONVERSION_RULE">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Journal Conversion Rules']/..</findElement>
+				</if>
+				<then>
+					<!--Post Journals Automatically from Source Ledger-->
+					<executeBlock name="SELECT_KB">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Post Journals Automatically from Source Ledger']/../.."/>
+							<parameter name="INV_NAME" value="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger"/>
+							<parameter name="COL_NAME" value="Post Journals Automatically from Source Ledger"/>
+						</parameters>
+					</executeBlock>	
+					<!--Retain Journal Creator from Source Ledger-->
+					<executeBlock name="SELECT_KB">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Retain Journal Creator from Source Ledger']/../.."/>
+							<parameter name="INV_NAME" value="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger"/>
+							<parameter name="COL_NAME" value="Retain Journal Creator from Source Ledger"/>
+						</parameters>
+					</executeBlock>	
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="SAVE_AND_CLOSE">
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</block>
+		<block name="ADD_ROW_BUTTON">
+			<findElement by="xpath">//img[contains(@title,'Add Row')]/../..//a</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="INFORMATON">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[contains(@data-afr-popupid,'Region1')]//div[text()='Information']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Information']/../../../../../../..//button[text()='Yes']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="SCROLLBAR_GENERIC_INNER_1">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+						</if>
+						<then>
+							<executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+							<break/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+								</if>
+								<then>
+									<executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+									<break/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+										</if>
+										<then>
+											<executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+											<break/>
+										</then>
+										<else>
+											<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+											<IfThenElse>
+												<if>
+													<isEndOfScroll/>
+												</if>
+												<then>
+													<executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+													<break/>
+												</then>
+												<else>
+													<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+													<scroll direction="DOWN"/>
+													<pause durationInSecs="1"/>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SCROLLBAR_GENERIC_1">
+			<!-- check if there is no data found returned after the search, if so then we create a new record if applicable -->
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+				</then>
+				<else>
+					<!-- resetting the scollbar back to the Top because the form remembers where it was even when searching a new record -->
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					<scroll direction="TOP"/>
+					<findElement by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<executeBlock name="SCROLLBAR_GENERIC_INNER_1" isRepeatUntilBreak="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Create">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+				</if>
+				<then>
+					<executeBlock name="ADD_ROW_BUTTON"/>
+					<executeBlock name="CREATE_JOURNAL"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="TOP"/>
+							<findElement by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<executeBlock name="ADD_ROW_BUTTON"/>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="TOP"/>
+							<pause durationInSecs="2"/>
+							<executeBlock name="CREATE_JOURNAL"/>
+						</then>
+						<else>
+							<findElement by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<executeBlock name="ADD_ROW_BUTTON"/>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="TOP"/>
+							<pause durationInSecs="2"/>
+							<executeBlock name="CREATE_JOURNAL"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Update">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+								</if>
+								<then>
+									<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+										</then>
+										<else>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>			
+			<executeBlock name="UPDATE_JOURNAL"/>
+		</block>
+		<block name="UPDATE_JOURNAL">
+			<IfThenElse>
+				<if>
+					<findElement
+                            by="xpath">//td[3]//span[text()='<valueKB
+                            inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules"
+                            columnName="Journal Source"/>']/../../../td[4]//span[text()='<valueKB
+                            inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules" columnName="Journal Category"/>']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement
+                                    by="xpath">//td[3]//span[text()='<valueKB
+                                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules"
+                                    columnName="Journal Source"/>']/../../../td[4]//span[text()='<valueKB
+                                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules" columnName="Journal Category"/>']/../../..//select</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    by="xpath">//td[3]//span[text()='<valueKB
+                                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules"
+                                    columnName="Journal Source"/>']/../../../td[4]//span[text()='<valueKB
+                                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules"
+                                    columnName="Journal Category"/>']/../../..//select[@title='<valueKB
+                                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules" columnName="Transfer Journals to this Secondary Ledger"/>']</findElement>
+								</if>
+								<then>
+									<findElement
+                                    by="xpath">//td[3]//span[text()='<valueKB
+                                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules"
+                                    columnName="Journal Source"/>']/../../../td[4]//span[text()='<valueKB
+                                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules" columnName="Journal Category"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<findElement
+                                    by="xpath">//td[3]//span[text()='<valueKB
+                                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules"
+                                    columnName="Journal Source"/>']/../../../td[4]//span[text()='<valueKB
+                                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules" columnName="Journal Category"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement
+                                    by="xpath">//td[3]//span[text()='<valueKB
+                                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules"
+                                    columnName="Journal Source"/>']/../../../td[4]//span[text()='<valueKB
+                                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules" columnName="Journal Category"/>']/../../..//select</findElement>
+									<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+										<valueKB
+                                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules" columnName="Transfer Journals to this Secondary Ledger"/>
+									</select>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CREATE_JOURNAL">
+			<findElement by="xpath">//label[text()='Journal Source']/..//option[@value=""]/../..//select</findElement>
+			<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+				<valueKB
+                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules" columnName="Journal Source"/>
+			</select>
+			<findElement by="xpath">//label[text()='Journal Category']/..//option[@value=""]/../..//select</findElement>
+			<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+				<valueKB
+                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules" columnName="Journal Category"/>
+			</select>
+			<findElements by="xpath"
+                    returnElementAtPosition="3">//tr[td//select[@title='<valueKB
+                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules"
+                    columnName="Journal Source"/>'] and td//select[@title='<valueKB
+                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules" columnName="Journal Category"/>']]//select</findElements>
+			<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+				<valueKB
+                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules" columnName="Transfer Journals to this Secondary Ledger"/>
+			</select>
+			<executeBlock name="INFORMATON"/>
+			<executeBlock name="SAVE"/>
+			<executeBlock name="INFORMATON"/>
+		</block>
+		<block name="DFF_FAKE">
+			<findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger - DFF" columnName="Field Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB
+                    inventoryName="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger - DFF" columnName="Field Value"/>
+			</click>
+			<findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules - DFF" columnName="Field Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB
+                    inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules - DFF" columnName="Field Value"/>
+			</click>
+		</block>
+		<block name="Expand">
+
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//tr[contains(@class,'Select')]//img[contains(@src,'expanded.png')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//tr[contains(@class,'Select')]//img[contains(@src,'collapsed.png')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+
+		</block>
+		<block name="Collapse">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//tr[contains(@class,'Select')]//img[contains(@src,'expanded.png')]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//tr[contains(@class,'Select')]//img[contains(@src,'expanded.png')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<executeBlock name="MANUAL_SEARCH_TASK"/>
+		<repeat inventoryName="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger">
+			<executeBlock name="SELECT_SCOPE"/>
+			<executeBlock name="CHART_OF_ACCOUNTS_MAPPING"/>
+			<executeBlock name="CURRENCY_CONVERSION_RULE"/>
+			<executeBlock name="JOURNAL_CONVERSION_RULE"/>
+			<repeat inventoryName="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger - DFF">
+				<executeBlock name="GLOBAL_ALL_DFF">
+					<parameters>
+						<parameter name="INV_NAME" value="Complete Primary to Secondary Ledger Mapping - Map Primary to Secondary Ledger - DFF"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<executeBlock name="SAVE"/>
+			<executeBlock name="INFORMATON"/>
+			<repeat inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules">
+				<IfThenElse>
+					<if>
+						<findElement isDisplayed="true" by="xpath">//td[text()='Warning']</findElement>
+					</if>
+					<then>
+						<error message="Adjustments Only level secondary ledgers do not require further definition. Saving completes the primary to secondary ledger mapping."/>
+					</then>
+					<else>
+						<executeBlock name="SCROLLBAR_GENERIC_1">
+							<parameters>
+								<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Journal Conversion Rules']/../..//div[contains(text(),'No data to display.')]"/>
+								<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Journal Conversion Rules'][@_rowcount]//tr[1]//td)[1]"/>
+								<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Journal Conversion Rules']/../..//div[contains(@id,'scroller')]"/>
+								<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Journal Conversion Rules']//tr[td[3]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules" columnName="Journal Source"/>')] and td[4]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules" columnName="Journal Category"/>')]]</parameter>
+								<parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[@summary='Journal Conversion Rules']//tr[td[3]/span/span[normalize-space(text())=normalize-space('<valueKB inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules" columnName="Journal Source"/>')] and td[4]/span/span[normalize-space(text())=normalize-space('<valueKB inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules" columnName="Journal Category"/>')]]</parameter>								
+								<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create"/>
+								<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update"/>
+							</parameters>
+						</executeBlock>
+						<executeBlock name="INFORMATON"/>
+						<repeat inventoryName="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules - DFF">
+							<executeBlock name="Expand"/>
+							<executeBlock name="GLOBAL_ALL_DFF">
+								<parameters>
+									<parameter name="INV_NAME" value="Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules - DFF"/>
+								</parameters>
+							</executeBlock>
+							<executeBlock name="Collapse"/>
+						</repeat>
+						<executeBlock name="SAVE"/>
+						<executeBlock name="INFORMATON"/>
+					</else>
+				</IfThenElse>
+			</repeat>
+			<executeBlock name="SAVE_AND_CLOSE"/>
+			<executeBlock name="INFORMATON"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

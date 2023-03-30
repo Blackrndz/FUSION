@@ -1,0 +1,827 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Data Access Sets</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Data Access Sets" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Ledger Sets"/>
+			<navigation name="Review and Submit Accounting Configuration"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Data Access Sets - Manage Data Access Sets"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Data Access Sets - Manage Data Access Sets - DFF"/>
+			<parameter name="REPEAT_3_MAIN" value="Manage Data Access Sets - Access Set Assignments"/>
+			<parameter name="REPEAT_4_MAIN" value="Manage Data Access Sets - Access Set Assignments - DFF"/>
+		</parameters>
+		<block name="FAKE_INV_MDAS">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_4_MAIN" columnName="Name"/>']/../..//input</findElement>
+		</block>
+		
+		<block name="GO_TO_TASK">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//h1[text()='Manage Data Access Sets']</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="QUERY_BY_EXAMPLE_ENTER_SEARCH">
+			<IfThenElse>
+				<if>     <!--23A-->
+					<findElement by="xpath">(//table[contains(@summary,'Access Set')]/../../../..//td//input)[1]</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>     <!--22D?-->
+							<findElement by="xpath">(//table[contains(@summary,'Access Set')]/../../../..//th//input)[1]</findElement>
+						</if>
+						<then>
+							<break/>
+						</then>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+								<parameters>
+									<parameter name="XPATH" value="//table[contains(@summary,'Access Set')]/../../../.."/>
+								</parameters>
+							</executeBlock>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="ENTER_SEARCH">
+			<executeBlock name="QUERY_BY_EXAMPLE_ENTER_SEARCH" isRepeatUntilBreak="true" />
+			<IfThenElse><!--23A-->
+				<if>
+					<findElement isDisplayed="true" by="xpath">(//table[contains(@summary,'Access Set')]/../../../..//td//input)[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">(//table[contains(@summary,'Access Set')]/../../../..//td//input)[1]</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true" isSkipCheckDomError="true">	
+						<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+					</sendKeys>
+				</then>
+				<else>
+					<IfThenElse><!--22D?-->
+						<if>
+							<findElement isDisplayed="true" by="xpath">(//table[contains(@summary,'Access Set')]/../../../..//th//input)[1]</findElement> 
+						</if>
+						<then>
+							<findElement by="xpath">(//table[contains(@summary,'Access Set')]/../../../..//th//input)[1]</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true" isSkipCheckDomError="true">	
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+							</sendKeys>
+						</then>
+						<else>
+							<error message="Unable to find 'Book column query box' Please contact Dev for help"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SAVE_BUTTON">
+			<findElement by="xpath" isSkipCheckDomError="true">//button[text()='Save']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="CREATE_Manage Data Access Sets">
+			<!-- Create Input Column Name -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+			<!-- Create Textarea Column Description -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>	
+			<!-- Create Select Column Access Set Type -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Access Set Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Access Set Type"/>
+				</parameters>
+			</executeBlock>	
+			<!-- Create Select Column Chart of Accounts -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Chart of Accounts']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Chart of Accounts"/>
+				</parameters>
+			</executeBlock>	
+			<!-- Create Select Column Accounting Calendar -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Accounting Calendar']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Accounting Calendar"/>
+				</parameters>
+			</executeBlock>	
+			<!-- Create Lov Column Default Ledger -->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Default Ledger']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Default Ledger"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+		</block>
+		<block name="UPDATE_Manage Data Access Sets">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='This is a system-generated data access set and cannot be updated.']</findElement>
+				</if>
+				<then>
+					<error message="Cannot be update"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- Update Textarea Column Description -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>	
+			<!-- Update Lov Default Ledger -->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Default Ledger']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Default Ledger"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Access Set Assignments">
+			<!-- Lov Ledger or Ledger Set -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="REPEAT_3_MAIN" columnName="Ledger or Ledger Set"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Search...Lov Ledger or Ledger Set" isRepeatUntilBreak="true"/>
+					<findElement by="xpath">//div[contains(@data-afr-popupid,'inputComboboxListOfValues1')]//a[text()='Search...']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//*[text()='Search']/../../../../../../..//label[text()='Ledger or Ledger Set']/../..//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="REPEAT_3_MAIN" columnName="Ledger or Ledger Set"/>
+					</sendKeys>
+					<findElement by="xpath">//*[text()='Search']/../../../../../../..//button[text()='Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//div[text()='No rows to display']</findElement>
+						</if>
+						<then>
+							<error message="The field 'Ledger or Ledger Set' doesn't exist"/>
+						</then>
+						<else>
+							<findElement
+                                    by="xpath">//*[text()='Search']/../../../../../../../../../../../..//td[text()='<valueKB
+                                    inventoryName="REPEAT_3_MAIN" columnName="Ledger or Ledger Set"/>']/../../..//tr[1]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../../..//button[text()='OK']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="All Value">
+			<!--All Values-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Access Set Assignments']//tr[contains(@class,'Select')]//td[5]"/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="All Values"/>
+				</parameters>
+			</executeBlock>
+			<!--Select Specific Value-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Access Set Assignments']//tr[contains(@class,'Select')]//label[text()='Meaning1']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Specific Value"/>
+				</parameters>
+			</executeBlock>	
+			<!--Select Tree Code-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Access Set Assignments']//tr[contains(@class,'Select')]//label[text()='TreeCode']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Tree Code"/>
+				</parameters>
+			</executeBlock>
+			<!--Select Tree Version Name-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Access Set Assignments']//tr[contains(@class,'Select')]//label[text()='TreeVersionName']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Tree Version Name"/>
+				</parameters>
+			</executeBlock>	
+			
+			<!--Lov Segment Value-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="REPEAT_3_MAIN" columnName="Segment Value"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true"
+                                isDisplayed="true" by="xpath">//table[@summary='Access Set Assignments']//tr[contains(@class,'Select')]//td[9]//input</findElement>
+						</if>
+						<then>
+							<executeBlock
+                                name="Search...Lov Segment Value" isRepeatUntilBreak="true"/>
+							<findElement by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//*[text()='Search']/../../../../../../..//label[text()='Gl_segment']/../..//input</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//*[text()='Search']/../../../../../../..//label[text()='Gl_segment']/../..//input</findElement>
+									<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+										<valueKB inventoryName="REPEAT_3_MAIN" columnName="Segment Value"/>
+									</sendKeys>
+								</then>
+								<else>
+									<findElement by="xpath">//*[text()='Search']/../../../../../../..//label[text()='Node' or text()='Value']/../..//input</findElement>
+									<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+										<valueKB inventoryName="REPEAT_3_MAIN" columnName="Segment Value"/>
+									</sendKeys>
+								</else>
+							</IfThenElse>
+							<findElement by="xpath">//*[text()='Search']/../../../../../../..//button[text()='Search']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//div[text()='No rows to display']</findElement>
+								</if>
+								<then>
+									<error message="The field 'Segment Value' doesn't exist"/>
+								</then>
+								<else>
+									<findElement
+                                    by="xpath">//*[text()='Search']/../../../../../../../../../../../..//td[text()='<valueKB
+                                    inventoryName="REPEAT_3_MAIN" columnName="Segment Value"/>']/../../..//tr[1]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../../..//button[text()='OK']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Select Privilege-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Access Set Assignments']//tr[contains(@class,'Select')]//label[text()='Privilege']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Privilege"/>
+				</parameters>
+			</executeBlock>	
+		</block>
+		<block name="CREATE_BUTTON">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true">//img[@title='Create']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isDisplayed="true">//img[@title='Create']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">//img[@title='Create']/../../../../../../../../..//div[contains(@id,'eoi')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath" isDisplayed="true">//img[@title='Create']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SAVE_CLOSE_BUTTON">
+			<findElement by="xpath" isSkipCheckDomError="true">//span[text()='S']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="Confirmation">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Confirmation']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Confirmation']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Error']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Error']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>			
+		</block>
+		<block name="ADD_ROW_BUTTON">
+			<findElement by="xpath">//img[contains(@title,'Add Row')]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Expand">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Access Set Assignments']/../../../../../../.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Collapse">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_COLLAPSE">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Access Set Assignments']/../../../../../../.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Check DFF Show">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Access Set Assignments']//tr[contains(@class,'Select')]/following-sibling::tr[1]//tr[contains(@id,'DFF')]</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<executeBlock name="Collapse"/>
+					<executeBlock name="Expand"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<!--<block name="FAKE_DFF1">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Value"/>
+			</click>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_4_MAIN" columnName="Field Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_4_MAIN" columnName="Field Value"/>
+			</click>
+		</block>-->
+		<block name="Search...Create Lov Column Default Ledger">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Default Ledger']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...Update Lov Default Ledger">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Default Ledger']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...Lov Segment Value">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//*[text()='Access Set Assignments']/../../../../../../..//td[9]//a[@title='Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...Lov Ledger or Ledger Set">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//*[text()='Access Set Assignments']/../../../../../../..//span/a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Check Click">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//span[text()='Segment Value']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@summary='Access Set Assignments']//td[3]//input[@value='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Ledger or Ledger Set"/>']/../../../..//td[1]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Access Set Assignments']//td[3]//input[@value='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Ledger or Ledger Set"/>']/../../../..//td[1]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//table[@summary='Access Set Assignments']//td[3]//span[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Ledger or Ledger Set"/>']/../../../..//td[1]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//span[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Ledger or Ledger Set"/>']/../../../..//td[1]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@summary='Access Set Assignments']//td[3]//input[@value='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Ledger or Ledger Set"/>']/../../../..//td[1]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Access Set Assignments']//td[3]//input[@value='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Ledger or Ledger Set"/>']/../../../..//td[1]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//table[@summary='Access Set Assignments']//td[3]//span[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Ledger or Ledger Set"/>']/../../../..//td[1]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//table[@summary='Access Set Assignments']//td[3]//span[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Ledger or Ledger Set"/>']/../../../..//td[1]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>					
+				</else>
+			</IfThenElse>			
+		</block>
+		<block name="Show All">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//th[contains(@class,'Select')]//div[text()='Ledger or Ledger Set']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Type']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//div[text()='Ledger or Ledger Set']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">//div[text()='Ledger or Ledger Set']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<findElement by="xpath">//a[text()='View']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElements by="xpath" returnElementAtPosition="2">//td[text()='Columns']</findElements>
+			<click waitForPageToFinishRendering="true"/>
+			<findElements by="xpath" returnElementAtPosition="2">//td[text()='Show All']</findElements>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//th[contains(@class,'Select')]//div[text()='Type']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Ledger or Ledger Set']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//div[text()='Type']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">//div[text()='Type']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="CANCEL">
+			<findElement by="xpath">//span[text()='C']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<!--<executeBlock name="CREATE_BUTTON"/>
+		<executeBlock name="CANCEL"/>-->
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="ENTER_SEARCH"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="UPDATE_Manage Data Access Sets"/>
+				</then>
+				<else>
+					<executeBlock name="CREATE_BUTTON"/>
+					<executeBlock name="CREATE_Manage Data Access Sets"/>
+				</else>
+			</IfThenElse>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+					<parameters>
+						<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<repeat inventoryName="REPEAT_3_MAIN">
+				<IfThenElse>
+					<if>
+						<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Access Set Assignments']/../../../..//a[@title='Clear All']</findElement>
+					</if>
+					<then>
+						
+					</then>
+					<else>
+						<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+							<parameters>
+								<parameter name="XPATH" value="//table[@summary='Access Set Assignments']/../../../.."/>
+							</parameters>
+						</executeBlock>
+					</else>
+				</IfThenElse>
+				<findElement by="xpath">//table[@summary='Access Set Assignments']/../../../..//a[@title='Clear All']</findElement>
+				<click waitForPageToFinishRendering="true"/>					
+				<IfThenElse>
+					<if>
+						<findElement by="xpath">(//table[@summary='Access Set Assignments']/../../../..//a[@title='Clear All']/../..//input)[1]</findElement>
+					</if>
+					<then>
+						<findElement by="xpath">(//table[@summary='Access Set Assignments']/../../../..//a[@title='Clear All']/../..//input)[1]</findElement>
+						<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true" isSkipCheckDomError="true">	
+							<valueKB inventoryName="REPEAT_3_MAIN" columnName="Ledger or Ledger Set"/>
+						</sendKeys>
+					</then>
+					<else/>
+				</IfThenElse>	
+				<IfThenElse>
+					<if>
+						<findElement by="xpath">//span[text()='Segment Value']</findElement>
+					</if>
+					<then>
+						<findElement by="xpath">//table[@summary='Access Set Assignments']/../../../..//a[@title='Clear All']/../..//td[number(//span[text()='Segment Value']/../../@_d_index)]//input</findElement>
+						<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true" isSkipCheckDomError="true">	
+							<valueKB inventoryName="REPEAT_3_MAIN" columnName="Segment Value"/>
+						</sendKeys>
+					</then>
+					<else>
+						<IfThenElse>
+							<if>
+								<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//*[contains(text(),'Access Set Assignments')]/../../../../../../..//a[text()='View']</findElement>
+							</if>
+							<then>
+								<findElement isSkipCheckDomError="true" by="xpath" isDisplayed="true">//*[contains(text(),'Access Set Assignments')]/../../../../../../..//a[text()='View']</findElement>
+								<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+								<findElement isSkipCheckDomError="true" by="xpath" isDisplayed="true">//table[@style='position: relative;']//td[text()='Columns']</findElement>
+								<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>				
+								<IfThenElse>
+									<if>
+										<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Segment Value']</findElement>
+									</if>
+									<then>
+										<IfThenElse>
+											<if>
+												<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//tr[contains(@class,'Select')]//td[text()='Segment Value']</findElement>
+											</if>
+											<then>
+												<findElement isSkipCheckDomError="true" by="xpath" isDisplayed="true">//table[@style='position: relative;']//td[text()='Segment Value']</findElement>
+												<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+											</then>
+											<else/>
+										</IfThenElse>
+									</then>
+									<else>
+										<findElement isSkipCheckDomError="true" by="xpath" isDisplayed="true">//table[@style='position: relative;']//td[text()='Show All']</findElement>
+										<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									</else>
+								</IfThenElse>					
+							</then>
+							<else>
+								<findElement isSkipCheckDomError="true" by="xpath" isDisplayed="true">//*[contains(text(),'Access Set Assignments')]/../../../../../../..//a[text()='View']/../../../../../../../../../../../../..//*[@title='Overflow']</findElement>
+								<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+								<findElement isSkipCheckDomError="true" by="xpath" isDisplayed="true">//table[@style='position: relative;']//a[text()='View']</findElement>
+								<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+								<findElement isSkipCheckDomError="true" by="xpath" isDisplayed="true">//table[@style='position: relative;']//td[text()='Columns']</findElement>
+								<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+								<IfThenElse>
+									<if>
+										<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Access Set Assignments']</findElement>
+									</if>
+									<then>
+										<IfThenElse>
+											<if>
+												<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//tr[contains(@class,'Select')]//td[text()='Access Set Assignments']</findElement>
+											</if>
+											<then>
+												<findElement isSkipCheckDomError="true" by="xpath" isDisplayed="true">//table[@style='position: relative;']//td[text()='Access Set Assignments']</findElement>
+												<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+											</then>
+											<else/>
+										</IfThenElse>
+									</then>
+									<else>
+										<findElement isSkipCheckDomError="true" by="xpath" isDisplayed="true">//table[@style='position: relative;']//td[text()='Show All']</findElement>
+										<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									</else>
+								</IfThenElse>
+							</else>
+						</IfThenElse>
+					</else>
+				</IfThenElse>		
+				<IfThenElse>
+					<if>
+						<findElement by="xpath">//span[text()='Segment Value']</findElement>
+					</if>
+					<then>
+						<IfThenElse>
+							<if>
+								<findElement by="xpath">//table[@summary='Access Set Assignments']//tr[td[3]//span[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Ledger or Ledger Set"/>'] and td[number(string(//span[text()='Segment Value']/../../@_d_index))+1]//span[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Segment Value"/>'] ]</findElement>
+							</if>
+							<then/>
+							<else>
+								<IfThenElse>
+									<if>
+										<findElement by="xpath">//table[@summary='Access Set Assignments']//tr[td[3]//input[@value='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Ledger or Ledger Set"/>'] and td[number(string(//span[text()='Segment Value']/../../@_d_index))+1]//input[@value='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Segment Value"/>'] ]</findElement>
+									</if>
+									<then/>
+									<else>
+										<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_ADD_ROW"/>
+										<executeBlock name="Access Set Assignments"/>
+										<executeBlock name="Check Click"/>
+										<executeBlock name="All Value"/>
+										<repeat inventoryName="REPEAT_4_MAIN">
+											<executeBlock name="Expand"/>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Access Set Assignments']//tr[contains(@class,'Select')]//span[contains(@id,'DFF')]</findElement>
+												</if>
+												<then/>
+												<else>
+													<findElement by="xpath">//img[contains(@title,'Add Row')]</findElement>
+													<click waitForPageToFinishRendering="true"/>
+													<findElement by="xpath">//img[contains(@title,'Delete')]</findElement>
+													<click waitForPageToFinishRendering="true"/>									
+													<findElement by="xpath">//div[text()='Warning']/../../../../../../..//span[text()='Y']/..</findElement>
+													<click waitForPageToFinishRendering="true"/>										
+												</else>
+											</IfThenElse>
+											<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+												<parameters>
+													<parameter name="INV_NAME" value="REPEAT_4_MAIN"/>
+												</parameters>
+											</executeBlock>
+										</repeat>
+									</else>
+								</IfThenElse>
+							</else>
+						</IfThenElse>
+					</then>
+					<else>
+						<IfThenElse>
+							<if>
+								<findElement by="xpath">//table[@summary='Access Set Assignments']//td[3]//span[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Ledger or Ledger Set"/>']</findElement>
+							</if>
+							<then/>
+							<else>
+								<IfThenElse>
+									<if>
+										<findElement by="xpath">//table[@summary='Access Set Assignments']//td[3]//input[@value='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Ledger or Ledger Set"/>']</findElement>
+									</if>
+									<then/>
+									<else>
+										<executeBlock name="ADD_ROW_BUTTON"/>
+										<executeBlock name="Access Set Assignments"/>
+										<executeBlock name="Check Click"/>
+										<executeBlock name="All Value"/>
+										<repeat inventoryName="REPEAT_4_MAIN">
+											<executeBlock name="Expand"/>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Access Set Assignments']//tr[contains(@class,'Select')]//span[contains(@id,'DFF')]</findElement>
+												</if>
+												<then/>
+												<else>
+													<findElement by="xpath">//img[contains(@title,'Add Row')]</findElement>
+													<click waitForPageToFinishRendering="true"/>
+													<findElement by="xpath">//img[contains(@title,'Delete')]</findElement>
+													<click waitForPageToFinishRendering="true"/>									
+													<findElement by="xpath">//div[text()='Warning']/../../../../../../..//span[text()='Y']/..</findElement>
+													<click waitForPageToFinishRendering="true"/>										
+												</else>
+											</IfThenElse>
+											<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+												<parameters>
+													<parameter name="INV_NAME" value="REPEAT_4_MAIN"/>
+												</parameters>
+											</executeBlock>
+										</repeat>
+									</else>
+								</IfThenElse>
+							</else>
+						</IfThenElse>
+					</else>
+				</IfThenElse>				
+				<executeBlock name="Collapse"/>
+			</repeat>
+			<executeBlock name="SAVE_BUTTON"/>
+			<executeBlock name="Confirmation"/>
+			<executeBlock name="SAVE_CLOSE_BUTTON"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

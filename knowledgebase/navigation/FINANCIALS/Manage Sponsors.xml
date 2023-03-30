@@ -1,0 +1,231 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Sponsors</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Sponsors" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Create Business Unit"/>
+			<navigation name="Manage Burden Structures"/>
+			<navigation name="Manage Burden Schedules"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Sponsors - Sponsor"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Sponsors - References"/>			
+		</parameters>
+		<block name="DFF_FAKE_US">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>	
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']</findElement>
+		</block>
+
+		<block name="Search_Sponsors">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//a[text()='Advanced']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='Advanced']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>					
+				</else>
+			</IfThenElse>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+			
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Manage Sponsors']/..//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Manage Sponsors']/..//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Manage Sponsors']/../../../../.."/>
+						</parameters>
+					</executeBlock>							
+				</else>
+			</IfThenElse>
+		</block>
+
+		<block name="Sponsor_Details">
+
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_2_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_1_NAME" value="Name"/>
+					<parameter name="COL_2_NAME" value="Number"/>
+					<parameter name="SEARCH_1_LABEL" value="Name"/>
+					<parameter name="SEARCH_2_LABEL" value="Number"/>					
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>					
+					<findElement highlightTurnedOff="true" by="xpath">//a[text()='Billing Details'][contains(@class,'Selected')]</findElement>	
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>					
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//a[text()='Billing Details']</findElement>	
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//a[text()='Billing Details']</findElement>	
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Sponsor Account Number']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Sponsor Account Number"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Federal']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Federal"/>
+				</parameters>
+			</executeBlock>		
+			<IfThenElse>
+				<if>					
+					<findElement highlightTurnedOff="true" by="xpath">//a[text()='General Details'][contains(@class,'Selected')]</findElement>	
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>					
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//a[text()='General Details']</findElement>	
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//a[text()='General Details']</findElement>	
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>			
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Burden Schedule']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Burden Schedule"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>			
+		</block>
+
+		<block name="References_Details">
+
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='References']//tr[contains(@class,'Select')]//td[1]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Type"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='References']//tr[contains(@class,'Select')]//td[2]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Value"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='References']//tr[contains(@class,'Select')]//td[4]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Comments"/>
+				</parameters>
+			</executeBlock>				
+		
+		</block>
+		<block name="Create_References">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='References']/../../../../.."/>
+				</parameters>
+			</executeBlock>		
+		</block>	
+		<block name="Update_References">
+			<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>	
+			<click waitForPageToFinishRendering="true"/>
+		</block>	
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search_Sponsors"/>
+			<executeBlock name="Sponsor_Details"/>		
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<IfThenElse>
+					<if>					
+						<findElement highlightTurnedOff="true" by="xpath">//a[text()='General Details'][contains(@class,'Selected')]</findElement>	
+					</if>
+					<then/>
+					<else>
+						<IfThenElse>
+							<if>					
+								<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//a[text()='General Details']</findElement>	
+							</if>
+							<then>
+								<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//a[text()='General Details']</findElement>	
+								<click waitForPageToFinishRendering="true"/>
+							</then>
+							<else/>
+						</IfThenElse>
+					</else>
+				</IfThenElse>	
+				<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='References']/../..//div[contains(text(),'No results found')]"/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='References'][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='References']/../..//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='References']//tr//td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Type"/>' or @value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Type"/>' or @title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Type"/>']</parameter>
+						<parameter name="TEMPLATE_CREATE" value="Create_References"/>
+						<parameter name="TEMPLATE_UPDATE" value="Update_References"/>
+					</parameters>
+				</executeBlock>			
+				<executeBlock name="References_Details"/>
+				<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			</repeat>			
+		</repeat>
+		<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+		<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+	</fusionNavigation>
+</navigation>

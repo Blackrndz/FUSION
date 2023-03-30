@@ -1,0 +1,244 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Compensation Plans</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Workforce Compensation Plans" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Individual Compensation Plans"/>
+        </dependencies>
+        
+        <parameters>
+            <parameter name="REPEAT_1_MAIN" value="Manage Compensation Plans - Compensation Plan"/>
+            <parameter name="REPEAT_2_MAIN" value="Manage Compensation Plans - Configure Plan Details"/>
+        </parameters>
+		
+        <block name="FAKE_INV">
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Plan"/>']/../..//input</findElement>
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Plan"/>']/../..//input</findElement>
+        </block>
+		
+		<block name="SEARCH">
+            <executeBlock name="GLOBAL_EXPAND">
+                <parameters>
+                    <parameter name="XPATH" value="//a[@title='Collapse Search']/../.."/>
+                </parameters>
+            </executeBlock>
+            <executeBlock name="BUTTON">
+                <parameters>
+                    <parameter name="BUTTON_NAME" value="Reset"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Plan']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Plan"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock name="BUTTON">
+                <parameters>
+                    <parameter name="BUTTON_NAME" value="Search"/>
+                </parameters>
+            </executeBlock>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath"
+                            isSkipCheckDomError="true">//table[@summary='Workforce Compensation Plans']/../..//a[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Plan"/>']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath"
+                            isSkipCheckDomError="true">//table[@summary='Workforce Compensation Plans']/../..//a[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Plan"/>']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <pause durationInSecs="1"/>
+                </then>
+                <else>
+                    <findElement by="xpath" isSkipCheckDomError="true">//div[@title='Create']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <pause durationInSecs="1"/>
+                </else>
+            </IfThenElse>
+        </block>
+		
+		 <block name="CREATE_COMPENSATION_PLAN">
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Plan']/../..//*[@title='Required']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Plan"/>
+                </parameters>
+            </executeBlock>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath" isSkipCheckDomError="true">//div[text()='Create Workforce Compensation Plan']/../../../../../../..//button[text()='Create']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath" isSkipCheckDomError="true">//div[text()='Create Workforce Compensation Plan']/../../../../../../..//button[text()='Create']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <pause durationInSecs="1"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+		
+		<block name="GO_TO_TASK_PLAN_DETAILS">
+            <executeBlock name="GLOBAL_EXPAND">
+                <parameters>
+                    <parameter name="XPATH" value="//div[text()='Foundation']//a"/>
+                </parameters>
+            </executeBlock>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Task List']//div[text()='Configure Plan Details']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Task List']//div[text()='Configure Plan Details']/../..//a</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <pause durationInSecs="1"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+		
+		 <block name="Configure_Plan_Details">
+            <!--Plan-->
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Plan Details']/../../../../../../..//label[text()='Plan']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Plan"/>
+                </parameters>
+            </executeBlock>
+            <!--Display Order-->
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Display Order']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Display Order"/>
+                </parameters>
+            </executeBlock>
+            <!--Frequency-->
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Frequency']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Frequency"/>
+                </parameters>
+            </executeBlock>
+            <!--Plan Annualization Factor-->
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Plan Annualization Factor']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Plan Annualization Factor"/>
+                </parameters>
+            </executeBlock>
+            <!--Plan Description-->
+            <executeBlock name="INPUT_TEXTAREA">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Plan Description']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Plan Description"/>
+                </parameters>
+            </executeBlock>
+            <!--Employment Records to Use-->
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Employment Records to Use']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Employment Records to Use"/>
+                </parameters>
+            </executeBlock>
+            <!--Status-->
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Status']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Status"/>
+                </parameters>
+            </executeBlock>
+            <!--Action-->
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Action']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Action"/>
+                </parameters>
+            </executeBlock>
+            <!--Action Reason-->
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Action Reason']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Action Reason"/>
+                </parameters>
+            </executeBlock>
+        </block>
+		
+		<block name="SAVE">
+            <findElement by="xpath">//*[text()='Save']/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+                <if>
+                    <findElement isDisplayed="true"
+                        highlightTurnedOff="true" by="xpath">//div[text()='Confirmation']/../../../../../../..</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//div[text()='Confirmation']/../../../../../../../..//button[text()='OK']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+		
+        <block name="SAVE_AND_CLOSE">
+            <findElement by="xpath">//*[text()='S']/../..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+                <if>
+                    <findElement isDisplayed="true"
+                        highlightTurnedOff="true" by="xpath">//div[text()='Confirmation']/../../../../../../..</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//div[text()='Confirmation']/../../../../../../../..//button[text()='OK']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+		
+		 <repeat inventoryName="REPEAT_1_MAIN">
+            <executeBlock name="SEARCH"/>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath" isSkipCheckDomError="true">//div[text()='Create Workforce Compensation Plan']</findElement>
+                </if>
+                <then>
+                    <executeBlock name="CREATE_COMPENSATION_PLAN"/>
+                </then>
+                <else/>
+            </IfThenElse>
+			<executeBlock name="GO_TO_TASK_PLAN_DETAILS"/>
+			 <repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="Configure_Plan_Details"/>
+                <executeBlock name="SAVE"/>
+                <executeBlock name="SAVE_AND_CLOSE"/>
+            </repeat>
+        </repeat>
+    </fusionNavigation>
+</navigation>

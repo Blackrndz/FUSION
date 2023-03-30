@@ -1,0 +1,231 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Inventory Transaction Reasons</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Inventory Transaction Reasons" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Inventory Organizations"/>
+        </dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Inventory Transaction Reasons - Inventory Transaction Reasons"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Inventory Transaction Reasons - Inventory Transaction Reasons - DFF"/>
+		</parameters>
+		<block name="OK_BUTTON">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='Additional Information']/../../../../../../..//span[text()='K']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Additional Information']/../../../../../../..//span[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="SAVE_BUTTON">
+			<findElement by="xpath">//button[text()='Save']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Save_and_Close">
+			<findElement by="xpath">//span[text()='S']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		 <block name="Expand_Search">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Collapse Search']</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement by="xpath">//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+		<block name="Search">
+			<executeBlock name="Expand_Search"/>
+			<findElement by="xpath">//button[text()='Reset']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<executeBlock name="Expand_Search"/>
+			<findElement by="xpath">//*[text()='Search']/../../../../../../..//label[text()='Name']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+			</sendKeys>
+			<findElement by="xpath">//*[text()='Search']/../../../../../../..//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//div[contains(text(),'No results found.')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[contains(text(),'Search Results')]/../../../../../../..//table[@style]/tbody/tr/td[1][@class])[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[contains(text(),'Search Results')]/../../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Search Results']//td[1]//input[@value='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</parameter>
+							
+							
+					<parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[@summary='Search Results']//td[1]//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</parameter>		
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_TRANSACTION_REASONS"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_TRANSACTION_REASONS"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="CREATE_TRANSACTION_REASONS">
+            <executeBlock name="GLOBAL_ADD"/>
+        </block>
+		<block name="TRANSACTION_REASONS">			
+			<!-- Name -->
+			<executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//label[text()='Name']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Name"/>
+                </parameters>
+            </executeBlock>
+			<!-- Description -->
+			<executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//label[text()='Description']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Description"/>
+                </parameters>
+            </executeBlock>
+			<!-- Start Date -->
+			<executeBlock name="INPUT_GREATER_THAN_EQUAL">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//label[text()='Start Date']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Start Date"/>
+                </parameters>
+            </executeBlock>
+			<!-- End Date -->
+			<executeBlock name="INPUT_GREATER_THAN_EQUAL">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//label[text()='End Date']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="End Date"/>
+                </parameters>
+            </executeBlock>
+			<!-- Reason Type -->
+			<executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//label[text()='Reason Type']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Reason Type"/>
+                </parameters>
+            </executeBlock>
+			<!-- Reason Context -->
+			<executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//label[text()='Reason Context']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Reason Context"/>
+                </parameters>
+            </executeBlock>
+		</block>
+		<block name="UPDATE_TRANSACTION_REASONS">			
+			<IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                            by="xpath">//table[@summary='Search Results']//td[1]//input[@value='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true"
+                            by="xpath">//table[@summary='Search Results']//td[1]//input[@value='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else>
+                    <findElement highlightTurnedOff="true"
+                            by="xpath">//table[@summary='Search Results']//td[1]//span[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </else>
+            </IfThenElse>
+			<!-- Description -->
+			<executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//label[text()='Description']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Description"/>
+                </parameters>
+            </executeBlock>
+			<!-- End Date -->
+			<executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//label[text()='End Date']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="End Date"/>
+                </parameters>
+            </executeBlock>
+			<!-- Reason Type -->
+			<executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//label[text()='Reason Type']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Reason Type"/>
+                </parameters>
+            </executeBlock>
+			<!-- Reason Context -->
+			<executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//label[text()='Reason Context']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Reason Context"/>
+                </parameters>
+            </executeBlock>
+		</block>
+		<block name="Additional_Information_DFF">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='Additional Information']</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//table[@summary='Search Results']//td[7]//img[@title='Additional Information']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="DFF_FAKE_MAPPER">
+			<findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="MAIN_REPEAT_2" columnName="Field Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_2" columnName="Field Value"/>
+			</click>
+			<findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="MAIN_REPEAT_1" columnName="Name"/>']/../..//input</findElement>
+            <click isCheckbox="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+            </click>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="Search"/>
+			<executeBlock name="TRANSACTION_REASONS"/>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<executeBlock name="Additional_Information_DFF"/>
+				<executeBlock name="GLOBAL_ALL_DFF">
+					<parameters>
+						<parameter name="INV_NAME" value="Manage Inventory Transaction Reasons - Inventory Transaction Reasons - DFF"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<executeBlock name="OK_BUTTON"/>
+			<executeBlock name="GLOBAL_SAVE"/>
+		</repeat>
+		<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+	</fusionNavigation>
+</navigation>

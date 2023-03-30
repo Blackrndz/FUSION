@@ -1,0 +1,521 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Segment Value Security Rules (Policy)</name>
+	<svn>
+		<xsd:revision>$Revision: 80240 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2023-02-20 14:38:12 +0700 (Mon, 20 Feb 2023) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Segment%20Value%20Security%20Rules%20(Policy).xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Segment Value Security Rules (Policy).xml 80240 2023-02-20 07:38:12Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Segment Value Security Rules" isBatchingAllowed="false" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="SegmentValues"/>
+			<navigation name="Manage Value Sets (Data Security Policy)"/>
+			<!--<navigation name="Manage Chart of Accounts Value Sets (Update)"/>-->
+			<navigation name="Manage Segment Value Security Rules (Condition)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="INV_1" value="Manage Segment Value Security Rules - Policy"/>
+		</parameters>	
+		<block name="FAKE_TABLE">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Value Set Code"/>']/../..//input</findElement>
+		</block>
+		<block name="SEARCH_VS_CODE">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Value Set Code']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Value Set Code"/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="2"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//tr[td[text()='<valueKB inventoryName="INV_1" columnName="Value Set Code"/>']]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//tr[td[text()='<valueKB inventoryName="INV_1" columnName="Value Set Code"/>']]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_UPDATE">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search Results']/../../../../../../.."/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<error message="The field 'Value Set Code' doesn't exist. This task cannot create or update for Security Rule"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Edit_Data_Security">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//button[text()='Edit Data Security'][contains(@class,'Disabled')]</findElement>
+				</if>
+				<then>
+					<error message="Please enable 'Data Security Resource Name' before define Data Security"/>
+				</then>
+				<else>
+					<findElement by="xpath">//button[text()='Edit Data Security']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="POLICY_TAB">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[contains(@class,'Select')]//a[text()='Policy']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement by="xpath">//a[text()='Policy']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>
+		</block>		
+		<block name="SEARCH_POLICY">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Policy List']/../..//a[@title='Clear All']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Policy List']/../..//a[@title='Clear All']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Policy List']/../../../..//img[@title='Query By Example']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Policy List']/../..//a[@title='Clear All']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>		
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Policy List']/../..//th[number(//th//*[text()='Role']/../../@_d_index)]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Role Name"/>
+				</parameters>
+			</executeBlock>		
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//div[contains(@class,'Select')]//a[text()='Policy']/../../../../../../../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//div[contains(@class,'Select')]//a[text()='Policy']/../../../../../../../../../..//table[@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//div[contains(@class,'Select')]//a[text()='Policy']/../../../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Policy List']//tr[td[text()='<valueKB inventoryName="INV_1" columnName="Role Name"/>']]</parameter>
+					<!-- <parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Policy List']//tr[td[text()='<valueKB inventoryName="INV_1" columnName="Display Role Name"/>']]</parameter> -->
+					<parameter name="TEMPLATE_CREATE" value="CREATE_POLICY"/>
+					<parameter name="TEMPLATE_UPDATE" value="UPDATE_POLICY"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="POLICY_GENERAL_DETAILS"/>
+			<executeBlock name="POLICY_ROLE_DETAILS"/>
+			<executeBlock name="POLICY_RULE_DETAILS"/>
+		</block>		
+		<block name="CREATE_POLICY">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Policy List']/../../../.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="UPDATE_POLICY">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_UPDATE">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Policy List']/../../../.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="GENERAL_TAB">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[contains(@class,'Select')]//a[text()='General Information']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement by="xpath">//a[text()='General Information']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="ROLE_TAB">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[contains(@class,'Select')]//a[text()='Role']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[contains(@class,'Select')]//a[text()='Role']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<findElement by="xpath">//a[text()='Role']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="RULE_TAB">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[contains(@class,'Select')]//a[text()='Rule']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[contains(@class,'Select')]//a[text()='Rule']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<findElement by="xpath">//a[text()='Rule']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="POLICY_GENERAL_DETAILS">
+			<!-- <findElement by="xpath">//h2[text()='<valueKB inventoryName="INV_1" columnName="Role Name"/>: Details']</findElement> -->
+			<executeBlock name="GENERAL_TAB"/>
+			<!--Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Start Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>
+			<!-- End Date -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>
+			<!-- Module -->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Module']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Module"/>
+					<parameter name="SEARCH_1" value="User Module Name"/>
+				</parameters>
+			</executeBlock>
+			<!-- Description -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="POLICY_ROLE_DETAILS">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='Create Policy']/../../../../../../..</findElement>
+				</if>
+				<then>
+					<executeBlock name="ROLE_TAB"/>
+					<!-- <executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(@id,'roleTab')]//table[@summary]"/>
+						</parameters>
+					</executeBlock>-->
+					<findElement by="xpath">//div[text()='Create Policy']/../../../../../../..//a[text()='Action']/../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<findElement by="xpath">//td[text()='Add']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<!-- Role Name -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search']/../../../../../../..//label[text()='Role Name']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Role Name"/>
+						</parameters>
+					</executeBlock>
+					<!-- Application-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search']/../../../../../../..//label[text()='Application']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Application"/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath">//*[text()='Search']/../../../../../../..//button[text()='Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[contains(text(),'Select and Add')]/../../../../../../../..//div[text()='No data to display.']</findElement>
+						</if>
+						<then>
+							<!-- Retry-->
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Search']/../../../../../../..//label[text()='Role Name']/../.."/>
+									<parameter name="INV_NAME" value="INV_1"/>
+									<parameter name="COL_NAME" value="Role Name"/>
+								</parameters>
+							</executeBlock>
+							<!--Application-->
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Search']/../../../../../../..//label[text()='Application']/../.."/>
+									<parameter name="INV_NAME" value="INV_1"/>
+									<parameter name="COL_NAME" value="Application"/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath">//*[text()='Search']/../../../../../../..//button[text()='Search']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="2"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//div[contains(text(),'Select and Add')]/../../../../../../../..//div[text()='No data to display.']</findElement>
+								</if>
+								<then>
+									<error message="The field 'Role Name' doesn't exist."/>
+								</then>
+								<else>
+									<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+										<parameters>
+											<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Selected Role']/../..//div[contains(text(),'No data to display.')]"/>
+											<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Selected Role'][@_rowcount]//tr[1]//td)[1]"/>
+											<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Selected Role']/../..//div[contains(@id,'scroller')]"/>
+											<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Selected Role']/../..//td[text()='<valueKB inventoryName="INV_1" columnName="Display Role Name"/>']</parameter>
+											<parameter name="TEMPLATE_CREATE" value="Error_Roles"/>
+											<parameter name="TEMPLATE_UPDATE" value="Select_Roles"/>
+										</parameters>
+									</executeBlock>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+								<parameters>
+									<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Selected Role']/../..//div[contains(text(),'No data to display.')]"/>
+									<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Selected Role'][@_rowcount]//tr[1]//td)[1]"/>
+									<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Selected Role']/../..//div[contains(@id,'scroller')]"/>
+									<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Selected Role']/../..//td[text()='<valueKB inventoryName="INV_1" columnName="Display Role Name"/>']</parameter>
+									<parameter name="TEMPLATE_CREATE" value="Error_Roles"/>
+									<parameter name="TEMPLATE_UPDATE" value="Select_Roles"/>
+								</parameters>
+							</executeBlock>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>			
+		</block>
+
+		<block name="Error_Roles">
+			<error message="The field 'Role Name' doesn't exist."/>
+		</block>
+
+		<block name="Select_Roles">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="2"/>
+			<findElement by="xpath">//div[contains(text(),'Select and Add')]/../../../../../../../..//span[text()='K']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="2"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//*[contains(text(),'An application error occurred')]</findElement>
+				</if>
+				<then>
+					<error message="Already select and add'Role Name'."/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+
+		<block name="POLICY_RULE_DETAILS">
+			<executeBlock name="RULE_TAB"/>
+			<!--Row Set-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Row Set']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Row Set"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//label[text()='Row Set']/../..//select[@title='Single Value']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//label[text()='Row']/../..//img[contains(@src,'search_qualifier.png')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+					<findElement by="xpath">//div[text()='Pick a Single Database Row']/../../../../../../..//tr[td[text()='<valueKB inventoryName="INV_1" columnName="Single Value - Name"/>'] and //td[text()='<valueKB inventoryName="INV_1" columnName="Single Value - Type"/>']]/../..//label[text()='Value']/../..//input</findElement>
+					<findElement by="xpath">//td[text()='<valueKB inventoryName="INV_1" columnName="Single Value - Type"/>']/../..//input</findElement>
+					<sendKeys isClear="true">
+						<valueKB inventoryName="INV_1" columnName="Single Value - Value"/>
+					</sendKeys>
+					<findElement by="xpath">//div[text()='Pick a Single Database Row']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Row Set']/../..//select[@title='All Values']</findElement>
+						</if>
+						<then>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//label[text()='Row Set']/../..//select[@title='Multiple Values']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//label[text()='Condition']/../../..//img[contains(@src,'search_qualifier.png')]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="2"/>
+									<findElement by="xpath">//label[text()='Display Name']/..//input</findElement>
+									<sendKeys isClear="true">
+										<valueKB inventoryName="INV_1" columnName="Multiple Values - Condition"/>
+									</sendKeys>
+									<findElement by="xpath">//div[text()='Pick a Set of Database Row']/../../../../../../..//img[contains(@src,'go_ena.png')]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="2"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[text()='Pick a Set of Database Row']/../../../../../../..//td[text()='<valueKB inventoryName="INV_1" columnName="Multiple Values - Condition"/>']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[text()='Pick a Set of Database Row']/../../../../../../..//td[text()='<valueKB inventoryName="INV_1" columnName="Multiple Values - Condition"/>']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="2"/>
+											<findElement by="xpath">//div[text()='Pick a Set of Database Row']/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="2"/>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>			
+		</block>		
+		<block name="SAVE_AND_CLOSE">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='Create Policy']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//button[text()='Save and Close']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<findElement by="xpath">//button[text()='Save']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SUBMIT_BUTTON">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//span[text()='m']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//span[text()='m']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="SAVE_AND_COLSE_VALUE">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[contains(text(),'Edit Value Set')]/../../../../..//span[text()='S']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[contains(text(),'Edit Value Set')]/../../../../..//span[text()='S']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CONFIRMATION">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='Confirmation']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Confirmation']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="WARNING">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//td[text()='Warning']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//td[text()='Warning']/../../../../../../../../..//span[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<repeat inventoryName="INV_1">
+			<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+			<!--Value Set Code-->
+			<executeBlock name="SEARCH_VS_CODE"/>
+			<executeBlock name="Edit_Data_Security"/>
+			<executeBlock name="POLICY_TAB"/>
+			<executeBlock name="SEARCH_POLICY"/>
+			<executeBlock name="SAVE_AND_CLOSE"/>
+			<executeBlock name="CONFIRMATION"/>
+			<executeBlock name="SAVE_AND_COLSE_VALUE"/>
+			<executeBlock name="SUBMIT_BUTTON"/>
+			<executeBlock name="WARNING"/>
+			<executeBlock name="CONFIRMATION"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

@@ -1,0 +1,832 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Financial Plan Types (Plan Settings)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Financial Plan Types" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Financial Plan Types"/>
+			<!--<navigation name="Manage Financial Plan Types (Resource Class)"/>-->
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Financial Plan Types - Plan Settings"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+			</click>
+		</block>
+		<block name="TAB_PLAN_SETTINGS">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='Plan Settings'][contains(@class,'Selected')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[text()='Plan Settings']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SREACH_PLAN_TYPE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Manage Financial Plan Types']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Manage Financial Plan Types']/../../../../../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Financial Plan Types']/../..//th[(string(//span[text()='Name']/../../@_d_index))+0]//input</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Financial Plan Types']/../..//th[(string(//span[text()='Name']/../../@_d_index))+0]//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+							</sendKeys>
+						</then>
+						<else>
+							<findElement by="xpath">//table[@summary='Manage Financial Plan Types']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Manage Financial Plan Types']/../..//tr//span[text()='Name']/../../@_d_index)]//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+					
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Manage Financial Plan Types']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Manage Financial Plan Types'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Manage Financial Plan Types']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Manage Financial Plan Types']//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</parameter>
+							<parameter name="TEMPLATE_CREATE" value="CREATE_PLAN_TYPE"/>
+							<parameter name="TEMPLATE_UPDATE" value="UPDATE_PLAN_TYPE"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="CREATE_PLAN_TYPE">
+			<error message="Please create plan types." />
+		</block>
+		<block name="UPDATE_PLAN_TYPE">
+			<findElement by="xpath">(TEMPLATE_1_FIND_ROW/../../../../../../..//td)[1]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_UPDATE">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Manage Financial Plan Types']/../../../.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<!--Plan Settings-->
+		<block name="PLAN_SETTINGS">
+			<IfThenElse>
+				<if>
+					<!--Cost and revenue in separate plan versions-->
+					<findElement by="xpath">//label[text()='Planning Amounts']/../..//select[@title='Cost and revenue in separate plan versions']</findElement>
+				</if>
+				<then>
+					<!--Cost quantity-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Cost quantity']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Cost quantity"/>
+						</parameters>
+					</executeBlock>
+					<!--Raw cost-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Raw cost']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Raw cost"/>
+						</parameters>
+					</executeBlock>
+					<!--Burdened cost-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Burdened cost']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Burdened cost"/>
+						</parameters>
+					</executeBlock>
+					<!--Raw cost rate-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Raw cost rate']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Raw cost rate"/>
+						</parameters>
+					</executeBlock>
+					<!--Burdened cost rate-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Burdened cost rate']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Burdened cost rate"/>
+						</parameters>
+					</executeBlock>
+					<!--Planning Level-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Planning Level']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Planning Level"/>
+						</parameters>
+					</executeBlock>	
+					<!--Calendar Type-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Calendar Type']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Calendar Type"/>
+						</parameters>
+					</executeBlock>	
+					<pause durationInSecs="2"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[@title='Cost Options']/../../../../../..//label[text()='Calendar Type']/../..//select[@title='None']</findElement>
+						</if>
+						<then>
+							<pause durationInSecs="1"/>
+							<!--Cost Rate Derivation Date Type-->
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Cost Rate Derivation Date Type']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Cost Rate Derivation Date Type"/>
+								</parameters>
+							</executeBlock>	
+							<pause durationInSecs="1"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//div[@title='Cost Options']/../../../../../..//label[text()='Cost Rate Derivation Date Type']/../..//select[@title='Fixed date']</findElement>
+								</if>
+								<then>
+									<!--Cost Rate Derivation Date-->
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Cost Rate Derivation Date']/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+											<parameter name="COL_NAME" value="Cost Rate Derivation Date"/>
+										</parameters>
+									</executeBlock>	
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<!--Period Profile-->
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Period Profile']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Period Profile"/>
+								</parameters>
+							</executeBlock>
+						</else>
+					</IfThenElse>
+					<!--Maintain manual spread on date changes-->
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" highlightTurnedOff="true">//div[@title='Cost Options']/../../../../../..//label[text()='Maintain manual spread on date changes']/../..</findElement>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+								<parameters>
+									<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Maintain manual spread on date changes']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Maintain manual spread on date changes"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else/>
+					</IfThenElse>
+					<!--Associate project costs to summary tasks-->
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" highlightTurnedOff="true">//div[@title='Cost Options']/../../../../../..//label[text()='Associate project costs to summary tasks']</findElement>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+								<parameters>
+									<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Associate project costs to summary tasks']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Associate project costs to summary tasks"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else/>
+					</IfThenElse>
+					<!--Revenue quantity-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Revenue quantity']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Revenue quantity"/>
+						</parameters>
+					</executeBlock>
+					<!--Revenue-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Revenue']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Revenue"/>
+						</parameters>
+					</executeBlock>
+					<!--Bill rate-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Bill rate']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Bill rate"/>
+						</parameters>
+					</executeBlock>
+					<!--Use cost plan options for revenue-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Use cost plan options for revenue']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Use cost plan options for revenue"/>
+						</parameters>
+					</executeBlock>
+					<!--Revenue - Planning Level-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Planning Level']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Revenue - Planning Level"/>
+						</parameters>
+					</executeBlock>	
+					<!--Revenue - Calendar Type-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Calendar Type']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Revenue - Calendar Type"/>
+						</parameters>
+					</executeBlock>	
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" highlightTurnedOff="true">//div[@title='Revenue Options']/../../../../../..//label[text()='Calendar Type']/../..//select[@title='None']</findElement>
+						</if>
+						<then>
+							<pause durationInSecs="1"/>
+							<!--Bill Rate Derivation Date Type-->
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Bill Rate Derivation Date Type']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Bill Rate Derivation Date Type"/>
+								</parameters>
+							</executeBlock>	
+							<pause durationInSecs="1"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" highlightTurnedOff="true">//div[@title='Revenue Options']/../../../../../..//label[text()='Cost Rate Derivation Date Type']/../..//select[@title='Fixed date']</findElement>
+								</if>
+								<then>
+									<!--Cost Rate Derivation Date-->
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Bill Rate Derivation Date']/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+											<parameter name="COL_NAME" value="Bill Rate Derivation Date"/>
+										</parameters>
+									</executeBlock>	
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<!--Revenue - Period Profile-->
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Period Profile']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Revenue - Period Profile"/>
+								</parameters>
+							</executeBlock>
+						</else>
+					</IfThenElse>
+					<!--Bill Rate Derivation Date-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Bill Rate Derivation Date']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Bill Rate Derivation Date"/>
+						</parameters>
+					</executeBlock>	
+					<!--Cost Rate Derivation Date-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Cost Rate Derivation Date']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Cost Rate Derivation Date"/>
+						</parameters>
+					</executeBlock>
+					<!--Revenue - Maintain manual spread on date changes-->
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" highlightTurnedOff="true">//div[@title='Cost Options']/../../../../../..//label[text()='Maintain manual spread on date changes']/../..</findElement>
+						</if>
+						<then>
+							
+							<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+								<parameters>
+									<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Maintain manual spread on date changes']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Revenue - Maintain manual spread on date changes"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else/>
+					</IfThenElse>
+					<!--Associate project revenue to summary tasks-->
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" highlightTurnedOff="true">//div[@title='Revenue Options']/../../../../../..//label[text()='Associate project revenue to summary tasks']</findElement>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+								<parameters>
+									<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Associate project revenue to summary tasks']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Associate project revenue to summary tasks"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else>
+					<!--Cost and revenue in the same plan version-->
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" highlightTurnedOff="true">//label[text()='Planning Amounts']/../..//select[@title='Cost and revenue in the same plan version']</findElement>
+						</if>
+						<then>
+							<!--Quantity-->
+							<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Quantity']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Quantity"/>
+								</parameters>
+							</executeBlock>
+							<!--Raw cost-->
+							<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Raw cost']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Raw cost"/>
+								</parameters>
+							</executeBlock>
+							<!--Burdened cost-->
+							<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Burdened cost']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Burdened cost"/>
+								</parameters>
+							</executeBlock>
+							<!--Revenue-->
+							<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Revenue']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Revenue"/>
+								</parameters>
+							</executeBlock>
+							<!--Raw cost rate-->
+							<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Raw cost rate']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Raw cost rate"/>
+								</parameters>
+							</executeBlock>
+							<!--Burdened cost rate-->
+							<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Burdened cost rate']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Burdened cost rate"/>
+								</parameters>
+							</executeBlock>
+							<!--Bill rate-->
+							<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Bill rate']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Bill rate"/>
+								</parameters>
+							</executeBlock>
+							<!--Planning Level-->
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Planning Level']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Planning Level"/>
+								</parameters>
+							</executeBlock>	
+							<!--Calendar Type-->
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Calendar Type']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Calendar Type"/>
+								</parameters>
+							</executeBlock>	
+							<pause durationInSecs="1"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" highlightTurnedOff="true">//label[text()='Calendar Type']/../..//select[@title='None']</findElement>
+								</if>
+								<then>
+									<pause durationInSecs="1"/>
+									<!--Bill Rate Derivation Date Type-->
+									<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+										<parameters>
+											<parameter name="XPATH" value="//label[text()='Rate Derivation Date Type']/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+											<parameter name="COL_NAME" value="Rate Derivation Date Type"/>
+										</parameters>
+									</executeBlock>	
+									<pause durationInSecs="1"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" highlightTurnedOff="true">//label[text()='Rate Derivation Date Type']/../..//select[@title='Fixed date']</findElement>
+										</if>
+										<then>
+											<!--Rate Derivation Date-->
+											<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+												<parameters>
+													<parameter name="XPATH" value="//label[text()='Rate Derivation Date']/../.."/>
+													<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+													<parameter name="COL_NAME" value="Rate Derivation Date"/>
+												</parameters>
+											</executeBlock>	
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else>
+									<!--Period Profile-->
+									<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+										<parameters>
+											<parameter name="XPATH" value="//tr[contains(@id,'crupAppsPanelZS')]//label[text()='Period Profile']/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+											<parameter name="COL_NAME" value="Period Profile"/>
+										</parameters>
+									</executeBlock>
+								</else>
+							</IfThenElse>
+							<!--Maintain manual spread on date changes-->
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" highlightTurnedOff="true">//label[text()='Maintain manual spread on date changes']/../..</findElement>
+								</if>
+								<then>
+									<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+										<parameters>
+											<parameter name="XPATH" value="//label[text()='Maintain manual spread on date changes']/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+											<parameter name="COL_NAME" value="Maintain manual spread on date changes"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else/>
+							</IfThenElse>
+							<!--Associate project costs or revenue to summary tasks-->
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" highlightTurnedOff="true">//label[text()='Associate project costs or revenue to summary tasks']</findElement>
+								</if>
+								<then>
+									<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+										<parameters>
+											<parameter name="XPATH" value="//label[text()='Associate project costs or revenue to summary tasks']/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+											<parameter name="COL_NAME" value="Associate project costs or revenue to summary tasks"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<!--Revenue only-->
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" highlightTurnedOff="true">//label[text()='Planning Amounts']/../..//select[@title='Revenue only']</findElement>
+								</if>
+								<then>
+									<!--Revenue quantity-->
+									<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+										<parameters>
+											<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Revenue quantity']/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+											<parameter name="COL_NAME" value="Revenue quantity"/>
+										</parameters>
+									</executeBlock>
+									<!--Revenue-->
+									<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+										<parameters>
+											<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Revenue']/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+											<parameter name="COL_NAME" value="Revenue"/>
+										</parameters>
+									</executeBlock>
+									<!--Bill rate-->
+									<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+										<parameters>
+											<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Bill rate']/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+											<parameter name="COL_NAME" value="Bill rate"/>
+										</parameters>
+									</executeBlock>
+									<!--Planning Level-->
+									<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+										<parameters>
+											<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Planning Level']/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+											<parameter name="COL_NAME" value="Planning Level"/>
+										</parameters>
+									</executeBlock>	
+									<!--Calendar Type-->
+									<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+										<parameters>
+											<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Calendar Type']/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+											<parameter name="COL_NAME" value="Calendar Type"/>
+										</parameters>
+									</executeBlock>	
+									<pause durationInSecs="1"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" highlightTurnedOff="true">//div[@title='Revenue Options']/../../../../../..//label[text()='Calendar Type']/../..//select[@title='None']</findElement>
+										</if>
+										<then>
+											<pause durationInSecs="1"/>
+											<!--Bill Rate Derivation Date Type-->
+											<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+												<parameters>
+													<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Bill Rate Derivation Date Type']/../.."/>
+													<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+													<parameter name="COL_NAME" value="Bill Rate Derivation Date Type"/>
+												</parameters>
+											</executeBlock>	
+											<pause durationInSecs="1"/>
+											<IfThenElse>
+												<if>
+													<findElement by="xpath" highlightTurnedOff="true">//div[@title='Revenue Options']/../../../../../..//label[text()='Bill Rate Derivation Date Type']/../..//select[@title='Fixed date']</findElement>
+												</if>
+												<then>
+													<!--Bill Rate Derivation Date-->
+													<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+														<parameters>
+															<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Bill Rate Derivation Date']/../.."/>
+															<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+															<parameter name="COL_NAME" value="Bill Rate Derivation Date"/>
+														</parameters>
+													</executeBlock>	
+												</then>
+												<else/>
+											</IfThenElse>
+										</then>
+										<else>
+											<!--Revenue - Period Profile-->
+											<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+												<parameters>
+													<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Period Profile']/../.."/>
+													<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+													<parameter name="COL_NAME" value="Period Profile"/>
+												</parameters>
+											</executeBlock>	
+										</else>
+									</IfThenElse>
+									<!--Revenue - Maintain manual spread on date changes-->
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" highlightTurnedOff="true">//div[@title='Revenue Options']/../../../../../..//label[text()='Maintain manual spread on date changes']</findElement>
+										</if>
+										<then>
+											<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+												<parameters>
+													<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Maintain manual spread on date changes']/../.."/>
+													<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+													<parameter name="COL_NAME" value="Revenue - Maintain manual spread on date changes"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else/>
+									</IfThenElse>
+									<!--Associate project revenue to summary tasks-->
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" highlightTurnedOff="true">//div[@title='Revenue Options']/../../../../../..//label[text()='Associate project revenue to summary tasks']</findElement>
+										</if>
+										<then>
+											<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+												<parameters>
+													<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Associate project revenue to summary tasks']/../.."/>
+													<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+													<parameter name="COL_NAME" value="Associate project revenue to summary tasks"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else>
+									<!--Cost only-->
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" highlightTurnedOff="true">//label[text()='Planning Amounts']/../..//select[@title='Cost only']</findElement>
+										</if>
+										<then>
+											<!--Cost quantity-->
+											<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+												<parameters>
+													<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Cost quantity']/../.."/>
+													<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+													<parameter name="COL_NAME" value="Cost quantity"/>
+												</parameters>
+											</executeBlock>
+											<!--Raw cost-->
+											<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+												<parameters>
+													<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Raw cost']/../.."/>
+													<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+													<parameter name="COL_NAME" value="Raw cost"/>
+												</parameters>
+											</executeBlock>
+											<!--Burdened cost-->
+											<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+												<parameters>
+													<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Burdened cost']/../.."/>
+													<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+													<parameter name="COL_NAME" value="Burdened cost"/>
+												</parameters>
+											</executeBlock>
+											<!--Raw cost rate-->
+											<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+												<parameters>
+													<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Raw cost rate']/../.."/>
+													<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+													<parameter name="COL_NAME" value="Raw cost rate"/>
+												</parameters>
+											</executeBlock>
+											<!--Burdened cost rate-->
+											<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+												<parameters>
+													<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Burdened cost rate']/../.."/>
+													<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+													<parameter name="COL_NAME" value="Burdened cost rate"/>
+												</parameters>
+											</executeBlock>
+											<!--Planning Level-->
+											<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+												<parameters>
+													<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Planning Level']/../.."/>
+													<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+													<parameter name="COL_NAME" value="Planning Level"/>
+												</parameters>
+											</executeBlock>	
+											<!--Calendar Type-->
+											<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+												<parameters>
+													<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Calendar Type']/../.."/>
+													<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+													<parameter name="COL_NAME" value="Calendar Type"/>
+												</parameters>
+											</executeBlock>	
+											<pause durationInSecs="2"/>
+											<IfThenElse>
+												<if>
+													<findElement by="xpath" highlightTurnedOff="true">//div[@title='Cost Options']/../../../../../..//label[text()='Calendar Type']/../..//select[@title='None']</findElement>
+												</if>
+												<then>
+													<pause durationInSecs="1"/>
+													<!--Cost Rate Derivation Date Type-->
+													<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+														<parameters>
+															<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Cost Rate Derivation Date Type']/../.."/>
+															<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+															<parameter name="COL_NAME" value="Cost Rate Derivation Date Type"/>
+														</parameters>
+													</executeBlock>	
+													<pause durationInSecs="1"/>
+													<IfThenElse>
+														<if>
+															<findElement by="xpath" highlightTurnedOff="true">//div[@title='Cost Options']/../../../../../..//label[text()='Cost Rate Derivation Date Type']/../..//select[@title='Fixed date']</findElement>
+														</if>
+														<then>
+															<!--Cost Rate Derivation Date-->
+															<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+																<parameters>
+																	<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Cost Rate Derivation Date']/../.."/>
+																	<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+																	<parameter name="COL_NAME" value="Cost Rate Derivation Date"/>
+																</parameters>
+															</executeBlock>	
+														</then>
+														<else/>
+													</IfThenElse>
+												</then>
+												<else>
+													<!--Period Profile-->
+													<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+														<parameters>
+															<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Period Profile']/../.."/>
+															<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+															<parameter name="COL_NAME" value="Period Profile"/>
+														</parameters>
+													</executeBlock>	
+												</else>
+											</IfThenElse>
+											<!--Maintain manual spread on date changes-->
+											<IfThenElse>
+												<if>
+													<findElement by="xpath" highlightTurnedOff="true">//div[@title='Cost Options']/../../../../../..//label[text()='Maintain manual spread on date changes']</findElement>
+												</if>
+												<then>
+													<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+														<parameters>
+															<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Maintain manual spread on date changes']/../.."/>
+															<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+															<parameter name="COL_NAME" value="Maintain manual spread on date changes"/>
+														</parameters>
+													</executeBlock>
+												</then>
+												<else/>
+											</IfThenElse>
+											<!--Associate project costs to summary tasks-->
+											<IfThenElse>
+												<if>
+													<findElement by="xpath" highlightTurnedOff="true">//div[@title='Cost Options']/../../../../../..//label[text()='Associate project costs to summary tasks']</findElement>
+												</if>
+												<then>
+													<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+														<parameters>
+															<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Associate project costs to summary tasks']/../.."/>
+															<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+															<parameter name="COL_NAME" value="Associate project costs to summary tasks"/>
+														</parameters>
+													</executeBlock>
+												</then>
+												<else/>
+											</IfThenElse>
+										</then>
+										<else/>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//label[text()='Name']/../..//input[@value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<executeBlock name="TAB_PLAN_SETTINGS"/>
+					<executeBlock name="PLAN_SETTINGS"/>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+					<executeBlock name="SREACH_PLAN_TYPE"/>
+					<executeBlock name="TAB_PLAN_SETTINGS"/>
+					<executeBlock name="PLAN_SETTINGS"/>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+				</else>
+			</IfThenElse>
+		</repeat>
+	</fusionNavigation>
+</navigation>

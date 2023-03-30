@@ -1,0 +1,1863 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Tax Condition Sets (Transaction Tax)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" isFailedParentLevelRecordRetry="true" taskName="Manage Tax Condition Sets" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Tax Rates and Tax Recovery Rates (Transaction Tax Rates)"/>
+			<navigation name="Manage Tax Determining Factor Sets (Transaction Tax)"/>
+			<!-- <navigation name="Manage Functional Area Catalogs"/> -->
+			<navigation name="FunctionalAreaCatalogs"/><!--FBDI-->
+			<navigation name="Manage Functional Area Catalogs (Assign)"/>
+			<navigation name="Manage Tax Zone Types (Zone)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Tax Condition Sets - Transaction Tax Condition Sets"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Tax Condition Sets - Transaction Tax Condition Set Details"/>
+			<parameter name="MAIN_REPEAT_3" value="Manage Tax Condition Sets - Transaction Tax Condition Set Details (Value)"/>
+		</parameters>
+		<block name="Reset">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//a[contains(@title,'Collapse Search: ')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[contains(@title,'Expand Search: ')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<findElement by="xpath">//button[text()='Reset']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="OK">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table[@style='position: relative;']//span[text()='K']/..</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//table[@style='position: relative;']//span[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Save_And_Close">
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</block>
+		<block name="Save">
+			<executeBlock name="GLOBAL_SAVE"/>
+		</block>
+		<block name="Error">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Error']</findElement>
+				</if>
+				<then>
+					<error message="Please see error on the Application."/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+
+		<block name="CONDITION_SET_ERROR">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Tax Condition Set Details']/..</findElement>
+				</if>
+				<then>
+					<error message="Cannot find 'Tax Condition Set Details' Pls check your data."/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Search_For">
+			<findElement highlightTurnedOff="true" by="xpath">//input[@id=//label[text()='Transaction Tax']/..//label[text()='Transaction Tax']//@for][not(@disabled)]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="1"/>
+		</block>
+		<block name="Search_Tax_Condition_Sets">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Tax Condition Set Code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Tax Condition Set Code"/>
+				</parameters>
+			</executeBlock>
+			<findElement isSkipCheckDomError="true" by="xpath">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="1"/>
+			<executeBlock name="Search..." isRepeatUntilBreak="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='No results found.']</findElement>
+				</if>
+				<then>
+					<executeBlock name="GLOBAL_CREATE"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax Condition Set Code"/>']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax Condition Set Code"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isDisplayed="true">//button[text()='Edit'][@disabled]</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath" isDisplayed="true">//button[text()='Edit']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<executeBlock name="GLOBAL_CREATE"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[text()='No search conducted.']</findElement>
+				</if>
+				<then>
+					<executeBlock name="Reset"/>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Tax Condition Set Code']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Tax Condition Set Code"/>
+						</parameters>
+					</executeBlock>
+					<findElement isSkipCheckDomError="true" by="xpath">//button[text()='Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<break/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Tax_Condition_Sets">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true">//button[text()='Edit'][@disabled]</findElement>
+				</if>
+				<then/>
+				<else>
+					<!--Tax Condition Set Code-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Tax Condition Set Code']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Tax Condition Set Code"/>
+						</parameters>
+					</executeBlock>
+					<!--Tax Condition Set Name-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Tax Condition Set Name']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Tax Condition Set Name"/>
+						</parameters>
+					</executeBlock>
+					<!-- Tax Determining Factor Set Code -->
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Tax Determining Factor Set Code']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Tax Determining Factor Set Code"/>
+							<parameter name="SEARCH_1" value="Tax Determining Factor Set Code"/>
+						</parameters>
+					</executeBlock>
+					<!-- Country -->
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Country']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Country"/>
+							<parameter name="SEARCH_1" value="Name"/>
+						</parameters>
+					</executeBlock>
+					<!-- Enabled -->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Enabled']/.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Enabled"/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//div[text()='Warning']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[text()='Warning']/../../../../../../../..//button[text()='Yes']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="LK_CONDITION_SET">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tax Determining Factor Class"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tax Class Qualifier"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tax Determining Factor Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+										<parameters>
+											<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Tax Condition Set Details']/../..//div[contains(text(),'No data to display.')]"/>
+											<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Tax Condition Set Details']//tr[1]//td)[1]"/>
+											<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Tax Condition Set Details']/../..//div[contains(@id,'scroller')]"/>
+											<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Tax Condition Set Details']//div//tr[//td[1]//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tax Determining Factor Class"/>'] and td[2]//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tax Class Qualifier"/>'] and td[3][text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tax Determining Factor Name"/>']]</parameter>
+											<parameter name="TEMPLATE_2_FIND_ROW">//table[@summary='Tax Condition Set Details']//div//tr[//td[1]//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tax Determining Factor Class"/>'] and td[2]//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tax Class Qualifier"/>'] and td[3]//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tax Determining Factor Name"/>']]</parameter>
+											<parameter name="TEMPLATE_3_FIND_ROW">//table[@summary='Tax Condition Set Details']//div//tr[//td[1]//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tax Determining Factor Class"/>'] and td[2]//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tax Class Qualifier"/>'] and td[3][text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tax Determining Factor Name"/>']]</parameter>
+											<parameter name="TEMPLATE_CREATE" value="CONDITION_SET_ERROR"/>
+											<parameter name="TEMPLATE_UPDATE" value="CONDITION_SET"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<error message="Data issue: Please prepare data column 'Tax Determining Factor Name'. "/>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tax Determining Factor Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+										<parameters>
+											<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Tax Condition Set Details']/../..//div[contains(text(),'No data to display.')]"/>
+											<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Tax Condition Set Details']//tr[1]//td)[1]"/>
+											<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Tax Condition Set Details']/../..//div[contains(@id,'scroller')]"/>
+											<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Tax Condition Set Details']//div//tr[//td[1]//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tax Determining Factor Class"/>'] and td[2][string-length(string(text()))] and td[3][text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tax Determining Factor Name"/>']]</parameter>
+											<parameter name="TEMPLATE_2_FIND_ROW">NoSearch</parameter>
+											<parameter name="TEMPLATE_3_FIND_ROW">NoSearch</parameter>
+											<parameter name="TEMPLATE_CREATE" value="CONDITION_SET_ERROR"/>
+											<parameter name="TEMPLATE_UPDATE" value="CONDITION_SET"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<error message="Data issue: Please prepare data column 'Tax Class Qualifier' or column 'Tax Determining Factor Name'. "/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<error message="Data issue: Please prepare data column 'Tax Determining Factor Class'. "/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="waiting_search">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table/tbody/tr/td/div/a[text()='More...']</findElement>
+						</if>
+						<then>
+							<break/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//table/tbody/tr/td/ul/li/a[text()='More...']</findElement>
+								</if>
+								<then>
+									<break/>
+								</then>
+								<else>
+									<findElement by="xpath">//table[@summary='Tax Condition Set Details']//tr[contains(@class,'Selected')]//label[text()='Value or Start from Range']/../..//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="1"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="CASE_LOV">
+			<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="1"/>
+			<!--input value-->
+			<IfThenElse>
+				<if>
+					<!--Tax Classification Code-->
+					<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//label[text()='Tax Classification Code']/../..//input</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//label[text()='Tax Classification Code']/../..//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>
+					</sendKeys>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<!--Lookup Code-->
+							<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//label[text()='Lookup Code']/../..//input</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//label[text()='Lookup Code']/../..//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>
+							</sendKeys>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<!--Fiscal Classification Code-->
+									<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//label[text()='Fiscal Classification Code']/../..//input</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//label[text()='Fiscal Classification Code']/../..//input</findElement>
+									<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+										<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>
+									</sendKeys>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<!--Geography Name-->
+											<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//label[text()='Geography Name']/../..//input</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//label[text()='Geography Name']/../..//input</findElement>
+											<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>
+											</sendKeys>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<!--Name-->
+													<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//label[text()='Name']/../..//input</findElement>
+												</if>
+												<then>
+													<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//label[text()='Name']/../..//input</findElement>
+													<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+														<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>
+													</sendKeys>
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<!--Transaction Type-->
+															<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//label[text()='Transaction Type']/../..//input</findElement>
+														</if>
+														<then>
+															<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//label[text()='Transaction Type']/../..//input</findElement>
+															<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+																<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>
+															</sendKeys>
+														</then>
+														<else/>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<findElement by="xpath">//table[@style='position: relative;']//table//table/tbody/tr/td//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@style='position: relative;']//div[contains(text(),'Search and Select: Value or From Range')]/../../../../../../..//div[text()='No rows to display']</findElement>
+				</if>
+				<then>
+					<error message="Data issue: The field 'Value or From Range' No results found."/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@style='position: relative;']//table//table//table/tbody/tr//td//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@style='position: relative;']//table//table//table/tbody/tr//td//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//table[@style='position: relative;']//table//table/tbody/tr/td//button[text()='OK']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//table[@style='position: relative;']//table//table//table/tbody/tr//td[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//table[@style='position: relative;']//table//table//table/tbody/tr//td[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//table[@style='position: relative;']//table//table/tbody/tr/td//button[text()='OK']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<error message="Data issue: The field 'Value or From Range' No results found."/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="FIND_Value_BLANK">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table[@summary='Value']//tr//input[@value='' or not(@Value)]</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Value']//tr//input[@value='' or not(@Value)]</findElement>
+					<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="TOP"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="CASE_LK">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table/tbody/tr/td/div/a[text()='More...']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table/tbody/tr/td/div/a[text()='More...']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">//table/tbody/tr/td/ul/li/a[text()='More...']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<pause durationInSecs="1"/>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@style='position: relative;']//div[text()='No data to display.']"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@style='position: relative;']//table[@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@style='position: relative;']/..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@style='position: relative;']//tr//td[2]//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>']</parameter>
+					<parameter name="TEMPLATE_2_FIND_ROW">//table[@style='position: relative;']//tr//td[2][text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>']</parameter>
+					<parameter name="TEMPLATE_3_FIND_ROW">XXXXXXXXXXXXXX</parameter>
+					<parameter name="TEMPLATE_CREATE" value="ERROR_VALUE"/>
+					<parameter name="TEMPLATE_UPDATE" value="CLICK_VALUE"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="ERROR_VALUE">
+			<error message="Data issue: The field 'Value or From Range' No results found."/>
+		</block>
+		<block name="CLICK_VALUE">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@style='position: relative;']//tr//td[2]//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@style='position: relative;']//tr//td[2]//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">//table[@style='position: relative;']//tr//td[2][text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<findElement by="xpath">//table[@style='position: relative;']//table//table/tbody/tr/td//button[text()='OK']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Waiting_time_Value_BLANK">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">(//table[@summary='Value']//input[@value='']/..//a)[1]</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="3"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//table[@style='position: relative;']//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="TOP"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="UPDATE_VAVLUE_DETAILS"/>
+		<block name="CREATE_VAVLUE_DETAILS">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Value']/../../../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="2"/>
+			<executeBlock name="FIND_Value_BLANK" isRepeatUntilBreak="true"/>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Value']//tr[contains(@class,'Selected')]//td[1]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Field - Value1"/>
+					<parameter name="SEARCH_1" value="Tax Classification Code' or text()='Lookup Code' or text()='Fiscal Classification Code' or text()='Geography Name' or text()='Name' or text()='Transaction Type"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="CONDITION_SET">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_2_FIND_ROW</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_2_FIND_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_3_FIND_ROW</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_3_FIND_ROW</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<!--Operator-->
+			<pause durationInSecs="1"/>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Tax Condition Set Details']//tr[contains(@class,'Selected')]//tr//td[4]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Operator"/>
+				</parameters>
+			</executeBlock>
+			<!--Value or From Range-->
+			<pause durationInSecs="2"/>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//table[@summary='Tax Condition Set Details']//tr[contains(@class,'Selected')]//tr//td[4]//select[@title='Is blank']</findElement>
+						</if>
+						<then/>
+						<else>
+							<pause durationInSecs="1"/>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" by="xpath">//table[@summary='Tax Condition Set Details']//tr[contains(@class,'Selected')]//tr//td[4]//select[@title='Is not blank']</findElement>
+								</if>
+								<then/>
+								<else>
+									<pause durationInSecs="1"/>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" by="xpath">//table[@summary='Tax Condition Set Details']//tr[contains(@class,'Selected')]//*[contains(@src,'func_fieldsfilter')]/../..//a</findElement>
+										</if>
+										<then/>
+										<else>
+											<pause durationInSecs="1"/>
+											<IfThenElse>
+												<if>
+													<findElement isDisplayed="true" by="xpath">//table[@summary='Tax Condition Set Details']//tr[contains(@class,'Selected')]//label[text()='Value or Start from Range']/../..//*[@title]</findElement>
+												</if>
+												<then>
+													<pause durationInSecs="1"/>
+													<IfThenElse>
+														<if>
+															<findElement isDisplayed="true" by="xpath">//table[@summary='Tax Condition Set Details']//tr[contains(@class,'Selected')]//tr//td[5]//*[@value='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>']</findElement>
+														</if>
+														<then/>
+														<else>
+															<pause durationInSecs="1"/>
+															<findElement by="xpath">//table[@summary='Tax Condition Set Details']//tr[contains(@class,'Selected')]//label[text()='Value or Start from Range']/../..//*[@title]</findElement>
+															<click waitForPageToFinishRendering="true"/>
+															<!--<findElement by="xpath">//table[@summary='Tax Condition Set Details']//tr[contains(@class,'Selected')]//tr//td[5]//input</findElement>
+															<sendKeys isClear="true">
+																<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>
+															</sendKeys>-->
+															<executeBlock name="waiting_search" isRepeatUntilBreak="true"/>
+															<pause durationInSecs="1"/>
+															<IfThenElse>
+																<if>
+																	<findElement by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+																</if>
+																<then>
+																	<executeBlock name="CASE_LOV"/>
+																	<pause durationInSecs="1"/>
+																</then>
+																<else>
+																	<executeBlock name="CASE_LK"/>
+																</else>
+															</IfThenElse>
+														</else>
+													</IfThenElse>
+												</then>
+												<else>
+													<pause durationInSecs="1"/>
+													<IfThenElse>
+														<if>
+															<findElement by="xpath">//table[@summary='Tax Condition Set Details']//tr[contains(@class,'Selected')]//tr//td[5]//input</findElement>
+														</if>
+														<then>
+															<findElement by="xpath">//table[@summary='Tax Condition Set Details']//tr[contains(@class,'Selected')]//tr//td[5]//input</findElement>
+															<sendKeys isClear="true">
+																<valueKB inventoryName="MAIN_REPEAT_2" columnName="Value or From Range"/>
+															</sendKeys>
+														</then>
+														<else/>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Ignore Condition"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Yes</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<pause durationInSecs="3"/>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Tax Condition Set Details']//tr[contains(@class,'Selected')]//tr//*[@type='checkbox']/.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+							<parameter name="COL_NAME" value="Ignore Condition"/>
+						</parameters>
+					</executeBlock>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Value_Account">
+			<IfThenElse>
+				<if>
+					<comparisons separator="OR">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Is blank</valueText>
+							</rightOperand>
+						</comparison>
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Is not blank</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath">//td[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//select</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//select</findElement>
+									<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+										<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+									</select>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//input/..//div//li[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//input/..//div//li[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath">XPATH//input[@role='combobox']</findElement>
+												</if>
+												<then>
+													<findElement by="xpath" setFocus="true">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//input[@role='combobox']</findElement>
+													<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+													<findElement by="xpath" setFocus="true">//ul[contains(@id,string(XPATH//input[@role='combobox']/../../@id))]//li[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']</findElement>
+													<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+												</then>
+												<else/>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="OR">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Between</valueText>
+									</rightOperand>
+								</comparison>
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Not between</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']/../../..//table//tr[td//input[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Value1"/>'] and td//input[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Value2"/>'] ]</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//span[text()='Add Fields']/..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<findElement by="xpath">//td[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+											</select>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//input/..//div//li[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']</findElement>
+												</if>
+												<then>
+													<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//input/..//div//li[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']</findElement>
+													<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement highlightTurnedOff="true" by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//input[@role='combobox']</findElement>
+														</if>
+														<then>
+															<findElement by="xpath" setFocus="true">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//input[@role='combobox']</findElement>
+															<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+															<findElement by="xpath" setFocus="true">//ul[contains(@id,string(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//input[@role='combobox']/../../@id))]//li[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']</findElement>
+															<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+														</then>
+														<else/>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isSkipCheckDomError="true">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']/../../..//input[not(@value) or @value='']/../../../../../..//input)[1]/../..</findElement>
+										</if>
+										<then>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']/../../..//input[not(@value) or @value='']/../../../../../..//input)[1]/../..//input[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Value1"/>']</findElement>
+												</if>
+												<then/>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']/../../..//input[not(@value) or @value='']/../../../../../..//input)[1]/../..//input[not(@disabled)]</findElement>
+														</if>
+														<then>
+															<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']/../../..//input[not(@value) or @value='']/../../../../../..//input)[1]/../..//input</findElement>
+															<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+																<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Value1"/>
+															</sendKeys>
+														</then>
+														<else/>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</then>
+										<else/>
+									</IfThenElse>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isSkipCheckDomError="true">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']/../../..//input[not(@value) or @value='']/../../../../../..//input)[2]/../..</findElement>
+										</if>
+										<then>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']/../../..//input[not(@value) or @value='']/../../../../../..//input)[2]/../..//input[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Value2"/>']</findElement>
+												</if>
+												<then/>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']/../../..//input[not(@value) or @value='']/../../../../../..//input)[2]/../..//input[not(@disabled)]</findElement>
+														</if>
+														<then>
+															<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']/../../..//input[not(@value) or @value='']/../../../../../..//input)[2]/../..//input</findElement>
+															<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+																<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Value2"/>
+															</sendKeys>
+														</then>
+														<else/>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</then>
+										<else/>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<comparisons separator="OR">
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>Equals to</valueText>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>Equal to</valueText>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>Equals</valueText>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>Does not equal</valueText>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>Is a child of</valueText>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>Is a descendant of</valueText>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>Is a last descendant of</valueText>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>Is a parent of</valueText>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>Is an ancestor of</valueText>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>Is a first ancestor of</valueText>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>Is a sibling of</valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//table//tr[td//input[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Value1"/>'] ]</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//span[text()='Add Fields']/..</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<findElement by="xpath">//td[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..</findElement>
+												</if>
+												<then>
+													<!-- <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+														<parameters>
+															<parameter name="xpath" value="Field - Condition">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']/../../..//input[not(@value) or @value='']/../../../../../../../..//select</parameter>
+															<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+															<parameter name="COL_NAME" value="Field - Condition"/>
+														</parameters>
+													</executeBlock> -->
+													<!-- <select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+														<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+													</select> -->
+													<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//select</findElement>
+													<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+														<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+													</select>
+													<IfThenElse>
+														<if>
+															<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/..</findElement>
+														</if>
+														<then>
+															<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/..</findElement>
+															<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+																<parameters>
+																	<parameter name="XPATH" value="//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/.."/>
+																	<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+																	<parameter name="COL_NAME" value="Field - Value1"/>
+																	<parameter name="SEARCH_1" value="Value"/>
+																</parameters>
+															</executeBlock>
+															<!-- <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+															<pause durationInSecs="1"/>
+															<findElement by="xpath">//a[text()='Search...']/../..</findElement>
+															<findElement by="xpath">//a[text()='Search...']</findElement>
+															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+															<pause durationInSecs="1"/>
+															<IfThenElse>
+																<if>
+																	<findElement by="xpath">//div[text()='Search and Select: <valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/..</findElement>
+																</if>
+																<then>
+																	<findElement by="xpath">//div[text()='Search and Select: <valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/..</findElement>
+																	<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+																		<parameters>
+																			<parameter name="XPATH" value=""/>
+																			<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+																			<parameter name="COL_NAME" value="Field - Value1"/>
+																		</parameters>
+																	</executeBlock>
+																	<findElement by="xpath">(//button[text()='Search'])[2]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																	<pause durationInSecs="1"/>
+																	<findElement by="xpath">(//td[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Value1"/>']/../..)[2]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																	<pause durationInSecs="1"/>
+																	<findElement by="xpath">(//button[text()='OK'])[1]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																	<pause durationInSecs="1"/>
+										
+																</then>
+																<else>
+																</else>
+															</IfThenElse> -->
+														</then>
+														<else>
+															<IfThenElse>
+																<if>
+																	<findElement by="xpath">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is a child of']/../../..//input[not(@value) or @value='']/..)[1]</findElement>
+																</if>
+																<then>
+																	<findElement by="xpath">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is a child of']/../../..//input[not(@value) or @value='']/..)[1]</findElement>
+																	<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+																		<parameters>
+																			<parameter name="XPATH" value="(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is a child of']/../../..//input[not(@value) or @value='']/..)[1]"/>
+																			<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+																			<parameter name="COL_NAME" value="Field - Value1"/>
+																			<parameter name="SEARCH_1" value="Value"/>
+																		</parameters>
+																	</executeBlock>
+																</then>
+																<else>
+																	<IfThenElse>
+																		<if>
+																			<findElement by="xpath">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is a descendant of']/../../..//input[not(@value) or @value='']/..)[1]</findElement>
+																		</if>
+																		<then>
+																			<findElement by="xpath">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is a descendant of']/../../..//input[not(@value) or @value='']/..)[1]</findElement>
+																			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+																				<parameters>
+																					<parameter name="XPATH" value="(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is a descendant of']/../../..//input[not(@value) or @value='']/..)[1]"/>
+																					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+																					<parameter name="COL_NAME" value="Field - Value1"/>
+																					<parameter name="SEARCH_1" value="Value"/>
+																				</parameters>
+																			</executeBlock>
+																		</then>
+																		<else>
+																			<IfThenElse>
+																				<if>
+																					<findElement by="xpath">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is a last descendant of']/../../..//input[not(@value) or @value='']/..)[1]</findElement>
+																				</if>
+																				<then>
+																					<findElement by="xpath">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is a last descendant of']/../../..//input[not(@value) or @value='']/..)[1]</findElement>
+																					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+																						<parameters>
+																							<parameter name="XPATH" value="(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is a last descendant of']/../../..//input[not(@value) or @value='']/..)[1]"/>
+																							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+																							<parameter name="COL_NAME" value="Field - Value1"/>
+																							<parameter name="SEARCH_1" value="Value"/>
+																						</parameters>
+																					</executeBlock>
+																				</then>
+																				<else>
+																					<IfThenElse>
+																						<if>
+																							<findElement by="xpath">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is a parent of']/../../..//input[not(@value) or @value='']/..)[1]</findElement>
+																						</if>
+																						<then>
+																							<findElement by="xpath">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is a parent of']/../../..//input[not(@value) or @value='']/..)[1]</findElement>
+																							<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+																								<parameters>
+																									<parameter name="XPATH" value="(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is a parent of']/../../..//input[not(@value) or @value='']/..)[1]"/>
+																									<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+																									<parameter name="COL_NAME" value="Field - Value1"/>
+																									<parameter name="SEARCH_1" value="Value"/>
+																								</parameters>
+																							</executeBlock>
+																						</then>
+																						<else>
+																							<IfThenElse>
+																								<if>
+																									<findElement by="xpath">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is an ancestor of']/../../..//input[not(@value) or @value='']/..)[1]</findElement>
+																								</if>
+																								<then>
+																									<findElement by="xpath">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is an ancestor of']/../../..//input[not(@value) or @value='']/..)[1]</findElement>
+																									<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+																										<parameters>
+																											<parameter name="XPATH" value="(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is an ancestor of']/../../..//input[not(@value) or @value='']/..)[1]"/>
+																											<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+																											<parameter name="COL_NAME" value="Field - Value1"/>
+																											<parameter name="SEARCH_1" value="Value"/>
+																										</parameters>
+																									</executeBlock>
+																								</then>
+																								<else>
+																									<IfThenElse>
+																										<if>
+																											<findElement by="xpath">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is a first ancestor of']/../../..//input[not(@value) or @value='']/..)[1]</findElement>
+																										</if>
+																										<then>
+																											<findElement by="xpath">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is a first ancestor of']/../../..//input[not(@value) or @value='']/..)[1]</findElement>
+																											<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+																												<parameters>
+																													<parameter name="XPATH" value="(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is a first ancestor of']/../../..//input[not(@value) or @value='']/..)[1]"/>
+																													<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+																													<parameter name="COL_NAME" value="Field - Value1"/>
+																													<parameter name="SEARCH_1" value="Value"/>
+																												</parameters>
+																											</executeBlock>
+																										</then>
+																										<else>
+																											<IfThenElse>
+																												<if>
+																													<findElement by="xpath">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is a sibling of']/../../..//input[not(@value) or @value='']/..)[1]</findElement>
+																												</if>
+																												<then>
+																													<findElement by="xpath">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is a sibling of']/../../..//input[not(@value) or @value='']/..)[1]</findElement>
+																													<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+																														<parameters>
+																															<parameter name="XPATH" value="(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Is a sibling of']/../../..//input[not(@value) or @value='']/..)[1]"/>
+																															<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+																															<parameter name="COL_NAME" value="Field - Value1"/>
+																															<parameter name="SEARCH_1" value="Value"/>
+																														</parameters>
+																													</executeBlock>
+																												</then>
+																												<else>
+																													<IfThenElse>
+																														<if>
+																															<findElement by="xpath">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Does not equal']/../../..//input[not(@value) or @value='']/..)[1]</findElement>
+																														</if>
+																														<then>
+																															<findElement by="xpath">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Does not equal']/../../..//input[not(@value) or @value='']/..)[1]</findElement>
+																															<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+																																<parameters>
+																																	<parameter name="XPATH" value="(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='Account']/../..//*[@title='Does not equal']/../../..//input[not(@value) or @value='']/..)[1]"/>
+																																	<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+																																	<parameter name="COL_NAME" value="Field - Value1"/>
+																																	<parameter name="SEARCH_1" value="Value"/>
+																																</parameters>
+																															</executeBlock>
+																														</then>
+																														<else>
+																														</else>
+																													</IfThenElse>
+																												</else>
+																											</IfThenElse>
+																										</else>
+																									</IfThenElse>
+																								</else>
+																							</IfThenElse>
+																						</else>
+																					</IfThenElse>
+																				</else>
+																			</IfThenElse>
+																		</else>
+																	</IfThenElse>
+																</else>
+															</IfThenElse>
+														</else>
+													</IfThenElse>
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement highlightTurnedOff="true" by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//input/..//div//li[text()='Equals']</findElement>
+														</if>
+														<then>
+															<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//input/..//div//li[text()='Equals']</findElement>
+															<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+														</then>
+														<else>
+															<IfThenElse>
+																<if>
+																	<findElement highlightTurnedOff="true" by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//input[@role='combobox']</findElement>
+																</if>
+																<then>
+																	<findElement by="xpath" setFocus="true">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//input[@role='combobox']</findElement>
+																	<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+																	<findElement by="xpath" setFocus="true">//ul[contains(@id,string(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//input[@role='combobox']/../../@id))]//li[text()='Equals']</findElement>
+																	<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+																</then>
+																<else/>
+															</IfThenElse>
+														</else>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+											<IfThenElse>
+												<if>
+													<findElement by="xpath" isSkipCheckDomError="true">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../..//input)[1]/../..</findElement>
+												</if>
+												<then>
+													<IfThenElse>
+														<if>
+															<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../..//input)[1]/../..//input[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Value1"/>']</findElement>
+														</if>
+														<then/>
+														<else>
+															<IfThenElse>
+																<if>
+																	<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../..//input)[1]/../..//input[not(@disabled)]</findElement>
+																</if>
+																<then>
+																	<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//*[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../..//input)[1]/../..//input</findElement>
+																	<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+																		<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Value1"/>
+																	</sendKeys>
+																</then>
+																<else/>
+															</IfThenElse>
+														</else>
+													</IfThenElse>
+												</then>
+												<else/>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//select[@title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']/../../..//table//tr[td//input[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Value1"/>'] ]</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//span[text()='Add Fields']/..</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<findElement by="xpath">//td[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//select[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//select</findElement>
+												</if>
+												<then>
+													<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//select[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//select</findElement>
+													<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+														<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>
+													</select>
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement highlightTurnedOff="true" by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//select[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//input/..//div//li[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']</findElement>
+														</if>
+														<then>
+															<findElement by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//select[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//input/..//div//li[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']</findElement>
+															<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+														</then>
+														<else>
+															<IfThenElse>
+																<if>
+																	<findElement highlightTurnedOff="true" by="xpath">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//select[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//input[@role='combobox']</findElement>
+																</if>
+																<then>
+																	<findElement by="xpath" setFocus="true">//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//select[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//input[@role='combobox']</findElement>
+																	<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+																	<findElement by="xpath" setFocus="true">//ul[contains(@id,string(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//select[@title='Equals']/../../..//input[not(@value) or @value='']/../../../../../../../..//input[@role='combobox']/../../@id))]//li[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']</findElement>
+																	<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+																</then>
+																<else/>
+															</IfThenElse>
+														</else>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+											<IfThenElse>
+												<if>
+													<findElement by="xpath" isSkipCheckDomError="true">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//select[@title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']/../../..//input[not(@value) or @value='']/../../../../../..//input)[1]/../..</findElement>
+												</if>
+												<then>
+													<IfThenElse>
+														<if>
+															<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//select[@title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']/../../..//input[not(@value) or @value='']/../../../../../..//input)[1]/../..//input[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Value1"/>']</findElement>
+														</if>
+														<then/>
+														<else>
+															<IfThenElse>
+																<if>
+																	<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//select[@title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']/../../..//input[not(@value) or @value='']/../../../../../..//input)[1]/../..//input[not(@disabled)]</findElement>
+																</if>
+																<then>
+																	<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">(//div[text()='Key Flexfilter']/../../../../../../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>']/../..//select[@title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Condition"/>']/../../..//input[not(@value) or @value='']/../../../../../..//input)[1]/../..//input</findElement>
+																	<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+																		<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Value1"/>
+																	</sendKeys>
+																</then>
+																<else/>
+															</IfThenElse>
+														</else>
+													</IfThenElse>
+												</then>
+												<else/>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="CHECK_KFF_FLEXILTER">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true">//div[text()='Key Flexfilter']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//table[@style='position: relative;']//span[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isDisplayed="true">//div[text()='Value']</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" by="xpath">//table[@style='position: relative;']//span[text()='K']/..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<pause durationInSecs="1"/>
+							<break/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="DELETE_DEFAULT_ROW">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true">//table[@summary='Value']//tr[contains(@class,'Select')]//input[@value='']</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Value']/../../../..//*[@title='Delete']</findElement>
+					<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<pause durationInSecs="1"/>
+					<break/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="VALUE_SCROLLBAR">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">VALUE_NO_DATA</findElement>
+				</if>
+				<then>
+					<executeBlock name="VALUE_CREATE"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">VALUE_SCROLLER</findElement>
+						</if>
+						<then>
+							<executeBlock name="VALUE_INNER" isRepeatUntilBreak="true"/>
+						</then>
+						<else>
+							<executeBlock name="VALUE_NO_INNER"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="VALUE_INNER">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">VALUE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<executeBlock name="VALUE_UPDATE"/>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">VALUE_2_FIND_ROW</findElement>
+						</if>
+						<then>
+							<executeBlock name="VALUE_UPDATE"/>
+							<break/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">VALUE_3_FIND_ROW</findElement>
+								</if>
+								<then>
+									<executeBlock name="VALUE_UPDATE"/>
+									<break/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">VALUE_4_FIND_ROW</findElement>
+										</if>
+										<then>
+											<executeBlock name="VALUE_UPDATE"/>
+											<break/>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">VALUE_5_FIND_ROW</findElement>
+												</if>
+												<then>
+													<executeBlock name="VALUE_UPDATE"/>
+													<break/>
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">VALUE_6_FIND_ROW</findElement>
+														</if>
+														<then>
+															<executeBlock name="VALUE_UPDATE"/>
+															<break/>
+														</then>
+														<else>
+															<IfThenElse>
+																<if>
+																	<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">VALUE_7_FIND_ROW</findElement>
+																</if>
+																<then>
+																	<executeBlock name="VALUE_UPDATE"/>
+																	<break/>
+																</then>
+																<else>
+																	<IfThenElse>
+																		<if>
+																			<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">VALUE_8_FIND_ROW</findElement>
+																		</if>
+																		<then>
+																			<executeBlock name="VALUE_UPDATE"/>
+																			<break/>
+																		</then>
+																		<else>
+																			<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">VALUE_SCROLLER</findElement>
+																			<IfThenElse>
+																				<if>
+																					<isEndOfScroll/>
+																				</if>
+																				<then>
+																					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">VALUE_SCROLLER</findElement>
+																					<scroll direction="TOP"/>
+																					<executeBlock name="VALUE_CREATE"/>
+																					<break/>
+																				</then>
+																				<else>
+																					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">VALUE_SCROLLER</findElement>
+																					<scroll direction="DOWN"/>
+																					<pause durationInSecs="1"/>
+																				</else>
+																			</IfThenElse>
+																		</else>
+																	</IfThenElse>
+																</else>
+															</IfThenElse>
+														</else>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="VALUE_NO_INNER">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">VALUE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<executeBlock name="VALUE_UPDATE"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">VALUE_2_FIND_ROW</findElement>
+						</if>
+						<then>
+							<executeBlock name="VALUE_UPDATE"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">VALUE_3_FIND_ROW</findElement>
+								</if>
+								<then>
+									<executeBlock name="VALUE_UPDATE"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">VALUE_4_FIND_ROW</findElement>
+										</if>
+										<then>
+											<executeBlock name="VALUE_UPDATE"/>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">VALUE_5_FIND_ROW</findElement>
+												</if>
+												<then>
+													<executeBlock name="VALUE_UPDATE"/>
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">VALUE_6_FIND_ROW</findElement>
+														</if>
+														<then>
+															<executeBlock name="VALUE_UPDATE"/>
+														</then>
+														<else>
+															<IfThenElse>
+																<if>
+																	<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">VALUE_7_FIND_ROW</findElement>
+																</if>
+																<then>
+																	<executeBlock name="VALUE_UPDATE"/>
+																</then>
+																<else>
+																	<IfThenElse>
+																		<if>
+																			<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">VALUE_8_FIND_ROW</findElement>
+																		</if>
+																		<then>
+																			<executeBlock name="VALUE_UPDATE"/>
+																		</then>
+																		<else>
+																			<executeBlock name="VALUE_CREATE"/>
+																		</else>
+																	</IfThenElse>
+																</else>
+															</IfThenElse>
+														</else>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Data_Assertions">
+			<executeBlock name="Search_For"/>
+			<executeBlock name="Reset"/>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Tax Condition Set Code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Tax Condition Set Code"/>
+				</parameters>
+			</executeBlock>
+			<findElement isSkipCheckDomError="true" by="xpath">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="1"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax Condition Set Code"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax Condition Set Code"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="Ledger"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//label[text()='Ledger']/../..//td[2]//*[not(string())]</findElement>
+								</if>
+								<then/>
+								<else>
+									<templateAssertion>
+										<findElement isSkipCheckDomError="true" by="xpath" setFocus="true">//label[text()='Ledger']/../../td/span</findElement>
+										<assert by="EQUAL_TEXT">
+											<valueKB inventoryName="MAIN_REPEAT_1" columnName="Ledger"/>
+										</assert>
+									</templateAssertion>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+					<findElement by="xpath" isDisplayed="true">//*[contains(text(),'Tax Condition Set:')]/../../../../../../../../../../..//button[@accesskey='o']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<error message="Assertion Issue : Cannot to find data 'Tax Condition Set'"/>
+				</else>
+			</IfThenElse>
+		</block>		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="Search_For"/>
+			<executeBlock name="Reset"/>
+			<executeBlock name="Search_Tax_Condition_Sets"/>
+			<executeBlock name="Tax_Condition_Sets"/>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<IfThenElse>
+					<if>
+						<findElement by="xpath" isDisplayed="true">//button[text()='Edit'][@disabled]</findElement>
+					</if>
+					<then/>
+					<else>
+						<executeBlock name="LK_CONDITION_SET"/>
+					</else>
+				</IfThenElse>
+				<repeat inventoryName="MAIN_REPEAT_3">
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isDisplayed="true">//button[text()='Edit'][@disabled]</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock name="CHECK_KFF_FLEXILTER" isRepeatUntilBreak="true"/>
+							<pause durationInSecs="2"/>
+							<findElement by="xpath">//table[@summary='Tax Condition Set Details']//tr[contains(@class,'Selected')]//*[@title='Select and Add' or @title='Select']/../..//a</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="2"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isDisplayed="true">//div[text()='Key Flexfilter']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<comparisons separator="AND">
+												<comparison operator="NOT_EQUAL">
+													<leftOperand>
+														<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Name"/>
+													</leftOperand>
+													<rightOperand>
+														<valueText/>
+													</rightOperand>
+												</comparison>
+											</comparisons>
+										</if>
+										<then>
+											<executeBlock name="Value_Account"/>
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											<error message="Data Issue : Please Prepare data column 'Field - Name' For Indentify Attribute Account."/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isDisplayed="true">//div[text()='Value']</findElement>
+										</if>
+										<then>
+											<executeBlock name="DELETE_DEFAULT_ROW" isRepeatUntilBreak="true"/>
+											<pause durationInSecs="2"/>
+											<executeBlock name="VALUE_SCROLLBAR">
+												<parameters>
+													<parameter name="VALUE_NO_DATA">//table[@summary='Value']/../..//div[contains(text(),'No data to display.')]</parameter>
+													<parameter name="VALUE_SCROLLER">//table[@summary='Value']/../..//div[contains(@id,'scroller')]</parameter>
+													<parameter name="VALUE_1_FIND_ROW">//table[@summary='Value']//input[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Value1"/>']</parameter>
+													<parameter name="VALUE_2_FIND_ROW">NO_DATA_TO_FIND</parameter>
+													<parameter name="VALUE_3_FIND_ROW">NO_DATA_TO_FIND</parameter>
+													<parameter name="VALUE_CREATE" value="CREATE_VAVLUE_DETAILS"/>
+													<parameter name="VALUE_UPDATE" value="UPDATE_VAVLUE_DETAILS"/>
+												</parameters>
+											</executeBlock>
+											<!--
+											<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+												<parameters>
+													<parameter name="TEMPLATE_NO_DATA">//table[@summary='Value']/../..//div[contains(text(),'No data to display.')]</parameter>
+													<parameter name="TEMPLATE_FIRST_ROW">//table[@summary='Value']//tr[1]//input</parameter>
+													<parameter name="TEMPLATE_SCROLLER">//table[@summary='Value']/../..//div[contains(@id,'scroller')]</parameter>
+													<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Value']//input[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field - Value1"/>']</parameter>
+													<parameter name="TEMPLATE_2_FIND_ROW">NO_DATA_TO_FIND</parameter>
+													<parameter name="TEMPLATE_3_FIND_ROW">NO_DATA_TO_FIND</parameter>
+													<parameter name="TEMPLATE_CREATE" value="CREATE_VAVLUE_DETAILS"/>
+													<parameter name="TEMPLATE_UPDATE" value="UPDATE_VAVLUE_DETAILS"/>
+												</parameters>
+											</executeBlock>		
+											-->
+										</then>
+										<else>
+											<pause durationInSecs="1"/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+							<executeBlock name="CHECK_KFF_FLEXILTER" isRepeatUntilBreak="true"/>
+							<pause durationInSecs="2"/>
+						</else>
+					</IfThenElse>
+				</repeat>
+			</repeat>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true">//button[text()='Edit'][@disabled]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isDisplayed="true">//*[contains(text(),'Tax Condition Set:')]/../../../../../../../../../../..//button[@accesskey='o']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<executeBlock name="Save"/>
+					<executeBlock name="Error"/>
+					<!-- Enabled -->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Enabled']/.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Enabled"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Save"/>
+					<executeBlock name="Error"/>
+					<executeBlock name="Save_And_Close"/>
+				</else>
+			</IfThenElse>
+			<executeBlock name="Data_Assertions"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

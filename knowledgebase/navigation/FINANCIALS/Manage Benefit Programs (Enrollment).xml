@@ -1,0 +1,871 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Benefit Programs (Enrollment)</name>
+    <svn>
+        <xsd:revision>$Revision: 77292 $:</xsd:revision>
+        <xsd:author>$Author: kissada.kiskaew $:</xsd:author>
+        <xsd:date>$Date: 2021-11-17 07:13:02 +0700 (Wed, 17 Nov 2021) $:</xsd:date>
+        <xsd:headURL>$HeadURL: http://svn01.rapidesuite.com:999/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Benefit%20Programs.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Benefit Programs.xml 77292 2021-11-17 00:13:02Z kissada.kiskaew $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Benefit Programs" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Enterprise HCM Information"/>
+			<navigation name="Manage Benefit Programs (Benefit Programs)"/>
+			<navigation name="Manage Benefit Life Events"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Benefit Programs - Benefit Program"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Benefit Programs - Benefit Program Details"/>
+			<parameter name="REPEAT_3_MAIN" value="Manage Benefit Programs - Program Enrollment"/>
+		</parameters>	
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Program Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Program Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Program Name"/>']/../..//input</findElement>
+		</block>
+		<!--Program_Look_Up_UTILITY-->
+		<block name="Click_Tab_Programs_and_Plans">
+			<executeBlock name="TAB">
+				<parameters>
+					<parameter name="TAB_NAME" value="Programs and Plans"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Click_Tab_Programs">
+			<executeBlock name="TAB">
+				<parameters>
+					<parameter name="TAB_NAME" value="Programs"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Expand_Search_Input_Area">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Expand_Search_Result_Area">
+			<!-- Expand Search Result Area -->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Search Results']/../.."/>
+				</parameters>
+			</executeBlock>
+			<!-- Expand Search Result Area -->
+		</block>
+		<block name="Program_Name_Search_Area_Click_Reset_Button">
+			<!-- Press Reset Button -->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//span/div[div/table//h1[text()='Search'] and div/div/table//td/button[text()='Reset']]"/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<!-- Press Reset Button -->
+		</block>
+		<block name="Program_Name_Search_Area_Click_Search_Button">
+			<!-- Press Search Button -->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//span/div[div/table//h1[text()='Search'] and div/div/table//td/button[text()='Search']]"/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<!-- Press Search Button -->
+		</block>
+		<block name="Session_Effective_Date_Warning_Skip">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//div[text()='Warning']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='es']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<!-- Do nothing -->
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Set_LookUp_Status_to_Null">
+			<defineVariable name="LookUp_Status" type="text"/>
+			<setVariable name="LookUp_Status" append="false">
+				<valueText/>
+			</setVariable>
+		</block>
+		<block name="View_All_Plans_and_Plan_Types">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='View All Plans' or text()='View Active Plans Only']/..</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Plans and Plan Types']/../../../../..//*[text()='View']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Waiting_2nd_Page_Render">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[@title='Edit Program Basic Details' or @title='Create Program Basic Details']</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement by="xpath">//table[@summary='Programs']/tbody/tr[td/div/table//a[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Program Name"/>'] and td/div/table//tr/td[8][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Effective Start Date"/>']]//a[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Program Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<!--Additional Configuration UTILITY-->
+		<block name="Click_Tab_Reporting_Groups">
+			<executeBlock name="TAB">
+				<parameters>
+					<parameter name="TAB_NAME" value="Reporting Groups"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="OK">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[contains(@class,'Expansion')]/..//button[text()='O']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[contains(@class,'Expansion')]/..//button[text()='O']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<executeBlock name="Waiting_OK" isRepeatUntilBreak="true"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Waiting_OK">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[contains(@class,'Expansion')]/..//button[text()='O']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[contains(@class,'Expansion')]/..//button[text()='O']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<break/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Warning">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//div[text()='Warning']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='es']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<!--REPEAT_1_MAIN-->
+		<block name="Benefit_Programs_Search_Only_By_Program_Name">
+			<executeBlock name="Expand_Search_Input_Area"/>
+			<executeBlock name="Program_Name_Search_Area_Click_Reset_Button"/>
+			<executeBlock name="Expand_Search_Input_Area"/>
+			<!-- Data Input -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Program Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Program Name"/>
+				</parameters>
+			</executeBlock>
+			<!-- Data Input -->
+			<executeBlock name="Program_Name_Search_Area_Click_Search_Button"/>
+		</block>
+		<!--REPEAT_2_MAIN-->
+		<block name="Benefit_Programs_Search_Only_By_Program_Name_Result_Lookup">
+			<executeBlock name="Expand_Search_Result_Area"/>			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Program Name"/>']</findElement>
+				</if>
+				<then>
+					<executeBlock name="Expand_Search_Result_Area"/>
+					<IfThenElse>
+						<if>
+							<!-- check program name and Eff start date -->
+							<findElement by="xpath">//table[@summary='Programs']/tbody/tr[td/div/table//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Program Name"/>'] and td/div/table//tr/td[8][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Effective Start Date"/>']]</findElement>					
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Programs']/tbody/tr[td/div/table//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Program Name"/>'] and td/div/table//tr/td[8][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Effective Start Date"/>']]//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Program Name"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="Waiting_2nd_Page_Render" isRepeatUntilBreak="true"/>							
+							<executeBlock name="Set_LookUp_Status_to_Null"/>
+							<setVariable name="LookUp_Status" append="true">Found</setVariable>
+						</then>
+						<else>
+							<executeBlock name="Set_LookUp_Status_to_Null"/>
+							<setVariable name="LookUp_Status" append="true">Not Found</setVariable>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<executeBlock name="Set_LookUp_Status_to_Null"/>
+					<setVariable name="LookUp_Status" append="true">Not Found</setVariable>
+				</else>
+			</IfThenElse>			
+		</block>
+		<block name="Benefit_Programs_Search_Again_By_Program_Name_and_Effective_Start_Date">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueVariable name="LookUp_Status"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Found</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<!-- Do Nothing -->
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueVariable name="LookUp_Status"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Not Found</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<executeBlock name="Expand_Search_Input_Area"/>
+							<!-- Data Input -->
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Program Name']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Program Name"/>
+								</parameters>
+							</executeBlock>
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Effective As-of Date']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Effective Start Date"/>
+								</parameters>
+							</executeBlock>
+							<!-- Data Input -->
+							<executeBlock name="Program_Name_Search_Area_Click_Search_Button"/>
+						</then>
+						<else>
+							<error message="Navigation error"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>			
+		</block>
+		<block name="Benefit_Programs_Search_By_Program_Name_and_Effective_Start_Date_Result_Lookup">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueVariable name="LookUp_Status"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Found</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<!-- Do Nothing -->
+				</then>
+				<else>
+					<executeBlock name="Expand_Search_Result_Area"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Program Name"/>']</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<!-- check program name and Eff start date -->
+									<findElement by="xpath">//table[@summary='Programs']/tbody/tr[td/div/table//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Program Name"/>'] and td/div/table//tr/td[8][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Effective Start Date"/>']]</findElement>					
+								</if>
+								<then>
+									<!-- Correct -->
+									<findElement by="xpath">//table[@summary='Programs']/tbody/tr[td/div/table//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Program Name"/>'] and td/div/table//tr/td[8][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Effective Start Date"/>']]//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Program Name"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>									
+									<executeBlock name="Set_LookUp_Status_to_Null"/>
+									<setVariable name="LookUp_Status" append="true">Found</setVariable>
+								</then>
+								<else>
+									<!-- can be edit later if consult want  -->
+									<executeBlock name="Set_LookUp_Status_to_Null"/>
+									<setVariable name="LookUp_Status" append="true">Error</setVariable>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<executeBlock name="Set_LookUp_Status_to_Null"/>
+							<setVariable name="LookUp_Status" append="true">Error</setVariable>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>			
+		</block>
+		<block name="Benefit_Program_LookUp_Status_Check_and_Page_Check">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueVariable name="LookUp_Status"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Found</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Waiting_2nd_Page_Render" isRepeatUntilBreak="true"/>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Session Effective Date']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Effective Start Date"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Session_Effective_Date_Warning_Skip"/>					
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueVariable name="LookUp_Status"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Not Found</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<error message="Can not find Benefit Program Name Please check your Data"/>
+						</then>
+						<else>							
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueVariable name="LookUp_Status"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>Error</valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<error message="Can not find Benefit Program Name Please check your Data"/>
+								</then>
+								<else>
+									<error message="LookUp_Status error please check your navigation"/>
+								</else>
+							</IfThenElse>							
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<!-- Enrollment -->
+		<block name="Tab_Enrollment">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[@title='Edit Program Enrollment' or text()='Create Program Enrollment']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">(//a[contains(@title,'Enrollment Step')])[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<executeBlock name="Waiting_Tab_Enrollment" isRepeatUntilBreak="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Waiting_Tab_Enrollment">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[@title='Edit Program Enrollment' or text()='Create Program Enrollment']</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">(//a[contains(@title,'Enrollment Step')])[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Expand_Program_Hierarchy">
+			<!-- Find Button Expand And Click Untill Found Data Then Break -->
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Program Enrollment Requirements']//a[@title='Expand'])[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Program Enrollment Requirements']//a[@title='Expand'])[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<break/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Lookup_Program_Hierarchy">
+			<executeBlock name="Expand_Program_Hierarchy" isRepeatUntilBreak="true"/>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Program Enrollment Requirements']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Program Enrollment Requirements'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Program Enrollment Requirements']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Program Enrollment Requirements']//tr[td[number(//table[@summary='Program Enrollment Requirements']/../..//th//span[text()='Program Hierarchy']/../../@_d_index)]//*[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Program Hierarchy"/>'] and td[number(//table[@summary='Program Enrollment Requirements']/../..//th//span[text()='Description']/../../@_d_index)][text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Program Hierarchy - Description"/>']]</parameter>
+					<parameter name="TEMPLATE_CREATE" value="No_Lookup"/>
+					<parameter name="TEMPLATE_UPDATE" value="Select_Program_Hierarchy"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="No_Lookup">
+			<error message=" Can not find 'Program Hierachy':Please create Program Hierachy in Manage Benefit Programs or Check Effective Date" />
+		</block>
+		<block name="Scroll_Down_Find_Data">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Program Enrollment Requirements']/../..//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="DOWN"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Select_Program_Hierarchy">
+			<!-- If Found Data Than Click If Not Found Then Scroll Down To Find -->
+			<executeBlock name="Scroll_Down_Find_Data" isRepeatUntilBreak="true"/>
+			<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>	
+		</block>
+		<block name="Expand_All_Hierachy">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Program Enrollment Requirements']//a[@title='Expand'])[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Program Enrollment Requirements']//a[@title='Expand'])[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<break/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Check_Name_Further_Details">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//h1[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Program Name"/>: Further Details']/..</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath">//h1[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Program Name"/>: Further Details']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Tab_General">
+			<executeBlock name="Check_Name_Further_Details"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_TAB">
+				<parameters>
+					<parameter name="TAB_NAME" value="General"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="1"/>
+			<!-- <executeBlock name="Lookup_Program_Hierarchy"/> -->
+			<IfThenElse>	
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[@title='General'][@style]/../../../../..//*[text()='Actions']/../..//div</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[@title='General'][@style]/../../../../..//*[text()='Actions']/../..//div</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//td[text()='Correct']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+			<!--Enrollment-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[text()='Enrollment Method']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Enrollment Method"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[text()='Automatic Formula']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Automatic Formula"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[text()='Default Enrollment Rule']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Default Enrollment Rule"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[text()='Default Enrollment Formula']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Default Enrollment Formula"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[text()='Post Election Formula']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Post Election Formula"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[text()='Enrollment Rule']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Enrollment Rule"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[text()='Enrollment Formula']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Enrollment Formula"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[text()='Spouse Insurance Coverage Maximum']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Spouse Insurance Coverage Maximum"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[text()='Dependents Insurance Coverage Maximum']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Dependents Insurance Coverage Maximum"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[text()='Interim Rule']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Interim Rule"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[text()='Interim Formula']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Interim Formula"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[text()='Unsuspend Enrollment Rule']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Unsuspend Enrollment Rule"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[text()='Unsuspend Enrollment Formula']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Unsuspend Enrollment Formula"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[text()='Unsuspend Rate Rule']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Unsuspend Rate Rule"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[text()='Unsuspend Rate Formula']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Unsuspend Rate Formula"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[text()='Maximum']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Enrollment - Maximum"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[contains(text(),'Sum participant')]/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Sum participant's insurance"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[text()='Coordinate coverage for all plans']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Coordinate coverage for all plans"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[contains(text(),'Subject to spouse')]/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Subject to spouse's insurance coverage maximum percentage"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[contains(text(),'Subject to dependent')]/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Subject to dependent's insurance coverage maximum percentage"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Enrollment'][@style]/../../../../../..//label[text()='Assign on default']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Assign on default"/>
+				</parameters>
+			</executeBlock>
+			<!--Coverage and Rate Date Ranges-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Coverage and Rate Date Ranges'][@style]/../../../../../..//label[text()='Coverage Start Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Coverage Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Coverage and Rate Date Ranges'][@style]/../../../../../..//label[text()='Coverage Start Formula']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Coverage Start Formula"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Coverage and Rate Date Ranges'][@style]/../../../../../..//label[text()='Previous Coverage End Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Previous Coverage End Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Coverage and Rate Date Ranges'][@style]/../../../../../..//label[text()='Previous Coverage End Formula']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Previous Coverage End Formula"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Coverage and Rate Date Ranges'][@style]/../../../../../..//label[text()='Rate Start Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Rate Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Coverage and Rate Date Ranges'][@style]/../../../../../..//label[text()='Rate Start Formula']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Rate Start Formula"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Coverage and Rate Date Ranges'][@style]/../../../../../..//label[text()='Previous Rate End Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Previous Rate End Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Coverage and Rate Date Ranges'][@style]/../../../../../..//label[text()='Previous Rate End Formula']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Previous Rate End Formula"/>
+				</parameters>
+			</executeBlock>
+			<!--Plan Limitation-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Plan Limitation'][@style]/../../../../../..//label[text()='No minimum']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="No minimum"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Plan Limitation'][@style]/../../../../../..//label[text()='No maximum']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="No maximum"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Plan Limitation'][@style]/../../../../../..//label[text()='Minimum']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Plan Limitation - Minimum"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Plan Limitation'][@style]/../../../../../..//label[text()='Maximum']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Plan Limitation - Maximum"/>
+				</parameters>
+			</executeBlock>
+			<!--Required Period of Enrollment-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Required Period of Enrollment'][@style]/../../../../../..//label[text()='Unit of Measure']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Unit of Measure"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Required Period of Enrollment'][@style]/../../../../../..//label[text()='Number of Units in Period']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Number of Units in Period"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Required Period of Enrollment'][@style]/../../../../../..//label[text()='Required Period of Enrollment Formula']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Required Period of Enrollment Formula"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>		
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="Set_LookUp_Status_to_Null"/> 
+				<executeBlock name="Click_Tab_Programs_and_Plans"/>
+				<executeBlock name="Click_Tab_Programs"/>
+				<executeBlock name="Benefit_Programs_Search_Only_By_Program_Name"/>
+				<executeBlock name="Benefit_Programs_Search_Only_By_Program_Name_Result_Lookup"/>
+				<executeBlock name="Benefit_Programs_Search_Again_By_Program_Name_and_Effective_Start_Date"/>
+				<executeBlock name="Benefit_Programs_Search_By_Program_Name_and_Effective_Start_Date_Result_Lookup"/>
+				<executeBlock name="Benefit_Program_LookUp_Status_Check_and_Page_Check"/>
+				<IfThenElse>
+					<if>
+						<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@summary='Plans and Plan Types']/../../../../..//*[text()='View']</findElement>
+					</if>
+					<then>
+						<executeBlock name="View_All_Plans_and_Plan_Types" isRepeatUntilBreak="true"/>
+						<IfThenElse>
+							<if>
+								<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='View All Plans']/..</findElement>
+							</if>
+							<then>
+								<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='View All Plans']/..</findElement>
+								<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+								<pause durationInSecs="2"/>	
+							</then>
+							<else/>
+						</IfThenElse>
+					</then>
+					<else/>
+				</IfThenElse>
+				<repeat inventoryName="REPEAT_3_MAIN">
+					<executeBlock name="Tab_Enrollment"/>
+					<executeBlock name="Lookup_Program_Hierarchy"/>
+					<executeBlock name="Select_Program_Hierarchy"/>
+					<executeBlock name="Check_Name_Further_Details"/>
+					<executeBlock name="Tab_General"/>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+				</repeat>
+				<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+			</repeat>
+		</repeat>
+	</fusionNavigation>
+</navigation>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

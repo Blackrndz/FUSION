@@ -1,0 +1,548 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Candidate Selection Process Configuration (Process)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Candidate Selection Process Configuration" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<parameters>
+			<parameter name="INV_1" value="Candidate Selection Process Configuration - Process"/>
+			<parameter name="INV_2" value="Candidate Selection Process Configuration - Recruiting Type"/>
+			<parameter name="INV_3" value="Candidate Selection Process Configuration - Organization"/>
+			<parameter name="INV_4" value="Candidate Selection Process Configuration - Location"/>
+			<parameter name="INV_5" value="Candidate Selection Process Configuration - Job Family"/>
+			<parameter name="INV_6" value="Candidate Selection Process Configuration - Job Function"/>
+		</parameters>
+		
+		 <block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_3" columnName="Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_4" columnName="Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_5" columnName="Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_6" columnName="Name"/>']</findElement>
+		</block>
+		
+		<block name="SAVE_AND_CONTINUE">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='Save and Continue']/../..</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='Save and Continue']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Process Properties']/../../../../../../../../../..//*[text()='ave and Close']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[text()='Warning']</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[text()='Warning']/../../../../../../..//*[text()='Yes']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="EDIT_PROCESS_PROPERTIES">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//button[text()='Edit Process Properties']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//button[text()='Edit Process Properties']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="SEARCH">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH">//td[text()='Search']/..</parameter>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Name']/../div[3]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Code']/../div[6]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Code"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Search Results']/../../../../../..//a/*[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Search Results']/../../../../../..//a/*[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+					<executeBlock name="EDIT_PROCESS_PROPERTIES"/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Search Results']/../../../../../..//*[text()='Create']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="CREATE_PROCESS">
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Process Type']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Process Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Code']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Code"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="SAVE_AND_CONTINUE"/>
+		</block>
+		
+		<block name="EDIT_PROCESS">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//td[text()='Basic Info']/.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Status']/../..//a</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Status']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//*[text()='Active']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Process Type']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Process Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Code']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Code"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//td[text()='Context Information']/.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="RECRUITING_TYPE">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//td/label[text()='Recruiting Type']/../../td[2]/div/div[1]//td[1]//input[@value='<valueKB inventoryName="INV_2" columnName="Recruiting Type - LOV"/>']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Recruiting Type']/../..//a[@title='Add']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//td/label[text()='Recruiting Type']/../../td[2]/div/div/table/tbody/tr/td[1]//input[not(@value)]/..//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//a[contains(text(),'More')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Recruiting Type')]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Recruiting Type')]/../../../../../../..//td[text()='<valueKB inventoryName="INV_2" columnName="Recruiting Type - LOV"/>']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Recruiting Type')]/../../../../../../..//button[text()='OK']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<error message="No Recruiting Type data found." />
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH">//td/label[text()='Recruiting Type']/../../td[2]/div/div[1]//td[1]//input[@value='<valueKB inventoryName="INV_2" columnName="Recruiting Type - LOV"/>']/../../../..//td[2]</parameter>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Recruiting Type - SELECT"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="1"/>
+		</block>
+		
+		<block name="ORGANIZATION">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Organization']/..//input[contains(@value,'<valueKB inventoryName="INV_3" columnName="Organization"/>')]</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Organization']/../..//*[text()='Add']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Organization']/../..//input/../.."/>
+							<parameter name="INV_NAME" value="INV_3"/>
+							<parameter name="COL_NAME" value="Organization"/>
+							<parameter name="SEARCH_1" value="Name"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="LOCATION">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Location']/..//input[@value='<valueKB inventoryName="INV_4" columnName="Location"/>']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Location']/../..//*[text()='Add']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Location']/../..//input/../.."/>
+							<parameter name="INV_NAME" value="INV_4"/>
+							<parameter name="COL_NAME" value="Location"/>
+							<parameter name="SEARCH_1" value="Name"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="JOB_FAMILY">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Job Family']/..//input[@value='<valueKB inventoryName="INV_5" columnName="Job Family"/>']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Job Family']/../..//*[text()='Add']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Job Family']/../..//input/../.."/>
+							<parameter name="INV_NAME" value="INV_5"/>
+							<parameter name="COL_NAME" value="Job Family"/>
+							<parameter name="SEARCH_1" value="Name"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="JOB_FUNCTION">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Job Function']/..//input[@value='<valueKB inventoryName="INV_6" columnName="Job Function"/>']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Job Function']/../..//*[text()='Add']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Job Function']/..//input[@value='<valueKB inventoryName="INV_6" columnName="Job Function"/>']</findElement>
+						</if>
+						<then>
+						
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Job Function']/..//a</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//a[contains(text(),'More')]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//a[contains(text(),'More')]</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//a[contains(text(),'Search')]</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Job Function')]</findElement>
+								</if>
+								<then>
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" value="//div[contains(text(),'Job Function')]/../../../../../../..//label[text()='Meaning']/../.."/>
+											<parameter name="INV_NAME" value="INV_6"/>
+											<parameter name="COL_NAME" value="Job Function"/>
+										</parameters>
+									</executeBlock>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Job Function')]/../../../../../../..//button[text()='Search']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Job Function')]/../../../../../../..//td[text()='<valueKB inventoryName="INV_6" columnName="Job Function"/>']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Job Function')]/../../../../../../..//td[text()='<valueKB inventoryName="INV_6" columnName="Job Function"/>']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Job Function')]/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											<error message="No Job Function found please check your data." />
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="SEARCH"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//td/div[@title='Create Process']</findElement>
+				</if>
+				<then>
+					<executeBlock name="CREATE_PROCESS"/>
+					<executeBlock name="EDIT_PROCESS_PROPERTIES"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//td/div[@title='Process Properties']</findElement>
+				</if>
+				<then>
+					<executeBlock name="EDIT_PROCESS"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<repeat inventoryName="INV_2">
+				<IfThenElse>
+					<if>
+						<comparisons separator="AND">
+							<comparison operator="NOT_EQUAL">
+								<leftOperand>
+									<valueKB inventoryName="INV_2" columnName="Recruiting Type - LOV"/>
+								</leftOperand>
+								<rightOperand>
+									<valueText/>
+								</rightOperand>
+							</comparison>
+						</comparisons>
+					</if>
+					<then>
+						<executeBlock name="RECRUITING_TYPE"/>
+					</then>
+					<else/>
+				</IfThenElse>
+			</repeat>
+			<repeat inventoryName="INV_3">
+				<IfThenElse>
+					<if>
+						<comparisons separator="AND">
+							<comparison operator="NOT_EQUAL">
+								<leftOperand>
+									<valueKB inventoryName="INV_3" columnName="Organization"/>
+								</leftOperand>
+								<rightOperand>
+									<valueText/>
+								</rightOperand>
+							</comparison>
+						</comparisons>
+					</if>
+					<then>
+						<executeBlock name="ORGANIZATION"/>
+					</then>
+					<else/>
+				</IfThenElse>
+			</repeat>
+			<repeat inventoryName="INV_4">
+				<IfThenElse>
+					<if>
+						<comparisons separator="AND">
+							<comparison operator="NOT_EQUAL">
+								<leftOperand>
+									<valueKB inventoryName="INV_4" columnName="Location"/>
+								</leftOperand>
+								<rightOperand>
+									<valueText/>
+								</rightOperand>
+							</comparison>
+						</comparisons>
+					</if>
+					<then>
+						<executeBlock name="LOCATION"/>
+					</then>
+					<else/>
+				</IfThenElse>
+			</repeat>
+			<repeat inventoryName="INV_5">
+				<IfThenElse>
+					<if>
+						<comparisons separator="AND">
+							<comparison operator="NOT_EQUAL">
+								<leftOperand>
+									<valueKB inventoryName="INV_5" columnName="Job Family"/>
+								</leftOperand>
+								<rightOperand>
+									<valueText/>
+								</rightOperand>
+							</comparison>
+						</comparisons>
+					</if>
+					<then>
+						<executeBlock name="JOB_FAMILY"/>
+					</then>
+					<else/>
+				</IfThenElse>
+			</repeat>
+			<repeat inventoryName="INV_6">
+				<IfThenElse>
+					<if>
+						<comparisons separator="AND">
+							<comparison operator="NOT_EQUAL">
+								<leftOperand>
+									<valueKB inventoryName="INV_6" columnName="Job Function"/>
+								</leftOperand>
+								<rightOperand>
+									<valueText/>
+								</rightOperand>
+							</comparison>
+						</comparisons>
+					</if>
+					<then>
+						<executeBlock name="JOB_FUNCTION"/>
+					</then>
+					<else/>
+				</IfThenElse>
+			</repeat>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[text()='Warning']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[text()='Warning']/../../../../../../..//*[text()='Yes']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</repeat>
+	</fusionNavigation>
+</navigation>	
+		

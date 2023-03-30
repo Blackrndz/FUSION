@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Performance Notifications (Profile Management)</name>
+    <svn>
+        <xsd:revision>$Revision: 53667 $:</xsd:revision>
+        <xsd:author>$Author: aratchaporn.kositsirikun $:</xsd:author>
+        <xsd:date>$Date: 2016-03-18 15:49:04 +0700 (Fri, 18 Mar 2016) $:</xsd:date>
+        <xsd:headURL>$HeadURL: http://svn01.rapidesuite.com:999/svn/a/dev/rapidesuite/controldata/FUSION_11.1.9/trunk/core/knowledgebase/navigation/FINANCIALS/Master%20Template/Manage%20General%20Ledger%20Profile%20Options.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage General Ledger Profile Options.xml 53667 2016-03-18 08:49:04Z aratchaporn.kositsirikun $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Performance Notifications" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+			<navigation name="Manage Enterprise HCM Information"/>
+			<navigation name="Manage Reference Data Sets"/>
+	</dependencies>
+		<parameters>
+            <parameter name="INV_1" value="Manage Performance Notifications - Profile Management"/>
+			<parameter name="TAB_SELECT" value="Profile Management"/>
+        </parameters>     
+		
+		<!--Fake_INV-->
+		<block name="Fake_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Notification"/>']</findElement>
+		</block>
+		
+		<!--New-->
+		<block name="New_Profile_Management">
+			
+		</block>
+		
+		
+		<!--Update-->
+		<block name="Update_Profile_Management">
+			<findElement setFocus="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH">//*[text()='<valueKB inventoryName="INV_1" columnName="Notification"/>']/..//td[3]</parameter>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Enabled"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		
+		<!--Save_and_Close_Button-->
+		<block name="Save_and_Close_Button">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//span[text()='ave and Close']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//span[text()='ave and Close']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Tab">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[contains(@class,'Select')]//a[text()='TAB_SELECT']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement by="xpath">//a[text()='TAB_SELECT']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<!--Execute-->		
+		<repeat inventoryName="INV_1">
+			<executeBlock name="GLOBAL_GO_TO_TASK"/>
+			<executeBlock name="Tab"/>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Profile Management']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Profile Management'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Profile Management']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Profile Management']/../..//td[text()='<valueKB inventoryName="INV_1" columnName="Notification"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_Profile_Management"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Profile_Management"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Save_and_Close_Button"/>
+		</repeat>		
+	</fusionNavigation>
+</navigation>

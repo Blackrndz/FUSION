@@ -1,0 +1,359 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Receipt Sources</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Receipt Sources" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Receipt Classes and Methods"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Receipt Sources - Manage Receipt Sources"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Receipt Sources - Manage Receipt Sources - DFF"/>
+		</parameters>
+		<block name="FAKE_DFF">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Business Unit"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Business Unit"/>']/../..//input</findElement>
+		</block>
+		
+		<block name="SEARCH_RECEIPT_SOURCES">
+			<!--GLOBAL_EXPAND-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<!--BUTTON-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<!--Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Business Unit-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Business Unit']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Business Unit"/>
+					<parameter name="SEARCH_1" value="Business Unit"/>
+				</parameters>
+			</executeBlock>
+			<!--check error-->
+			<pause durationInSecs="2"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[contains(@class,'Expansion')]/../..//div[contains(text(),'Error')]</findElement>
+				</if>
+				<then>
+					<error message="The field 'Business Unit' doesn't exist"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--BUTTON-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//td[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//td[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Search Results']/../../../.."/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="RECEIPT_SOURCES_DETAILS">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Create Receipt Source']/../../../../../../..</findElement>
+				</if>
+				<then>
+					<!--LOV COLUMN BUSINESS UNIT-->
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Create Receipt Source']/../../../../../../..//label[text()='Business Unit']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Business Unit"/>
+							<parameter name="SEARCH_1" value="Business Unit"/>
+						</parameters>
+					</executeBlock>
+					<!--INPUT COLUMN NAME-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Create Receipt Source']/../../../../../../..//label[text()='Name']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Name"/>
+						</parameters>
+					</executeBlock>
+					<!--INPUT COLUMN Description-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Create Receipt Source']/../../../../../../..//label[text()='Description']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Description"/>
+						</parameters>
+					</executeBlock>
+					<!--RADIO COLUMN Receipt Source Type-->
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Create Receipt Source']/../../../../../../..//label[text()='Receipt Source Type']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Receipt Source Type"/>
+						</parameters>
+					</executeBlock>
+					<!--LOV COLUMN Receipt Class-->
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Create Receipt Source']/../../../../../../..//label[text()='Receipt Class']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Receipt Class"/>
+							<parameter name="SEARCH_1" value="Receipt Class"/>
+						</parameters>
+					</executeBlock>
+					<!--LOV COLUMN Receipt Method-->
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Create Receipt Source']/../../../../../../..//label[text()='Receipt Method']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Receipt Method"/>
+							<parameter name="SEARCH_1" value="Receipt Method"/>
+						</parameters>
+					</executeBlock>
+					<!--LOV COLUMN Bank Account-->
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Create Receipt Source']/../../../../../../..//label[text()='Bank Account']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Bank Account"/>
+							<parameter name="SEARCH_1" value="Bank Account"/>
+						</parameters>
+					</executeBlock>
+					<!--RADIO COLUMN Batch Numbering-->
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Create Receipt Source']/../../../../../../..//label[text()='Batch Numbering']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Batch Numbering"/>
+						</parameters>
+					</executeBlock>
+					<!--INPUT COLUMN Batch Number Starts After-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Create Receipt Source']/../../../../../../..//label[text()='Batch Number Starts After']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Batch Number Starts After"/>
+						</parameters>
+					</executeBlock>
+					<!--INPUT COLUMN Effective Start Date-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Create Receipt Source']/../../../../../../..//label[text()='Effective Start Date']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Effective Start Date"/>
+						</parameters>
+					</executeBlock>
+					<!--INPUT COLUMN Effective End Date-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Create Receipt Source']/../../../../../../..//label[text()='Effective End Date']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Effective End Date"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<!--LOV COLUMN BUSINESS UNIT-->
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Details')]/../../../../../../..//label[text()='Business Unit']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Business Unit"/>
+							<parameter name="SEARCH_1" value="Business Unit"/>
+						</parameters>
+					</executeBlock>
+					<!--INPUT COLUMN NAME-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Details')]/../../../../../../..//label[text()='Name']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Name"/>
+						</parameters>
+					</executeBlock>
+					<!--INPUT COLUMN Description-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Details')]/../../../../../../..//label[text()='Description']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Description"/>
+						</parameters>
+					</executeBlock>
+					<!--RADIO COLUMN Receipt Source Type-->
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Details')]/../../../../../../..//label[text()='Receipt Source Type']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Receipt Source Type"/>
+						</parameters>
+					</executeBlock>
+					<!--LOV COLUMN Receipt Class-->
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Details')]/../../../../../../..//label[text()='Receipt Class']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Receipt Class"/>
+							<parameter name="SEARCH_1" value="Receipt Class"/>
+						</parameters>
+					</executeBlock>
+					<!--LOV COLUMN Receipt Method-->
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Details')]/../../../../../../..//label[text()='Receipt Method']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Receipt Method"/>
+							<parameter name="SEARCH_1" value="Receipt Method"/>
+						</parameters>
+					</executeBlock>
+					<!--LOV COLUMN Bank Account-->
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Details')]/../../../../../../..//label[text()='Bank Account']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Bank Account"/>
+							<parameter name="SEARCH_1" value="Bank Account"/>
+						</parameters>
+					</executeBlock>
+					<!--RADIO COLUMN Batch Numbering-->
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Details')]/../../../../../../..//label[text()='Batch Numbering']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Batch Numbering"/>
+						</parameters>
+					</executeBlock>
+					<!--INPUT COLUMN Batch Number Starts After-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Details')]/../../../../../../..//label[text()='Batch Number Starts After']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Batch Number Starts After"/>
+						</parameters>
+					</executeBlock>
+					<!--INPUT COLUMN Effective Start Date-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Details')]/../../../../../../..//label[text()='Effective Start Date']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Effective Start Date"/>
+						</parameters>
+					</executeBlock>
+					<!--INPUT COLUMN Effective End Date-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Details')]/../../../../../../..//label[text()='Effective End Date']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Effective End Date"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="SEARCH_RECEIPT_SOURCES"/>
+			<executeBlock name="RECEIPT_SOURCES_DETAILS"/>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<IfThenElse>
+					<if>
+						<findElement by="xpath">//div[text()='Create Receipt Source']/../../../../../../..</findElement>
+					</if>
+					<then>
+						<IfThenElse>
+							<if>
+								<findElement highlightTurnedOff="true" by="xpath">//div[text()='Create Receipt Source']/../../../../../../..//*[text()='Additional Information']/../../../../../..//*[@title='Collapse Additional Information']</findElement>
+							</if>
+							<then>
+								<break/>
+							</then>
+							<else>
+								<findElement by="xpath">//div[text()='Create Receipt Source']/../../../../../../..//*[text()='Additional Information']/../../../../../..//*[@title='Expand Additional Information']</findElement>
+								<click waitForPageToFinishRendering="true"/>
+								<pause durationInSecs="2"/>
+							</else>
+						</IfThenElse>
+					</then>
+					<else>
+						<IfThenElse>
+							<if>
+								<findElement highlightTurnedOff="true" by="xpath">//*[contains(text(),'Details')]/../../../../../../..//*[text()='Additional Information']/../../../../../..//*[@title='Collapse Additional Information']</findElement>
+							</if>
+							<then>
+								<break/>
+							</then>
+							<else>
+								<findElement by="xpath">//*[contains(text(),'Details')]/../../../../../../..//*[text()='Additional Information']/../../../../../..//*[@title='Expand Additional Information']</findElement>
+								<click waitForPageToFinishRendering="true"/>
+								<pause durationInSecs="2"/>
+							</else>
+						</IfThenElse>
+					</else>
+				</IfThenElse>
+				<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+					<parameters>
+						<parameter name="DFF_NAME" value="MAIN_REPEAT_2"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='Create Receipt Source']/../../../../../../..</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_SAVE_AND_CLOSE">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Create Receipt Source']/../../../../../../.."/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_SAVE">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Manage Receipt Sources']/../../../../../../../../../../.."/>
+				</parameters>
+			</executeBlock>
+		</repeat>
+	</fusionNavigation>
+</navigation>

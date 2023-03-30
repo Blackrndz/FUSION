@@ -1,0 +1,222 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Attachment Entities</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" taskName="Manage Attachment Entities" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true">
+		<dependencies>
+			<navigation name="Manage Attachment Categories"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_INV_1" value="Manage Attachment Entities - Attachment Entities"/>		
+			<parameter name="REPEAT_INV_2" value="Manage Attachment Entities - Attachment Categories"/>
+		</parameters>
+		<block name="Fake_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_INV_1" columnName="Entity Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_INV_2" columnName="Entity Name"/>']/../..//input</findElement>
+		</block>		
+		<block name="Search_Entities">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//td[contains(@id,'Id1::_afrTtxt')]/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//td[contains(@id,'Id1::_afrTtxt')]/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Entity Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_INV_1"/>
+					<parameter name="COL_NAME" value="Entity Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='User Entity Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_INV_1"/>
+					<parameter name="COL_NAME" value="User Entity Name"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Module']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_INV_1"/>
+					<parameter name="COL_NAME" value="Module"/>
+					<parameter name="SEARCH_1" value="User Module Name"/>
+				</parameters>
+			</executeBlock>			
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Table of Attachment Entities to manage.']//tr//tr[td[1]//*[@value='<valueKB inventoryName="REPEAT_INV_1" columnName="Entity Name"/>'] and td[2]//*[@value='<valueKB inventoryName="REPEAT_INV_1" columnName="User Entity Name"/>']]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Table of Attachment Entities to manage.']//tr//tr[td[1]//*[@value='<valueKB inventoryName="REPEAT_INV_1" columnName="Entity Name"/>'] and td[2]//*[@value='<valueKB inventoryName="REPEAT_INV_1" columnName="User Entity Name"/>']]/../../../../../td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>					
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Table of Attachment Entities to manage.']/../../../.."/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>		
+		<block name="Entities">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Add Attachment Entity']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Add Attachment Entity']/../../../../../../..//label[text()='Entity Name']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_INV_1"/>
+							<parameter name="COL_NAME" value="Entity Name"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Add Attachment Entity']/../../../../../../..//label[text()='User Entity Name']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_INV_1"/>
+							<parameter name="COL_NAME" value="User Entity Name"/>
+						</parameters>
+					</executeBlock>	
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Add Attachment Entity']/../../../../../../..//label[text()='Module']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_INV_1"/>
+							<parameter name="COL_NAME" value="Module"/>
+							<parameter name="SEARCH_1" value="User Module Name"/>
+						</parameters>
+					</executeBlock>	
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Add Attachment Entity']/../../../../../../..//label[text()='Database Resource']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_INV_1"/>
+							<parameter name="COL_NAME" value="Database Resource"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Add Attachment Entity']/../../../../../../..//label[text()='Table Name']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_INV_1"/>
+							<parameter name="COL_NAME" value="Table Name"/>
+						</parameters>
+					</executeBlock>		
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Add Attachment Entity']/../../../../../../..//label[text()='Enable Security']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_INV_1"/>
+							<parameter name="COL_NAME" value="Enable Security"/>
+						</parameters>
+					</executeBlock>		
+					<findElement by="xpath">//div[text()='Add Attachment Entity']/../../../../../../..//*[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>					
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Table of Attachment Entities to manage.']//tr[contains(@class,'Select')]//tr//td[5]"/>
+							<parameter name="INV_NAME" value="REPEAT_INV_1"/>
+							<parameter name="COL_NAME" value="Table Name"/>
+						</parameters>
+					</executeBlock>		
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Table of Attachment Entities to manage.']//tr[contains(@class,'Select')]//tr//td[6]"/>
+							<parameter name="INV_NAME" value="REPEAT_INV_1"/>
+							<parameter name="COL_NAME" value="Enable Security"/>
+						</parameters>
+					</executeBlock>		
+				</else>
+			</IfThenElse>		
+		</block>
+		<block name="Categories">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Attachment Categories')]/../../../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath">//*[contains(text(),'Select and Add: Attachment Categories')]/../../../../../../..//*[text()='Reset']</findElement>
+			<click waitForPageToFinishRendering="true"/>				
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Select and Add: Attachment Categories')]/../../../../../../..//label[text()='Category Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_INV_2"/>
+					<parameter name="COL_NAME" value="Category Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Select and Add: Attachment Categories')]/../../../../../../..//label[text()='User Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_INV_2"/>
+					<parameter name="COL_NAME" value="Display Name"/>
+				</parameters>
+			</executeBlock>	
+			<findElement by="xpath">//*[contains(text(),'Select and Add: Attachment Categories')]/../../../../../../..//*[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>				
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[@summary='Table of Attachment Categories for selection.']//tr[td[1][text()='<valueKB inventoryName="REPEAT_INV_2" columnName="Category Name"/>'] and td[2][text()='<valueKB inventoryName="REPEAT_INV_2" columnName="Display Name"/>']]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[@summary='Table of Attachment Categories for selection.']//tr[td[1][text()='<valueKB inventoryName="REPEAT_INV_2" columnName="Category Name"/>'] and td[2][text()='<valueKB inventoryName="REPEAT_INV_2" columnName="Display Name"/>']]/../../../../../td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>	
+					<findElement by="xpath">//*[contains(text(),'Select and Add: Attachment Categories')]/../../../../../../..//*[text()='S']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>						
+				</then>
+				<else>
+					<error message="Cannot find data 'Attachment Category'."/>
+				</else>
+			</IfThenElse>	
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Information']/../../../../../../..//*[contains(text(),'categories are already')]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Information']/../../../../../../..//*[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>						
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>			
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_INV_1">
+			<executeBlock name="Search_Entities"/>
+			<executeBlock name="Entities"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<repeat inventoryName="REPEAT_INV_2">
+				<executeBlock name="Categories"/>
+				<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			</repeat>
+		</repeat>
+	</fusionNavigation>
+</navigation>

@@ -1,0 +1,330 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Invoice Tolerances</name>
+    <svn>
+        <xsd:revision>$Revision: 78997 $:</xsd:revision>
+        <xsd:author>$Author: kullada.somtragool $:</xsd:author>
+        <xsd:date>$Date: 2022-07-13 17:26:21 +0700 (Wed, 13 Jul 2022) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Invoice%20Tolerances.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Invoice Tolerances.xml 78997 2022-07-13 10:26:21Z kullada.somtragool $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Invoice Tolerances" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Data Role and Security Profiles"/>
+			<navigation name="Manage Service Provider Relationships (Customer Payments Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Payables Payment Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Procurement Service Providers)"/>
+        </dependencies>
+        <block name="GO_TO_TASK">
+            <findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="FIND_COLUMN_NAME">
+            <findElement by="xpath">//a[text()='<valueKB
+                    inventoryName="Manage Invoice Tolerances - Manage Invoice Tolerances" columnName="Name"/>']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="CRATE_BUTTON">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//img[contains(@src,'new_ena.png')]/../..//a</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//img[contains(@src,'new_ena.png')]/../..//a</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <findElement by="xpath">//img[contains(@src,'add')]/../..//a</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="DONE_BUTTON">
+            <findElement by="xpath">//span[text()='o']/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="SAVE_AND_CLOSE_BUTTON">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//*[contains(text(),'Edit Invoice Tolerances')]</findElement>
+                </if>
+                <then>
+                    <executeBlock name="GLOBAL_SPECIFY_SAVE_AND_CLOSE">
+                        <parameters>
+                            <parameter name="SPECIFY_XPATH" value="//*[contains(text(),'Edit Invoice Tolerances')]/../../../../../../../../../../..//td[3]"/>
+                        </parameters>
+                    </executeBlock>
+                </then>
+                <else>
+                    <executeBlock name="GLOBAL_SPECIFY_SAVE_AND_CLOSE">
+                        <parameters>
+                            <parameter name="SPECIFY_XPATH" value="//*[contains(text(),'Create Invoice Tolerances')]/../../../../../../../../../../..//td[3]"/>
+                        </parameters>
+                    </executeBlock>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="SAVE_BUTTON">
+            <executeBlock name="GLOBAL_SAVE"/>
+        </block>
+        <block name="CRATE_NAVIGATION_SECTION_HEAD">
+            <findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+            <sendKeys isClear="true">
+                <valueKB
+                    inventoryName="Manage Invoice Tolerances - Manage Invoice Tolerances" columnName="Name"/>
+            </sendKeys>
+            <!-- Description -->
+			<executeBlock name="INPUT_TEXTAREA">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="Manage Invoice Tolerances - Manage Invoice Tolerances"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+            <!-- Type -->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Type']/../.."/>
+					<parameter name="INV_NAME" value="Manage Invoice Tolerances - Manage Invoice Tolerances"/>
+					<parameter name="COL_NAME" value="Type"/>
+				</parameters>
+			</executeBlock>
+        </block>
+        <block name="INVOICE TOLERANCES">
+            <!-- Active -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Active"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Active"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" by="xpath">//td[text()='<valueKB
+                            inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Tolerance"/>']/../..//td[2]//div[not(@disabled)]</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" by="xpath">//td[text()='<valueKB
+                            inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Tolerance"/>']/../..//td[2]//input[@checked]</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement by="xpath" isSkipCheckDomError="true">//td[text()='<valueKB
+                            inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Tolerance"/>']/../..//td[2]//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" by="xpath">//td[text()='<valueKB
+                            inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Tolerance"/>']/../..//td[2]//input[not(@disabled)]</findElement>
+										</if>
+										<then>
+											<IfThenElse>
+												<if>
+													<findElement isSkipCheckDomError="true" by="xpath">//td[text()='<valueKB
+                            inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Tolerance"/>']/../..//td[2]//input[@checked]</findElement>
+												</if>
+												<then/>
+												<else>
+													<findElement by="xpath" isSkipCheckDomError="true">//td[text()='<valueKB
+                            inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Tolerance"/>']/../..//td[2]//input</findElement>
+													<click isCheckbox="true" waitForPageToFinishRendering="true">
+														<valueKB inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Active"/>
+													</click>
+												</else>
+											</IfThenElse>
+										</then>
+										<else/>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" by="xpath">//td[text()='<valueKB
+                            inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Tolerance"/>']/../..//td[2]//div[not(@disabled)]</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" by="xpath">//td[text()='<valueKB
+                            inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Tolerance"/>']/../..//td[2]//input[@checked]</findElement>
+										</if>
+										<then>
+											<findElement by="xpath" isSkipCheckDomError="true">//td[text()='<valueKB
+                            inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Tolerance"/>']/../..//td[2]//div</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" by="xpath">//td[text()='<valueKB
+                            inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Tolerance"/>']/../..//td[2]//input[not(@disabled)]</findElement>
+										</if>
+										<then>
+											<IfThenElse>
+												<if>
+													<findElement isSkipCheckDomError="true" by="xpath">//td[text()='<valueKB
+                            inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Tolerance"/>']/../..//td[2]//input[@checked]</findElement>
+												</if>
+												<then>
+													<findElement by="xpath" isSkipCheckDomError="true">//td[text()='<valueKB
+                            inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Tolerance"/>']/../..//td[2]//input</findElement>
+													<click isCheckbox="true" waitForPageToFinishRendering="true">
+														<valueKB inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Active"/>
+													</click>
+												</then>
+												<else/>
+											</IfThenElse>
+										</then>
+										<else/>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+            <!-- Tolerance Limit -->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB
+                                    inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Tolerance Limit"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement
+                                    by="xpath">//td[text()='<valueKB
+                                    inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Tolerance"/>']/../..//td[3]//input[@Disabled]</findElement>
+                        </if>
+                        <then>
+                            <error message="Please check if column 'active' before you input the tolerance limit"/>
+                        </then>
+                        <else>
+                            <findElement
+                                    by="xpath">//td[text()='<valueKB
+                                    inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Tolerance"/>']/../..//td[3]//input</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB
+                                    inventoryName="Manage Invoice Tolerances - Invoice Tolerances" columnName="Tolerance Limit"/>
+                            </sendKeys>
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="UPDATE_NAVIGATION_SECTION_HEAD">
+            <!-- Description -->
+			<executeBlock name="INPUT_TEXTAREA">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="Manage Invoice Tolerances - Manage Invoice Tolerances"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+            <!-- Type -->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Type']/../.."/>
+					<parameter name="INV_NAME" value="Manage Invoice Tolerances - Manage Invoice Tolerances"/>
+					<parameter name="COL_NAME" value="Type"/>
+				</parameters>
+			</executeBlock>
+        </block>
+        <block name="Enter_search">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//a[@title='Clear All']/../../../../..//input</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement by="xpath">//a[text()='View']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <findElement by="xpath">//td[text()='Query By Example']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+            <findElements by="xpath" returnElementAtPosition="1">//a[@title='Clear All']/../../../../..//input</findElements>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB
+                    inventoryName="Manage Invoice Tolerances - Manage Invoice Tolerances" columnName="Name"/>
+            </sendKeys>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="Manage Invoice Tolerances - Manage Invoice Tolerances">
+            <executeBlock name="Enter_search"/>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//a[text()='<valueKB
+                            inventoryName="Manage Invoice Tolerances - Manage Invoice Tolerances" columnName="Name"/>']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//a[text()='<valueKB
+                            inventoryName="Manage Invoice Tolerances - Manage Invoice Tolerances" columnName="Name"/>']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <executeBlock name="UPDATE_NAVIGATION_SECTION_HEAD"/>
+                </then>
+                <else>
+                    <executeBlock name="CRATE_BUTTON"/>
+                    <executeBlock name="CRATE_NAVIGATION_SECTION_HEAD"/>
+                </else>
+            </IfThenElse>
+            <repeat inventoryName="Manage Invoice Tolerances - Invoice Tolerances">
+                <executeBlock name="INVOICE TOLERANCES"/>
+            </repeat>
+            <executeBlock name="SAVE_AND_CLOSE_BUTTON"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

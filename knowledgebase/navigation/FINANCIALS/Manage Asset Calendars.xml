@@ -1,0 +1,316 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Asset Calendars</name>
+	<svn>
+		<xsd:revision>$Revision: 80414 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2023-03-08 20:49:28 +0700 (Wed, 08 Mar 2023) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Asset%20Calendars.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Asset Calendars.xml 80414 2023-03-08 13:49:28Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Asset Calendars" isBatchingAllowed="false" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Fiscal Years"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Asset Calendars - Asset Calendars"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Asset Calendars - Periods"/>
+			<parameter name="MAIN_REPEAT_3" value="Manage Asset Calendars - Asset Calendars - DFF"/>
+		</parameters>
+		<block name="GO_TO_TASK">
+			<findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="SEARCH_ASSET_CALENDARS">
+			
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Asset Calendars']/../..//a[@title='Clear All']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Manage Asset Calendars']/../../../.."/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Asset Calendars']/../..//a[@title='Clear All']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement by="xpath">//table[@summary='Manage Asset Calendars']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Manage Asset Calendars']/../..//div//*[text()='Name']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//td[1]//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//td[1]//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Manage Asset Calendars']/../../../.."/>
+						</parameters>   
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="QUERY_BY_EXAMPLE">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//th[(string(//span[text()='Period Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//table[@summary='Periods']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Periods']/../..//div//*[text()='Period Name']/../../@_d_index)]//input</findElement>
+						</if>
+						<then>
+							<break/>
+						</then>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+								<parameters>
+									<parameter name="XPATH" value="//table[@summary='Periods']/../../../.."/>
+								</parameters>
+							</executeBlock>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SEARCH_PERIODS">
+			<!--<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Periods']/../../../.."/>
+				</parameters>
+			</executeBlock>-->
+			<executeBlock name="QUERY_BY_EXAMPLE" isRepeatUntilBreak="true"/>
+			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//th[(string(//span[text()='Period Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//th[(string(//span[text()='Period Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Period Name"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement by="xpath">//table[@summary='Periods']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Periods']/../..//div//*[text()='Period Name']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Period Name"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true"
+                            by="xpath">//table[@summary='Periods']//td[1]//span[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_2" columnName="Period Name"/>']</findElement>
+				</if>
+				<then/>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Periods']/../../../.."/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="CREATE_BUTTON">
+			<executeBlock name="GLOBAL_CREATE"/>
+		</block>
+		<block name="ADD_ROW_BUTTON">
+			<executeBlock name="GLOBAL_ADD"/>
+		</block>
+		<block name="SAVE">
+			<executeBlock name="GLOBAL_SAVE"/>
+		</block>
+		<block name="SAVE_AND_COLSE">
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</block>
+
+		<block name="ASSET_CALENDARS">
+			<!-- Name -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!-- Description -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!-- Fiscal Year Name -->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Fiscal Year Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Fiscal Year Name"/>
+				</parameters>
+			</executeBlock>
+			<!-- Periods per Year -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Periods per Year']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Periods per Year"/>
+				</parameters>
+			</executeBlock>
+			<!-- Period Suffix -->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Period Suffix']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Period Suffix"/>
+				</parameters>
+			</executeBlock>
+		</block>
+
+		<block name="PERIODS">
+			<!-- Period Name -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Periods']//label[text()='Period Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Period Name"/>
+				</parameters>
+			</executeBlock>
+			<!-- Period Number -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Periods']//label[text()='Period Number']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Period Number"/>
+				</parameters>
+			</executeBlock>
+			<!-- Start Date -->
+			<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Periods']//tr/td[1]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="1"/>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Periods']//tr[contains(@class,'Select')]//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>
+			<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Periods']//tr/td[1]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="1"/>
+			<!-- End Date -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Periods']//tr[contains(@class,'Select')]//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="1"/>
+		</block>
+		<block name="FAKE_DFF12">
+			<findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+			</click>
+		</block>
+	
+		<block name="Data_Assertions">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">(//a[@title='Clear All']/../../../../..//input)[1]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//img[@title='Query By Example']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<findElement by="xpath">(//a[@title='Clear All']/../../../../..//input)[1]</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_2" columnName="Period Name"/>
+			</sendKeys>
+			<pause durationInSecs="2"/>
+
+			<templateAssertion> 
+				<findElement isSkipCheckDomError="true" by="xpath" setFocus="true">//table[@summary='Periods']//tr[contains(@class,'Select')]//tr/td[number(//th//span[text()='Period Number']/../../@_d_index)]</findElement>
+				<assert by="EQUAL_TEXT"><valueKB inventoryName="MAIN_REPEAT_2" columnName="Period Number"/></assert> 
+			</templateAssertion>
+					
+			<templateAssertion> 
+				<findElement isSkipCheckDomError="true" by="xpath" setFocus="true">//table[@summary='Periods']//tr[contains(@class,'Select')]//tr/td[number(//th//span[text()='Start Date']/../../@_d_index)]</findElement>
+				<assert by="EQUAL_TEXT"><valueKB inventoryName="MAIN_REPEAT_2" columnName="Start Date"/></assert> 
+			</templateAssertion>			
+
+			<templateAssertion> 
+				<findElement isSkipCheckDomError="true" by="xpath" setFocus="true">//table[@summary='Periods']//tr[contains(@class,'Select')]//tr/td[number(//th//span[text()='End Date']/../../@_d_index)]</findElement>
+				<assert by="EQUAL_TEXT"><valueKB inventoryName="MAIN_REPEAT_2" columnName="End Date"/></assert> 
+			</templateAssertion>		
+			
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="SEARCH_ASSET_CALENDARS"/>
+			<executeBlock name="ASSET_CALENDARS"/>
+			<repeat inventoryName="MAIN_REPEAT_3">
+				<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+					<parameters>
+						<parameter name="DFF_NAME" value="MAIN_REPEAT_3"/>
+					</parameters>
+				</executeBlock>	
+			</repeat>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<executeBlock name="SEARCH_PERIODS"/>
+				<executeBlock name="PERIODS"/>
+				<executeBlock name="SAVE"/>
+				<executeBlock name="Data_Assertions"/>
+			</repeat>
+			<executeBlock name="SAVE_AND_COLSE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

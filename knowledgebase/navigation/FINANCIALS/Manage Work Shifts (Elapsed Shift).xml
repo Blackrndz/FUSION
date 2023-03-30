@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Work Shifts (Elapsed Shift)</name>
+    <svn>
+        <xsd:revision>$Revision: 77923 $:</xsd:revision>
+        <xsd:author>$Author: kullada.somtragool $:</xsd:author>
+        <xsd:date>$Date: 2022-02-17 14:55:07 +0700 (Thu, 17 Feb 2022) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Work%20Shifts%20(Elapsed%20Shift).xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Work Shifts (Elapsed Shift).xml 77923 2022-02-17 07:55:07Z kullada.somtragool $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Work Shifts" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Create Business Unit"/>
+			<navigation name="Create Implementation Users"/>
+        </dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT1" value="Manage Work Shifts - Elapsed Shift"/>
+        </parameters>
+		
+        <block name="Search">
+			<!--GLOBAL_EXPAND-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<!--BUTTON-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Search_Add_Field"/>
+			<!--Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="(//label[text()='Name']/../..//input)[3]/../../../../../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Type-->
+			<findElement by="xpath" isSkipCheckDomError="true">(//label[text()='Type']/../..//a)[2]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//*[text()='Elapsed']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			<!--BUTTON-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Shifts']/..//tr[td//td//*[text()='<valueKB inventoryName="MAIN_REPEAT1" columnName="Name"/>']]/td[1]</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Shifts']/..//tr[td//td//*[text()='<valueKB inventoryName="MAIN_REPEAT1" columnName="Name"/>']]/td[1]</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<executeBlock name="Update"/>
+                </then>
+                <else>
+                    <executeBlock name="Create"/>
+                </else>
+            </IfThenElse>
+        </block>
+		<block name="Search_Add_Field">
+			<findElement isSkipCheckDomError="true" by="xpath">//*[text()='d']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			<findElement isSkipCheckDomError="true" by="xpath">//*[text()='Add Fields']/../../../td[2]//a</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			<findElement isSkipCheckDomError="true" by="xpath">//div[@class='AFDetectExpansion']/..//*[text()='Type']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+		</block>
+        <block name="Create">
+            <findElement by="xpath" isSkipCheckDomError="true">//a[text()='Actions']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+            <findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//*[text()='Create Elapsed Shift']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+        </block>
+		<block name="Update">
+			<findElement by="xpath" isSkipCheckDomError="true">//a[text()='Actions']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+            <findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//*[text()='Edit Shift']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+		</block>
+		<block name="Elapsed_Shift">
+            <!--Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Elapsed Shift')]/../../../../../../..//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+            <!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Elapsed Shift')]/../../../../../../..//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+            <!--Code-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Elapsed Shift')]/../../../../../../..//label[text()='Code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Code"/>
+				</parameters>
+			</executeBlock>
+            <!--Duration - Unit-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Elapsed Shift')]/../../../../../../..//label[text()='Duration']/../..//a/../../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Duration - Unit"/>
+				</parameters>
+			</executeBlock>
+            <!--Duration - Value-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="(//div[contains(text(),'Elapsed Shift')]/../../../../../../..//label[text()='Duration']/../..//input)[1]/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Duration - Value"/>
+				</parameters>
+			</executeBlock>
+            <!--Category-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Elapsed Shift')]/../../../../../../..//label[text()='Category']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Category"/>
+				</parameters>
+			</executeBlock>	
+        </block>
+		
+		<block name="Check_Error">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Error']/../../../../../../..//*[contains(text(),'You must enter a duration')]</findElement>
+				</if>
+				<then>
+					<error message="Please check error message."/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Save_And_Close">
+           <IfThenElse>
+				<if>
+					 <findElement by="xpath">//div[contains(text(),'Elapsed Shift')]/../../../../../../..//button[span[text()='S']]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[contains(text(),'Elapsed Shift')]/../../../../../../..//button[span[text()='S']]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[contains(@class,'Expansion')]/..//button[text()='ave and Close']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[contains(@class,'Expansion')]/..//button[text()='ave and Close']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else>
+							
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock name="Check_Error"/>
+        </block>
+		
+        <executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+        <repeat inventoryName="MAIN_REPEAT1">
+            <executeBlock name="Search"/>
+            <executeBlock name="Elapsed_Shift"/>
+            <executeBlock name="Save_And_Close"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

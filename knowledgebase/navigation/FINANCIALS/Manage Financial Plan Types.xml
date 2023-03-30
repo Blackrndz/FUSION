@@ -1,0 +1,791 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Financial Plan Types</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Financial Plan Types" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Create Business Unit"/>
+			<navigation name="Manage Resource Classes"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Financial Plan Types - Financial Plan Type"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Financial Plan Types - Cost Options - DFF"/>
+			<parameter name="REPEAT_3_MAIN" value="Manage Financial Plan Types - Revenue Options - DFF"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>
+			</click>
+			<findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+			</click>
+			<findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_3_MAIN" columnName="Name"/>
+			</click>
+		</block>
+		<block name="TAB_DFF">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='Additional Information'][contains(@class,'Selected')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[text()='Additional Information']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SREACH_PLAN_TYPE">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Manage Financial Plan Types')]/../../../../../../.."/>
+				</parameters>   
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[@title='Clear All']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[@title='Clear All']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if> <!-- 23A -->
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//table[@summary='Manage Financial Plan Types']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Manage Financial Plan Types']/../..//tr//span[text()='Name']/../../@_d_index)]//input</findElement> 
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_AND_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Manage Financial Plan Types']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Manage Financial Plan Types']/../..//tr//span[text()='Name']/../../@_d_index)]"/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Name"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else> <!-- 22D -->
+					<findElement by="xpath">//table[@summary='Manage Financial Plan Types']/../..//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+						<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Manage Financial Plan Types']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Manage Financial Plan Types'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Manage Financial Plan Types']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Manage Financial Plan Types']//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="CREATE_PLAN_TYPE"/>
+					<parameter name="TEMPLATE_UPDATE" value="UPDATE_PLAN_TYPE"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="CREATE_PLAN_TYPE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//span[text()='Sponsored Project']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Sponsored Project"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Financial Plan Type for Non-Sponsored Project</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a/img[@title='Create']</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//a/img[@title='Create']/../../..//div</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 
+									<findElement by="xpath">//div[contains(@class,'Popup')]//td[text()='Financial Plan Type for Non-Sponsored Project']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a/img[@title='Create']/../../../../../../../../../../../../../../../../../../..</findElement>
+										</if>
+										<then>
+											<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a/img[@title='Create']/../../../../../../../../../../../../../../../../../../..</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+											<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Popup')]//a/img[@title='Create']/../../..//div</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+											<findElement by="xpath">//div[contains(@class,'Popup')]//td[text()='Financial Plan Type for Non-Sponsored Project']</findElement>
+											<click waitForPageToFinishRendering="true"/>					
+										</then>
+										<else>						
+										</else>
+									</IfThenElse>							
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="REPEAT_1_MAIN" columnName="Sponsored Project"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>Financial Plan Type for Sponsored Project</valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a/img[@title='Create']/../../..//div</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath">//a/img[@title='Create']/../../..//div</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 
+											<findElement by="xpath">//div[contains(@class,'Popup')]//td[text()='Financial Plan Type for Sponsored Project']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a/img[@title='Create']/../../../../../../../../../../../../../../../../../../..</findElement>
+												</if>
+												<then>
+													<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a/img[@title='Create']/../../../../../../../../../../../../../../../../../../..</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+													<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Popup')]//a/img[@title='Create']/../../..//div</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+													<findElement by="xpath">//div[contains(@class,'Popup')]//td[text()='Financial Plan Type for Sponsored Project']</findElement>
+													<click waitForPageToFinishRendering="true"/>		
+												</then>
+												<else>						
+												</else>
+											</IfThenElse>							
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<comparisons separator="AND">
+												<comparison operator="EQUAL">
+													<leftOperand>
+														<valueKB inventoryName="REPEAT_1_MAIN" columnName="Sponsored Project"/>
+													</leftOperand>
+													<rightOperand>
+														<valueText>""</valueText>
+													</rightOperand>
+												</comparison>
+											</comparisons>
+										</if>
+										<then>
+											<error message="Please specify Sponsored Project." />
+										</then>
+										<else/>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_CREATE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="UPDATE_PLAN_TYPE">
+			<findElement by="xpath">(TEMPLATE_1_FIND_ROW/../../../../../../..//td)[1]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<executeBlock name="GLOBAL_UPDATE"/>
+		</block>
+		<block name="PLAN_TYPE">
+			<!--Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+			<!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Plan Class-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Plan Class']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Plan Class"/>
+				</parameters>
+			</executeBlock>				
+			<!--From Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='From Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="From Date"/>
+				</parameters>
+			</executeBlock>
+			<!--To Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='To Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="To Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Planning Amounts-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Planning Amounts']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Planning Amounts"/>
+				</parameters>
+			</executeBlock>	
+			<!--Enable planning in multiple transaction currencies-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enable planning in multiple transaction currencies']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Enable planning in multiple transaction currencies"/>
+				</parameters>
+			</executeBlock>
+			<!--Designate as approved cost budget-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Designate as approved cost budget']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Designate as approved cost budget"/>
+				</parameters>
+			</executeBlock>
+			<!--Designate as approved revenue budget-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Designate as approved revenue budget']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Designate as approved revenue budget"/>
+				</parameters>
+			</executeBlock>
+			<!--Use workflow for status changes-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Use workflow for status changes']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Use workflow for status changes"/>
+				</parameters>
+			</executeBlock>
+			<!--Set as default financial plan type-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Set as default financial plan type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Set as default financial plan type"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="1"/>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//div[text()='Warning']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Warning']/../../../../../../..//button[text()='Yes']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Enable budgetary controls-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enable budgetary controls']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Enable budgetary controls"/>
+				</parameters>
+			</executeBlock>
+			<!--Designate as primary revenue forecast-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Designate as primary revenue forecast']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Designate as primary revenue forecast"/>
+				</parameters>
+			</executeBlock>
+			<!--Designate as primary cost forecast-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Designate as primary cost forecast']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Designate as primary cost forecast"/>
+				</parameters>
+			</executeBlock>
+			<!--Automatically submit forecasts for approval-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Automatically submit forecasts for approval']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Automatically submit forecasts for approval"/>
+				</parameters>
+			</executeBlock>
+			<!--Automatically approve forecasts-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Automatically approve forecasts']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Automatically approve forecasts"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<!-- DFF -->
+<!--	<block name="XX_SCROLLBAR_GENERIC_INNER_DFF">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">XX_SCROLLBAR_GENERIC_DFF_FIND_ROW</findElement>
+				</if>
+				<then>
+					<executeBlock name="XX_SCROLLBAR_GENERIC_DFF_UPDATE_BLOCK"/>
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" by="xpath">XX_SCROLLBAR_GENERIC_DFF_SCROLLER</findElement>
+					<IfThenElse>
+						<if>
+							<isEndOfScroll/>
+						</if>
+						<then>
+							<executeBlock name="XX_SCROLLBAR_GENERIC_DFF_CREATE_BLOCK"/>
+							<break/>
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath">XX_SCROLLBAR_GENERIC_DFF_SCROLLER</findElement>
+							<scroll direction="DOWN"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="XX_SCROLLBAR_GENERIC_DFF">
+			<!{1}** check if there is no data found returned after the search, if so then we create a new record if applicable **{1}>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">XX_SCROLLBAR_GENERIC_DFF_NO_DATA</findElement>
+				</if>
+				<then>
+					<executeBlock name="XX_SCROLLBAR_GENERIC_DFF_CREATE_BLOCK"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">XX_SCROLLBAR_GENERIC_DFF_SCROLLER</findElement>
+						</if>
+						<then>
+							<!{1}** resetting the scollbar back to the Top because the form remembers where it was even when searching a new record **{1}>
+							<findElement highlightTurnedOff="true" by="xpath">XX_SCROLLBAR_GENERIC_DFF_SCROLLER</findElement>
+							<executeBlock name="XX_SCROLLBAR_GENERIC_INNER_DFF" isRepeatUntilBreak="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="XX_SCROLLBAR_GENERIC_SPAN">
+			<executeBlock name="XX_SCROLLBAR_GENERIC_DFF">
+				<parameters>
+					<parameter name="XX_SCROLLBAR_GENERIC_DFF_NO_DATA" value="//div[contains(text(),'XXX No data to display.')]"/>
+					<parameter name="XX_SCROLLBAR_GENERIC_DFF_FIRST_ROW" value=""/>
+					<parameter name="XX_SCROLLBAR_GENERIC_DFF_SCROLLER" value="//div[contains(@id,'scroller')]"/>
+					<parameter name="XX_SCROLLBAR_GENERIC_DFF_FIND_ROW">XPATH_DFF//span[text()='<valueKB inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Name"/>']
+					</parameter>
+					<parameter name="XX_SCROLLBAR_GENERIC_DFF_CREATE_BLOCK" value="XX_SCROLLBAR_GENERIC_ACTION"/>
+					<parameter name="XX_SCROLLBAR_GENERIC_DFF_UPDATE_BLOCK" value="XX_SCROLLBAR_GENERIC_ACTION"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="XX_SCROLLBAR_GENERIC_ACTION"/>
+	<block name="XX_DFF_TYPE_INPUT_ZOOM_LOV">
+			<!{1}** Input Pop up List of Value **{1}>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" setFocus="true">XPATH_DFF//label[text()='<valueKB
+                            inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Name"/>']/../../td[input|img|a]//a</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>""</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    by="xpath">XPATH_DFF//label[text()='<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF"
+                                    columnName="Field Name"/>']/../../td[input|img|a]//input[@value='']</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement
+											by="xpath">XPATH_DFF//label[text()='<valueKB
+											inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Name"/>']/../../td[input|img|a]//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+											inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>
+									</sendKeys>
+								</else>
+							</IfThenElse>						
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    by="xpath">XPATH_DFF//label[text()='<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF"
+                                    columnName="Field Name"/>']/../../td[input|img|a]//input[@value='<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>']</findElement>
+								</if>
+								<then/>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    by="xpath">//label[text()='<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Name"/>']/../../td[input|img|a]//a[contains(@title,'Date')]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    by="xpath">//label[text()='<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Name"/>']/../../td[input|img|a]//input</findElement>
+											<sendKeys isClear="true" waitForPageToFinishRendering="true">
+												<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>
+											</sendKeys>
+										</then>
+										<else>
+											<findElement
+                                    by="xpath">//label[text()='<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Name"/>']/../../td[input|img|a]//a</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//h2[text()='Search']/../../../../../../../../../../../../../../..//label[text()='Value']/../..//input</findElement>
+											<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+												<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>
+											</sendKeys>
+											<findElement by="xpath">//h2[text()='Search']/../../../../../../../../../../../../../../..//button[text()='Search']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<IfThenElse>
+												<if>
+													<findElement
+                                    by="xpath">//h2[text()='Search']/../../../../../../../../../../../../../../..//td[text()='<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>']</findElement>
+												</if>
+												<then>
+													<findElement
+                                    by="xpath">//h2[text()='Search']/../../../../../../../../../../../../../../..//td[text()='<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>']</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else>
+													<error message="No data to display."/>
+												</else>
+											</IfThenElse>
+											<findElement by="xpath">//h2[text()='Search']/../../../../../../../../../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<!{1}** Input No Pop Up List of Value **{1}>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true"
+                                    by="xpath" setFocus="true">XPATH_DFF//label[text()='<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Name"/>']/../../td[span|div]//a</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>""</valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">XPATH_DFF//label[text()='<valueKB inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Name"/>']/../../td[span|div]//input[@value='']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement
+											by="xpath">XPATH_DFF//label[text()='<valueKB
+											inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Name"/>']/../../td[span|div]//a</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<IfThenElse>
+												<if>
+													<findElement by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[td[@_afrseparator]]</findElement>
+												</if>
+												<then>
+													<findElement by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[td[@_afrseparator]]//following-sibling::tr[1]//td[1]</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else>
+													<findElement by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr//td[1]</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>								
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    by="xpath">XPATH_DFF//label[text()='<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF"
+                                    columnName="Field Name"/>']/../../td[span|div]//input[@value='<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement by="xpath">XPATH_DFF//label[text()='<valueKB inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Name"/>']/../../td[span|div]//a</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>']</findElement>
+												</if>
+												<then>
+													<findElement isDisplayed="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr//td[1][text()='<valueKB inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>']</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else>
+													<findElement by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']</findElement>
+													<click waitForPageToFinishRendering="true"/>												
+													<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//label[text()='Value']/../..//input</findElement>
+													<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+														<valueKB inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>
+													</sendKeys>
+													<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//button[text()='Search']</findElement>
+													<click waitForPageToFinishRendering="true"/>
+													<IfThenElse>
+														<if>
+															<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//td[text()='<valueKB inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>']</findElement>
+														</if>
+														<then>
+															<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//td[text()='<valueKB inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>']</findElement>
+															<click waitForPageToFinishRendering="true"/>
+														</then>
+														<else>
+															<error message="No data to display."/>
+														</else>
+													</IfThenElse>
+													<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//button[text()='OK']</findElement>
+													<click waitForPageToFinishRendering="true"/>		
+												</else>
+											</IfThenElse>											
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<!{1}** Input only **{1}>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true"
+                                    by="xpath" setFocus="true">XPATH_DFF//label[text()='<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Name"/>']/../../td[input]//input</findElement>
+								</if>
+								<then>
+									<findElement
+                                    by="xpath" setFocus="true">XPATH_DFF//label[text()='<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Name"/>']/../../td[input]//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>
+									</sendKeys>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="XX_DFF_TYPE_INPUT_RADIO">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" setFocus="true">XPATH_DFF//label[text()='<valueKB
+                            inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Name"/>']/../..//input[@type='radio']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<findElement
+                                    by="xpath">XPATH_DFF//label[text()='<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF"
+                                    columnName="Field Name"/>']/../..//label[text()='<valueKB
+                                    inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>']/preceding-sibling::*[1]/input</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="XX_DFF_TYPE_INPUT_SELCET">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" setFocus="true">XPATH_DFF//label[text()='<valueKB
+                            inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Name"/>']/../..//select</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">XPATH_DFF//label[text()='<valueKB
+                            inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Name"/>']/../..//select</findElement>
+					<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+						<valueKB inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>
+					</select>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="XX_DFF_TYPE_INPUT_CHECKBOK">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" setFocus="true">XPATH_DFF//label[text()='<valueKB
+                            inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Name"/>']/../..//input[@type='checkbox']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">XPATH_DFF//label[text()='<valueKB
+                            inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Name"/>']/../..//input</findElement>
+					<click isCheckbox="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>
+					</click>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+<block name="XX_BLOCK_ALL_SESSION_DFF">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Value"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="XX_SCROLLBAR_GENERIC_DFF">
+						<parameters>
+							<parameter name="XX_SCROLLBAR_GENERIC_DFF_NO_DATA" value="//div[contains(text(),'XXX No data to display.')]"/>
+							<parameter name="XX_SCROLLBAR_GENERIC_DFF_FIRST_ROW" value=""/>
+							<parameter name="XX_SCROLLBAR_GENERIC_DFF_SCROLLER" value="//div[contains(@id,'scroller')]"/>
+							<parameter name="XX_SCROLLBAR_GENERIC_DFF_FIND_ROW">XPATH_DFF//label[text()='<valueKB inventoryName="XX_REPEAT_ALL_INV_DFF" columnName="Field Name"/>']
+							</parameter>
+							<parameter name="XX_SCROLLBAR_GENERIC_DFF_CREATE_BLOCK" value="XX_SCROLLBAR_GENERIC_SPAN"/>
+							<parameter name="XX_SCROLLBAR_GENERIC_DFF_UPDATE_BLOCK" value="XX_SCROLLBAR_GENERIC_ACTION"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="XX_DFF_TYPE_INPUT_ZOOM_LOV"/>
+					<executeBlock name="XX_DFF_TYPE_INPUT_RADIO"/>
+					<executeBlock name="XX_DFF_TYPE_INPUT_SELCET"/>
+					<executeBlock name="XX_DFF_TYPE_INPUT_CHECKBOK"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		-->
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="SREACH_PLAN_TYPE"/>
+			<executeBlock name="PLAN_TYPE"/>
+			<executeBlock name="GLOBAL_SAVE"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="GLOBAL_BLOCK_ALL_SESSION_DFF">
+					<parameters>
+						<parameter name="REPEAT_ALL_INV_DFF" value="Manage Financial Plan Types - Cost Options - DFF"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<repeat inventoryName="REPEAT_3_MAIN">
+				<executeBlock name="GLOBAL_BLOCK_ALL_SESSION_DFF">
+					<parameters>
+						<parameter name="REPEAT_ALL_INV_DFF" value="Manage Financial Plan Types - Revenue Options - DFF"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

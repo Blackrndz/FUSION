@@ -1,0 +1,466 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Invoice Holds and Releases</name>
+    <svn>
+        <xsd:revision>$Revision: 78997 $:</xsd:revision>
+        <xsd:author>$Author: kullada.somtragool $:</xsd:author>
+        <xsd:date>$Date: 2022-07-13 17:26:21 +0700 (Wed, 13 Jul 2022) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Invoice%20Holds%20and%20Releases.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Invoice Holds and Releases.xml 78997 2022-07-13 10:26:21Z kullada.somtragool $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" defaultBatchSize="3" taskName="Manage Invoice Holds and Releases" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Data Role and Security Profiles"/>
+			<navigation name="Manage Service Provider Relationships (Customer Payments Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Payables Payment Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Procurement Service Providers)"/>
+        </dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Invoice Holds and Releases - Invoice Hold or Release"/>
+		</parameters>
+		
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../..//input</findElement>
+		</block>
+		
+		 <block name="GO_TO_TASK">
+            <findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a[@title='Go to Task']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+		
+		<block name="Query By Example">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[@title='Clear All']</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//div[@title='Query By Example']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[@title='Query By Example']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+							<break/>
+						</then>
+						<else>
+							<findElement isDisplayed="true" by="xpath">//a[text()='View']/../..//div</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='Query By Example']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Invoice_Hold">
+			<executeBlock name="Query By Example"/>
+			<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">(//a[@title='Clear All']/../../../../..//input)[1]</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+			</sendKeys>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Invoice Holds and Releases']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Invoice Holds and Releases'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Invoice Holds and Releases']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Invoice Holds and Releases']//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_Invoice_Hold"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Invoice_Hold"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Create_Invoice_Hold"/>
+		</block>
+		
+		<block name="New_Invoice_Hold">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Invoice Holds and Releases']/../../../..//div[@title='Create']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Invoice Holds and Releases']/../../../..//div[@title='Create']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Invoice Holds and Releases']/../../../../"/>
+						</parameters>   
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Update_Invoice_Hold">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		
+		<block name="Create_Invoice_Hold">
+			 <!--Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Type"/>
+				</parameters>
+			</executeBlock>	
+            <!--Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+            
+            <!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+           
+            <!--Inactive Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Inactive Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Inactive Date"/>
+				</parameters>
+			</executeBlock>	
+          
+            <!--Allow Accounting-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Allow Accounting"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Allow Accounting"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//label[text()='Allow Accounting']/..//input[not(@checked)]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//label[text()='Allow Accounting']/..//input</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="REPEAT_1_MAIN" columnName="Allow Accounting"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>No</valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//label[text()='Allow Accounting']/..//input[@checked]</findElement>
+										</if>
+										<then>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//label[text()='Allow Accounting']/..//input</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+           
+            <!--Allow Manual Release-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Allow Manual Release"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Allow Manual Release"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//label[text()='Allow Manual Release']/..//input[not(@checked)]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//label[text()='Allow Manual Release']/..//input</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="REPEAT_1_MAIN" columnName="Allow Accounting"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>No</valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//label[text()='Allow Manual Release']/..//input[@checked]</findElement>
+										</if>
+										<then>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//label[text()='Allow Manual Release']/..//input</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+          
+            <!--Allow Holds Resolution Routing-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Allow Holds Resolution Routing"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Allow Holds Resolution Routing"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//label[text()='Allow Holds Resolution Routing']/..//input[not(@checked)]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//label[text()='Allow Holds Resolution Routing']/..//input</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="REPEAT_1_MAIN" columnName="Allow Holds Resolution Routing"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>No</valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//label[text()='Allow Holds Resolution Routing']/..//input[@checked]</findElement>
+										</if>
+										<then>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//label[text()='Allow Holds Resolution Routing']/..//input</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+          
+            <!--Days Before Notifying-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Days Before Notifying']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Days Before Notifying"/>
+				</parameters>
+			</executeBlock>	
+           
+            <!--Days Before Reminding-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+					<parameters>
+						<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Days Before Reminding']/../.."/>
+						<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+						<parameter name="COL_NAME" value="Days Before Reminding"/>
+					</parameters>
+				</executeBlock>
+            
+            <!--Hold Instruction-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Hold Instruction']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Hold Instruction"/>
+				</parameters>
+			</executeBlock>	
+		</block>
+		
+		 <block name="Save and Close">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Invoice Hold or Release')]/../../../../../../..//*[text()='ave and Close']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Invoice Hold or Release')]/../../../../../../..//*[text()='ave and Close']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							 <findElement by="xpath">//div[contains(text(),'Invoice Hold or Release')]/../../../../../../..//span[text()='S']/../..</findElement>
+						</if>
+						<then>
+							 <findElement by="xpath">//div[contains(text(),'Invoice Hold or Release')]/../../../../../../..//span[text()='S']/../..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+        </block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="REPEAT_1_MAIN">
+            <executeBlock name="Invoice_Hold"/>
+            <executeBlock name="Save and Close"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>
+		
+		
+		
+		
+		
+		
+		
+		
+		

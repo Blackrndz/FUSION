@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Configure Plan Type Groups (Administrator Usage)</name>
+	<svn>
+		<xsd:revision>$Revision: 77784 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2022-02-03 12:03:34 +0700 (Thu, 03 Feb 2022) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Configure%20Plan%20Type%20Groups%20(Administrator%20Usage).xml $:</xsd:headURL>
+		<xsd:id>$Id: Configure Plan Type Groups (Administrator Usage).xml 77784 2022-02-03 05:03:34Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Configure Plan Type Groups" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Benefit Lookups"/>
+			<navigation name="Create Implementation Users"/>
+			<navigation name="Manage Enterprise HCM Information"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Configure Plan Type Groups - Administrator Usage"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='Process Name']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="Enrollment Display Name"/>
+			</click>	
+		</block>
+		
+		<block name="Create">
+			<error message="Cannot Define Enrollment Display Name data on this task"/>
+		</block>
+		
+		<block name="Update">
+			<findElement isSkipCheckDomError="true" by="xpath">TEMPLATE_1_FIND_ROW/../../../../../../../..//td[1]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+		</block>
+		
+		<block name="Configure">
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'Administrator Usage')]//tr[contains(@class,'Select')]//*[@type='checkbox']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Display"/>
+				</parameters>
+			</executeBlock>			
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[contains(@class,'Select')]//a[text()='Administrator Usage']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div/div/a[text()='Administrator Usage']</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//div/div/a[text()='Administrator Usage']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 				
+							<pause durationInSecs="1"/>		
+						</then>
+						<else>
+							<executeBlock name="TAB">
+								<parameters>
+									<parameter name="TAB_NAME" value="Administrator Usage"/>
+								</parameters>
+							</executeBlock>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>			
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[contains(@summary,'Administrator Usage')]/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[contains(@summary,'Administrator Usage')][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[contains(@summary,'Administrator Usage')]/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[contains(@summary,'Administrator Usage')]//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Enrollment Display Name"/>' or @value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Enrollment Display Name"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="Create"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update"/>
+				</parameters>
+			</executeBlock>		
+			<executeBlock name="Configure"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

@@ -1,0 +1,501 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Financial Plan Types (Rate Settings)</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Financial Plan Types" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Financial Plan Types"/>
+		</dependencies>
+        <parameters>
+            <parameter name="REPEAT_1_MAIN" value="Manage Financial Plan Types - Rate Settings"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Financial Plan Types - Details"/>
+        </parameters>
+		<block name="FAKE_INV">
+           <findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+                    <click isCheckbox="true" waitForPageToFinishRendering="true">
+                        <valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+                    </click>
+					 <findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+                    <click isCheckbox="true" waitForPageToFinishRendering="true">
+                        <valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>
+                    </click>
+        </block>
+		<block name="SREACH_PLAN_TYPE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Manage Financial Plan Types']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Manage Financial Plan Types')]/../../../../../../.."/>
+						</parameters>   
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//a[@title='Clear All']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//a[@title='Clear All']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+					<IfThenElse>
+						<if> <!-- 23A -->
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//table[@summary='Manage Financial Plan Types']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Manage Financial Plan Types']/../..//tr//span[text()='Name']/../../@_d_index)]//input</findElement> 
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_AND_ENTER">
+								<parameters>
+									<parameter name="XPATH" value="//table[@summary='Manage Financial Plan Types']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Manage Financial Plan Types']/../..//tr//span[text()='Name']/../../@_d_index)]"/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Name"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else> <!-- 22D -->
+							<findElement by="xpath">//table[@summary='Manage Financial Plan Types']/../..//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Manage Financial Plan Types']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Manage Financial Plan Types'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Manage Financial Plan Types']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Manage Financial Plan Types']//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</parameter>
+							<parameter name="TEMPLATE_CREATE" value="CREATE_PLAN_TYPE"/>
+							<parameter name="TEMPLATE_UPDATE" value="UPDATE_PLAN_TYPE"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+        </block>
+		<block name="CREATE_PLAN_TYPE">
+			<error message="Please create plan types." />
+		 </block>
+		 <block name="UPDATE_PLAN_TYPE">
+				<findElement by="xpath">(TEMPLATE_1_FIND_ROW/../../../../../../..//td)[1]</findElement>
+				<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				<executeBlock name="GLOBAL_UPDATE"/>
+		 </block>
+		<block name="TAB_RATE_SETTINGS">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='Rate Settings'][contains(@class,'Selected')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[text()='Rate Settings']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<!--RATE_SETTINGS-->
+		<block name="TOP_RATE_SCHEDULES">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Rate Schedules']/../..//div[contains(text(),'No data to display.')]</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">(//table[@summary='Rate Schedules'][@_startrow='0']//tr[1]//td)[1]</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">(//table[@summary='Rate Schedules'][@_startrow='0']//tr[1]//td)[1]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<break/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">TEMPLATE_SCROLLER</findElement>
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">TEMPLATE_SCROLLER</findElement>
+									<scroll direction="TOP"/>
+									<pause durationInSecs="2"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>	
+				</else>
+			</IfThenElse>		
+		</block>
+		<block name="FIND_INPUT_RATE_SCHEDULES">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//label[text()='Business Unit']/../..//input[@value='']</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//label[text()='Business Unit']/../..//input[@value='']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">TEMPLATE_SCROLLER</findElement>
+					<scroll direction="TOP"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>		
+		</block>	
+		<block name="RATE_SCHEDULES">
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Rate Schedules']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Rate Schedules'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Rate Schedules']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Rate Schedules']//label[text()='Business Unit']/../..//input[@value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Business Unit"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="CREATE_RATE_SCHEDULES"/>
+					<parameter name="TEMPLATE_UPDATE" value="UPDATE_RATE_SCHEDULES"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="CREATE_RATE_SCHEDULES">
+			<executeBlock name="TOP_RATE_SCHEDULES" isRepeatUntilBreak="true"/>
+			<executeBlock name="GLOBAL_SPECIFY_ADD">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//table[@summary='Rate Schedules']/../../../.."/>
+				</parameters>   
+			</executeBlock>
+			<executeBlock name="FIND_INPUT_RATE_SCHEDULES" isRepeatUntilBreak="true"/>
+			<findElement by="xpath">//label[text()='Business Unit']/../..//input[@value='']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<!--Business Unit-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Business Unit']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Business Unit"/>
+					<parameter name="SEARCH_1" value="Business Unit"/>
+				</parameters>
+			</executeBlock>
+			<!--Use planning rates-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//input[contains(@id,'usePlRatesFlag')]/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Use planning rates"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="UPDATE_RATE_SCHEDULES">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<!--Use planning rates-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//input[contains(@id,'usePlRatesFlag')]/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Use planning rates"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="RATE_DETAILS">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//label[text()='Person']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<!--Cost and revenue in separate plan versions-->
+							 <findElement by="xpath">//label[text()='Planning Amounts']/../..//*[@title='Cost and revenue in separate plan versions']</findElement>
+						</if>
+						<then>
+							<!--Person-->
+							<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+								<parameters>
+									<parameter name="XPATH" value="//input[contains(@id,'transCostEmpRateSchIdId')]/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Person"/>
+									<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+								</parameters>
+							</executeBlock>
+							<!--Job-->
+							<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+								<parameters>
+									<parameter name="XPATH" value="//input[contains(@id,'transCostJobRateSchIdId')]/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Job"/>
+									<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+								</parameters>
+							</executeBlock>
+							<!--Burden Schedule-->
+							<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+								<parameters>
+									<parameter name="XPATH" value="//input[contains(@id,'transCostBrdndRateSchIdId')]/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Burden Schedule"/>
+									<parameter name="SEARCH_1" value="Burden Schedule"/>
+								</parameters>
+							</executeBlock>
+							<!--Nonlabor Resource-->
+							<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+								<parameters>
+									<parameter name="XPATH" value="//input[contains(@id,'transCostNonLbrResRateSchIdId')]/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Nonlabor Resource"/>
+									<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+								</parameters>
+							</executeBlock>
+							<!--Resource Class-->
+							<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+								<parameters>
+									<parameter name="XPATH" value="//input[contains(@id,'inputComboboxListOfValues1')]/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Resource Class"/>
+									<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+								</parameters>
+							</executeBlock>
+							<!--Revenue - Person-->
+							<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+								<parameters>
+									<parameter name="XPATH" value="//input[contains(@id,'transRevEmpRateSchIdId')]/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Revenue - Person"/>
+									<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+								</parameters>
+							</executeBlock>
+							<!--Revenue - Job-->
+							<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+								<parameters>
+									<parameter name="XPATH" value="//input[contains(@id,'transRevJobRateSchidId')]/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Revenue - Job"/>
+									<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+								</parameters>
+							</executeBlock>
+							<!--Revenue - Nonlabor Resource-->
+							<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+								<parameters>
+									<parameter name="XPATH" value="//input[contains(@id,'transRevNonLbrResRateSchIdId')]/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Revenue - Nonlabor Resource"/>
+									<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+								</parameters>
+							</executeBlock>
+							<!--Revenue - Resource Class-->
+							<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+								<parameters>
+									<parameter name="XPATH" value="//input[contains(@id,'inputComboboxListOfValues2')]/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Revenue - Resource Class"/>
+									<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<!--Cost and revenue in the same plan version-->
+									<findElement by="xpath">//label[text()='Planning Amounts']/../..//*[@title='Cost and revenue in the same plan version']</findElement>
+								</if>
+								<then>
+									<!--Person-->
+									<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+										<parameters>
+											<parameter name="XPATH" value="//input[contains(@id,'transCostEmpRateSchIdId')]/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+											<parameter name="COL_NAME" value="Person"/>
+											<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+										</parameters>
+									</executeBlock>
+									<!--Job-->
+									<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+										<parameters>
+											<parameter name="XPATH" value="//input[contains(@id,'transCostJobRateSchIdId')]/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+											<parameter name="COL_NAME" value="Job"/>
+											<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+										</parameters>
+									</executeBlock>
+									<!--Burden Schedule-->
+									<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+										<parameters>
+											<parameter name="XPATH" value="//input[contains(@id,'transCostBrdndRateSchIdId')]/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+											<parameter name="COL_NAME" value="Burden Schedule"/>
+											<parameter name="SEARCH_1" value="Burden Schedule"/>
+										</parameters>
+									</executeBlock>
+									<!--Nonlabor Resource-->
+									<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+										<parameters>
+											<parameter name="XPATH" value="//input[contains(@id,'transCostNonLbrResRateSchIdId')]/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+											<parameter name="COL_NAME" value="Nonlabor Resource"/>
+											<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+										</parameters>
+									</executeBlock>
+									<!--Resource Class-->
+									<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+										<parameters>
+											<parameter name="XPATH" value="//input[contains(@id,'inputComboboxListOfValues1')]/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+											<parameter name="COL_NAME" value="Resource Class"/>
+											<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+										</parameters>
+									</executeBlock>
+									<!--Revenue - Person-->
+									<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+										<parameters>
+											<parameter name="XPATH" value="//input[contains(@id,'transRevEmpRateSchIdId')]/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+											<parameter name="COL_NAME" value="Revenue - Person"/>
+											<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+										</parameters>
+									</executeBlock>
+									<!--Revenue - Job-->
+									<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+										<parameters>
+											<parameter name="XPATH" value="//input[contains(@id,'transRevJobRateSchidId')]/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+											<parameter name="COL_NAME" value="Revenue - Job"/>
+											<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+										</parameters>
+									</executeBlock>
+									<!--Revenue - Nonlabor Resource-->
+									<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+										<parameters>
+											<parameter name="XPATH" value="//input[contains(@id,'transRevNonLbrResRateSchIdId')]/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+											<parameter name="COL_NAME" value="Revenue - Nonlabor Resource"/>
+											<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+										</parameters>
+									</executeBlock>
+									<!--Revenue - Resource Class-->
+									<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+										<parameters>
+											<parameter name="XPATH" value="//input[contains(@id,'inputComboboxListOfValues2')]/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+											<parameter name="COL_NAME" value="Revenue - Resource Class"/>
+											<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<!--Person-->
+									<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+										<parameters>
+											<parameter name="XPATH" value="//input[contains(@id,'transCostEmpRateSchIdId')]/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+											<parameter name="COL_NAME" value="Person"/>
+											<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+										</parameters>
+									</executeBlock>
+									<!--Job-->
+									<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+										<parameters>
+											<parameter name="XPATH" value="//input[contains(@id,'transCostJobRateSchIdId')]/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+											<parameter name="COL_NAME" value="Job"/>
+											<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+										</parameters>
+									</executeBlock>
+									<!--Burden Schedule-->
+									<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+										<parameters>
+											<parameter name="XPATH" value="//input[contains(@id,'transCostBrdndRateSchIdId')]/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+											<parameter name="COL_NAME" value="Burden Schedule"/>
+											<parameter name="SEARCH_1" value="Burden Schedule"/>
+										</parameters>
+									</executeBlock>
+									<!--Nonlabor Resource-->
+									<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+										<parameters>
+											<parameter name="XPATH" value="//input[contains(@id,'transCostNonLbrResRateSchIdId')]/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+											<parameter name="COL_NAME" value="Nonlabor Resource"/>
+											<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+										</parameters>
+									</executeBlock>
+									<!--Resource Class-->
+									<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+										<parameters>
+											<parameter name="XPATH" value="//input[contains(@id,'inputComboboxListOfValues1')]/../.."/>
+											<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+											<parameter name="COL_NAME" value="Resource Class"/>
+											<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+										</parameters>
+									</executeBlock>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<!--Resource Class Raw Cost Rate-->
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Resource Class Raw Cost Rate']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Resource Class Raw Cost Rate"/>
+							<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+						</parameters>
+					</executeBlock>
+					<!--Resource Class Bill Rate-->
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Resource Class Bill Rate']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Resource Class Bill Rate"/>
+							<parameter name="SEARCH_1" value="Rate Schedule Name"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//label[text()='Name']/../..//input[@value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<executeBlock name="TAB_RATE_SETTINGS"/>
+					<executeBlock name="RATE_SCHEDULES"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+					<executeBlock name="SREACH_PLAN_TYPE"/>
+					<executeBlock name="TAB_RATE_SETTINGS"/>
+					<executeBlock name="RATE_SCHEDULES"/>
+				</else>
+			</IfThenElse>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="RATE_DETAILS"/>
+				<executeBlock name="GLOBAL_SAVE"/>
+			</repeat>
+			<executeBlock name="GLOBAL_SAVE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

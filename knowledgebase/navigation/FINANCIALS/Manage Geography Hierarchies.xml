@@ -1,0 +1,1257 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Geography Hierarchies</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Geography Hierarchies" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<dependencies>
+			<navigation name="Manage Geographies"/>
+		</dependencies>
+		<parameters>
+			<parameter name="INV_1" value="Manage Geography Hierarchies - Geography Hierarchies"/>
+			<parameter name="INV_2" value="Manage Geography Hierarchies - Country"/>
+			<parameter name="INV_3" value="Manage Geography Hierarchies - Sublevels"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_3" columnName="Name"/>']/../..//input</findElement>
+		</block>
+		
+		<block name="BACK_BUTTON">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[contains(@id,'SP1:SPdonei::icon')]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[contains(@id,'SP1:SPdonei::icon')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+				
+		<block name="SAVE_BUTTON">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_1" columnName="Status"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Draft</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//a/*[contains(text(),'Save')]/../../..//div/a</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//a/*[contains(text(),'Save')]/../../..//div/a</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[text()='Save as Draft']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="INV_1" columnName="Status"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Draft</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//a/*[text()='Save and Activate']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//a/*[text()='Save and Activate']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									<findElement by="xpath" isSkipCheckDomError="true">//a/*[contains(text(),'Save')]/../../..//div/a</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[text()='Save and Activate']/..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="New_Geography_Hierarchies">
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Geography Hierarchies']/../../../..//div[@title='Create']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Details']/../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<!--Start Date-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_1" columnName="Start Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Details']/../../../../../../..//label[text()='Name']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Start Date"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Start_Date"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Details']/../../../../../../..//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Details']/../../../../../../..//label[text()='Start on Activation']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Start on Activation"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="Update_Geography_Hierarchies">
+			 <findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Actions']/../../../..//div/a</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Actions']/../../../..//div/a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//tr[contains(@class,'AFDisabled')]/td[text()='Edit']/..</findElement>
+						</if>
+						<then>
+							<executeBlock name="BACK_BUTTON"/>
+							<error message="Disabled to edit this data." />
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[text()='Edit']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Details']/../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Start Date']/../..//input[contains(@value,'<valueKB inventoryName="INV_1" columnName="Start Date"/>')]</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<executeBlock name="Update_Start_Date"/>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Details']/../../../../../../..//label[text()='Name']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Name"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Details']/../../../../../../..//label[text()='Start on Activation']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Start on Activation"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="Update_Start_Date">
+			<!--Start Date-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_1" columnName="Start Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Details']/../../../../../../..//label[text()='Name']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Start Date"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Start_Date"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="Start_Date">
+			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Start Date']/../..//a</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'Jan')]</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//label[text()='Select Month']/../..//select</findElement>
+					<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+						<valueText>January</valueText>
+					</select>	
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'Feb')]</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//label[text()='Select Month']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+								<valueText>February</valueText>
+							</select>	
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'Mar')]</findElement>
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//label[text()='Select Month']/../..//select</findElement>
+									<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+										<valueText>March</valueText>
+									</select>	
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'Apr')]</findElement>
+										</if>
+										<then>
+											<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//label[text()='Select Month']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+												<valueText>April</valueText>
+											</select>	
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'May')]</findElement>
+												</if>
+												<then>
+													<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//label[text()='Select Month']/../..//select</findElement>
+													<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+														<valueText>May</valueText>
+													</select>	
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'Jun')]</findElement>
+														</if>
+														<then>
+															<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//label[text()='Select Month']/../..//select</findElement>
+															<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+																<valueText>June</valueText>
+															</select>	
+														</then>
+														<else>
+															<IfThenElse>
+																<if>
+																	<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'Jul')]</findElement>
+																</if>
+																<then>
+																	<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//label[text()='Select Month']/../..//select</findElement>
+																	<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+																		<valueText>July</valueText>
+																	</select>	
+																</then>
+																<else>
+																	<IfThenElse>
+																		<if>
+																			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'Aug')]</findElement>
+																		</if>
+																		<then>
+																			<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//label[text()='Select Month']/../..//select</findElement>
+																			<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+																				<valueText>August</valueText>
+																			</select>	
+																		</then>
+																		<else>
+																			<IfThenElse>
+																				<if>
+																					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'Sep')]</findElement>
+																				</if>
+																				<then>
+																					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//label[text()='Select Month']/../..//select</findElement>
+																					<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+																						<valueText>September</valueText>
+																					</select>	
+																				</then>
+																				<else>
+																					<IfThenElse>
+																						<if>
+																							<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'Oct')]</findElement>
+																						</if>
+																						<then>
+																							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//label[text()='Select Month']/../..//select</findElement>
+																							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+																								<valueText>October</valueText>
+																							</select>	
+																						</then>
+																						<else>
+																							<IfThenElse>
+																								<if>
+																									<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'Nov')]</findElement>
+																								</if>
+																								<then>
+																									<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//label[text()='Select Month']/../..//select</findElement>
+																									<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+																										<valueText>November</valueText>
+																									</select>	
+																								</then>
+																								<else>
+																									<IfThenElse>
+																										<if>
+																											<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'Dec')]</findElement>
+																										</if>
+																										<then>
+																											<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//label[text()='Select Month']/../..//select</findElement>
+																											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+																												<valueText>December</valueText>
+																											</select>	
+																										</then>
+																										<else/>
+																									</IfThenElse>
+																								</else>
+																							</IfThenElse>
+																						</else>
+																					</IfThenElse>
+																				</else>
+																			</IfThenElse>
+																		</else>
+																	</IfThenElse>
+																</else>
+															</IfThenElse>
+														</else>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<pause durationInSecs="2"/>
+			<executeBlock name="Select_Date"/>
+			<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//button[text()='OK']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/><findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+				<valueKB inventoryName="INV_1" columnName="Name"/>
+			</sendKeys>
+		</block>
+		
+		<block name="Select_Date">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'01-')]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//tr[not(@class='x14t p_AFLast')]/td[text()='1']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'02-')]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//tr[not(@class='x14t p_AFLast')]/td[text()='2-']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'03-')]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//tr[not(@class='x14t p_AFLast')]/td[text()='3']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'04-')]</findElement>
+										</if>
+										<then>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//tr[not(@class='x14t p_AFLast')]/td[text()='4']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'05-')]</findElement>
+												</if>
+												<then>
+													<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//tr[not(@class='x14t p_AFLast')]/td[text()='5']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="1"/>
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'06-')]</findElement>
+														</if>
+														<then>
+															<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//tr[not(@class='x14t p_AFLast')]/td[text()='6']</findElement>
+															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+															<pause durationInSecs="1"/>
+														</then>
+														<else>
+															<IfThenElse>
+																<if>
+																	<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'07-')]</findElement>
+																</if>
+																<then>
+																	<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//tr[not(@class='x14t p_AFLast')]/td[text()='7']</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																	<pause durationInSecs="1"/>
+																</then>
+																<else>
+																	<IfThenElse>
+																		<if>
+																			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'08-')]</findElement>
+																		</if>
+																		<then>
+																			<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//td[text()='8']</findElement>
+																			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																			<pause durationInSecs="1"/>
+																		</then>
+																		<else>
+																			<IfThenElse>
+																				<if>
+																					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'09-')]</findElement>
+																				</if>
+																				<then>
+																					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//td[text()='9']</findElement>
+																					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																					<pause durationInSecs="1"/>
+																				</then>
+																				<else>
+																					<IfThenElse>
+																						<if>
+																							<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'10-')]</findElement>
+																						</if>
+																						<then>
+																							<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//td[text()='10']</findElement>
+																							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																							<pause durationInSecs="1"/>
+																						</then>
+																						<else>
+																							<IfThenElse>
+																								<if>
+																									<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'11-')]</findElement>
+																								</if>
+																								<then>
+																									<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//td[text()='11']</findElement>
+																									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																									<pause durationInSecs="1"/>
+																								</then>
+																								<else>
+																									<IfThenElse>
+																										<if>
+																											<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'12-')]</findElement>
+																										</if>
+																										<then>
+																											<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//td[text()='12']</findElement>
+																											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																											<pause durationInSecs="1"/>
+																										</then>
+																										<else>
+																											<IfThenElse>
+																												<if>
+																													<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'13-')]</findElement>
+																												</if>
+																												<then>
+																													<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//td[text()='13']</findElement>
+																													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																													<pause durationInSecs="1"/>
+																												</then>
+																												<else>
+																													<IfThenElse>
+																														<if>
+																															<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'14-')]</findElement>
+																														</if>
+																														<then>
+																															<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//td[text()='14']</findElement>
+																															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																															<pause durationInSecs="1"/>
+																														</then>
+																														<else>
+																															<IfThenElse>
+																																<if>
+																																	<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'15-')]</findElement>
+																																</if>
+																																<then>
+																																	<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//td[text()='15']</findElement>
+																																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																																	<pause durationInSecs="1"/>
+																																</then>
+																																<else>
+																																	<executeBlock name="Select_Date_16_30"/>
+																																</else>
+																															</IfThenElse>
+																														</else>
+																													</IfThenElse>
+																												</else>
+																											</IfThenElse>
+																										</else>
+																									</IfThenElse>
+																								</else>
+																							</IfThenElse>
+																						</else>
+																					</IfThenElse>
+																				</else>
+																			</IfThenElse>
+																		</else>
+																	</IfThenElse>
+																</else>
+															</IfThenElse>
+														</else>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>	
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Select_Date_16_30">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'16-')]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//td[text()='16']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'17-')]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//td[text()='17']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'18-')]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//td[text()='18']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'19-')]</findElement>
+										</if>
+										<then>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//td[text()='19']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'20-')]</findElement>
+												</if>
+												<then>
+													<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//td[text()='20']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="1"/>
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'21-')]</findElement>
+														</if>
+														<then>
+															<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//td[text()='21']</findElement>
+															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+															<pause durationInSecs="1"/>
+														</then>
+														<else>
+															<IfThenElse>
+																<if>
+																	<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'22-')]</findElement>
+																</if>
+																<then>
+																	<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//td[text()='22']</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																	<pause durationInSecs="1"/>
+																</then>
+																<else>
+																	<IfThenElse>
+																		<if>
+																			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'23-')]</findElement>
+																		</if>
+																		<then>
+																			<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//td[text()='23']</findElement>
+																			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																			<pause durationInSecs="1"/>
+																		</then>
+																		<else>
+																			<IfThenElse>
+																				<if>
+																					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'24-')]</findElement>
+																				</if>
+																				<then>
+																					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//td[text()='24']</findElement>
+																					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																					<pause durationInSecs="1"/>
+																				</then>
+																				<else>
+																					<IfThenElse>
+																						<if>
+																							<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'25-')]</findElement>
+																						</if>
+																						<then>
+																							<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../..//td[text()='25']</findElement>
+																							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																							<pause durationInSecs="1"/>
+																						</then>
+																						<else>
+																							<IfThenElse>
+																								<if>
+																									<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'26-')]</findElement>
+																								</if>
+																								<then>
+																									<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../...//tr[not(@class='x14t p_AFFirst')]/td[text()='26']</findElement>
+																									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																									<pause durationInSecs="1"/>
+																								</then>
+																								<else>
+																									<IfThenElse>
+																										<if>
+																											<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'27-')]</findElement>
+																										</if>
+																										<then>
+																											<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../...//tr[not(@class='x14t p_AFFirst')]/td[text()='27']</findElement>
+																											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																											<pause durationInSecs="1"/>
+																										</then>
+																										<else>
+																											<IfThenElse>
+																												<if>
+																													<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'28-')]</findElement>
+																												</if>
+																												<then>
+																													<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../...//tr[not(@class='x14t p_AFFirst')]/td[text()='28']</findElement>
+																													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																													<pause durationInSecs="1"/>
+																												</then>
+																												<else>
+																													<IfThenElse>
+																														<if>
+																															<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'29-')]</findElement>
+																														</if>
+																														<then>
+																															<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../...//tr[not(@class='x14t p_AFFirst')]/td[text()='29']</findElement>
+																															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																															<pause durationInSecs="1"/>
+																														</then>
+																														<else>
+																															<IfThenElse>
+																																<if>
+																																	<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'30-')]</findElement>
+																																</if>
+																																<then>
+																																	<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../...//tr[not(@class='x14t p_AFFirst')]/td[text()='30']</findElement>
+																																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																																	<pause durationInSecs="1"/>
+																																</then>
+																																<else>
+																																	<IfThenElse>
+																																		<if>
+																																			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[contains(@title,'31-')]</findElement>
+																																		</if>
+																																		<then>
+																																			<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Date and Time']/..[@style]/../../../../../...//tr[not(@class='x14t p_AFFirst')]/td[text()='31']</findElement>
+																																			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																																			<pause durationInSecs="1"/>
+																																		</then>
+																																		<else/>
+																																	</IfThenElse>
+																																</else>
+																															</IfThenElse>
+																														</else>
+																													</IfThenElse>
+																												</else>
+																											</IfThenElse>
+																										</else>
+																									</IfThenElse>
+																								</else>
+																							</IfThenElse>
+																						</else>
+																					</IfThenElse>
+																				</else>
+																			</IfThenElse>
+																		</else>
+																	</IfThenElse>
+																</else>
+															</IfThenElse>
+														</else>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>	
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="SEARCH_COUNTRY">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Search'][@style]/../../../../..</findElement>
+				</if>
+				<then>
+					<executeBlock name="ACTIONS_BUTTON"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<findElement by="xpath" isSkipCheckDomError="true">//a[text()='View']/../..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+			<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[text()='Collapse All']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Country Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//td[1]//*[text()='<valueKB inventoryName="INV_2" columnName="Country Name"/>']</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//td[1]//*[text()='<valueKB inventoryName="INV_2" columnName="Country Name"/>']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<executeBlock name="NEW_COUNTRY"/>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//td[1]//*[text()='<valueKB inventoryName="INV_2" columnName="Country Name"/>']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="NEW_COUNTRY">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Add Country']"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="ADD_COUNTRY"/>
+		</block>
+		
+		<block name="ADD_COUNTRY">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Add Country'][@style]/../../../../../../../../../../../../../../../..//input/../../../*[1]"/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Country Name"/>
+				</parameters>
+			</executeBlock>	
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Add Country'][@style]/../../../../../../../../../../../../../../../..//td[1][text()='<valueKB inventoryName="INV_2" columnName="Country Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Add Country'][@style]/../../../../../../../../../../../../../../../..//td[1][text()='<valueKB inventoryName="INV_2" columnName="Country Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Select Country']</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Select Country']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//img[contains(@src,'shuttle_right_ena')]/../..</findElement>
+								</if>
+								<then>
+									<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//img[contains(@src,'shuttle_right_ena')]/../..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//img[@title='Select Country']/../..</findElement>
+										</if>
+										<then>
+											<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//img[@title='Select Country']/../..</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//img[@alt='Select Country']/../..</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Add Country'][@style]/../../../../../../../../../../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<error message="No Country Data" />
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="SEARCH_PARENT_SUBLEVELS">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Parent Sublevel"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//tr[contains(@class,'Selected')]//*[text()='<valueKB inventoryName="INV_3" columnName="Country Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[text()='View']/../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[text()='Expand']/..</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[text()='Expand']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//*[text()='Expand']/../..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//tr[contains(@class,'Selected')]/../../.././following::tr/td[1]//*[text()='<valueKB inventoryName="INV_3" columnName="Parent Sublevel"/>']</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//tr[contains(@class,'Selected')]/../../.././following::tr/td[1]//*[text()='<valueKB inventoryName="INV_3" columnName="Parent Sublevel"/>']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<executeBlock name="NEW_PARENT_SUBLEVEL"/>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//tr[contains(@class,'Selected')]/../../.././following::tr/td[1]//*[text()='<valueKB inventoryName="INV_3" columnName="Parent Sublevel"/>']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="NEW_PARENT_SUBLEVEL">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Add Sublevels']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Add Sublevels']/../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Add Sublevels']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+					
+				</else>
+			</IfThenElse>
+			<executeBlock name="ADD_PARENT_SUBLEVEL"/>
+		</block>
+		
+		<block name="ADD_PARENT_SUBLEVEL">
+			<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Level 2']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+				<valueKB inventoryName="INV_3" columnName="Country Name"/>
+			</sendKeys>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Level 1']/../.."/>
+					<parameter name="INV_NAME" value="INV_3"/>
+					<parameter name="COL_NAME" value="Parent Sublevel"/>
+				</parameters>
+			</executeBlock>		
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Add Sublevels'][@style]/../../../../../../../../../../../../../../../..//td[1][text()='<valueKB inventoryName="INV_3" columnName="Parent Sublevel"/>']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Add Sublevels'][@style]/../../../../../../../../../../../../../../../..//td[1][text()='<valueKB inventoryName="INV_3" columnName="Parent Sublevel"/>']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Select Item']</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Select Item']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//img[contains(@src,'shuttle_right_ena')]/../..</findElement>
+								</if>
+								<then>
+									<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//img[contains(@src,'shuttle_right_ena')]/../..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//img[@title='Select Item']/../..</findElement>
+										</if>
+										<then>
+											<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//img[@title='Select Item']/../..</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//img[@alt='Select Item']/../..</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Add Sublevels'][@style]/../../../../../../../../../../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<error message="No Country Data" />
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="SEARCH_SUBLEVELS">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Sublevel"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//tr[contains(@class,'Selected')]/../../.././following::tr/td[1]//*[text()='<valueKB inventoryName="INV_3" columnName="Parent Sublevel"/>']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[text()='View']/../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[text()='Expand']/..</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[text()='Expand']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//*[text()='Expand']/../..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//tr[contains(@class,'Selected')]/../../.././following::tr/td[1]//*[text()='<valueKB inventoryName="INV_3" columnName="Sublevel"/>']</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//tr[contains(@class,'Selected')]/../../.././following::tr/td[1]//*[text()='<valueKB inventoryName="INV_3" columnName="Sublevel"/>']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<executeBlock name="NEW_SUBLEVEL"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="NEW_SUBLEVEL">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Add Sublevels']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Add Sublevels']/../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Add Sublevels']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+				</else>
+			</IfThenElse>
+			<executeBlock name="ADD_SUBLEVEL"/>
+		</block>
+		
+		<block name="ADD_SUBLEVEL">
+			<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Level 1']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+				<valueKB inventoryName="INV_3" columnName="Parent Sublevel"/>
+			</sendKeys>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Level 2']/../.."/>
+					<parameter name="INV_NAME" value="INV_3"/>
+					<parameter name="COL_NAME" value="Sublevel"/>
+				</parameters>
+			</executeBlock>		
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Add Sublevels'][@style]/../../../../../../../../../../../../../../../..//td[1][text()='<valueKB inventoryName="INV_3" columnName="Sublevel"/>']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Add Sublevels'][@style]/../../../../../../../../../../../../../../../..//td[1][text()='<valueKB inventoryName="INV_3" columnName="Sublevel"/>']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Select Item']</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Select Item']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//img[contains(@src,'shuttle_right_ena')]/../..</findElement>
+								</if>
+								<then>
+									<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//img[contains(@src,'shuttle_right_ena')]/../..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//img[@title='Select Item']/../..</findElement>
+										</if>
+										<then>
+											<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//img[@title='Select Item']/../..</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//img[@alt='Select Item']/../..</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Add Sublevels'][@style]/../../../../../../../../../../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<error message="No Country Data" />
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Geography Hierarchies']/..//*[text()='No data to display.']"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Geography Hierarchies'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Geography Hierarchies']/..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Geography Hierarchies']/..//*[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_Geography_Hierarchies"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Geography_Hierarchies"/>
+				</parameters>
+			</executeBlock>	
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input[@value='<valueKB inventoryName="INV_1" columnName="Start Date"/>']</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueText></valueText>
+					</sendKeys>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//*[text()='Details']/../../../../../../..//label[text()='Name']/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="INV_1" columnName="Name"/>
+					</sendKeys>
+				</then>
+				<else/>
+			</IfThenElse>
+			<repeat inventoryName="INV_2">
+				<executeBlock name="SEARCH_COUNTRY"/>
+				<repeat inventoryName="INV_3">
+					<executeBlock name="SEARCH_PARENT_SUBLEVELS"/>
+					<executeBlock name="SEARCH_SUBLEVELS"/>
+				</repeat>
+			</repeat>
+			<executeBlock name="SAVE_BUTTON"/>
+			<executeBlock name="BACK_BUTTON"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>
+		
+		

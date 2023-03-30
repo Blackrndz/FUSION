@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Orchestration Process Definitions (Deploy Process)</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Orchestration Process Definitions"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Upstream and Fulfillment Source Systems"/>
+		</dependencies>
+        <parameters>
+            <parameter name="REPEAT_1_MAIN" value="Manage Orchestration Process Definitions - Orchestration Process Definitions"/>
+        </parameters>
+      
+	  <block name="Deploy">
+            <findElement by="xpath">//a[text()='Actions']/..//a</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <findElement by="xpath">//td[2][text()='Deploy Process']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+      
+	  <block name="Deploy_Process">
+            <IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//div[text()='Deploy Process']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//label[text()='User Name']/../..//input</findElement>
+					<sendKeys isClear="true"><valueText>###FUSION_USER_NAME###</valueText></sendKeys> 
+					<findElement by="xpath">//label[text()='Password']/../..//input</findElement>
+					<sendKeys isClear="true"><valueText>###FUSION_PASSWORD###</valueText></sendKeys> 
+					<findElement by="xpath">//div[text()='Deploy Process']/../../../../../../..//button[text()='Deploy']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+        </block>
+		<block name="Confirmation">
+            <IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//div[text()='Confirmation Message']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Confirmation Message']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+        </block>
+		<block name="Save_and_close">
+            <findElement by="xpath">//span[text()='Save and Close']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+       
+	   <block name="Search">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <findElement isDisplayed="true" by="xpath">//label[text()='Process Name']/../..//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_1_MAIN" columnName="Process Name"/>
+            </sendKeys>
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <findElement highlightTurnedOff="true" by="xpath">//span[text()='r']/..</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+            <IfThenElse>
+                <if>
+                    <findElement
+                            by="xpath">//table[@summary='Search Results: Orchestration Process']/../../../../..//tr//td[2][text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Process Name"/>']</findElement>
+                </if>
+                <then>
+                    <findElement
+                            by="xpath">//table[@summary='Search Results: Orchestration Process']/../../../../..//tr//td[2][text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Process Name"/>']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <executeBlock name="GLOBAL_SPECIFY_UPDATE">
+                        <parameters>
+                            <parameter name="SPECIFY_XPATH" value="//table[@summary='Search Results: Orchestration Process']/../../../../../../.."/>
+                        </parameters>
+                    </executeBlock>
+                </then>
+                <else>
+                    <error message="Process Name doesn't exist."/>
+                </else>
+            </IfThenElse>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="REPEAT_1_MAIN">
+            <executeBlock name="Search"/>
+            <executeBlock name="Deploy"/>
+			 <executeBlock name="Deploy_Process"/>
+			 <executeBlock name="Confirmation"/>
+            <executeBlock name="Save_and_close"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

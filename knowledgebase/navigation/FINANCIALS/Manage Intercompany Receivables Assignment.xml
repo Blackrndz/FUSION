@@ -1,0 +1,297 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Intercompany Receivables Assignment</name>
+	<svn>
+		<xsd:revision>$Revision: 78997 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2022-07-13 17:26:21 +0700 (Wed, 13 Jul 2022) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Intercompany%20Receivables%20Assignment.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Intercompany Receivables Assignment.xml 78997 2022-07-13 10:26:21Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+			isBatchingBasedOnRootInventoryUniqueRecords="true"
+			taskName="Manage Intercompany Receivables Assignment"
+			isBatchingAllowed="false" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Intercompany System Options"/>
+			<navigation name="Manage Data Role and Security Profiles"/>
+			<navigation name="Manage Transaction Types"/>
+			<navigation name="Manage Standard Memo Lines"/>
+			<navigation name="Manage Service Provider Relationships (Customer Payments Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Payables Payment Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Procurement Service Providers)"/>
+		</dependencies> 
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Intercompany Receivables Assignment - Intercompany Receivables Assignments"/>
+		</parameters>
+		
+		<block name="Information">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true"
+                        highlightTurnedOff="true" by="xpath">//div[text()='Information']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Information']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="Search Intercompany Receivables Assignment">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Business Unit"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Transaction Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="GLOBAL_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Search')]/.."/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+							<parameter name="BUTTON_NAME" value="Reset"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="GLOBAL_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Search')]/.."/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Search')]/..//label[text()='Business Unit']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Business Unit"/>
+							<parameter name="SEARCH_1" value="Business Unit Name"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Search')]/..//label[text()='Transaction Type']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Transaction Type"/>
+							<parameter name="SEARCH_1" value="Transaction Type Name"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+							<parameter name="BUTTON_NAME" value="Search"/>
+						</parameters>
+					</executeBlock>
+					<pause durationInSecs="3"/>
+					
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//tr[td/span/span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Business Unit"/>'] and td/span/span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Transaction Type"/>']]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//tr[td/span/span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Business Unit"/>'] and td/span/span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Transaction Type"/>']]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="Update Intercompany Receivables Assignment"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Intercompany Receivables Assignments Search Results']/../../../..//div[@title='Add Row']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Intercompany Receivables Assignments Search Results']/../../../..//div[@title='Add Row']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+							<findElement by="xpath">(//table[@summary='Manage Intercompany Receivables Assignments Search Results']//tr//td)[1]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="Create Intercompany Receivables Assignment"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<error message="'Business Unit' and 'Transaction Type' are required."/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Create Intercompany Receivables Assignment">
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Business Unit']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Business Unit"/>
+					<parameter name="SEARCH_1" value="Business Unit Name"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//tr[contains(@class,'Select')]//label[text()='Transaction Type Name']/../..//a</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Transaction Type Name']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Transaction Type"/>
+							<parameter name="SEARCH_1" value="Transaction Type Name"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Transaction Type Name']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Transaction Type"/>
+						</parameters>
+					</executeBlock>				
+				</else>
+			</IfThenElse>			
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//tr[contains(@class,'Select')]//label[text()='Receivables Transaction Type']/../..//a</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Receivables Transaction Type']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Receivables Transaction Type"/>
+							<parameter name="SEARCH_1" value="Transaction Type Name"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Receivables Transaction Type']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Receivables Transaction Type"/>
+						</parameters>
+					</executeBlock>			
+				</else>
+			</IfThenElse>	
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Receivables Memo Line']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Receivables Memo Line"/>
+					<parameter name="SEARCH_1" value="Memo Line Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Name3']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Negative Receivables Transaction Type"/>
+					<parameter name="SEARCH_1" value="Transaction Type Name"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="Update Intercompany Receivables Assignment">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//tr[contains(@class,'Select')]//label[text()='Transaction Type Name']/../..//a</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Transaction Type Name']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Transaction Type"/>
+							<parameter name="SEARCH_1" value="Transaction Type Name"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Transaction Type Name']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Transaction Type"/>
+						</parameters>
+					</executeBlock>				
+				</else>
+			</IfThenElse>			
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//tr[contains(@class,'Select')]//label[text()='Receivables Transaction Type']/../..//a</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Receivables Transaction Type']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Receivables Transaction Type"/>
+							<parameter name="SEARCH_1" value="Transaction Type Name"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Receivables Transaction Type']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Receivables Transaction Type"/>
+						</parameters>
+					</executeBlock>			
+				</else>
+			</IfThenElse>	
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Receivables Memo Line']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Receivables Memo Line"/>
+					<parameter name="SEARCH_1" value="Memo Line Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Name3']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Negative Receivables Transaction Type"/>
+					<parameter name="SEARCH_1" value="Transaction Type Name"/>
+				</parameters>
+			</executeBlock>
+		</block>
+					
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search Intercompany Receivables Assignment"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<executeBlock name="Information"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+			<executeBlock name="Information"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

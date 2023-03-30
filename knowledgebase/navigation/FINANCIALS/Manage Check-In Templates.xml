@@ -1,0 +1,772 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Check-In Templates</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Check-In Templates" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<dependencies>
+            <navigation name="Manage Worker Goal Descriptive Flexfields"/>
+			<navigation name="Manage Questionnaires"/>
+			<navigation name="Manage Eligibility Profiles"/>
+        </dependencies>
+
+		<parameters>
+			<parameter name="INV_1" value="Manage Check-In Templates - Details"/>
+			<parameter name="INV_2" value="Manage Check-In Templates - Review Periods"/>
+			<parameter name="INV_3" value="Manage Check-In Templates - Eligibility Profile"/>
+		</parameters>
+		
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_3" columnName="Name"/>']/../..//input</findElement>
+		</block>
+		
+		<block name="CONFIRMATION">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Confirmation']/../../../../../../..//*[text()='OK']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Confirmation']/../../../../../../..//*[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="Search_Check_in_Template">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search Results']/../.././../../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Summary']//a[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Summary']//a[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Summary']/../../../.."/>
+						</parameters>   
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Create_Checkin_Template">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Comments']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Comments"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='From Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="From Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='To Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="To Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Review Periods']/../../td[2]//td[1]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Review Periods"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Status']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Status"/>
+				</parameters>
+			</executeBlock>
+			<!--Include in Performance Document-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_1" columnName="Include in Performance Document"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Yes</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Include in Performance Document']/../..//input[@checked]</findElement>
+						</if>
+						<then>
+						
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Include in Performance Document']/../..//input</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="INV_1" columnName="Include in Performance Document"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>No</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Include in Performance Document']/../..//input[@checked]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Include in Performance Document']/../..//input</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							
+						</else>
+					</IfThenElse>		
+				</else>
+			</IfThenElse>		
+			<!--Performance goals-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_1" columnName="Performance goals"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Yes</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Performance goals']/../..//input[@checked]</findElement>
+						</if>
+						<then>
+						
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Performance goals']/../..//input</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="INV_1" columnName="Performance goals"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>No</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Performance goals']/../..//input[@checked]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Performance goals']/../..//input</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							
+						</else>
+					</IfThenElse>		
+				</else>
+			</IfThenElse>	
+			<!--Add default discussion topics for performance goals-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_1" columnName="Add default discussion topics for performance goals"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Yes</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Add default discussion topics for performance goals']/../..//input[@checked]</findElement>
+						</if>
+						<then>
+						
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Add default discussion topics for performance goals']/../..//input</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="INV_1" columnName="Add default discussion topics for performance goals"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>No</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Add default discussion topics for performance goals']/../..//input[@checked]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Add default discussion topics for performance goals']/../..//input</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							
+						</else>
+					</IfThenElse>		
+				</else>
+			</IfThenElse>
+			<!--Development goals-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_1" columnName="Development goals"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Yes</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Development goals']/../..//input[@checked]</findElement>
+						</if>
+						<then>
+						
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Development goals']/../..//input</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="INV_1" columnName="Development goals"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>No</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Development goals']/../..//input[@checked]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Development goals']/../..//input</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							
+						</else>
+					</IfThenElse>		
+				</else>
+			</IfThenElse>
+			<!--Add default discussion topics for development goals-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_1" columnName="Add default discussion topics for development goals"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Yes</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Add default discussion topics for development goals']/../..//input[@checked]</findElement>
+						</if>
+						<then>
+						
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Add default discussion topics for development goals']/../..//input</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="INV_1" columnName="Add default discussion topics for development goals"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>No</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Add default discussion topics for development goals']/../..//input[@checked]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Add default discussion topics for development goals']/../..//input</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							
+						</else>
+					</IfThenElse>		
+				</else>
+			</IfThenElse>
+			<!--Questionnaire-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_1" columnName="Questionnaire"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Yes</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Questionnaire']/../..//input[@checked]</findElement>
+						</if>
+						<then>
+						
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Questionnaire']/../..//input</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="INV_1" columnName="Questionnaire"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>No</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Questionnaire']/../..//input[@checked]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Questionnaire']/../..//input</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							
+						</else>
+					</IfThenElse>		
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Questionnaire for worker role']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Questionnaire for worker role"/>
+					<parameter name="SEARCH_1" value="Questionnaire Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Questionnaire for manager role']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Questionnaire for manager role"/>
+					<parameter name="SEARCH_1" value="Questionnaire Name"/>
+				</parameters>
+			</executeBlock>
+			<!--General discussion topics-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_1" columnName="General discussion topics"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Yes</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='General discussion topics']/../..//input[@checked]</findElement>
+						</if>
+						<then>
+						
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='General discussion topics']/../..//input</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="INV_1" columnName="General discussion topics"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>No</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='General discussion topics']/../..//input[@checked]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='General discussion topics']/../..//input</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							
+						</else>
+					</IfThenElse>		
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Review_Periods">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Review Periods']/../../td[2]//td[3]//a</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Review Periods']/../../td[2]//td[3]//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH">//div[@class='AFDetectExpansion']/..//*[text()='<valueKB inventoryName="INV_2" columnName="Review Periods"/>']</parameter>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Enabled"/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath" isSkipCheckDomError="true">//td/label[text()='Review Periods']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Review Periods']/../../td[2]//td[3]//*[contains(@class,'Error')]//input</findElement>
+				</if>
+				<then>
+					<error message="Data issue: Must select at least one Review Periods." />
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="New_Eligibility_Profile">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Eligibility Profile']/../../../.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="Update_Eligibility_Profile">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		
+		<block name="Create_Eligibility_Profile">
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Eligibility Profile']//tr[contains(@class,'Selected')]/td[2]//td[1]"/>
+					<parameter name="INV_NAME" value="INV_3"/>
+					<parameter name="COL_NAME" value="Eligibility Profile"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Required-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Required"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Yes</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Eligibility Profile']//tr[contains(@class,'Selected')]/td[2]//td[2]//label/..//input[@checked]</findElement>
+						</if>
+						<then>
+						
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Eligibility Profile']//tr[contains(@class,'Selected')]/td[2]//td[2]//label/..//input</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="INV_3" columnName="Required"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>No</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Eligibility Profile']//tr[contains(@class,'Selected')]/td[2]//td[2]//label/..//input[@checked]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Eligibility Profile']//tr[contains(@class,'Selected')]/td[2]//td[2]//label/..//input</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							
+						</else>
+					</IfThenElse>		
+				</else>
+			</IfThenElse>		
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="Search_Check_in_Template"/>
+			<executeBlock name="Create_Checkin_Template"/>
+			<repeat inventoryName="INV_2">
+				<IfThenElse>
+					<if>
+						<comparisons separator="AND">
+							<comparison operator="NOT_EQUAL">
+								<leftOperand>
+									<valueKB inventoryName="INV_2" columnName="Review Periods"/>
+								</leftOperand>
+								<rightOperand>
+									<valueText/>
+								</rightOperand>
+							</comparison>
+						</comparisons>
+					</if>
+					<then>
+						<executeBlock name="Review_Periods"/>
+					</then>
+					<else/>
+				</IfThenElse>
+			</repeat>
+			<repeat inventoryName="INV_3">
+				<IfThenElse>
+					<if>
+						<comparisons separator="AND">
+							<comparison operator="NOT_EQUAL">
+								<leftOperand>
+									<valueKB inventoryName="INV_3" columnName="Eligibility Profile"/>
+								</leftOperand>
+								<rightOperand>
+									<valueText/>
+								</rightOperand>
+							</comparison>
+						</comparisons>
+					</if>
+					<then>
+						<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+							<parameters>
+								<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Eligibility Profile']/../..//div[contains(text(),'No data to display.')]"/>
+								<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Eligibility Profile'][@_rowcount]//tr[1]//td)[1]"/>
+								<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Eligibility Profile']/../..//div[contains(@id,'scroller')]"/>
+								<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Eligibility Profile']//input[@value='<valueKB inventoryName="INV_3" columnName="Eligibility Profile"/>']</parameter>
+								<parameter name="TEMPLATE_CREATE" value="New_Eligibility_Profile"/>
+								<parameter name="TEMPLATE_UPDATE" value="Update_Eligibility_Profile"/>
+							</parameters>
+						</executeBlock>
+						<executeBlock name="Create_Eligibility_Profile"/>
+					</then>
+					<else/>
+				</IfThenElse>
+			</repeat>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+			<executeBlock name="CONFIRMATION"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>	

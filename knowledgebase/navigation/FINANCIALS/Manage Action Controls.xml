@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Action Controls</name>
+	<svn>
+		<xsd:revision>$Revision: 53667 $:</xsd:revision>
+		<xsd:author>$Author: aratchaporn.kositsirikun $:</xsd:author>
+		<xsd:date>$Date: 2016-03-18 15:49:04 +0700 (Fri, 18 Mar 2016) $:</xsd:date>
+		<xsd:headURL>$HeadURL: http://svn01.rapidesuite.com:999/svn/a/dev/rapidesuite/controldata/FUSION_11.1.9/trunk/core/knowledgebase/navigation/FINANCIALS/Master%20Template/Manage%20General%20Ledger%20Profile%20Options.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage General Ledger Profile Options.xml 53667 2016-03-18 08:49:04Z aratchaporn.kositsirikun $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Action Controls" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Enterprise HCM Information"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Action Controls - Action Controls"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Action Controls - Actions"/>
+		</parameters>
+		<block name="FAKE_DFF">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Source Application"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Source Application"/>
+			</click>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Source Application"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_2" columnName="Source Application"/>
+			</click>			
+		</block>
+		
+		<block name="SEARCH_SOURCE">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//label[text()='Source Application']/../..//select[@title='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Source Application"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//label[text()='Source Application']/../../..//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+				</then>
+				<else>
+					<executeBlock name="SELECT_KB">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Source Application']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Source Application"/>
+						</parameters>
+					</executeBlock>	
+					<findElement by="xpath">//label[text()='Source Application']/../../..//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>					
+				</else>
+			</IfThenElse>
+
+		</block>	
+		<block name="ACTIONS">
+			<executeBlock name="GLOBAL_QUERY_BY_EXAMPLE"/>
+			<findElement by="xpath">(//th//input)[1]</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_2" columnName="Action"/>
+			</sendKeys>			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Search Results']/../..//div[text()='No data to display.']</findElement>
+				</if>
+				<then>
+					<executeBlock name="GLOBAL_ADD"/>
+					<findElement by="xpath">//table[@summary='Search Results']//tr[contains(@class, 'Select')]/td//select/../../../../../../../..//td[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<executeBlock name="SELECT_KB">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class, 'Select')]//td//td[1]"/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+							<parameter name="COL_NAME" value="Action"/>
+						</parameters>
+					</executeBlock>			
+				</then>
+				<else>
+					<findElement by="xpath">//table[@summary='Search Results']//tr[contains(@class, 'Select')]//td//td[1]//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Action"/>']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>					
+				</else>
+			</IfThenElse>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class, 'Select')]//td//td[2]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="From Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class, 'Select')]//td//td[3]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="To Date"/>
+				</parameters>
+			</executeBlock>				
+		</block>	
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="SEARCH_SOURCE"/>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<executeBlock name="ACTIONS"/>
+				<executeBlock name="GLOBAL_SAVE"/>
+			</repeat>
+		</repeat>		
+	</fusionNavigation>
+</navigation>

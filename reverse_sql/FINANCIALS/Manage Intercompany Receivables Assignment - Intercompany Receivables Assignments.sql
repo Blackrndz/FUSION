@@ -1,0 +1,50 @@
+/* ****************************************************************************
+ * $Revision: 62668 $:
+ * $Author: pisan.jariyasettachok $:
+ * $Date: 2017-06-19 18:28:29 +0700 (Mon, 19 Jun 2017) $:
+ * $HeadURL: http://svn01.rapidesuite.com:999/svn/a/dev/rapidesuite/controldata/FUSION_11.1.12/trunk/core/reverse_sql/FINANCIALS/Assign%20Legal%20Entities%20-%20Assign%20Legal%20Entities.sql $:
+ * $Id: Assign Legal Entities - Assign Legal Entities.sql 62668 2017-06-19 11:28:29Z pisan.jariyasettachok $:
+ * ****************************************************************************
+ * Description:
+ * ************************************************************************** */
+
+-- RSC_PREREQUISITE_OBJECTS=FUN_TRX_TYPE_AR_MAPS
+
+SELECT
+	(SELECT BU_NAME
+	FROM FUN_ALL_BUSINESS_UNITS_V
+	WHERE BU_ID = FunTrxTypeArMapsE0.BU_ID
+	AND SYSDATE BETWEEN DATE_FROM AND DATE_TO
+	) RES_BUSINESS_UNIT
+,(SELECT TRX_TYPE_NAME
+	FROM FUN_TRX_TYPES_VL
+	WHERE TRX_TYPE_ID = FunTrxTypeArMapsE0.TRX_TYPE_ID
+	) RES_TRANSACTION_TYPE
+,(SELECT NAME
+	FROM RA_CUST_TRX_TYPES_ALL
+	WHERE CUST_TRX_TYPE_ID = FunTrxTypeArMapsE0.AR_TRX_TYPE_ID
+	) RES_RECEIVABLES_TRANSACTION_TY
+,(SELECT NAME
+	FROM AR_MEMO_LINES_ALL_VL
+	WHERE MEMO_LINE_ID   = FunTrxTypeArMapsE0.MEMO_LINE_ID
+	AND MEMO_LINE_SEQ_ID = FunTrxTypeArMapsE0.MEMO_LINE_SEQ_ID
+	) RES_RECEIVABLES_MEMO_LINE
+,(SELECT NAME
+	FROM RA_CUST_TRX_TYPES_ALL
+	WHERE CUST_TRX_TYPE_ID = FunTrxTypeArMapsE0.AR_CM_TRX_TYPE_ID 
+	) RES_NEGATIVE_RECEIVABLES_TRANS
+,FunTrxTypeArMapsE0.LAST_UPDATED_BY  RSC_LAST_UPDATED_BY
+,FunTrxTypeArMapsE0.LAST_UPDATE_DATE  RSC_LAST_UPDATE_DATE
+,FunTrxTypeArMapsE0.CREATED_BY  RSC_CREATED_BY
+,FunTrxTypeArMapsE0.CREATION_DATE  RSC_CREATION_DATE
+,NULL RSC_LEDGER_ID
+,NULL RSC_CHART_OF_ACCOUNTS_ID
+,FunTrxTypeArMapsE0.BU_ID RSC_BUSINESS_UNIT_ID
+,NULL RSC_LEGAL_ENTITY_ID
+,NULL RSC_ORGANIZATION_ID
+,NULL RSC_BUSINESS_GROUP_ID
+,NULL RSC_ENTERPRISE_ID
+,NULL RSC_COUNTRY_ID
+
+FROM FUN_TRX_TYPE_AR_MAPS FunTrxTypeArMapsE0
+ORDER BY 1,2

@@ -1,0 +1,335 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Item Transaction Defaults</name>
+	<svn>
+		<xsd:revision>$Revision: 79729 $:</xsd:revision>
+		<xsd:author>$Author: sudarak.unchan $:</xsd:author>
+		<xsd:date>$Date: 2022-12-01 12:26:12 +0700 (Thu, 01 Dec 2022) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Item%20Transaction%20Defaults.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Item Transaction Defaults.xml 79729 2022-12-01 05:26:12Z sudarak.unchan $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Item Transaction Defaults"
+        isBatchingAllowed="false" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Inventory Organizations"/>
+			<navigation name="Manage Subinventories and Locators"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Item Transaction Defaults - Item Transaction Defaults"/>
+		</parameters>
+
+		<block name="Search_Item_Cost_Profiles">
+			<executeBlock name="Check_ORG"/>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../../../../../..//label[text()='Item']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Item"/>
+					<parameter name="SEARCH_1" value="Item' or text()='Item Number"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//tr[td[1]/span[contains(text(),'<valueKB inventoryName="REPEAT_1_MAIN" columnName="Item"/>')]]//td[3]//span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Default For"/>']/../../..//td[4]//span//input[@value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Subinventory"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//tr[td[1]/span[contains(text(),'<valueKB inventoryName="REPEAT_1_MAIN" columnName="Item"/>')]]//td[3]//span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Default For"/>']/../../..//td[4]//span//input[@value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Subinventory"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="Item_Cost_Profiles"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_ADD"/>
+					<executeBlock name="Item_Cost_Profiles"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Check_ORG">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Select Organization']/../../../../../../..</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Organization']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Organization"/>
+							<parameter name="SEARCH_1" value="Organization"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="BUTTON">
+						<parameters>
+							<parameter name="BUTTON_NAME" value="K"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//label[text()='Inventory Organization']/../..//span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Organization"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock name="BUTTON">
+								<parameters>
+									<parameter name="BUTTON_NAME" value="Change Organization"/>
+								</parameters>
+							</executeBlock>
+							<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[text()='Change Organization']</findElement>
+							<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+								<parameters>
+									<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Organization']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Organization"/>
+									<parameter name="SEARCH_1" value="Organization"/>
+								</parameters>
+							</executeBlock>
+							<executeBlock name="BUTTON">
+								<parameters>
+									<parameter name="BUTTON_NAME" value="K"/>
+								</parameters>
+							</executeBlock>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Item_Cost_Profiles">
+			<!--Item-->
+			<executeBlock name="LOV_ZOOM_ITEM"/>
+			<!--<executeBlock name="LOV_ZOOM">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//td[1]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Item"/>
+					<parameter name="SEARCH_1" value="Item"/>
+				</parameters>
+			</executeBlock>-->
+			<!--Default For-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//label[text()='Default For']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Default For"/>
+				</parameters>
+			</executeBlock>
+			<!--Subinventory-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//label[text()='Subinventory']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Subinventory"/>
+					<parameter name="SEARCH_1" value="Subinventory"/>
+				</parameters>
+			</executeBlock>
+			<!--Locator-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Locator"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//label[text()='Locator']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Locator"/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Search Results']//tr[contains(@class,'Select')]//label[text()='Locator']/../../..//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']</findElement>
+						</if>
+						<then>
+							<error message="Locator doesn't exist. Please check your data" />
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+			
+			
+		</block>
+		<block name="LOV_ZOOM_ITEM">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Item"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Item"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>""</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<!-- create -->
+						<if>
+							<findElement by="xpath">//table[@summary='Search Results']//tr[contains(@class,'Select')]//td[1]//input[@value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Item"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//table[@summary='Search Results']//tr[contains(@class,'Select')]//td[1]//input[not(@disabled)]</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//table[@summary='Search Results']//tr[contains(@class,'Select')]//span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Item"/>']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement by="xpath">//table[@summary='Search Results']//tr[contains(@class,'Select')]//td[1]//a[contains(@title,'Search')]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<executeBlock name="GLOBAL_EXPAND">
+												<parameters>
+													<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//*[text()='Search']/../../.."/>
+												</parameters>
+											</executeBlock>
+											
+											<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='Item']/../..//input</findElement>
+											<sendKeys isClear="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="REPEAT_1_MAIN" columnName="Item"/>
+											</sendKeys>
+											<executeBlock name="GLOBAL_EXPAND">
+												<parameters>
+													<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//*[text()='Search']/../../.."/>
+												</parameters>
+											</executeBlock>
+											
+											<findElement by="xpath">//div[contains(@class,'Expansion')]/..//button[text()='Search']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<executeBlock name="GLOBAL_EXPAND">
+												<parameters>
+													<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//*[text()='Search']/../../.."/>
+												</parameters>
+											</executeBlock>
+											<executeBlock name="GLOBAL_EXPAND">
+												<parameters>
+													<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//*[text()='Search Results']/../../.."/>
+												</parameters>
+											</executeBlock>
+											<IfThenElse>
+												<if>
+													<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//table[@_rowcount]/tbody//td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Item"/>']</findElement>
+												</if>
+												<then>
+													<findElement by="xpath">//div[contains(@class,'Expansion')]/..//table[@_rowcount]/tbody//td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Item"/>']</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else>
+													<error message="No results found."/>
+												</else>
+											</IfThenElse>
+											<findElement by="xpath">//div[contains(@class,'Expansion')]/..//span[text()='K']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+									
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Item"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>""</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//table[@summary='Search Results']//tr[contains(@class,'Select')]//td[1]//input[not(@disabled)]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//table[@summary='Search Results']//tr[contains(@class,'Select')]//td[1]//input[not(@disabled)]</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Item"/>
+									</sendKeys>		
+								</then>
+								<else/>
+							</IfThenElse>															
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+
+
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search_Item_Cost_Profiles"/>
+			<executeBlock name="GLOBAL_SAVE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

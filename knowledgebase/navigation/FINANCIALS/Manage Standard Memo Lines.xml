@@ -1,0 +1,1169 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Standard Memo Lines</name>
+	<svn>
+		<xsd:revision>$Revision: 79434 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2022-09-29 18:01:28 +0700 (Thu, 29 Sep 2022) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Standard%20Memo%20Lines.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Standard Memo Lines.xml 79434 2022-09-29 11:01:28Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Standard Memo Lines" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Revenue Scheduling Rules"/>
+			<navigation name="Manage Tax Rates and Tax Recovery Rates (Transaction Tax Rates)"/>
+		</dependencies>
+		<block name="GO_TO_TASK_STANDARD_MEMO_LINES">
+			<findElements by="xpath" returnElementAtPosition="2">//span[text()='###TASK_NAME###']/../../../..//a</findElements>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="SEARCH_NAME">
+			<executeBlock name="Waiting_Seacrh_Memo" isRepeatUntilBreak="true"/>
+			<findElement by="xpath">//button[text()='Reset']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Memo Line Set"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+							<parameter name="INV_NAME" value="Manage Standard Memo Lines - Standard Memo Lines"/>
+							<parameter name="COL_NAME" value="Name"/>
+						</parameters>
+					</executeBlock>	
+
+					<executeBlock name="Search_Memo_Line_Set"/>
+					<executeBlock name="Waiting_Seacrh_Memo" isRepeatUntilBreak="true"/>
+					<findElement by="xpath">//button[text()='Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Name"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Memo Line Set"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+									<parameter name="INV_NAME" value="Manage Standard Memo Lines - Standard Memo Lines"/>
+									<parameter name="COL_NAME" value="Name"/>
+								</parameters>
+							</executeBlock>	
+							<executeBlock name="Waiting_Seacrh_Memo" isRepeatUntilBreak="true"/>
+							<findElement by="xpath">//button[text()='Search']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<block name="Search...Memo Line Set">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Memo Line Set']/../..//span/a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search_Memo_Line_Set">
+			<executeBlock name="Search...Memo Line Set" isRepeatUntilBreak="true"/>
+
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true"
+                            by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr//td[2][text()='<valueKB
+                            inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Memo Line Set"/>']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true"
+                            by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr//td[2][text()='<valueKB
+                            inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Memo Line Set"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement isDisplayed="true" by="xpath">//button[@accesskey='d']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//label[text()='Reference Data Set Name']/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//label[text()='Reference Data Set Name']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Equals</valueText>
+							</select>								
+						</then>
+						<else>
+
+							<findElement by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//label[text()='Reference Data Set Name']/../..//input/..//div//li[text()='Equals']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true" />
+						</else>
+					</IfThenElse>				
+					<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//label[text()='Reference Data Set Name']/../..//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB
+                            inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Memo Line Set"/>
+					</sendKeys>
+					<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//button[text()='Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[text()='No rows to display']</findElement>
+						</if>
+						<then>
+							<error message="No results found."/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true"
+                                    highlightTurnedOff="true"
+                                    by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../../../../..//td[2][text()='<valueKB
+                                    inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Memo Line Set"/>']</findElement>
+								</if>
+								<then>
+									<findElement isDisplayed="true"                                    
+                                    by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../../../../..//td[2][text()='<valueKB
+                                    inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Memo Line Set"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../..//button[text()='OK']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SAVE_AND_CLOSE_BUTTON_STANDARD_MEMO_LINES">
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</block>
+
+		<block name="SAVE_BUTTON_STANDARD_MEMO_LINES">
+			<executeBlock name="GLOBAL_SAVE"/>
+		</block>
+
+		<block name="SEARCH_COLUMN_TAX CLASSIFICATION_MANUAL">
+			<executeBlock name="Search...Tax Classification" isRepeatUntilBreak="true"/>
+			<findElement by="xpath">//div[contains(@data-afr-popupid,'taxClassCodeId')]//a[text()='Search...']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='Search and Select: Tax Classification']/../../../../../../..//label[text()='Name']/../..//input</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Search and Select: Tax Classification']/../../../../../../..//label[text()='Name']/../..//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB
+                            inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Classification"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement by="xpath">//div[text()='Search and Select: Tax Classification']/../../../../../../..//label[text()='Tax Classification Code']/../..//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB
+                            inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Classification"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			<findElement by="xpath">//div[text()='Search and Select: Tax Classification']/../../../../../../..//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement
+                            by="xpath">//div[text()='Search and Select: Tax Classification']/../../../../../../..//td[text()='<valueKB
+                            inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Classification"/>']</findElement>
+				</if>
+				<then>
+					<findElement
+                            by="xpath">//div[text()='Search and Select: Tax Classification']/../../../../../../..//td[text()='<valueKB
+                            inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Classification"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<error message="The field 'Tax Classification' doesn't exist."/>
+				</else>
+			</IfThenElse>
+			<findElement by="xpath">//div[text()='Search and Select: Tax Classification']/../../../../../../..//button[text()='OK']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="SEARCH_COLUMN_TAX PRODUCT CATEGORY_MANUAL">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Code"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Code Path"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_2_ADV_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Tax Product Category']/../.."/>
+							<parameter name="INV_NAME" value="Manage Standard Memo Lines - Standard Memo Lines"/>
+							<parameter name="COL_1_NAME" value="Tax Product Category - Name"/>
+							<parameter name="COL_2_NAME" value="Tax Product Category - Code"/>
+							<parameter name="SEARCH_1_LABEL" value="Name"/>
+							<parameter name="SEARCH_2_LABEL" value="Code"/>
+						</parameters>
+					</executeBlock>		
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Name"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText></valueText>
+									</rightOperand>
+								</comparison>
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Code"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText></valueText>
+									</rightOperand>
+								</comparison>
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Code Path"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText></valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Tax Product Category']/../..//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueText>""</valueText>
+							</sendKeys>
+							<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Tax Product Category']/../.."/>
+									<parameter name="INV_NAME" value="Manage Standard Memo Lines - Standard Memo Lines"/>
+									<parameter name="COL_NAME" value="Tax Product Category - Name"/>
+									<parameter name="SEARCH_1" value="Name"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText></valueText>
+											</rightOperand>
+										</comparison>
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Code"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText></valueText>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Code Path"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText></valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Tax Product Category']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+										<valueText>""</valueText>
+									</sendKeys>
+									<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+										<parameters>
+											<parameter name="XPATH" value="//label[text()='Tax Product Category']/../.."/>
+											<parameter name="INV_NAME" value="Manage Standard Memo Lines - Standard Memo Lines"/>
+											<parameter name="COL_NAME" value="Tax Product Category - Code"/>
+											<parameter name="SEARCH_1" value="Code"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<comparisons separator="OR">
+												<comparison operator="NOT_EQUAL">
+													<leftOperand>
+														<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Name"/>
+													</leftOperand>
+													<rightOperand>
+														<valueText></valueText>
+													</rightOperand>
+												</comparison>
+												<comparison operator="NOT_EQUAL">
+													<leftOperand>
+														<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Code"/>
+													</leftOperand>
+													<rightOperand>
+														<valueText></valueText>
+													</rightOperand>
+												</comparison>
+												<comparison operator="NOT_EQUAL">
+													<leftOperand>
+														<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Code Path"/>
+													</leftOperand>
+													<rightOperand>
+														<valueText></valueText>
+													</rightOperand>
+												</comparison>
+											</comparisons>
+										</if>
+										<then>
+											<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Tax Product Category']/../..//input</findElement>
+											<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+												<valueText>""</valueText>
+											</sendKeys>
+											<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//label[text()='Tax Product Category']/../..//a</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="3"/>
+											<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//a[text()='Search...']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="3"/>
+											<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+												<parameters>
+													<parameter name="XPATH" value="//table[@style='position: relative;']//a[@title='Expand Search']/../.."/>
+												</parameters>
+											</executeBlock>
+											<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='Reset']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="3"/>
+											<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+												<parameters>
+													<parameter name="XPATH" value="//table[@style='position: relative;']//a[@title='Expand Search']/../.."/>
+												</parameters>
+											</executeBlock>
+											<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='vanced']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="3"/>
+											<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+												<parameters>
+													<parameter name="XPATH" value="//table[@style='position: relative;']//a[@title='Expand Search']/../.."/>
+												</parameters>
+											</executeBlock>
+											 <IfThenElse>
+												<if>
+													<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//label[text()='Code Path']/../..</findElement>
+												</if>
+												<then>
+													
+												</then>
+												<else>
+													<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='Add Fields']/../../..//div</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="1"/>
+													<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//td[text()='Code Path']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="1"/>
+												</else>
+											</IfThenElse>
+											<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//label[text()='Name']/../..//td[2]//td[2]//input</findElement>
+											<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+												<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Name"/>
+											</sendKeys>
+											<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//label[text()='Code']/../..//td[2]//td[2]//input</findElement>
+											<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+												<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Code"/>
+											</sendKeys>
+											<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//label[text()='Code Path']/../..//td[2]//td[2]//input</findElement>
+											<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+												<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Code Path"/>
+											</sendKeys>
+											<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='Search']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="3"/>
+											 <IfThenElse>
+												<if>
+													<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">(//table[@style='position: relative;']//td[text()='<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Name"/>' or text()='<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Code"/>' or text()='<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Code Path"/>'])[1]</findElement>
+												</if>
+												<then>
+													<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">(//table[@style='position: relative;']//td[text()='<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Name"/>' or text()='<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Code"/>' or text()='<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category - Code Path"/>'])[1]</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="1"/>
+													<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='OK']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="3"/>
+												</then>
+												<else>
+													<error message="Tax Product Category does not exist" />
+												</else>
+											</IfThenElse>
+										</then>
+										<else>
+
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<!--<executeBlock name="Search...Tax Product Category" isRepeatUntilBreak="true"/>
+			<findElement by="xpath">//div[contains(@data-afr-popupid,'taxCategoryId')]//a[text()='Search...']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//div[text()='Search and Select: Tax Product Category']/../../../../../../..//label[text()='Code Path' or text()='Code']/../..//input</findElement>
+			<sendKeys isClear="true">
+				<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category"/>
+			</sendKeys>
+			<findElement by="xpath">//div[text()='Search and Select: Tax Product Category']/../../../../../../..//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement
+                            by="xpath">//div[text()='Search and Select: Tax Product Category']/../../../../../../..//td[text()='<valueKB
+                            inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category"/>']</findElement>
+				</if>
+				<then>
+					<findElement
+                            by="xpath">//div[text()='Search and Select: Tax Product Category']/../../../../../../..//td[text()='<valueKB
+                            inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Product Category"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<error message="The field 'Tax Product Category' doesn't exist."/>
+				</else>
+			</IfThenElse>
+			<findElement by="xpath">//div[text()='Search and Select: Tax Product Category']/../../../../../../..//button[text()='OK']</findElement>
+			<click waitForPageToFinishRendering="true"/>-->
+		</block>
+		<block name="SEARCH_COLUMN_UNIT OF MEASURE_MANUAL">
+			<executeBlock name="Search...Unit of Measure" isRepeatUntilBreak="true"/>
+			<findElement by="xpath">//div[contains(@data-afr-popupid,'unitOfMeasureId')]//a[text()='Search...']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//div[text()='Search and Select: Unit of Measure']/../../../../../../..//label[text()='UOM Name']/../..//input</findElement>
+			<sendKeys isClear="true">
+				<valueKB
+                    inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Unit of Measure"/>
+			</sendKeys>
+			<findElement by="xpath">//div[text()='Search and Select: Unit of Measure']/../../../../../../..//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement
+                            by="xpath">//div[text()='Search and Select: Unit of Measure']/../../../../../../..//td[text()='<valueKB
+                            inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Unit of Measure"/>']</findElement>
+				</if>
+				<then>
+					<findElement
+                            by="xpath">//div[text()='Search and Select: Unit of Measure']/../../../../../../..//td[text()='<valueKB
+                            inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Unit of Measure"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<error message="The field 'Unit of Measure' doesn't exist."/>
+				</else>
+			</IfThenElse>
+			<findElement by="xpath">//div[text()='Search and Select: Unit of Measure']/../../../../../../..//button[text()='OK']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="SEARCH_COLUMN_REVENUE SCHEDULING RULE_MANUAL">
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Rule']/../.."/>
+					<parameter name="INV_NAME" value="Manage Standard Memo Lines - Standard Memo Lines"/>
+					<parameter name="COL_NAME" value="Rule"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+		</block>
+
+
+		<block name="Standard_Memo_Line">
+			<!--Memo Line Set-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Memo Line Set']/../.."/>
+					<parameter name="INV_NAME" value="Manage Standard Memo Lines - Standard Memo Lines"/>
+					<parameter name="COL_NAME" value="Memo Line Set"/>
+					<parameter name="SEARCH_1" value="Reference Data Set Name"/>
+				</parameters>
+			</executeBlock>			
+			<!--Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="Manage Standard Memo Lines - Standard Memo Lines"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="Manage Standard Memo Lines - Standard Memo Lines"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Type']/../.."/>
+					<parameter name="INV_NAME" value="Manage Standard Memo Lines - Standard Memo Lines"/>
+					<parameter name="COL_NAME" value="Type"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--Tax Classification-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Classification"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Tax Classification']/../..//input</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    by="xpath">//label[text()='Default Period End Rate Type']/../..//input[@value='<valueKB
+                                    inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Tax Classification"/>']</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="SEARCH_COLUMN_TAX CLASSIFICATION_MANUAL"/>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Tax Product Category-->
+			<executeBlock name="SEARCH_COLUMN_TAX PRODUCT CATEGORY_MANUAL"/>
+			<!--Unit List Price-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Unit List Price']/../.."/>
+					<parameter name="INV_NAME" value="Manage Standard Memo Lines - Standard Memo Lines"/>
+					<parameter name="COL_NAME" value="Unit List Price"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--Unit of Measure-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Unit of Measure"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Unit of Measure']/../..//input[@disabled]</findElement>
+						</if>
+						<then>
+							<error message="The field 'Unit of Measure' doesn't exist."/>
+						</then>
+						<else>
+							<executeBlock name="SEARCH_COLUMN_UNIT OF MEASURE_MANUAL"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Invoicing Rule-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Invoicing Rule']/../.."/>
+					<parameter name="INV_NAME" value="Manage Standard Memo Lines - Standard Memo Lines"/>
+					<parameter name="COL_NAME" value="Invoicing Rule"/>
+				</parameters>
+			</executeBlock>
+
+			<!--Rule-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Rule"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Rule"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>""</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//label[text()='Revenue Scheduling Rule' or text()='Rule']/../..//input</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//label[text()='Revenue Scheduling Rule' or text()='Rule']/../..//input[@value='<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Rule"/>']</findElement>
+										</if>
+										<then/>
+										<else>
+											<executeBlock name="SEARCH_COLUMN_REVENUE SCHEDULING RULE_MANUAL"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Rule"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>""</valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement by="xpath">//label[text()='Revenue Scheduling Rule' or text()='Rule']/../..//input</findElement>
+									<sendKeys isClear="true">
+										<valueKB
+                                    inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Rule"/>
+									</sendKeys>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--From Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='From Date']/../.."/>
+					<parameter name="INV_NAME" value="Manage Standard Memo Lines - Standard Memo Lines"/>
+					<parameter name="COL_NAME" value="From Date"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--To Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='To Date']/../.."/>
+					<parameter name="INV_NAME" value="Manage Standard Memo Lines - Standard Memo Lines"/>
+					<parameter name="COL_NAME" value="To Date"/>
+				</parameters>
+			</executeBlock>	
+
+		</block>
+
+		<block name="NAVIGATION_SECTION_REFERENCE_CREATE">
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//input[contains(@id,'businessUnitName')]/../../.."/>
+					<parameter name="INV_NAME" value="Manage Standard Memo Lines - Reference Accounts"/>
+					<parameter name="COL_NAME" value="Business Unit"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Ledger-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="Manage Standard Memo Lines - Reference Accounts" columnName="Ledger"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement
+                                    by="xpath">//span[text()='<valueKB
+                                    inventoryName="Manage Standard Memo Lines - Reference Accounts" columnName="Ledger"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<error message="The field 'Ledger' doesn't update"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Revenue-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ACCOUNT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Revenue']/../.."/>
+					<parameter name="INV_NAME" value="Manage Standard Memo Lines - Reference Accounts"/>
+					<parameter name="COL_NAME" value="Revenue"/>
+				</parameters>
+			</executeBlock>
+
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true">//div[text()='Revenue']/../../../../../../..//span[text()='K']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isDisplayed="true">//div[text()='Revenue']/../../../../../../..//span[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isDisplayed="true">//div[text()='Error']/../../../../../../..</findElement>
+						</if>
+						<then>
+							<error message="The field 'Revenue' doesn't exist."/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<findElement by="xpath">//div[text()='Create Reference Accounts']/../../../../../../..//span[text()='K']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+
+		<block name="NAVIGATION_SECTION_REFERENCE_UPDATE">
+			<!--Business Unit-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="Manage Standard Memo Lines - Reference Accounts" columnName="Business Unit"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement
+                                    by="xpath">//span[text()='<valueKB
+                                    inventoryName="Manage Standard Memo Lines - Reference Accounts" columnName="Business Unit"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<error message="The field 'Business Unit' doesn't update"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Ledger-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="Manage Standard Memo Lines - Reference Accounts" columnName="Ledger"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement
+                                    by="xpath">//span[text()='<valueKB
+                                    inventoryName="Manage Standard Memo Lines - Reference Accounts" columnName="Ledger"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<error message="The field 'Ledger' doesn't update"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Revenue-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ACCOUNT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Revenue']/../.."/>
+					<parameter name="INV_NAME" value="Manage Standard Memo Lines - Reference Accounts"/>
+					<parameter name="COL_NAME" value="Revenue"/>
+				</parameters>
+			</executeBlock>
+
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true">//div[text()='Revenue']/../../../../../../..//span[text()='K']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isDisplayed="true">//div[text()='Revenue']/../../../../../../..//span[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isDisplayed="true">//div[text()='Error']/../../../../../../..</findElement>
+						</if>
+						<then>
+							<error message="The field 'Revenue' doesn't exist."/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<!--DFF HEAD-->
+		<block name="DFF_FAKE">
+			<findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="Manage Standard Memo Lines - Standard Memo Lines - DFF" columnName="Field Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB
+                    inventoryName="Manage Standard Memo Lines - Standard Memo Lines - DFF" columnName="Field Value"/>
+			</click>
+		</block>
+
+
+		<block name="Search...Tax Classification">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Tax Classification']/../..//span/a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<block name="Search...Tax Product Category">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Tax Product Category']/../..//span/a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<block name="Search...Unit of Measure">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Unit of Measure']/../..//span/a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<block name="Search...Revenue Scheduling Rule">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Rule']/../..//span/a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+
+
+		<block name="Waiting_Seacrh_Memo">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true"
+                        highlightTurnedOff="true" by="xpath">//a[@title='Collapse Search']</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement by="xpath">//a[@title='Expand Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<repeat inventoryName="Manage Standard Memo Lines - Standard Memo Lines">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Manage Standard Memo Lines']/../..//div</findElement>
+				</if>
+				<then>
+					<executeBlock name="SEARCH_NAME"/>
+					<pause durationInSecs="3"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@summary='Search Results']//span[text()='<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Name"/>']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Search Results']//span[text()='<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Name"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="Standard_Memo_Line"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//table[@summary='Search Results']//*[text()='<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Name"/>']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//table[@summary='Search Results']//*[text()='<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Name"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<executeBlock name="Standard_Memo_Line"/>
+								</then>
+								<else>
+									<executeBlock name="GLOBAL_CREATE"/>
+									<executeBlock name="Standard_Memo_Line"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_GO_TO_TASK"/>
+					<executeBlock name="SEARCH_NAME"/>
+					<pause durationInSecs="3"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@summary='Search Results']//span[normalize-space(text())=normalize-space('<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Name"/>')]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Search Results']//span[normalize-space(text())=normalize-space('<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Name"/>')]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="Standard_Memo_Line"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//table[@summary='Search Results']//*[normalize-space(text())=normalize-space('<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Name"/>')]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//table[@summary='Search Results']//*[normalize-space(text())=normalize-space('<valueKB inventoryName="Manage Standard Memo Lines - Standard Memo Lines" columnName="Name"/>')]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<executeBlock name="Standard_Memo_Line"/>
+								</then>
+								<else>
+									<executeBlock name="GLOBAL_CREATE"/>
+									<executeBlock name="Standard_Memo_Line"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<repeat inventoryName="Manage Standard Memo Lines - Standard Memo Lines - DFF">
+				<executeBlock name="GLOBAL_ALL_DFF">
+					<parameters>
+						<parameter name="INV_NAME" value="Manage Standard Memo Lines - Standard Memo Lines - DFF"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<repeat inventoryName="Manage Standard Memo Lines - Reference Accounts">
+				<IfThenElse>
+					<if>
+						<comparisons separator="AND">
+							<comparison operator="NOT_EQUAL">
+								<leftOperand>
+									<valueKB inventoryName="Manage Standard Memo Lines - Reference Accounts" columnName="Business Unit"/>
+								</leftOperand>
+								<rightOperand>
+									<valueText/>
+								</rightOperand>
+							</comparison>
+						</comparisons>
+					</if>
+					<then>
+						<IfThenElse>
+							<if>
+								<findElement by="xpath">//label[text()='Business Unit']/../..//option[text()='<valueKB inventoryName="Manage Standard Memo Lines - Reference Accounts" columnName="Business Unit"/>']</findElement>
+							</if>
+							<then>
+								<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+									<parameters>
+										<parameter name="XPATH" value="//label[text()='Business Unit']/../.."/>
+										<parameter name="INV_NAME" value="Manage Standard Memo Lines - Reference Accounts"/>
+										<parameter name="COL_NAME" value="Business Unit"/>
+									</parameters>
+								</executeBlock>	
+
+								<executeBlock name="NAVIGATION_SECTION_REFERENCE_UPDATE"/>
+								<executeBlock name="SAVE_BUTTON_STANDARD_MEMO_LINES"/>
+							</then>
+							<else>
+								<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+									<parameters>
+										<parameter name="XPATH" value="//*[text()='Reference Accounts']/../../.."/>
+									</parameters>
+								</executeBlock>
+								<executeBlock name="NAVIGATION_SECTION_REFERENCE_CREATE"/>
+								<executeBlock name="SAVE_BUTTON_STANDARD_MEMO_LINES"/>
+							</else>
+						</IfThenElse>
+					</then>
+					<else/>
+				</IfThenElse>
+				<executeBlock name="SAVE_BUTTON_STANDARD_MEMO_LINES"/>
+			</repeat>
+			<executeBlock name="SAVE_AND_CLOSE_BUTTON_STANDARD_MEMO_LINES"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

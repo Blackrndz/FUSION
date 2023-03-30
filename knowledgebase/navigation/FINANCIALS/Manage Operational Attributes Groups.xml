@@ -1,0 +1,294 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Operational Attributes Groups</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Operational Attributes Groups" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Inventory Organizations"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Operational Attributes Groups - Operational Attribute Group Control"/>
+		</parameters>
+		<block name="Save_And_Close">
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</block>
+		<block name="Save">
+			<executeBlock name="GLOBAL_SAVE"/>
+		</block>
+		<block name="Confirmation">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[text()='Confirmation']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Confirmation']/../../../../../../..//span[text()='Y']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			</block>
+			<block name="Schedule Process">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[text()='Schedule Process']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Schedule Process']/../../../../../../..//button[contains(@id,'d2')][text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Information">
+		<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[text()='Information']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Information']/../../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+			</block>
+		<block name="SCROLLBAR_GENERIC_INNER_1">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					<IfThenElse>
+						<if>
+							<isEndOfScroll/>
+						</if>
+						<then>
+							<executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+							<break/>
+						</then>
+						<else>
+							<findElement
+                                    highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="DOWN"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SCROLLBAR_GENERIC_1">
+			<!-- check if there is no data found returned after the search, if so then we create a new record if applicable -->
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+				</then>
+				<else>
+					<!-- resetting the scrollbar back to the Top because the form remembers where it was even when searching a new record -->
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					<scroll direction="TOP"/>
+					<findElement by="xpath" setFocus="true">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<executeBlock name="SCROLLBAR_GENERIC_INNER_1" isRepeatUntilBreak="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Attribute Groups'or @summary='Attributes']/../../../..//a[@title='Clear All']</findElement>
+				</if>
+				<then/>
+				<else>
+					<executeBlock name="SPECIFY_QUERY_BY_EXAMPLE">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Attribute Groups'or @summary='Attributes']/../../../.."/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Attribute Groups'or @summary='Attributes']/../../../..//a[@title='Clear All']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+			<findElement by="xpath">//table[@summary='Attribute Groups'or @summary='Attributes']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Attribute Groups'or @summary='Attributes']/../..//tr//span[text()='Attribute Group']/../../@_d_index)]//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true" isSkipCheckDomError="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="Attribute Group"/>
+			</sendKeys>
+			<findElement by="xpath">//table[@summary='Attribute Groups'or @summary='Attributes']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Attribute Groups'or @summary='Attributes']/../..//tr//span[text()='Attribute']/../../@_d_index)]//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true" isSkipCheckDomError="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="Attribute"/>
+			</sendKeys>			
+			<!--			
+			<executeBlock name="SCROLLBAR_GENERIC_1">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Attribute Groups'or @summary='Attributes']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Attribute Groups'or @summary='Attributes']//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Attribute Groups'or @summary='Attributes']/../..//div[contains(@id,'scroller')]"/>                    
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Attribute Groups'or @summary='Attributes']//td[1][text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Attribute Group"/>']</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="ADD_Operational_Attribute_Groups"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Operational_Attribute_Groups"/>
+				</parameters>
+			</executeBlock>
+			-->
+			
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Attribute Groups'or @summary='Attributes']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Attribute Groups'or @summary='Attributes']//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Attribute Groups'or @summary='Attributes']/../..//div[contains(@id,'scroller')]"/>    
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Attribute Groups'or @summary='Attributes']//tr[td[1][text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Attribute Group"/>'] and td[2][text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Attribute"/>']]</parameter>
+					<parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[@summary='Attribute Groups'or @summary='Attributes']//tr[td[1]//span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Attribute Group"/>'] and td[2]//span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Attribute"/>']]</parameter>
+					<parameter name="SCROLLBAR_GENERIC_3_FIND_ROW">//table[@summary='Attribute Groups'or @summary='Attributes']//tr[td[1]//span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Attribute Group"/>'] and td[2][text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Attribute"/>']]</parameter>
+					<parameter name="SCROLLBAR_GENERIC_4_FIND_ROW">//table[@summary='Attribute Groups'or @summary='Attributes']//tr[td[1][text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Attribute Group"/>'] and td[2]//span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Attribute"/>']]</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="ADD_Attributes"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Attributes"/>
+				</parameters>
+			</executeBlock>			
+			
+		</block>
+		<!--
+		<block name="ADD_Operational_Attribute_Groups">			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Attribute Groups'or @summary='Attributes']/../..//div[contains(text(),'No data to display.')]</findElement>
+				</if>
+				<then>
+					<error message="This 'Attribute Groups' doesn't exist."/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Update_Operational_Attribute_Groups">
+			<findElement by="xpath" isDisplayed="true">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Attribute Groups'or @summary='Attributes']/../..//input</findElement>
+				</if>
+				<then/>
+				<else>
+					<executeBlock name="SPECIFY_QUERY_BY_EXAMPLE">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Attribute Groups'or @summary='Attributes']/../../../.."/>
+						</parameters>
+					</executeBlock>					
+				</else>
+			</IfThenElse>
+
+
+			<executeBlock name="SCROLLBAR_GENERIC_1">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Attribute Groups'or @summary='Attributes']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Attribute Groups'or @summary='Attributes']//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Attribute Groups'or @summary='Attributes']/../..//div[contains(@id,'scroller')]"/>                    
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Attribute Groups'or @summary='Attributes']//td[1][text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Attribute"/>']</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="ADD_Attributes"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Attributes"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		-->
+		<block name="ADD_Attributes">			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Attribute Groups'or @summary='Attributes']/../..//div[contains(text(),'No data to display.')]</findElement>
+				</if>
+				<then>
+					<error message="This 'Attribute' doesn't exist."/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Update_Attributes">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true">SCROLLBAR_GENERIC_1_FIND_ROW/td[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isDisplayed="true">SCROLLBAR_GENERIC_1_FIND_ROW/td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isDisplayed="true">SCROLLBAR_GENERIC_2_FIND_ROW/td[1]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isDisplayed="true">SCROLLBAR_GENERIC_2_FIND_ROW/td[1]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isDisplayed="true">SCROLLBAR_GENERIC_3_FIND_ROW/td[1]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isDisplayed="true">SCROLLBAR_GENERIC_3_FIND_ROW/td[1]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isDisplayed="true">SCROLLBAR_GENERIC_4_FIND_ROW/td[1]</findElement>
+										</if>
+										<then>
+											<findElement by="xpath" isDisplayed="true">SCROLLBAR_GENERIC_4_FIND_ROW/td[1]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+										
+										</else>
+									</IfThenElse>									
+								</else>
+							</IfThenElse>							
+						</else>
+					</IfThenElse>					
+				</else>
+			</IfThenElse>		
+
+
+			<!--Controlled At-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Attribute Groups'or @summary='Attributes']//tr[contains(@class,'Select')]//label[text()='Controlled At']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Controlled At"/>
+				</parameters>
+			</executeBlock>
+		</block>
+
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search"/>
+			<executeBlock name="Save"/>
+			<executeBlock name="Confirmation"/>
+			<executeBlock name="Schedule Process"/>
+			<executeBlock name="Information"/>
+		</repeat>
+		<executeBlock name="Save_And_Close"/>
+	</fusionNavigation>
+</navigation>

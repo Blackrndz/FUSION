@@ -1,0 +1,372 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Time Layout Sets (New Responsive UI Layout)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" isFailedParentLevelRecordRetry="true" taskName="Time Layout Sets" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Time Entry Layout Components (Single)"/>
+			<navigation name="Manage Time Layout Sets"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_1_REPEAT" value="Manage Time Layout Sets - Layout Sets"/>
+			<parameter name="MAIN_6_REPEAT" value="Manage Time Layout Sets - Responsive UI Layout (New)"/>
+			<parameter name="MAIN_7_REPEAT" value="Manage Time Layout Sets - Responsive UI Layout (Hourly Totals)"/>
+			<parameter name="MAIN_8_REPEAT" value="Manage Time Layout Sets - Responsive UI Layout (Unit Totals)"/>
+			<parameter name="CONFIGURE_LAYOUT" value="Responsive UI Layout"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Layout Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_6_REPEAT" columnName="Layout Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_7_REPEAT" columnName="Layout Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_8_REPEAT" columnName="Layout Name"/>']</findElement>
+		</block>
+		<block name="LK_Layout_Name">
+			<!--GLOBAL_EXPAND-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<!--BUTTON-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<!--GLOBAL_EXPAND-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<!--INPUT-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Layout Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Layout Name"/>
+				</parameters>
+			</executeBlock>
+			<!--BUTTON-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Layout Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Layout Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[text()='Warning']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[contains(@class,'Expansion')]/..//div[text()='Warning']/../../../../../../..//button[text()='Yes']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else>
+					<error message="Please define the Layout."/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="PROPERTIES">
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Show']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_6_REPEAT"/>
+					<parameter name="COL_NAME" value="Day Start Time - Show"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Decimal Places']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_6_REPEAT"/>
+					<parameter name="COL_NAME" value="Decimal Places"/>
+				</parameters>
+			</executeBlock>		
+		</block>
+		
+		<block name="CREATE_HOURS">
+			<findElement isDisplayed="true" by="xpath">//*[text()='Hourly Totals']/../../../../../../..//table[@summary='Time Card Fields']/../../../..//div[@title='Add']/a</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="2"/>
+			<findElement by="xpath">//*[text()='Hourly Totals']/../../../../../../..//table[@summary='Time Card Fields']//tr//input[@value='']/../../../../../../../../../td[1]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="2"/>
+		</block>
+		<block name="UPDATE_HOURS">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>		
+		</block>
+		<block name="HOURS">
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Hourly Totals']/../../../../../../..//table[@summary='Time Card Fields']//tr[contains(@class,'Select')]//td/span[contains(@id,'nameId')]/.."/>
+					<parameter name="INV_NAME" value="MAIN_7_REPEAT"/>
+					<parameter name="COL_NAME" value="Time Category Name"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Hourly Totals']/../../../../../../..//table[@summary='Time Card Fields']//tr[contains(@class,'Select')]//label[text()='Display Label']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_7_REPEAT"/>
+					<parameter name="COL_NAME" value="Display Label"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Hourly Totals']/../../../../../../..//table[@summary='Time Card Fields']//tr[contains(@class,'Select')]//td/span[contains(@id,'sbc1')]/.."/>
+					<parameter name="INV_NAME" value="MAIN_7_REPEAT"/>
+					<parameter name="COL_NAME" value="Show"/>
+				</parameters>
+			</executeBlock>			
+		</block>
+		
+		<block name="CREATE_UNITS">
+			<findElement isDisplayed="true" by="xpath">//*[text()='Unit Totals']/../../../../../../..//table[@summary='Time Card Fields']/../../../..//div[@title='Add']/a</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="2"/>
+			<findElement by="xpath">//*[text()='Unit Totals']/../../../../../../..//table[@summary='Time Card Fields']/../../../..//table[@summary='Time Card Fields']//tr//input[@value='']/../../../../../../../../../td[1]</findElement>
+			<click waitForPageToFinishRendering="true"/>	
+		</block>			
+		<block name="UPDATE_UNITS">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>	
+		<block name="UNITS">
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Unit Totals']/../../../../../../..//table[@summary='Time Card Fields']//tr[contains(@class,'Select')]//td/span[contains(@id,'nameId1')]/.."/>
+					<parameter name="INV_NAME" value="MAIN_8_REPEAT"/>
+					<parameter name="COL_NAME" value="Time Category Name"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Unit Totals']/../../../../../../..//table[@summary='Time Card Fields']/../../../..//table[@summary='Time Card Fields']//tr[contains(@class,'Select')]//label[text()='Display Label']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_8_REPEAT"/>
+					<parameter name="COL_NAME" value="Display Label"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Unit Totals']/../../../../../../..//table[@summary='Time Card Fields']//tr[contains(@class,'Select')]//label[text()='Display Label']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_8_REPEAT"/>
+					<parameter name="COL_NAME" value="Show"/>
+				</parameters>
+			</executeBlock>			
+		</block>
+		
+		<block name="BT_Update_Layout_Set">
+			<findElement by="xpath">//span[text()='Update Layout Set']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="BT_Warring">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//div[text()='Warning']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Warning']/../../../../../../..//button[text()='Yes']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="BT_Edit_Layout">
+			<findElement by="xpath">//*[text()='New']/../../../../../../../../../../../../../../../..//button[text()='Edit Layout']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="BT_SAVE_AND_CLOSE">
+			<findElement by="xpath">//*[text()='Save']/../../../td[2]//a</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//div[contains(@class,'Popup')]//span[text()='S']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Configure_Time_Entry_Layout">
+			<findElement by="xpath">//table[@summary='Configure Layout']//td[text()='CONFIGURE_LAYOUT']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement isSkipCheckDomError="true" by="xpath">//tr[contains(@class,'Selected')]//img[@title='Configure Layout']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="ERROR">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Error']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Error']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_1_REPEAT">
+			<executeBlock name="LK_Layout_Name"/>
+			<executeBlock name="BT_Update_Layout_Set"/>
+			<pause durationInSecs="2"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Configure Layout']//td[text()='CONFIGURE_LAYOUT']</findElement>
+				</if>
+				<then>
+					<executeBlock name="Configure_Time_Entry_Layout"/>
+					<pause durationInSecs="2"/>
+					<executeBlock name="ERROR"/>
+				</then>
+				<else>
+					<error message="Configure Layout 'Time Entry Layout' doesn't exist."/>
+				</else>
+			</IfThenElse>
+			<repeat inventoryName="MAIN_6_REPEAT">
+				<IfThenElse>
+					<if>
+						<comparisons separator="AND">
+							<comparison operator="NOT_EQUAL">
+								<leftOperand>
+									<valueKB inventoryName="MAIN_6_REPEAT" columnName="Time Card Type"/>
+								</leftOperand>
+								<rightOperand>
+									<valueText/>
+								</rightOperand>
+							</comparison>
+						</comparisons>			
+					</if>
+					<then>
+						<IfThenElse>
+							<if>
+								<comparisons separator="AND">
+									<comparison operator="EQUAL">
+										<leftOperand>
+											<valueKB inventoryName="MAIN_6_REPEAT" columnName="Time Card Type"/>
+										</leftOperand>
+										<rightOperand>
+											<valueText>Worker</valueText>
+										</rightOperand>
+									</comparison>
+								</comparisons>			
+							</if>
+							<then>
+								<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_TAB">
+									<parameters>
+										<parameter name="TAB_NAME" value="Worker"/>
+									</parameters>
+								</executeBlock>	
+							</then>
+							<else>
+								<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_TAB">
+									<parameters>
+										<parameter name="TAB_NAME" value="Manager"/>
+									</parameters>
+								</executeBlock>	
+							</else>
+						</IfThenElse>	
+					</then>
+					<else/>
+				</IfThenElse>
+				<executeBlock name="BT_Edit_Layout"/>
+				<IfThenElse>
+					<if>
+						<findElement by="xpath">//div[text()='Edit Layout']/../../../../../../..</findElement>
+					</if>
+					<then>
+						<executeBlock name="PROPERTIES"/>
+					</then>
+					<else/>
+				</IfThenElse>
+				<repeat inventoryName="MAIN_7_REPEAT">
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[text()='Edit Layout']/../../../../../../..</findElement>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+								<parameters>
+									<parameter name="TEMPLATE_NO_DATA" value="//*[text()='Hourly Totals']/../../../../../../..//table[@summary='Time Card Fields']/../..//div[contains(text(),'No data to display.')]"/>
+									<parameter name="TEMPLATE_FIRST_ROW" value="(//*[text()='Hourly Totals']/../../../../../../..//table[@summary='Time Card Fields'][@_rowcount]//tr[1]//td)[1]"/>
+									<parameter name="TEMPLATE_SCROLLER" value="//*[text()='Hourly Totals']/../../../../../../..//table[@summary='Time Card Fields']/../..//div[contains(@id,'scroller')]"/>
+									<parameter name="TEMPLATE_1_FIND_ROW">//*[text()='Hourly Totals']/../../../../../../..//table[@summary='Time Card Fields']//*[text()='<valueKB inventoryName="MAIN_7_REPEAT" columnName="Time Category Name"/>']/../../../../../../td[1]</parameter>
+									<parameter name="TEMPLATE_CREATE" value="CREATE_HOURS"/>
+									<parameter name="TEMPLATE_UPDATE" value="UPDATE_HOURS"/>
+								</parameters>
+							</executeBlock>  
+							<executeBlock name="HOURS"/>
+						</then>
+						<else/>
+					</IfThenElse>					
+				</repeat>
+				<repeat inventoryName="MAIN_8_REPEAT">
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[text()='Edit Layout']/../../../../../../..</findElement>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+								<parameters>
+									<parameter name="TEMPLATE_NO_DATA" value="//*[text()='Unit Totals']/../../../../../../..//table[@summary='Time Card Fields']/../../../..//table[@summary='Time Card Fields']/../..//div[contains(text(),'No data to display.')]"/>
+									<parameter name="TEMPLATE_FIRST_ROW" value="(//*[text()='Unit Totals']/../../../../../../..//table[@summary='Time Card Fields']/../../../..//table[@summary='Time Card Fields'][@_rowcount]//tr[1]//td)[1]"/>
+									<parameter name="TEMPLATE_SCROLLER" value="//*[text()='Unit Totals']/../../../../../../..//table[@summary='Time Card Fields']/../../../..//table[@summary='Time Card Fields']/../..//div[contains(@id,'scroller')]"/>
+									<parameter name="TEMPLATE_1_FIND_ROW">//*[text()='Unit Totals']/../../../../../../..//table[@summary='Time Card Fields']/../../../..//table[@summary='Time Card Fields']//*[text()='<valueKB inventoryName="MAIN_8_REPEAT" columnName="Time Category Name"/>']/../../../../../../../../td[1]</parameter>
+									<parameter name="TEMPLATE_CREATE" value="CREATE_UNITS"/>
+									<parameter name="TEMPLATE_UPDATE" value="UPDATE_UNITS"/>
+								</parameters>
+							</executeBlock>  
+							<executeBlock name="UNITS"/>
+						</then>
+						<else/>
+					</IfThenElse>					
+				</repeat>
+				<IfThenElse>
+					<if>
+						<findElement by="xpath">//div[text()='Edit Layout']/../../../../../../..</findElement>
+					</if>
+					<then>
+						<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_SAVE_AND_CLOSE">
+							<parameters>
+								<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//div[text()='Edit Layout']/../../../../../../.."/>
+							</parameters>
+						</executeBlock>
+						<pause durationInSecs="2"/>
+						<executeBlock name="BT_Warring"/>
+						<pause durationInSecs="2"/>
+						<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_CONFIRMATION"/>
+						<pause durationInSecs="2"/>
+					</then>
+					<else>
+					</else>
+				</IfThenElse>				
+			</repeat>
+			<executeBlock name="BT_SAVE_AND_CLOSE"/>
+			<pause durationInSecs="2"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+			<pause durationInSecs="2"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_CONFIRMATION"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

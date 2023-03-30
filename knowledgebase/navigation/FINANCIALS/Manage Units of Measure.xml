@@ -1,0 +1,454 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Units of Measure</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Units of Measure" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Units of Measure (Manage UOM Classes)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="INV_1" value="Manage Units of Measure - Manage Units of Measure"/>
+        </parameters>
+        <block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="UOM Name"/>']/../..//input</findElement>
+        </block>
+		
+		<!--Control_Block-->
+		<block name="Search_UOM">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="INV_1" columnName="UOM Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='UOM Name']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="UOM Name"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+							<parameter name="BUTTON_NAME" value="Search"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//table[contains(@summary,': Search Results')]/../..//div[contains(text(),'No results found.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[contains(@summary,': Search Results')][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[contains(@summary,': Search Results')]/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="TEMPLATE_1_FIND_ROW">//table[contains(@summary,': Search Results')]//label[text()='UOM Name']/..//input[@value='<valueKB inventoryName="INV_1" columnName="UOM Name"/>']/../../../../../../../../td[1]</parameter>
+							<parameter name="TEMPLATE_CREATE" value="Add_UOM"/>
+							<parameter name="TEMPLATE_UPDATE" value="Update_UOM"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<error message="Data issue: The field 'UOM Name' is require data."/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Add_UOM">
+			<!--Add_Row-->
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_ADD_ROW"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='UOM Name']/..//input[not(@value)]/../../../../../../../../td[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='UOM Name']/..//input[not(@value)]/../../../../../../../../td[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']/../../../../../../../..//*[text()='OK']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--UOM_Code-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="INV_1" columnName="UOM Code"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='UOM Code']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="UOM Code"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+                    <error message="Data issue: The field 'UOM Code' is require data."/>
+                </else>
+			</IfThenElse>
+			<!--UOM_Name-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="INV_1" columnName="UOM Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='UOM Name']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="UOM Name"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+                    <error message="Data issue: The field 'UOM Name' is require data."/>
+                </else>
+			</IfThenElse>
+			<!--Description-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="INV_1" columnName="Description"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Description']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Description"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Class_Name-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="INV_1" columnName="Class Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH">//tr[contains(@class,'Selected')]//label[text()='Class Name']/../..</parameter>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Class Name"/>
+							<parameter name="SEARCH_1" value="Class Name"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+                    <error message="Data issue: The field 'Class Name' is require data."/>
+                </else>
+			</IfThenElse>
+			<!--Base_UOM_Name-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB
+                                    inventoryName="INV_1" columnName="Base UOM Name"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Base UOM Name']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Base UOM Name"/>
+						</parameters>
+					</executeBlock>
+                </then>
+               <else/>
+            </IfThenElse>
+			<!--End_Date-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="INV_1" columnName="End Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='End Date']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="End Date"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Reciprocal_Description-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="INV_1" columnName="Reciprocal Description"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Reciprocal Description']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Reciprocal Description"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Plural_Description-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="INV_1" columnName="Plural Description"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Plural Description']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Plural Description"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="Update_UOM">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+			<!--Description-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="INV_1" columnName="Description"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Description']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Description"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--End Date-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="INV_1" columnName="End Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='End Date']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="End Date"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Reciprocal Description-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="INV_1" columnName="Reciprocal Description"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Reciprocal Description']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Reciprocal Description"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Plural Description-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="INV_1" columnName="Plural Description"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Plural Description']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Plural Description"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<!--BEGIN REPEAT-->
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="Search_UOM"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+		</repeat>
+		<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+		<!--END REPEAT-->
+	</fusionNavigation>
+</navigation>

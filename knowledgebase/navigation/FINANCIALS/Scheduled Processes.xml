@@ -1,0 +1,2307 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Scheduled Processes</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Scheduled Processes" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <parameters>
+            <parameter name="REPEAT_1_MAIN" value="Scheduled Processes - Scheduled New Processes"/>
+			<parameter name="REPEAT_2_MAIN" value="Scheduled Processes - Job"/>
+			<parameter name="REPEAT_3_MAIN" value="Scheduled Processes - Job Set"/>
+			<parameter name="REPEAT_4_MAIN" value="Scheduled Processes - Job Set Processes"/>
+			<parameter name="REPEAT_5_MAIN" value="Scheduled Processes - Job Set Schedule"/>
+			<parameter name="REPEAT_6_MAIN" value="Scheduled Processes - Job Set Schedule - Time"/>
+			<parameter name="REPEAT_7_MAIN" value="Scheduled Processes - Job Set Schedule - Schedule"/>
+			<parameter name="REPEAT_8_MAIN" value="Scheduled Processes - Job Set Notification"/>
+        </parameters>
+        <block name="FAKE_INV">
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_4_MAIN" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_5_MAIN" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_6_MAIN" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_7_MAIN" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_8_MAIN" columnName="Name"/>']/../..//input</findElement>
+        </block>
+		<block name="Search_Scheduled_Processes">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@id,'criteria')]//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='List of Processes Meeting Search Criteria']//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Process ID"/>'] and //span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='List of Processes Meeting Search Criteria']//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Process ID"/>'] and //span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]/../../../../../td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<executeBlock name="Schedule_New_Process_Button"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Schedule_New_Process">
+			<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+				<parameters>
+					<parameter name="XPATH">//label[text()='Type']/../..</parameter>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Job">
+			<!--Every JOB name have different process details-->
+			<!--Notify me when this process ends-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Notify me when this process ends']/../../../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Notify me when this process ends"/>
+				</parameters>
+			</executeBlock>
+			<!--Submission Notes-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//td/span/label[text()='Submission Notes']/../../..//input/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Submission Notes"/>
+				</parameters>
+			</executeBlock>
+			<!--Effective Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Effective Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Effective Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Effective As-of Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Effective Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Run as test-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Run as test']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Run as test"/>
+				</parameters>
+			</executeBlock>
+			<!--Include trace statements in audit log-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Include trace statements in audit log']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Include trace statements in audit log"/>
+				</parameters>
+			</executeBlock>
+			<!--Increment effective date-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Increment effective date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Increment effective date"/>
+				</parameters>
+			</executeBlock>
+			<!--Person-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Person']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Person"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Business Unit-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Business Unit']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Business Unit"/>
+					<parameter name="SEARCH_1" value="Business Unit"/>
+				</parameters>
+			</executeBlock>
+			<!--Legal Employer-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legal Employer']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Legal Employer"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Person Selection Rule-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Person Selection Rule']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Person Selection Rule"/>
+					<parameter name="SEARCH_1" value="Formula Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Payroll-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Payroll']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Payroll"/>
+					<parameter name="SEARCH_1" value="Payroll"/>
+				</parameters>
+			</executeBlock>
+			<!--Legislative Data Group-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legislative Data Group']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Legislative Data Group"/>
+					<parameter name="SEARCH_1" value="Legislative Data Group"/>
+				</parameters>
+			</executeBlock>
+			<!--Absence Start Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Absence Start Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Absence Start Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Absence End Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Absence End Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Absence End Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Absence Type-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Absence Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Absence Type"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Type-->
+			<executeBlock name="Manual_LOV_Type"/>
+			<!--Work Schedule Rule-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Work Schedule Rule']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Work Schedule Rule"/>
+				</parameters>
+			</executeBlock>
+			<!--Number of Days-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Number of Days']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Number of Days"/>
+				</parameters>
+			</executeBlock>
+			<!--Reference Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Reference Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Reference Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Record Selection-->
+			<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+				<parameters>
+					<parameter name="XPATH">//label[text()='Record Selection']/../..</parameter>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Record Selection"/>
+				</parameters>
+			</executeBlock>
+			<!--Absence Plan-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Absence Plan']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Absence Plan"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Plan Category-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Plan Category']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Plan Category"/>
+				</parameters>
+			</executeBlock>
+			<!--Changes Since Last Run-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Changes Since Last Run']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Changes Since Last Run"/>
+				</parameters>
+			</executeBlock>
+			<!--Plan Type-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Plan Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Plan Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Payroll Relationship Group-->
+			<executeBlock name="Manual_LOV_Payroll_Relationship_Group"/>
+			<!--Repeating Period-->
+			<executeBlock name="Manual_LOV_Repeating_Period"/>
+			<!--Processing Option-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Processing Option']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Processing Option"/>
+				</parameters>
+			</executeBlock>
+			<!--Print output - CHECKBOX-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Print output']/../../../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Print output - CHECKBOX"/>
+				</parameters>
+			</executeBlock>
+			<!--Print output - KB-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Print output']/../../../../../td[2]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Print output - KB"/>
+				</parameters>
+			</executeBlock>
+			<!--Legal Entity-->			
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legal Entity']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Legal Entity"/>
+					<parameter name="SEARCH_1" value="Legal Entity Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Legal Reporting Unit-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@id,'paramDynForm_EstablishmentNam')]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Legal Reporting Unit"/>
+					<parameter name="SEARCH_1" value="Legal Reporting Unit Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Tax Registration Number-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Tax Registration Number']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Tax Registration Number"/>
+					<parameter name="SEARCH_1" value="Registration Number"/>
+				</parameters>
+			</executeBlock>
+			<!--From Transaction Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='From Transaction Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="From Transaction Date"/>
+				</parameters>
+			</executeBlock>
+			<!--To Transaction Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='To Transaction Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="To Transaction Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Supplier Name-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Supplier Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Supplier Name"/>
+					<parameter name="SEARCH_1" value="Supplier"/>
+				</parameters>
+			</executeBlock>
+			<!--Supplier Site-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//tr/td[@class='xxr x4z']/label[text()='Supplier Site']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Supplier Site"/>
+					<parameter name="SEARCH_1" value="Supplier Site"/>
+				</parameters>
+			</executeBlock>
+			<!--Invoice Number-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Invoice Number']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Invoice Number"/>
+					<parameter name="SEARCH_1" value="Number"/>
+				</parameters>
+			</executeBlock>
+			<!--Submission Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Submission Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Submission Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Submitting Department-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Submitting Department']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Submitting Department"/>
+				</parameters>
+			</executeBlock>
+			<!--Submitted By-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Submitted By']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Submitted By"/>
+				</parameters>
+			</executeBlock>
+			<!--Phone-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Phone']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Phone"/>
+				</parameters>
+			</executeBlock>
+			<!--Submission Cycle-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Submission Cycle']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Submission Cycle"/>
+				</parameters>
+			</executeBlock>
+			<!--Cutoff Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Cutoff Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Cutoff Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Reporting Level-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Reporting Level']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Reporting Level"/>
+				</parameters>
+			</executeBlock>
+			<!--Organization Type-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Organization Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Organization Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Accounting Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Accounting Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Accounting Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Asset Book-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Asset Book']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Asset Book"/>
+				</parameters>
+			</executeBlock>
+			<!--Revaluation Period-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Revaluation Period']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Revaluation Period"/>
+					<parameter name="SEARCH_1" value="Accounting Period"/>
+				</parameters>
+			</executeBlock>
+			<!--Rate Type-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Rate Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Rate Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Daily Rate Type-->
+			<executeBlock name="Manual_LOV_Daily_Rate_Type"/>
+			<!--Primary Balancing Segment-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Primary Balancing Segment']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Primary Balancing Segment"/>
+				</parameters>
+			</executeBlock>
+			<!--Transfer to General Ledger Only-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Transfer to General Ledger Only']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Transfer to General Ledger Only"/>
+				</parameters>
+			</executeBlock>
+			<!--Cleared Only-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Cleared Only']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Cleared Only"/>
+				</parameters>
+			</executeBlock>
+			<!--From Accounting Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='From Accounting Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="From Accounting Date"/>
+				</parameters>
+			</executeBlock>
+			<!--To Accounting Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='To Accounting Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="To Accounting Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Tax Reporting Entity-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Tax Reporting Entity']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Tax Reporting Entity"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Payer Name Source-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Payer Name Source']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Payer Name Source"/>
+				</parameters>
+			</executeBlock>
+			<!--Control Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Control Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Control Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Control Code-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Control Code']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Control Code"/>
+				</parameters>
+			</executeBlock>
+			<!--Test Submission-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Test Submission']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Test Submission"/>
+				</parameters>
+			</executeBlock>
+			<!--Media Type-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Media Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Media Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Last Year Filing-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Last Year Filing']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Last Year Filing"/>
+				</parameters>
+			</executeBlock>
+			<!--Foreign Corporation-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Foreign Corporation']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Foreign Corporation"/>
+				</parameters>
+			</executeBlock>
+			<!--Balancing Segment Source-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Balancing Segment Source']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Balancing Segment Source"/>
+				</parameters>
+			</executeBlock>
+			<!--File Indicator-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='File Indicator']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="File Indicator"/>
+				</parameters>
+			</executeBlock>
+			<!--Original File-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Original File']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Original File"/>
+				</parameters>
+			</executeBlock>
+			<!--Replacement Alphanumeric Character-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Replacement Alphanumeric Character']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Replacement Alphanumeric Character"/>
+				</parameters>
+			</executeBlock>
+			<!--Contact Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Contact Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Contact Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Contact Phone-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Contact Phone']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Contact Phone"/>
+				</parameters>
+			</executeBlock>
+			<!--Contact Email-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Contact Email']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Contact Email"/>
+				</parameters>
+			</executeBlock>
+			<!--Electronic File Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Electronic File Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Electronic File Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Federal Reporting Limit-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Federal Reporting Limit']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Federal Reporting Limit"/>
+				</parameters>
+			</executeBlock>
+			<!--Conversion Rate Type-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Conversion Rate Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Conversion Rate Type"/>
+					<parameter name="SEARCH_1" value="Conversion Rate Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Payer Phone-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Payer Phone']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Payer Phone"/>
+				</parameters>
+			</executeBlock>
+			<!--Order By-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Order By']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Order By"/>
+				</parameters>
+			</executeBlock>
+			<!--Reporting Entity-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Reporting Entity']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Reporting Entity"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Group By-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Group By']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Group By"/>
+				</parameters>
+			</executeBlock>
+			<!--Reporting Method-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Reporting Method']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Reporting Method"/>
+				</parameters>
+			</executeBlock>
+			<!--Income Tax Region-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Income Tax Region']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Income Tax Region"/>
+					<parameter name="SEARCH_1" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Federal Reportable Only-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Federal Reportable Only']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Federal Reportable Only"/>
+				</parameters>
+			</executeBlock>
+			<!--Meeting Minimum Levels Only-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Meeting Minimum Levels Only']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Meeting Minimum Levels Only"/>
+				</parameters>
+			</executeBlock>
+			<!--Ledger-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Ledger']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Ledger"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Option-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Option']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Option"/>
+				</parameters>
+			</executeBlock>
+			<!--From Invoice Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='From Invoice Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="From Invoice Date"/>
+				</parameters>
+			</executeBlock>
+			<!--To Invoice Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='To Invoice Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="To Invoice Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Supplier or Party-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Supplier or Party']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Supplier or Party"/>
+					<parameter name="SEARCH_1" value="Supplier or Party"/>
+				</parameters>
+			</executeBlock>
+			<!--Pay Group-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Pay Group']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Pay Group"/>
+					<parameter name="SEARCH_1" value="Pay Group"/>
+				</parameters>
+			</executeBlock>
+			<!--Entered By-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Entered By']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Entered By"/>
+					<parameter name="SEARCH_1" value="User Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Maximum Invoices Count-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Maximum Invoices Count']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Maximum Invoices Count"/>
+				</parameters>
+			</executeBlock>
+			<!--Number of Parallel Processes-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Number of Parallel Processes']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Number of Parallel Processes"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Job_Set">
+			<!--Submission Notes-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//td/table[@class='x1u']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Submission Notes"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Job_Set_Processes">
+		</block>
+		<block name="Job_Set_Schedule">
+			<!--Run-->
+			<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+				<parameters>
+					<parameter name="XPATH">//label[text()='Run']/../..</parameter>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Run"/>
+				</parameters>
+			</executeBlock>
+			<!--Frequency-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Frequency']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Frequency"/>
+				</parameters>
+			</executeBlock>
+			<!--Time Between Runs - Hours-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Hours']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Time Between Runs - Hours"/>
+				</parameters>
+			</executeBlock>
+			<!--Time Between Runs - Minutes-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Minutes']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Time Between Runs - Minutes"/>
+				</parameters>
+			</executeBlock>
+			<!--Days Between Runs-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Days Between Runs']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Days Between Runs"/>
+				</parameters>
+			</executeBlock>
+			<!--Weeks Between Runs-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Weeks Between Runs']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Weeks Between Runs"/>
+				</parameters>
+			</executeBlock>
+			<!--Frequency - Monthly-->
+			<!--Repeat-->
+			<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+				<parameters>
+					<parameter name="XPATH">//table[contains(@id,'selectOneRadio2')]//label[text()='Repeat']/../..</parameter>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Repeat"/>
+				</parameters>
+			</executeBlock>
+			<!--Week of the Month - First-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'selectManyCheckbox20')]/../..//label[text()='First']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Week of the Month - First"/>
+				</parameters>
+			</executeBlock>
+			<!--Week of the Month - Second-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'selectManyCheckbox20')]/../..//label[text()='Second']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Week of the Month - Second"/>
+				</parameters>
+			</executeBlock>
+			<!--Week of the Month - Third-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'selectManyCheckbox20')]/../..//label[text()='Third']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Week of the Month - Third"/>
+				</parameters>
+			</executeBlock>
+			<!--Week of the Month - Fourth-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'selectManyCheckbox20')]/../..//label[text()='Fourth']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Week of the Month - Fourth"/>
+				</parameters>
+			</executeBlock>
+			<!--Week of the Month - Last-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Last']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Week of the Month - Last"/>
+				</parameters>
+			</executeBlock>
+			<!--Day of the Week - Monday-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'selectManyCheckbox19')]//label[text()='Monday']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Day of the Week - Monday"/>
+				</parameters>
+			</executeBlock>
+			<!--Day of the Week - Tuesday-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'selectManyCheckbox19')]//label[text()='Tuesday']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Day of the Week - Tuesday"/>
+				</parameters>
+			</executeBlock>
+			<!--Day of the Week - Wednesday-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'selectManyCheckbox19')]//label[text()='Wednesday']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Day of the Week - Wednesday"/>
+				</parameters>
+			</executeBlock>
+			<!--Day of the Week - Thursday-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'selectManyCheckbox19')]//label[text()='Thursday']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Day of the Week - Thursday"/>
+				</parameters>
+			</executeBlock>
+			<!--Day of the Week - Friday-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'selectManyCheckbox19')]//label[text()='Friday']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Day of the Week - Friday"/>
+				</parameters>
+			</executeBlock>
+			<!--Day of the Week - Saturday-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'selectManyCheckbox19')]//label[text()='Saturday']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Day of the Week - Saturday"/>
+				</parameters>
+			</executeBlock>
+			<!--Day of the Week - Sunday-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'selectManyCheckbox19')]//label[text()='Sunday']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Day of the Week - Sunday"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 1-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='1']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 1"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 2-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='2']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 2"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 3-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='3']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 3"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 4-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='4']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 4"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 5-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='5']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 5"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 6-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='6']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 6"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 7-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='7']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 7"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 8-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='8']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 8"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 9-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='9']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 9"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 10-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='10']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 10"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 11-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='11']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 11"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 12-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='12']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 12"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 13-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='13']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 13"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 14-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='14']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 14"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 15-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='15']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 15"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 16-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='16']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 16"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 17-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='17']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 17"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 18-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='18']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 18"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 19-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='19']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 19"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 20-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='20']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 20"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 21-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='21']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 21"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 22-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='22']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 22"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 23-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='23']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 23"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 24-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='24']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 24"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 25-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='25']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 25"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 26-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='26']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 26"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 27-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='27']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 27"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 28-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='28']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 28"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 29-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='29']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 29"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 30-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='30']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 30"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 31-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='31']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 31"/>
+				</parameters>
+			</executeBlock>
+			<!--Last day of month-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout16')]//label[text()='Last day of month']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Last day of month"/>
+				</parameters>
+			</executeBlock>
+			<!--Frequency  - Yearly-->
+			<!--Repeat-->
+			<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+				<parameters>
+					<parameter name="XPATH">//table[contains(@id,'selectOneRadio3')]//label[text()='Repeat']/../..</parameter>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Repeat"/>
+				</parameters>
+			</executeBlock>
+			<!--Week of the Month - First-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout20')]/../..//label[text()='First']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Week of the Month - First"/>
+				</parameters>
+			</executeBlock>
+			<!--Week of the Month - Second-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout20')]/../..//label[text()='Second']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Week of the Month - Second"/>
+				</parameters>
+			</executeBlock>
+			<!--Week of the Month - Third-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout20')]/../..//label[text()='Third']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Week of the Month - Third"/>
+				</parameters>
+			</executeBlock>
+			<!--Week of the Month - Fourth-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout20')]/../..//label[text()='Fourth']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Week of the Month - Fourth"/>
+				</parameters>
+			</executeBlock>
+			<!--Week of the Month - Last-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Last']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Week of the Month - Last"/>
+				</parameters>
+			</executeBlock>
+			<!--Day of the Week - Monday-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout20')]//label[text()='Monday']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Day of the Week - Monday"/>
+				</parameters>
+			</executeBlock>
+			<!--Day of the Week - Tuesday-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout20')]//label[text()='Tuesday']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Day of the Week - Tuesday"/>
+				</parameters>
+			</executeBlock>
+			<!--Day of the Week - Wednesday-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout20')]//label[text()='Wednesday']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Day of the Week - Wednesday"/>
+				</parameters>
+			</executeBlock>
+			<!--Day of the Week - Thursday-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout20')]//label[text()='Thursday']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Day of the Week - Thursday"/>
+				</parameters>
+			</executeBlock>
+			<!--Day of the Week - Friday-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout20')]//label[text()='Friday']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Day of the Week - Friday"/>
+				</parameters>
+			</executeBlock>
+			<!--Day of the Week - Saturday-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout20')]//label[text()='Saturday']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Day of the Week - Saturday"/>
+				</parameters>
+			</executeBlock>
+			<!--Day of the Week - Sunday-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout20')]//label[text()='Sunday']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Day of the Week - Sunday"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 1-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='1']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 1"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 2-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='2']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 2"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 3-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='3']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 3"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 4-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='4']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 4"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 5-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='5']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 5"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 6-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='6']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 6"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 7-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='7']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 7"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 8-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='8']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 8"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 9-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='9']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 9"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 10-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='10']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 10"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 11-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='11']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 11"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 12-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='12']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 12"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 13-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='13']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 13"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 14-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='14']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 14"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 15-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='15']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 15"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 16-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='16']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 16"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 17-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='17']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 17"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 18-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='18']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 18"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 19-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='19']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 19"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 20-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='20']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 20"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 21-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='21']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 21"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 22-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='22']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 22"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 23-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='23']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 23"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 24-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='24']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 24"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 25-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='25']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 25"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 26-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='26']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 26"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 27-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='27']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 27"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 28-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='28']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 28"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 29-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='29']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 29"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 30-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='30']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 30"/>
+				</parameters>
+			</executeBlock>
+			<!--Date - 31-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='31']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Date - 31"/>
+				</parameters>
+			</executeBlock>
+			<!--Last day of month-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@id,'panelGroupLayout19')]//label[text()='Last day of month']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Last day of month"/>
+				</parameters>
+			</executeBlock>
+			<!--Month - January-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='January']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Month - January"/>
+				</parameters>
+			</executeBlock>
+			<!--Month - February-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='February']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Month - February"/>
+				</parameters>
+			</executeBlock>
+			<!--Month - March-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='March']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Month - March"/>
+				</parameters>
+			</executeBlock>
+			<!--Month - April-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='April']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Month - April"/>
+				</parameters>
+			</executeBlock>
+			<!--Month - May-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='May']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Month - May"/>
+				</parameters>
+			</executeBlock>
+			<!--Month - June-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='June']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Month - June"/>
+				</parameters>
+			</executeBlock>
+			<!--Month - July-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='July']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Month - July"/>
+				</parameters>
+			</executeBlock>
+			<!--Month - August-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='August']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Month - August"/>
+				</parameters>
+			</executeBlock>
+			<!--Month - September-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='September']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Month - September"/>
+				</parameters>
+			</executeBlock>
+			<!--Month - October-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='October']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Month - October"/>
+				</parameters>
+			</executeBlock>
+			<!--Month - November-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='November']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Month - November"/>
+				</parameters>
+			</executeBlock>
+			<!--Month - December-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='December']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Month - December"/>
+				</parameters>
+			</executeBlock>
+			<!--Start Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>
+			<!--End Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Job_Set_Notification">
+			<!--Recipient-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Recipient']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_8_MAIN"/>
+					<parameter name="COL_NAME" value="Recipient"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Manual_Condition"/>
+		</block>
+		<block name="Job_Set_Schedule_Time">
+			<!--Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Add Time']/../../../../../../..//label[text()='Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_6_MAIN"/>
+					<parameter name="COL_NAME" value="Date"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<!--Manual LOV-->
+			<!--Type-->
+		<block name="Manual_LOV_Type">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[contains(@id,'pfl1')]//label[text()='Type']/../..</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//div[contains(@id,'pfl1')]//label[text()='Type']/../..</findElement>
+					<findElement by="xpath">//div[contains(@id,'pfl1')]//label[text()='Type']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//a[text()='Search...']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="5"/>
+					<executeBlock name="TYPE_Search_and_Select_Scheduled_Absences"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="TYPE_Search_and_Select_Scheduled_Absences">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Search and Select: Scheduled Absences']/../../../../../../..//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<!--Reset-->
+			<findElement by="xpath">//div[text()='Search and Select: Scheduled Absences']/../../../../../../..//button[text()='Reset']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Search and Select: Scheduled Absences']/../../../../../../..//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Adavnced_and_Add_Fields"/>
+			<findElement by="xpath">//td[text()='AbsenceEntry']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="2"/>
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@id,'lovDialogId')]//label[text()='Type']/../../td[2]//td[2]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Population Filters - Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@id,'lovDialogId')]//label[text()='AbsenceEntry']/../../td[2]//td[2]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Type - AbsenceEntry"/>
+				</parameters>
+			</executeBlock>
+			<!--Search-->
+			<findElement by="xpath">//div[text()='Search and Select: Scheduled Absences']/../../../../../../..//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//span[text()='AbsenceEntry']/../../../../../../../..//tr[td//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Type - AbsenceEntry"/>']]/td[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//span[text()='AbsenceEntry']/../../../../../../../..//tr[td//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Type - AbsenceEntry"/>']]/td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<!--OK-->
+					<findElement by="xpath">//div[contains(@id,'lovDialogId')]/../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<!--Cancel-->
+					<findElement by="xpath">//div[contains(@id,'lovDialogId')]/../../../../..//button[text()='Cancel']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+			<!--Payroll Relationship Group-->
+		<block name="Manual_LOV_Payroll_Relationship_Group">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Payroll Relationship Group']/../..</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Payroll Relationship Group']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement isDisplayed="true" by="xpath">//a[text()='Search...']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="5"/>
+					<executeBlock name="Payroll_Relationship_Group_Search"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Payroll_Relationship_Group_Search">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Payroll Relationship Group')]/../../../../../../..//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<!--Reset-->
+			<findElement by="xpath">//*[contains(text(),'Payroll Relationship Group')]/../../../../../../..//*[text()='Reset']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Payroll Relationship Group')]/../../../../../../..//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Adavnced_and_Add_Fields"/>
+			<findElement by="xpath">//td[text()='ObjectGroupName']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<!--ObjectGroupName-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='ObjectGroupName']/../../td[2]//td[2]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Payroll Relationship Group - ObjectGroupName"/>
+				</parameters>
+			</executeBlock>
+			<!--Search-->
+			<findElement by="xpath">//*[contains(text(),'Payroll Relationship Group')]/../../../../../../..//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//span[text()='ObjectGroupName']/../../../../../../../..//tr[td//td[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Payroll Relationship Group - ObjectGroupName"/>']]/td[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//span[text()='ObjectGroupName']/../../../../../../../..//tr[td//td[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Payroll Relationship Group - ObjectGroupName"/>']]/td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<!--OK-->
+					<findElement by="xpath">//*[contains(text(),'Payroll Relationship Group')]/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">//*[contains(text(),'Payroll Relationship Group')]/../../../../../../..//button[text()='Cancel']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+			<!--Repeating Period-->
+		<block name="Manual_LOV_Repeating_Period">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Repeating Period']/../..//a</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Repeating Period']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//a[text()='Search...']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="5"/>
+					<executeBlock name="Repeating_Period_Search"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Repeating_Period_Search">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Payroll Relationship Group')]/../../../../../../..//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<!--Reset-->
+			<findElement by="xpath">//*[contains(text(),'Payroll Relationship Group')]/../../../../../../..//*[text()='Reset']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Payroll Relationship Group')]/../../../../../../..//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Adavnced_and_Add_Fields"/>
+			<findElement by="xpath">//td[text()='ObjectGroupName']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='ObjectGroupName']/../../td[2]//td[2]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Payroll Relationship Group - ObjectGroupName"/>
+				</parameters>
+			</executeBlock>
+			<!--Search-->
+			<findElement by="xpath">//*[contains(text(),'Payroll Relationship Group')]/../../../../../../..//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//span[text()='ObjectGroupName']/../../../../../../../..//tr[td//td[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Payroll Relationship Group - ObjectGroupName"/>']]/td[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//span[text()='ObjectGroupName']/../../../../../../../..//tr[td//td[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Payroll Relationship Group - ObjectGroupName"/>']]/td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//*[contains(text(),'Payroll Relationship Group')]/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">//*[contains(text(),'Payroll Relationship Group')]/../../../../../../..//button[text()='Cancel']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+			<!--Daily Rate Type-->
+		<block name="Manual_LOV_Daily_Rate_Type">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Daily Rate Type']/../..</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Daily Rate Type']/../..//span/a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement isDisplayed="true" by="xpath">//a[text()='Search...']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="5"/>
+					<executeBlock name="Daily_Rate_Type_Search"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Daily_Rate_Type_Search">
+			<executeBlock name="Adavnced_and_Add_Fields"/>
+			<findElement by="xpath">//td[text()='Conversion Rate Type']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="5"/>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Conversion Rate Type']/../../td[2]//td[2]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Daily Rate Type - Conversion Rate Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Search-->
+			<findElement isDisplayed="true" by="xpath">//*[contains(text(),'Daily Rate Type')]/../../../../../../..//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//tr[td[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Daily Rate Type - Conversion Rate Type"/>']]/../../../../../td[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//tr[td[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Daily Rate Type - Conversion Rate Type"/>']]/../../../../../td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement isDisplayed="true" by="xpath">//*[contains(text(),'Daily Rate Type')]/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//*[contains(text(),'Daily Rate Type')]/../../../../../../..//button[text()='Cancel']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+			<!--Notification Condition-->
+		<block name="Manual_Condition">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//label[text()='Condition']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//label[text()='Condition']/../..</findElement>
+					<findElement by="xpath">//label[text()='Condition']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<!--Condition - All-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='All']/.."/>
+							<parameter name="INV_NAME" value="REPEAT_8_MAIN"/>
+							<parameter name="COL_NAME" value="Condition - All"/>
+						</parameters>
+					</executeBlock>
+					<!--Condition - On Success-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='On Success']/.."/>
+							<parameter name="INV_NAME" value="REPEAT_8_MAIN"/>
+							<parameter name="COL_NAME" value="Condition - On Success"/>
+						</parameters>
+					</executeBlock>
+					<!--Condition - On Warning-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='On Warning']/.."/>
+							<parameter name="INV_NAME" value="REPEAT_8_MAIN"/>
+							<parameter name="COL_NAME" value="Condition - On Warning"/>
+						</parameters>
+					</executeBlock>
+					<!--Condition - On Error-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='On Error']/.."/>
+							<parameter name="INV_NAME" value="REPEAT_8_MAIN"/>
+							<parameter name="COL_NAME" value="Condition - On Error"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+			<!--Schedule Name-->
+		<block name="Manual_Schedule_Name">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//label[text()='Schedule Name']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//label[text()='Schedule Name']/../..//span/a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="3"/>
+					<executeBlock name="SCROLLBAR">
+						<parameters>
+							<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//div[contains(@id,'SelectScheduleChoice_afrLovInternalTableId::db')]/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//div[contains(@id,'afrLovInternalTableId::db')]/table[@class='x1jc x1k0'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//div[contains(@id,'SelectScheduleChoice_afrLovInternalTableId::db')]/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//div[contains(@id,'SelectScheduleChoice_afrLovInternalTableId::db')]/..//tr[td[contains(text(),'<valueKB inventoryName="REPEAT_7_MAIN" columnName="Schedule Name"/>')] and //*[text()='<valueKB inventoryName="REPEAT_7_MAIN" columnName="Schedule Name - Package"/>']]/../../../../../td[1]</parameter>
+							<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="New_Row_Schedule_Name"/>
+							<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Row_Schedule_Name"/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath">//*[contains(text(),'Schedule Name')]/./../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="3"/>
+				</then>
+				<else>
+					<findElement by="xpath">//*[contains(text(),'Schedule Name')]/./../../../../../../..//button[text()='Cancel']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="3"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<!--Button-->
+		<block name="Schedule_New_Process_Button">
+			<findElement by="xpath">//table[@summary='List of Processes Meeting Search Criteria']/../../../..//span[text()='Schedule New Process']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Adavnced_and_Add_Fields">
+			<!--Advance-->
+			<findElement by="xpath">//*[text()='d']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<!--Add Fields-->
+			<findElement by="xpath">//*[text()='Add Fields']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="SUBMIT">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//span[text()='m']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//span[text()='m']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/> 
+				</then>
+				<else>
+					<findElement by="xpath">//*[text()='m']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="COMFIRMATION">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//*[text()='Confirmation']/../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//*[text()='Confirmation']/../../../../../../..</findElement>
+					<findElement by="xpath">//*[text()='Confirmation']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="New_Row_List_of_job_definitions">
+		</block>
+		<block name="Update_Row_List_of_job_definitions">
+			<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="Create_Notification">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//img[@title='Create Notification']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//img[@title='Create Notification']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[@title='Create Notification']/a</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[@title='Create Notification']/a</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//div[contains(@id,'addaction')]/a</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(@id,'addaction')]/a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="New_Row_List_of_notifications">
+			<executeBlock name="Create_Notification"/>
+			<executeBlock name="Job_Set_Notification"/>
+		</block>
+		<block name="Update_Row_List_of_notifications">
+			<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="New_Row_Time">
+			<findElement by="xpath">//table[@summary='List of recurrences']/../../../..//*[text()='Add Time']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Update_Row_Time">
+			<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="New_Row_Schedule_Name">
+		</block>
+		<block name="Update_Row_Schedule_Name">
+			<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<!--Manual Go To Task-->
+		<block name="Serach_Page">
+			<findElement by="xpath">//a[contains(@id,'UIShome')]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[@data-afr-dsp-child='grid']//div[@data-afr-dsp-child='layerWrapper']</findElement>
+				</if>
+				<then>
+					<executeBlock name="Serach_Task_Layer"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//div[@data-afr-dsp-child='grid']</findElement>
+						</if>
+						<then>
+							<executeBlock name="Serach_Task_Grid"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Serach_Task_Layer">
+			<findElement by="xpath">//a[@title='Navigator']</findElement>
+			<click waitForPageToFinishRendering="true" />
+			<findElement setFocus="true" by="xpath">//span[text()='Tools']</findElement>
+			<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+			<findElement by="xpath">//span[text()='Scheduled Processes']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Serach_Task_Grid">
+			<findElement setFocus="true" by="xpath">//div[@title='Tools']</findElement>
+			<click waitForPageToFinishRendering="true" />
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[@title='Scheduled Processes']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[@title='Scheduled Processes']</findElement>
+					<click waitForPageToFinishRendering="true" />
+				</then>
+				<else>
+					<executeBlock name="Personalize_Springboard"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Personalize_Springboard">
+			<findElement setFocus="true" by="xpath">//img[@title='Personalize Springboard']</findElement>
+			<click waitForPageToFinishRendering="true" />
+			<findElement by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='Scheduled Processes']/../..//div</findElement>
+			<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+			<findElement by="xpath">//span[text()='OK']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement setFocus="true" by="xpath">//div[@title='Tools']</findElement>
+			<click waitForPageToFinishRendering="true" />
+			<findElement by="xpath">//div[@title='Scheduled Processes']</findElement>
+			<click waitForPageToFinishRendering="true" />
+		</block>
+		<executeBlock name="Serach_Page"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search_Scheduled_Processes"/>
+			<executeBlock name="Schedule_New_Process"/>
+			<findElement by="xpath">//*[text()='Schedule New Process']/../../../../../../..//button[text()='OK']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="5"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="Job"/>
+				<!--Process ID is shown only after click Submit-->
+				<executeBlock name="SUBMIT"/>
+			</repeat>
+			<repeat inventoryName="REPEAT_3_MAIN">
+				<executeBlock name="Job_Set"/>
+				<!--Processes-->
+				<executeBlock name="TAB">
+					<parameters>
+						<parameter name="TAB_NAME" value="Processes"/>
+					</parameters>
+				</executeBlock>
+				<repeat inventoryName="REPEAT_4_MAIN">
+					<executeBlock name="SCROLLBAR">
+						<parameters>
+							<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='List of job definitions']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='List of job definitions'][@_rowcount]//tr)[1]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='List of job definitions']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='List of job definitions']/../..//tr[td[text()='<valueKB inventoryName="REPEAT_4_MAIN" columnName="Job Definition"/>'] and //*[text()='<valueKB inventoryName="REPEAT_4_MAIN" columnName="Path"/>'] and //*[text()='<valueKB inventoryName="REPEAT_4_MAIN" columnName="Job Set"/>']]</parameter>
+							<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="New_Row_List_of_job_definitions"/>
+							<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Row_List_of_job_definitions"/>
+						</parameters>
+					</executeBlock>
+				</repeat>
+				<!--Schedule-->
+				<executeBlock name="TAB">
+					<parameters>
+						<parameter name="TAB_NAME" value="Schedule"/>
+					</parameters>
+				</executeBlock>
+				<repeat inventoryName="REPEAT_5_MAIN">
+					<executeBlock name="Job_Set_Schedule"/>
+					<repeat inventoryName="REPEAT_6_MAIN">
+						<!--Schedule Frequency = User - Defined-->
+						<executeBlock name="SCROLLBAR">
+							<parameters>
+								<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='List of recurrences']/../..//div[contains(text(),'No data to display.')]"/>
+								<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='List of recurrences'][@_rowcount]//tr[1]//td)[1]"/>
+								<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='List of recurrences']/../..//div[contains(@id,'scroller')]"/>
+								<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='List of recurrences']/../..//tr[td[text()='<valueKB inventoryName="REPEAT_6_MAIN" columnName="Date"/>'] and //*[text()='<valueKB inventoryName="REPEAT_6_MAIN" columnName="Schedule Time - Type"/>']]/../../../../../td[1]</parameter>
+								<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="New_Row_Time"/>
+								<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Row_Time"/>
+							</parameters>
+						</executeBlock>
+						<executeBlock name="Job_Set_Schedule_Time"/>
+						<findElement by="xpath">//*[text()='Add Time']/../../../../../../..//button[text()='OK']</findElement>
+						<click waitForPageToFinishRendering="true"/>
+					</repeat>
+					<repeat inventoryName="REPEAT_7_MAIN">
+						<executeBlock name="Manual_Schedule_Name"/>
+					</repeat>
+				</repeat>
+				<!--Notification-->
+				<executeBlock name="TAB">
+					<parameters>
+						<parameter name="TAB_NAME" value="Notification"/>
+					</parameters>
+				</executeBlock>
+				<repeat inventoryName="REPEAT_8_MAIN">
+					<executeBlock name="SCROLLBAR">
+						<parameters>
+							<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='List of notifications']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='List of notifications'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='List of notifications']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='List of notifications']/..//tr[td[text()='<valueKB inventoryName="REPEAT_8_MAIN" columnName="Recipient"/>'] and //*[text()='<valueKB inventoryName="REPEAT_8_MAIN" columnName="Condition"/>']]/../../../../../td[1]</parameter>
+							<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="New_Row_List_of_notifications"/>
+							<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Row_List_of_notifications"/>
+						</parameters>
+					</executeBlock>
+				</repeat>
+				<executeBlock name="SUBMIT"/>
+			</repeat>
+			<executeBlock name="COMFIRMATION"/>
+		</repeat>
+    </fusionNavigation>
+</navigation>

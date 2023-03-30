@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Activate Subledger Journal Entry Rule Set Assignments</name>
+    <svn>
+        <xsd:revision>$Revision: 78908 $:</xsd:revision>
+        <xsd:author>$Author: pakasit.sangsod $:</xsd:author>
+        <xsd:date>$Date: 2022-07-03 13:27:20 +0700 (Sun, 03 Jul 2022) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Activate%20Subledger%20Journal%20Entry%20Rule%20Set%20Assignments.xml $:</xsd:headURL>
+        <xsd:id>$Id: Activate Subledger Journal Entry Rule Set Assignments.xml 78908 2022-07-03 06:27:20Z pakasit.sangsod $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        taskName="Activate Subledger Journal Entry Rule Set Assignments"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <!--<dependencies>
+			<navigation name="Manage Project Templates"/>
+		</dependencies>-->
+		
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Activate Subledger Journal Entry Rule Set Assignments - Activate Subledger Journal Entry Rule Set Assignments"/>
+        </parameters>
+        <block name="BT_SUBMIT">
+            <findElement by="xpath">//span[text()='m']/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="CONFIRMATION">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//table[contains(@id,'confirmationPopup')]</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true" by="xpath">//table[contains(@id,'confirmationPopup')]//button[text()='OK']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="BASIC_OPTION">
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement
+                                    by="xpath">//label[text()='Name']/../../..//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+                        </if>
+                        <then/>
+                        <else>
+                            <error message="The field 'Name' doesn't exist."/>
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Print output-->
+            <executeBlock name="CHECKBOX">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Print output']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Print output"/>
+                </parameters>
+            </executeBlock>
+            <pause durationInSecs="2"/>
+            <!--Notify me when this process ends-->
+            <executeBlock name="CHECKBOX">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Notify me when this process ends']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Notify me when this process ends"/>
+                </parameters>
+            </executeBlock>
+            <!--Submission Notes-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Submission Notes']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Submission Notes"/>
+                </parameters>
+            </executeBlock>
+            <!--List of printers-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='List of printers']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="List of printers"/>
+                </parameters>
+            </executeBlock>
+            <!--Accounting Method-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Accounting Method']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Accounting Method"/>
+                </parameters>
+            </executeBlock>
+            <!--Subledger Application-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Subledger Application']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Subledger Application"/>
+                </parameters>
+            </executeBlock>
+            <!--Incomplete Status Only-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Incomplete Status Only']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Incomplete Status Only"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <repeat inventoryName="MAIN_REPEAT_1">
+            <executeBlock name="GLOBAL_GO_TO_TASK"/>
+            <executeBlock name="BASIC_OPTION"/>
+            <executeBlock name="BT_SUBMIT"/>
+            <pause durationInSecs="2"/>
+            <executeBlock name="CONFIRMATION"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

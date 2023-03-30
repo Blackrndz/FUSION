@@ -1,0 +1,340 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Collectors</name>
+    <svn>
+        <xsd:revision>$Revision: 53667 $:</xsd:revision>
+        <xsd:author>$Author: aratchaporn.kositsirikun $:</xsd:author>
+        <xsd:date>$Date: 2016-03-18 15:49:04 +0700 (Fri, 18 Mar 2016) $:</xsd:date>
+        <xsd:headURL>$HeadURL: http://svn01.rapidesuite.com:999/svn/a/dev/rapidesuite/controldata/FUSION_11.1.9/trunk/core/knowledgebase/navigation/FINANCIALS/Master%20Template/Manage%20General%20Ledger%20Profile%20Options.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage General Ledger Profile Options.xml 53667 2016-03-18 08:49:04Z aratchaporn.kositsirikun $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Collectors" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <!--
+            LOGIC: SCROLLBAR
+                1. SELECT THE FIRST ROW OF THE GRID
+                2. FIND THE SCROLLER
+                3. EXECUTE A LOOP:
+                    3.1. IF CONDITION TO FIND THE ROW WITH THE DATA
+                    3.2. IF NOT FOUND THEN
+                        3.2.1 IF CONDITION TO CHECK IF WE ARE AT THE END OF THE SCROLLBAR (ALWAYS FIND THE SCROLLER BEFORE CHECKING THE END)
+                            IF YES: THEN CLICK CREATE AND BREAK.
+                            IF NOT: THEN SCROLL DOWN ONE TIME, PAUSE 1 SEC THEN GO BACK TO 3.1
+        -->
+        <dependencies>
+			<navigation name="Manage Internal Resource Organizations"/>
+			<navigation name="Manage Users"/>
+        </dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Collectors - Manage Collectors"/>
+            <parameter name="MAIN_REPEAT_2" value="Manage Collectors - Manage Collectors - DFF"/>
+        </parameters>
+        <block name="Fake_Inv">
+            <findElement by="xpath">//label[text()='Collector Name']/../..//input</findElement>
+            <sendKeys isClear="true">
+                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Collector Name"/>
+            </sendKeys>
+            <findElement by="xpath">//label[text()='Collector Name']/../..//input</findElement>
+            <sendKeys isClear="true">
+                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Collector Name"/>
+            </sendKeys>
+        </block>
+        <block name="Button_Search">
+            <findElement by="xpath">//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Button_SAVE">
+            <findElement by="xpath">//button[text()='Save']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Expand_Search">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//*[text()='Manage Collectors']/../..//div/../../../../../..//a[@title='Expand Search']</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">//*[text()='Manage Collectors']/../..//div/../../../../../..//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Search_Collectors">
+            <executeBlock name="Expand_Search"/>
+            <findElement by="xpath">//*[text()='Search']/../../../../../../../..//label[text()='Collector Name']/../..//input</findElement>
+            <sendKeys isClear="true">
+                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Collector Name"/>
+            </sendKeys>
+            <executeBlock name="Expand_Search"/>
+            <findElement by="xpath">//*[text()='Search']/../../../../../../../..//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <executeBlock name="SCROLLBAR">
+                <parameters>
+                    <parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Collectors']/../..//div[contains(text(),'No data to display.')]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="//table[@summary='Collectors'][@_rowcount]//tr[1]//td[2]//input"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Collectors']/../..//div[contains(@id,'scroller')]"/>
+                    <parameter
+                            name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Collectors']/..//tr[td[2]//input[@value='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Collector Name"/>']]//input</parameter>
+                    <parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Collectors"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Collectors"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="DFF_Expand_Search">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//table[@summary='Collectors']//tr[contains(@class,'Select')]//a[@title='Expand']</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">//table[@summary='Collectors']//tr[contains(@class,'Select')]//a[@title='Expand']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Create_Collectors">
+            <executeBlock name="GLOBAL_SPECIFY_ADD">
+                <parameters>
+                    <parameter name="SPECIFY_XPATH" value="//table[@summary='Collectors']/../../../.."/>
+                </parameters>
+            </executeBlock>
+            <findElement highlightTurnedOff="true" by="xpath">//label[text()='Collector Name']/..//input[not(@value)]</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <!--Collector Name-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Collectors']//tr[contains(@class,'Select')]//label[text()='Collector Name']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Collector Name"/>
+                </parameters>
+            </executeBlock>
+            <!--Type-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Collectors']//tr[contains(@class,'Select')]//label[text()='Type']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Type"/>
+                </parameters>
+            </executeBlock>
+            <!--Employee or Group-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Employee or Group"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Type"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText>Group</valueText>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <executeBlock name="LOV">
+                                <parameters>
+                                    <parameter name="XPATH" value="//table[@summary='Collectors']//tr[contains(@class,'Select')]//label[text()='Group']/.."/>
+                                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                                    <parameter name="COL_NAME" value="Employee or Group"/>
+                                    <parameter name="SEARCH_1" value="Group"/>
+                                </parameters>
+                            </executeBlock>
+                        </then>
+                        <else>
+                            <IfThenElse>
+                                <if>
+                                    <comparisons separator="AND">
+                                    <comparison operator="EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Type"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText>Employee</valueText>
+                                    </rightOperand>
+                                    </comparison>
+                                    </comparisons>
+                                </if>
+                                <then>
+                                    <executeBlock name="LOV">
+                                    <parameters>
+                                    <parameter name="XPATH" value="//table[@summary='Collectors']//tr[contains(@class,'Select')]//label[text()='Employee']/.."/>
+                                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                                    <parameter name="COL_NAME" value="Employee or Group"/>
+                                    <parameter name="SEARCH_1" value="Employee"/>
+                                    </parameters>
+                                    </executeBlock>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Enabled-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Collectors']//tr[contains(@class,'Select')]//label[text()='Enabled']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Enabled"/>
+                </parameters>
+            </executeBlock>
+            <pause durationInSecs="1"/>
+            <!--Inactive Date-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Collectors']//tr[contains(@class,'Select')]//label[text()='Inactive Date']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Inactive Date"/>
+                </parameters>
+            </executeBlock>
+            <!--Collector Set-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Collectors']//tr[contains(@class,'Select')]//label[text()='Collector Set']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Collector Set"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Update_Collectors">
+            <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <!--Employee or Group-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Employee or Group"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Type"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText>Group</valueText>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <executeBlock name="LOV">
+                                <parameters>
+                                    <parameter name="XPATH" value="//table[@summary='Collectors']//tr[contains(@class,'Select')]//label[text()='Group']/.."/>
+                                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                                    <parameter name="COL_NAME" value="Employee or Group"/>
+                                    <parameter name="SEARCH_1" value="Group"/>
+                                </parameters>
+                            </executeBlock>
+                        </then>
+                        <else>
+                            <IfThenElse>
+                                <if>
+                                    <comparisons separator="AND">
+                                    <comparison operator="EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Type"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText>Employee</valueText>
+                                    </rightOperand>
+                                    </comparison>
+                                    </comparisons>
+                                </if>
+                                <then>
+                                    <executeBlock name="LOV">
+                                    <parameters>
+                                    <parameter name="XPATH" value="//table[@summary='Collectors']//tr[contains(@class,'Select')]//label[text()='Employee']/.."/>
+                                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                                    <parameter name="COL_NAME" value="Employee or Group"/>
+                                    <parameter name="SEARCH_1" value="Employee"/>
+                                    </parameters>
+                                    </executeBlock>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Enabled-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Collectors']//tr[contains(@class,'Select')]//label[text()='Enabled']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Enabled"/>
+                </parameters>
+            </executeBlock>
+            <pause durationInSecs="1"/>
+            <!--Inactive Date-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Collectors']//tr[contains(@class,'Select')]//label[text()='Inactive Date']/.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Inactive Date"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="MAIN_REPEAT_1">
+            <executeBlock name="Search_Collectors"/>
+            <executeBlock name="Button_SAVE"/>
+            <repeat inventoryName="MAIN_REPEAT_2">
+				<executeBlock name="DFF_Expand_Search"/>
+				<executeBlock name="GLOBAL_ALL_DFF">
+                        <parameters>
+                            <parameter name="INV_NAME" value="Manage Collectors - Manage Collectors - DFF"/>
+                        </parameters>
+                    </executeBlock>
+            </repeat>
+            <executeBlock name="Button_SAVE"/>
+			<IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//div[text()='Error']</findElement>
+                </if>
+                <then>
+                   <error message="Please see error on the Application." />
+                </then>
+                <else/>
+            </IfThenElse>
+        </repeat>
+    </fusionNavigation>
+</navigation>

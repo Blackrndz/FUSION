@@ -1,0 +1,437 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Chart of Accounts Structures (Deploy)</name>
+    <svn>
+        <xsd:revision>$Revision: 56288 $:</xsd:revision>
+        <xsd:author>$Author: pheerah.praditthaphong $:</xsd:author>
+        <xsd:date>$Date: 2016-06-27 10:53:09 +0700 (Mon, 27 Jun 2016) $:</xsd:date>
+        <xsd:headURL>$HeadURL: http://svn01.rapidesuite.com:999/svn/a/dev/rapidesuite/controldata/FUSION_11.1.9/trunk/core/knowledgebase/navigation/FINANCIALS/Master%20Template/Manage%20Chart%20of%20Accounts%20Structures.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Chart of Accounts Structures.xml 56288 2016-06-27 03:53:09Z pheerah.praditthaphong $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Chart of Accounts Structures"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Chart of Accounts Structures"/>
+			<navigation name="Manage Chart of Accounts Structure Instances (Deploy)"/>
+			<navigation name="Manage Key Flexfields (Deploy Structures)"/>
+        </dependencies>
+        <parameters>
+            <parameter name="REPEAT_STRUCTURES" value="Manage Chart of Accounts Structures - Manage Key Flexfield Structures"/>
+        </parameters>
+        <block name="Go To Task">
+            <findElement by="xpath" isSkipCheckDomError="true">//span[text()='###TASK_NAME###']/../../../..//a</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+        </block>
+        <block name="Search">
+            <findElement by="xpath" isSkipCheckDomError="true">//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+        </block>
+        <block name="Waiting Deploy">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Confirmation')]</findElement>
+                </if>
+                <then>
+                    <break/>
+                </then>
+                <else>
+                    <pause durationInSecs="2"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Deploy Flexfield">
+            <findElement by="xpath" isSkipCheckDomError="true">//span[text()='Deploy Flexfield']/..</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+        </block>
+        <block name="Deploy Ok">
+            <findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Confirmation')]/../../../../../../..//button[text()='OK']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+        </block>
+        <block name="waiting search">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath" isSkipCheckDomError="true">//div[text()='No search conducted.']</findElement>
+                </if>
+                <then>
+                    <pause durationInSecs="1"/>
+                </then>
+                <else>
+                    <break/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Search Key FlexField">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//h1[text()='###TASK_NAME###']/../../../../../../../..//label[text()='Key Flexfield Code']/../..//input</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath" isSkipCheckDomError="true">//h1[text()='###TASK_NAME###']/../../../../../../../..//label[text()='Key Flexfield Name']/../..//input</findElement>
+                    <sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+                        <valueKB inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Name"/>
+                    </sendKeys>
+                    <findElement by="xpath" isSkipCheckDomError="true">//h1[text()='###TASK_NAME###']/../../../../../../../..//label[text()='Key Flexfield Code']/../..//input</findElement>
+                    <sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+                        <valueKB inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Code"/>
+                    </sendKeys>
+                    <findElement by="xpath" isSkipCheckDomError="true">//h1[text()='###TASK_NAME###']/../../../../../../../..//button[text()='Search']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Select Key FlexField">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//h1[text()='###TASK_NAME###']/../../../../../../../..//label[text()='Key Flexfield Code']/../..//input</findElement>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Code"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Name"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <findElement
+                                    by="xpath" isSkipCheckDomError="true">//tr[td[text()='<valueKB
+                                    inventoryName="REPEAT_STRUCTURES"
+                                    columnName="Key Flexfield Name"/>'] and td[text()='<valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Code"/>']]</findElement>
+                                </if>
+                                <then>
+                                    <findElement
+                                    by="xpath" isSkipCheckDomError="true">//tr[td[text()='<valueKB
+                                    inventoryName="REPEAT_STRUCTURES"
+                                    columnName="Key Flexfield Name"/>'] and td[text()='<valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Code"/>']]</findElement>
+                                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                                </then>
+                                <else>
+                                    <error message="No results found."/>
+                                </else>
+                            </IfThenElse>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Name"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                                <comparison operator="EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Code"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <findElement
+                                    by="xpath" isSkipCheckDomError="true">//tr[td[text()='<valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Name"/>']]</findElement>
+                                </if>
+                                <then>
+                                    <findElement
+                                    by="xpath" isSkipCheckDomError="true">//tr[td[text()='<valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Name"/>']]</findElement>
+                                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                                </then>
+                                <else>
+                                    <error message="No results found."/>
+                                </else>
+                            </IfThenElse>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Name"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Code"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <findElement
+                                    by="xpath" isSkipCheckDomError="true">//tr[td[text()='<valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Code"/>'] ]</findElement>
+                                </if>
+                                <then>
+                                    <findElement
+                                    by="xpath" isSkipCheckDomError="true">//tr[td[text()='<valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Code"/>'] ]/</findElement>
+                                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                                </then>
+                                <else>
+                                    <error message="No results found."/>
+                                </else>
+                            </IfThenElse>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement isDisplayed="true"
+                                    by="xpath" isSkipCheckDomError="true">//a[text()='<valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Code"/>']</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath" isSkipCheckDomError="true">//a[text()='<valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Code"/>']</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                        </then>
+                        <else>
+                            <IfThenElse>
+                                <if>
+                                    <comparisons separator="AND">
+                                    <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Name"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                    </comparison>
+                                    <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Code"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                    </comparison>
+                                    </comparisons>
+                                </if>
+                                <then>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement
+                                    by="xpath" isSkipCheckDomError="true">//tr[td[text()='<valueKB
+                                    inventoryName="REPEAT_STRUCTURES"
+                                    columnName="Key Flexfield Name"/>'] and td[text()='<valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Code"/>'] ]</findElement>
+                                    </if>
+                                    <then>
+                                    <findElement
+                                    by="xpath" isSkipCheckDomError="true">//tr[td[text()='<valueKB
+                                    inventoryName="REPEAT_STRUCTURES"
+                                    columnName="Key Flexfield Name"/>'] and td[text()='<valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Code"/>'] ]</findElement>
+                                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                                    </then>
+                                    <else>
+                                    <error message="No results found."/>
+                                    </else>
+                                    </IfThenElse>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                            <IfThenElse>
+                                <if>
+                                    <comparisons separator="AND">
+                                    <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Name"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                    </comparison>
+                                    <comparison operator="EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Code"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                    </comparison>
+                                    </comparisons>
+                                </if>
+                                <then>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement
+                                    by="xpath" isSkipCheckDomError="true">//tr[td[text()='<valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Name"/>']]</findElement>
+                                    </if>
+                                    <then>
+                                    <findElement
+                                    by="xpath" isSkipCheckDomError="true">//tr[td[text()='<valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Name"/>']]</findElement>
+                                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                                    </then>
+                                    <else>
+                                    <error message="No results found."/>
+                                    </else>
+                                    </IfThenElse>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                            <IfThenElse>
+                                <if>
+                                    <comparisons separator="AND">
+                                    <comparison operator="EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Name"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                    </comparison>
+                                    <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Code"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                    </comparison>
+                                    </comparisons>
+                                </if>
+                                <then>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement
+                                    by="xpath" isSkipCheckDomError="true">//tr[td[text()='<valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Code"/>'] ]</findElement>
+                                    </if>
+                                    <then>
+                                    <findElement
+                                    by="xpath" isSkipCheckDomError="true">//tr[td[text()='<valueKB
+                                    inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Code"/>'] ]</findElement>
+                                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                                    </then>
+                                    <else>
+                                    <error message="No results found."/>
+                                    </else>
+                                    </IfThenElse>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Check Status Deploy">
+            <!--<findElement by="xpath">//label[text()='Key Flexfield Name']/../..//input</findElement>
+            <sendKeys isClear="true">
+                <valueKB inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Name"/>
+            </sendKeys>
+            <executeBlock name="Search"/>-->
+            <executeBlock name="Search Key FlexField"/>
+            <executeBlock name="Select Key FlexField"/>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath" isSkipCheckDomError="true">//img[contains(@title,'Deployed')]</findElement>
+                </if>
+                <then/>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath" isSkipCheckDomError="true">//span[text()='Deploy Flexfield']/../../../../../../../../..</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath" isSkipCheckDomError="true">//span[text()='Deploy Flexfield']/../../../../../../../../..</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                            <executeBlock name="Deploy Flexfield"/>
+                            <executeBlock name="Waiting Deploy" isRepeatUntilBreak="true"/>
+                            <executeBlock name="Deploy Ok"/>
+                        </then>
+                        <else>
+                            <executeBlock name="Deploy Flexfield"/>
+                            <executeBlock name="Waiting Deploy" isRepeatUntilBreak="true"/>
+                            <executeBlock name="Deploy Ok"/>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="DONE">
+            <!--<findElement by="xpath">//span[text()='o']</findElement>
+            <click waitForPageToFinishRendering="true"/>-->
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath" isSkipCheckDomError="true">(//h1[text()='###TASK_NAME###']/../../..//span[text()='o'])[2]</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">(//h1[text()='###TASK_NAME###']/../../..//span[text()='o'])[2]</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="REPEAT_STRUCTURES">
+            <executeBlock name="Check Status Deploy"/>
+			<executeBlock name="DONE"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

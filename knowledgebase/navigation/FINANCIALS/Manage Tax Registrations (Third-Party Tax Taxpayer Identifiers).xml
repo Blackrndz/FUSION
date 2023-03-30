@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Tax Registrations (Third-Party Tax Taxpayer Identifiers)</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Tax Registrations" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <parameters>
+            <parameter name="INV_1" value="Manage Tax Registrations - Third Party Tax Taxpayer Identifiers"/>
+        </parameters>
+        <block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Party Name"/>']/../..//input</findElement>
+        </block>
+		
+		<block name="Search_For">
+			<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//label[contains(text(),'Search For')]/../..//select</findElement>
+			<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+				<valueText>Third-Party Tax Profiles</valueText>
+			</select>	
+		</block>
+		<block name="Search">
+			<executeBlock name="Search_For"/>
+			<!--GLOBAL_EXPAND-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[@title='Search: Third-Party Tax Profiles']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[@title='Search: Third-Party Tax Profiles']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//*[@title='Search: Third-Party Tax Profiles']/../../../../../..//label[text()='Party Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Party Name"/>
+					<parameter name="SEARCH_1" value="Party Name' or text()='Party Number"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[@title='Search: Third-Party Tax Profiles']/../../../../../..//label[text()='Party Number']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Party Number"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[@title='Search: Third-Party Tax Profiles']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Search Results']//td[1][text()='<valueKB inventoryName="INV_1" columnName="Party Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Search Results']//td[1][text()='<valueKB inventoryName="INV_1" columnName="Party Name"/>']/../../../../../../td[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<executeBlock name="Search_Taxpayer_Identifiers"/>
+				</then>
+				<else>
+					<!--TAB Taxpayer Identifiers-->
+					<findElement by="xpath">//div[contains(@id,'sdi4::ti')]//a[text()='Taxpayer Identifiers']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Taxpayer Identifiers']/../..[@style]/../.."/>
+						</parameters>   
+					</executeBlock>
+					<pause durationInSecs="5"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search_Taxpayer_Identifiers">
+			<!--TAB Taxpayer Identifiers-->
+			<findElement by="xpath">//div[contains(@id,'sdi4::ti')]//a[text()='Taxpayer Identifiers']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="2"/>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Taxpayer Identifiers']/../..[@style]/div[1]/div//tr[2]/*[1]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Taxpayer ID"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Taxpayer Identifiers']/../..[@style]/div[1]/div//tr[2]/*[2]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Validation Type"/>
+				</parameters>
+			</executeBlock>	
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Taxpayer Identifiers']/..//td[1][text()='<valueKB inventoryName="INV_1" columnName="Taxpayer ID"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Taxpayer Identifiers']/..//td[1][text()='<valueKB inventoryName="INV_1" columnName="Taxpayer ID"/>']/../../../../../../td[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Taxpayer Identifiers']/../..[@style]/../..//div[@title='Edit']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="5"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Taxpayer Identifiers']/../..[@style]/../.."/>
+						</parameters>   
+					</executeBlock>
+					<pause durationInSecs="5"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Taxpayer_Identifiers">
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Third-Party Taxpayer ID')]/../../../../../../..//label[text()='Party Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Party Name"/>
+					<parameter name="SEARCH_1" value="Party Name' or text()='Party Number"/>
+				</parameters>
+			</executeBlock> 
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Third-Party Taxpayer ID')]/../../../../../../..//label[text()='Validation Type']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Validation Type"/>
+					<parameter name="SEARCH_1" value="Tax Registration Type Code' or text()='Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Third-Party Taxpayer ID')]/../../../../../../..//label[text()='Taxpayer ID']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Taxpayer ID"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Third-Party Taxpayer ID')]/../../../../../../..//label[text()='Validation Digit']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Validation Digit"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Third-Party Taxpayer ID')]/../../../../../../..//label[text()='Effective Start Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Effective Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Third-Party Taxpayer ID')]/../../../../../../..//label[text()='Effective End Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Effective End Date"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="Search"/>
+			<executeBlock name="Taxpayer_Identifiers"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Create Third-Party Taxpayer ID']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Create Third-Party Taxpayer ID']/../../../../../../..//*[text()='S']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Edit Third-Party Taxpayer ID')]/../../../../../../..//*[text()='S']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>
+		</repeat>
+    </fusionNavigation>
+</navigation>

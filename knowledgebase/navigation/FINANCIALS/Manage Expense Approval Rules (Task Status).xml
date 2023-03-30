@@ -1,0 +1,282 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Expense Approval Rules (Task Status)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Expense Approval Rules"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Enterprise HCM Information"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Expense Approval Rules - Notification Task Status"/>
+		</parameters>
+		<block name="FAKE_KB">
+			<findElement highlightTurnedOff="true"
+                    by="xpath">//a[text()='<valueKB
+                    inventoryName="REPEAT_1_MAIN" columnName="Task Name"/>']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="SEACH">
+			<findElement by="xpath">//label[text()='Search']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true">
+				<valueText>ExpenseApproval</valueText>
+			</sendKeys>
+			<findElement by="xpath">//img[@title='Search task types']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//span[contains(text(),'ExpenseApproval')]/..//img</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Edit task'][contains(@class,'Disabled')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[@title='Edit task']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<findElement by="xpath">//span[text()='Notifications']/../..//a</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Task_Status">
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//span[text()='Notifications']/../../../../../../../../../..//table[@ _rowcount='0']"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//span[text()='Notifications']/../../../../../../../../../..//table[@_rowcount]//tr[@ _afrrk='0']//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//span[text()='Notifications']/../../../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter
+                            name="SCROLLBAR_GENERIC_1_FIND_ROW">//tr[@class][td//*[@title='<valueKB
+                            inventoryName="REPEAT_1_MAIN"
+                            columnName="Task Status"/>'] and td//*[@title='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Recipient"/>']]/td[1]</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Status"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Status"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="CLICK_LAST_ROW">
+			<findElement by="xpath">//span[text()='Notifications']/../../../../../../../../../..//table[@_rowcount]/tbody//tr[count(//span[text()='Notifications']/../../../../../../../../../..//table[@_rowcount]/tbody//tr//img)]/td[1]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Create_Status">
+			<findElement by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<findElement by="xpath">//img[contains(@title,'Add Notification')]/../..//a</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//span[text()='Notifications']/../../../../../../../../../..//table[@ _rowcount='0']"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//span[text()='Notifications']/../../../../../../../../../..//table[@_rowcount]//tr[@ _afrrk='0']//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//span[text()='Notifications']/../../../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//span[text()='Notifications']/../../../../../../../../../..//table[@_rowcount]/tbody//tr[count(//span[text()='Notifications']/../../../../../../../../../..//table[@_rowcount]/tbody//tr//img)]/td[1]</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CLICK_LAST_ROW"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="CLICK_LAST_ROW"/>
+				</parameters>
+			</executeBlock>
+			<!--  Task Status -->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//tr//td[1]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Task Status"/>
+				</parameters>
+			</executeBlock>
+			<!--  Recipient -->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//tr//td[2]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Recipient"/>
+				</parameters>
+			</executeBlock>
+			<!--  Notification Message -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Notification Message"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement by="xpath">//tr[contains(@class,'Selected')]//tr//td//img</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//div[text()='Edit Notification Message']/../../../../../../../../..//textarea</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="REPEAT_1_MAIN" columnName="Notification Message"/>
+					</sendKeys>
+					<findElement by="xpath">//div[text()='Edit Notification Message']/../../../../../../../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enable Reminder']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Enable Reminder"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//td[text()='Repeat']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Repeat"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//td[text()='Initiating Action']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Initiating Action"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Day']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Frequency - Day"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Hour']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Frequency - Hour"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Minutes']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Frequency - Minutes"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Update_Status">
+			<findElement isDisplayed="true" by="xpath" setFocus="true">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<!--  Notification Message -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Notification Message"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement by="xpath">//tr[contains(@class,'Selected')]//tr//td//img</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//div[text()='Edit Notification Message']/../../../../../../../../..//textarea</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="REPEAT_1_MAIN" columnName="Notification Message"/>
+					</sendKeys>
+					<findElement by="xpath">//div[text()='Edit Notification Message']/../../../../../../../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enable Reminder']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Enable Reminder"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//td[text()='Repeat']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Repeat"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//td[text()='Initiating Action']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Initiating Action"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Day']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Frequency - Day"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Hour']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Frequency - Hour"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Minutes']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Frequency - Minutes"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="SAVE">
+			<findElement by="xpath">//img[@title='Save']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[contains(@class,'Expansion')]/..//button[text()='OK']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[contains(@class,'Expansion')]/..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[contains(@class,'Expansion')]/..//button[text()='OK']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[contains(@class,'Expansion')]/..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<window action="open"/>
+		<pause durationInSecs="3"/>
+		<executeBlock name="SEACH"/>
+		<pause durationInSecs="1"/>
+		<repeat inventoryName="REPEAT_1_MAIN">          
+			<executeBlock name="Task_Status"/>           
+		</repeat>
+		<executeBlock name="SAVE"/>
+		<window action="close"/>
+	</fusionNavigation>
+</navigation>

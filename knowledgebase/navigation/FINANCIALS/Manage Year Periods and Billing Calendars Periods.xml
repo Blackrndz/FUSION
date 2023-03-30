@@ -1,0 +1,234 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Year Periods and Billing Calendars Periods</name>
+	<svn>
+		<xsd:revision>$Revision: 79996 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2023-01-24 14:28:55 +0700 (Tue, 24 Jan 2023) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Year%20Periods%20and%20Billing%20Calendars%20Periods.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Year Periods and Billing Calendars Periods.xml 79996 2023-01-24 07:28:55Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Year Periods and Billing Calendars" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true">
+		<dependencies>
+			<navigation name="Manage Enterprise HCM Information"/>
+			<navigation name="Manage Year Periods and Billing Calendars(Generate Billing Periods)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Year Periods and Billing Calendars - Billing Calendar"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Year Periods and Billing Calendars - Billing Calendar Period"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Calendar Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Calendar Name"/>']/../..//input</findElement>
+		</block>
+		<block name="Billing_Calendars">
+			<executeBlock name="TAB">
+				<parameters>
+					<parameter name="TAB_NAME" value="Billing Calendars"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Year Periods']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Year Periods'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Year Periods']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Year Periods']//td[1]//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Calendar Name"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_Billing_Calendars"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Billing_Calendars"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Create_Billing_Calendars"/>
+		</block>
+		<block name="New_Billing_Calendars">
+			<error message="Please create header data in Manage Year Periods and Billing Calendars(Generate Billing Periods)" />
+		</block>
+		<block name="Update_Billing_Calendars">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="Create_Billing_Calendars">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Calendar Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Calendar Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Payment Due Day']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Payment Due Day"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Days Overdue']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Days Overdue"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<!--REPEAT_2_MAIN-->
+		<block name="Billing_Period">
+			 <IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Year Periods']/../../..//a[@title='Clear All']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<executeBlock name="SPECIFY_QUERY_BY_EXAMPLE">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Year Periods']/../../../.."/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">(//table[@summary='Year Periods'][@_rowcount]//tr[1]//td)[1]/..//td[number(//table[@summary='Year Periods']/../..//th//span[text()='Year']/../../@_d_index)]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Year"/>']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Year Periods']/../../..//a[@title='Clear All']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Year Periods']/../../..//th[(string(//span[text()='Year']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Year Periods']/../../..//th[(string(//span[text()='Year']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="REPEAT_2_MAIN" columnName="Year"/>
+							</sendKeys>
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Year Periods']/../../..//td[number(//span[text()='Year']/../../@_d_index)+0]//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="REPEAT_2_MAIN" columnName="Year"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+					
+					<executeBlock name="Waiting_Year" isRepeatUntilBreak="true"/>
+				</else>
+			</IfThenElse>
+			
+			<defineVariable name="YEAR_PERIOD" type="text"/>
+			<setVariable name="YEAR_PERIOD" append="false">
+				<valueText/>
+			</setVariable>
+			<setVariable name="YEAR_PERIOD" append="true">//table[@summary='Year Periods']//tr[td[number(//table[@summary='Year Periods']/../..//th//span[text()='Period Start Date']/../../@_d_index)][text()='</setVariable>
+			<setVariable name="YEAR_PERIOD" append="true">
+				<valueKB inventoryName="REPEAT_2_MAIN" columnName="Period Start Date"/>
+			</setVariable>
+			<setVariable name="YEAR_PERIOD" append="true">']</setVariable>
+			<setVariable name="YEAR_PERIOD" append="true"> and </setVariable>
+			<setVariable name="YEAR_PERIOD" append="true">td[number(//table[@summary='Year Periods']/../..//th//span[text()='Period End Date']/../../@_d_index)][text()='</setVariable>
+			<setVariable name="YEAR_PERIOD" append="true">
+				<valueKB inventoryName="REPEAT_2_MAIN" columnName="Period End Date"/>
+			</setVariable>
+			<setVariable name="YEAR_PERIOD" append="true">']]</setVariable>
+			
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Year Periods']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Year Periods'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Year Periods']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW"><valueVariable name="YEAR_PERIOD"/></parameter>
+					<parameter name="TEMPLATE_CREATE" value="No_Billing_Period"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Billing_Period"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Waiting_Year">
+			 <IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">(//table[@summary='Year Periods'][@_rowcount]//tr[1]//td)[1]/..//td[number(//table[@summary='Year Periods']/../..//th//span[text()='Year']/../../@_d_index)]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Year"/>']</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="No_Billing_Period">
+			<error message="DATA ISSUE: Please check data for Period Start Date and Period End Date in Manage Year Periods and Billing Calendars(Generate Billing Periods)" />
+		</block>
+		<block name="Update_Billing_Period">
+			<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW/../../../../../td[1]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Year Periods']//tr[contains(@class,'Selected')]//label[text()='Billing Period']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Billing Period"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Year Periods']//tr[contains(@class,'Selected')]//label[text()='Payment Due Date']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Payment Due Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Year Periods']//tr[contains(@class,'Selected')]//label[text()='Payment Overdue Date']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Payment Overdue Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Year Periods']//tr[contains(@class,'Selected')]//label[text()='Comments']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Comments"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Save']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Save']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Billing_Calendars"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="Billing_Period"/>
+			</repeat>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

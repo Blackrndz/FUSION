@@ -1,0 +1,211 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Transmission Configurations</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true" isFailedParentLevelRecordRetry="true"
+        taskName="Manage Transmission Configurations" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Account Hierarchies (Tree Version Values within a range)"/>   
+			<navigation name="Manage Account Hierarchies (Tree Version Values from referenced hierarchy)"/>
+			<navigation name="SegmentValueHierarchies"/>	 
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Transmission Configurations - Transmission Configuration"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Transmission Configurations - Parameters"/>
+		</parameters>
+		<block name="BT_Search">
+			<findElement by="xpath">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="BT_Reset">
+			<findElement by="xpath">//button[text()='Reset']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Search">
+				<executeBlock name="BT_Expand_Search"/>
+				<executeBlock name="BT_Reset"/>
+				<executeBlock name="BT_Expand_Search"/>
+				<findElement by="xpath">//label[text()='Configuration']/../..//input</findElement>
+				<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+					<valueKB inventoryName="REPEAT_1_MAIN" columnName="Configuration"/>
+				</sendKeys>	
+				<executeBlock name="BT_Expand_Search"/>
+				<executeBlock name="BT_Search"/>
+				<IfThenElse>
+					<if>
+						<findElement by="xpath">//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Configuration"/>']</findElement>
+					</if>
+					<then>
+						<findElement by="xpath">(//tr//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Configuration"/>']/../../../../../../..//td)[1]</findElement>
+						<executeBlock name="GLOBAL_UPDATE"/>
+					</then>
+					<else>
+						<executeBlock name="SELECT_KB">
+							<parameters>
+								<parameter name="XPATH" value="//label[text()='Select Protocol']/../.."/>
+								<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+								<parameter name="COL_NAME" value="Protocol"/>
+							</parameters>
+						</executeBlock>	
+						<pause durationInSecs="1"/>
+						<findElement by="xpath">//span[text()='Create']</findElement>
+						<click waitForPageToFinishRendering="true"/>
+					</else>
+				</IfThenElse>
+		</block>
+		<block name="BT_Expand_Search">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Collapse Search']</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[@title='Expand Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Error_Value">
+			<error message="The field 'Name' doesn't exist." />
+		</block>
+
+		<block name="Click_Value">
+			<IfThenElse>
+				<if>
+					<findElement setFocus="true" highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement setFocus="true" highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement setFocus="true" highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_2_MAIN" columnName="Value"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@summary='Parameters']//tr[contains(@class,'Selected')]//a</findElement>
+						</if>
+						<then>
+							<executeBlock name="LOV">
+								<parameters>
+									<parameter name="XPATH" value="//table[@summary='Parameters']//tr[contains(@class,'Selected')]//label[text()='Value']/.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Value"/>
+									<parameter name="SEARCH_1" value="Security Credential Name"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<executeBlock name="INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//table[@summary='Parameters']//tr[contains(@class,'Selected')]//label[text()='Value']/.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Value"/>
+								</parameters>
+							</executeBlock>	
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="BT_Confirmation">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//div[text()='Confirmation']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Confirmation']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Transmission_Configuration">
+			<!--Configuration-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Configuration']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Configuration"/>
+				</parameters>
+			</executeBlock>	
+			<!--Tunneling Configuration-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Tunneling Configuration']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Tunneling Configuration"/>
+				</parameters>
+			</executeBlock>	
+			<!--From Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='From Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="From Date"/>
+				</parameters>
+			</executeBlock>	
+			<!--To Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='To Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="To Date"/>
+				</parameters>
+			</executeBlock>	
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search"/>
+			<executeBlock name="Transmission_Configuration"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="SCROLLBAR">
+					<parameters>
+						<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[contains(@summary,'Parameters')]/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[contains(@summary,'Parameters')][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[contains(@summary,'Parameters')]/../..//div[contains(@id,'scroller')]"/>
+						<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Parameters']//span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']</parameter>
+						<parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[@summary='Parameters']//td[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']</parameter>
+						<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Error_Value"/>
+						<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Click_Value"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+			<pause durationInSecs="2"/>
+			<executeBlock name="BT_Confirmation"/>
+			<pause durationInSecs="2"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Cash Generating Units</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Manage Cash Generating Units" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<dependencies>
+			<navigation name="Manage Asset Books"/>
+			<navigation name="Manage Asset Books (Tax)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Cash Generating Units - Cash Generating Units"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../..</findElement>
+		</block>
+		<block name="Update_Cash_Generating_Units">
+			<findElement isDisplayed="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Cash_Generateing_Units">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[@summary='Manage Cash Generating Units']//tr[contains(@class,'Select')]//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//*[@summary='Manage Cash Generating Units']//tr[contains(@class,'Select')]//label[text()='Book']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Book"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[@summary='Manage Cash Generating Units']//tr[contains(@class,'Select')]//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//*[@summary='Manage Cash Generating Units']//tr[contains(@class,'Select')]//*[@type='checkbox']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Enabled"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Create_Cash_Generating_Units">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//*[@summary='Manage Cash Generating Units']/../../../.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Save">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//span[text()='Save']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//span[text()='Save']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[@summary='Manage Cash Generating Units']/../..//*[@title='Clear All']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[@summary='Manage Cash Generating Units']/../..//*[@title='Clear All']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+						<parameters>
+							<parameter name="XPATH" value="//*[@summary='Manage Cash Generating Units']/../../../.."/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>		
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//*[@summary='Manage Cash Generating Units']/../..//th[number(//th//*[text()='Name']/../../@_d_index)+1]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//*[@summary='Manage Cash Generating Units']/../..//th[number(//th//*[text()='Book']/../../@_d_index)]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Book"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Manage Cash Generating Units']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Manage Cash Generating Units'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Manage Cash Generating Units']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Manage Cash Generating Units']//tr[td//input[@value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>'] and td//select[@title='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Book"/>']]/td[1]</parameter>
+					<parameter name="TEMPLATE_CREATE" value="Create_Cash_Generating_Units"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Cash_Generating_Units"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Cash_Generateing_Units"/>
+			<executeBlock name="Save"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>
+
+

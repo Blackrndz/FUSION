@@ -1,0 +1,1190 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Cost Organization Relationships (Assign Inventory Organizations)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description>
+        This Navigation is For Create new Inventory Organization only. Cannot use for Create new Cost Organization or Update Inventory Organization. This Navigation will skip evey error and continue to inject Inventory Organization DATA until finish all Record.
+    </description>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Cost Organization Relationships" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Inventory Organizations"/>
+			<navigation name="Manage Cost Organizations"/>
+			<navigation name="Manage Cost Books"/>
+            <navigation name="Manage Cost Organization Relationships"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Cost Organization Relationships - Cost Organizations"/>			
+			<parameter name="REPEAT_2_MAIN" value="Manage Cost Organization Relationships - Inventory Organizations"/>			
+			<parameter name="REPEAT_3_MAIN" value="Manage Cost Organization Relationships - Inventory Organizations - DFF"/>			
+		</parameters>
+        <block name="INV_FAKE">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Cost Organization"/>']/../..//input</findElement>			
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Cost Organization"/>']/../..//input</findElement>			
+		</block>
+        <block name="DFF_FAKE">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Field Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_3_MAIN" columnName="Field Value"/>
+			</click>
+		</block>
+		<block name="Save_And_Close">
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</block>
+		<block name="Save">
+			<executeBlock name="GLOBAL_SAVE"/>
+		</block>
+		<block name="Save_Error">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[text()='Error']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[text()='OK']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+        <block name="Error_Duplicated_Record">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//div[text()='Error']/../../../../../../..//*[contains(text(),'The inventory organization was assigned to a different cost organization.')]</findElement>
+				</if>
+				<then>
+                    <findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[text()='OK']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SCROLLBAR_GENERIC_1_MOD">
+			<!-- check if there is no data found returned after the search, if so then we create a new record if applicable -->
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+				</then>
+				<else>
+					<!-- resetting the scrollbar back to the Top and create new record -->
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					<scroll direction="TOP"/>
+					<findElement by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="3"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">SPECIFY_SEARCH</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="3"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search_Cost_Organizations">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<findElement by="xpath">//button[text()='Reset']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//label[text()='Cost Organization']/../..//select</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//label[text()='Cost Organization']/../..//select</findElement>
+					<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+						<valueText>Equals</valueText>
+					</select>								
+				</then>
+				<else>              
+					<findElement by="xpath">//label[text()='Cost Organization']/../..//input/..//div//li[text()='Equals']</findElement>
+					<click waitForPageToFinishRendering="true" isJavaScript="true" />
+				</else>
+			</IfThenElse>
+			<executeBlock name="Search..." isRepeatUntilBreak="true">
+				<parameters>
+					<parameter name="SPECIFY_SEARCH" value="//label[text()='Cost Organization']/../..//span/a"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+                        isDisplayed="true"
+                            by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Cost Organization"/>']</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true"
+                        isDisplayed="true"
+                            by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Cost Organization"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//div[text()='Search and Select: Cost Organization']/../../../../../../..//label[text()='Cost Organization']/../..//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="REPEAT_1_MAIN" columnName="Cost Organization"/>
+					</sendKeys>
+					<findElement by="xpath">//div[text()='Search and Select: Cost Organization']/../../../../../../..//button[text()='Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<IfThenElse>
+						<if>
+							<findElement
+                                    by="xpath">//div[text()='Search and Select: Cost Organization']/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Cost Organization"/>']</findElement>
+						</if>
+						<then>
+							<findElement
+                                    by="xpath">//div[text()='Search and Select: Cost Organization']/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Cost Organization"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//div[text()='Search and Select: Cost Organization']/../../../../../../..//button[text()='OK']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<error message="The field 'Cost Organization' doesn't exist."/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<findElement by="xpath" isDisplayed="true">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement
+                            by="xpath">//*[contains(text(),'Cost Organizations')]/../../../../../../..//td[1]/span/span[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Cost Organization"/>']</findElement>
+				</if>
+				<then>
+					<findElement
+                            by="xpath">//*[contains(text(),'Cost Organizations')]/../../../../../../..//td[1]/span/span[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Cost Organization"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SPECIFY_ADD">
+						<parameters>
+							<parameter name="SPECIFY_XPATH" value="//*[contains(text(),'Cost Organizations')]/../../../../../../.."/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Cost_Organizations"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Cost_Organizations">
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Cost Organizations')]/../../../../../../..//tr[contains(@class,'Select')]//td[1]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Cost Organization"/>
+					<parameter name="SEARCH_1" value="Cost Organization"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Cost Organizations')]/../../../../../../..//tr[contains(@class,'Select')]//td[4]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Item Validation Organization"/>
+					<parameter name="SEARCH_1" value="Organization Name"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Warning']/../../../../../../..//span[text()='K']/..</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Warning']/../../../../../../..//span[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Cost Organizations')]/../../../../../../..//tr[contains(@class,'Select')]//td[5]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Standard Cost Approval"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Search_Inventory_Organizations">
+			<!-- tab Inventory Organizations -->
+            <IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='Inventory Organizations'][contains(@class,'Select')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[text()='Inventory Organizations']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+            <!-- tab Inventory Organizations -->
+            <!-- This is modified scrollbar for create only -->
+			<executeBlock name="SCROLLBAR_GENERIC_1_MOD">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//a[text()='Inventory Organizations']/../../../../../../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="((//table[@summary='Table displays inventory organizations of selected cost organization']//tr)[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//a[text()='Inventory Organizations']/../../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Table displays inventory organizations of selected cost organization']//td[3]/span/span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>']</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="ADD_Inventory_Organizations"/>					
+				</parameters>
+			</executeBlock>
+            <!-- This is modified scrollbar for create only -->
+		</block>
+		<block name="Top_Inventory_Organizations">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table[@summary='Table displays inventory organizations of selected cost organization']//tr[contains(@class,'Select')]//td[3]//input[@value='' or not(@value)]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Table displays inventory organizations of selected cost organization']//tr[contains(@class,'Select')]//td[3]//input[@value='' or not(@value)]/../../../../td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>						
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" by="xpath">//a[text()='Inventory Organizations']/../../../../../../..//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="TOP"/>
+					<pause durationInSecs="1"/>	
+				</else>
+			</IfThenElse>
+		</block>		
+		<block name="ADD_Inventory_Organizations">
+            <executeBlock name="GLOBAL_SPECIFY_ADD">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//a[text()='Inventory Organizations']/../../../../../../.."/>
+				</parameters>
+			</executeBlock>
+            <executeBlock name="Top_Inventory_Organizations" isRepeatUntilBreak="true"/>
+            <!-- Modified LOV -->
+			<executeBlock name="MANNUAL_LOV">
+				<parameters>
+					<parameter name="XPATH" >//table[@summary='Table displays inventory organizations of selected cost organization']//tr[contains(@class,'Select')]//td[3]//input/..</parameter>					
+					<parameter name="SEARCH_1" value="Organization Name"/>
+				</parameters>
+			</executeBlock>
+            <!-- Modified LOV -->
+			<!--Effective Start Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Table displays inventory organizations of selected cost organization']//tr[contains(@class,'Select')]//td[6]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Effective Start Date"/>
+				</parameters>
+			</executeBlock>	
+			<!--Effective End Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Table displays inventory organizations of selected cost organization']//tr[contains(@class,'Select')]//td[7]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Effective End Date"/>
+				</parameters>
+			</executeBlock>
+            <executeBlock name="Error_Duplicated_Record"/>
+		</block>
+        <block name="MANNUAL_LOV_SEARCH">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table/tbody/tr/td/div/a[text()='Search...' or text()='More...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Search and Select')]/../../../../../../..</findElement>
+						</if>
+						<then>
+							<pause durationInSecs="2"/>
+							<break/>
+						</then>
+						<else>
+							<pause durationInSecs="2"/>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">XPATH//a//img</findElement>
+								</if>
+								<then>
+									<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">XPATH//a//img[not(contains(@title,'More'))]</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isSkipCheckDomError="true">XPATH//a//img</findElement>
+										</if>
+										<then>
+											<findElement by="xpath" isSkipCheckDomError="true">XPATH//a//img[not(contains(@title,'More'))]</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">XPATH//a</findElement>
+												</if>
+												<then>
+													<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">XPATH//a[not(contains(@title,'More'))]</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="1"/>
+												</then>
+												<else>
+													<findElement by="xpath" isSkipCheckDomError="true">XPATH//a[not(contains(@title,'More'))]</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="1"/>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+        <block name="MANNUAL_LOV">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>""</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">XPATH//input[not(@disabled)]</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">XPATH//input[not(@disabled)]</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+										<valueText>""</valueText>
+									</sendKeys>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">XPATH//input[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>']</findElement>
+								</if>
+								<then/>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">XPATH//input[not(@disabled)]</findElement>
+										</if>
+										<then>
+											<executeBlock name="MANNUAL_LOV_SEARCH" isRepeatUntilBreak="true"/>
+											<IfThenElse>
+												<if>
+													<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..</findElement>
+												</if>
+												<then>
+													<IfThenElse>
+														<if>
+															<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='SEARCH_1']/../..//input</findElement>
+														</if>
+														<then>
+															<IfThenElse>
+																<if>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																</if>
+																<then>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																</then>
+																<else/>
+															</IfThenElse>
+															<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='SEARCH_1']/../..//input</findElement>
+															<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+																<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>
+															</sendKeys>
+															<IfThenElse>
+																<if>
+																	<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																</if>
+																<then>
+																	<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																</then>
+																<else/>
+															</IfThenElse>
+															<IfThenElse>
+																<if>
+																	<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='SEARCH_1']/../..//input[not(@title)]</findElement>
+																</if>
+																<then>
+																	<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='SEARCH_1']/../..//input</findElement>
+																	<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+																		<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>
+																	</sendKeys>
+																</then>
+																<else/>
+															</IfThenElse>
+															<IfThenElse>
+																<if>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																</if>
+																<then>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																</then>
+																<else/>
+															</IfThenElse>
+															<findElement isDisplayed="false" isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Search']</findElement>
+															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+															<IfThenElse>
+																<if>
+																	<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																</if>
+																<then>
+																	<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																</then>
+																<else>
+																	<IfThenElse>
+																		<if>
+																			<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																		</if>
+																		<then>
+																			<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																		</then>
+																		<else>
+																			<IfThenElse>
+																				<if>
+																					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																				</if>
+																				<then>
+																					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																				</then>
+																				<else>
+																					<IfThenElse>
+																						<if>
+																							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																						</if>
+																						<then>
+																							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																						</then>
+																						<else>
+																							<IfThenElse>
+																								<if>
+																									<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																								</if>
+																								<then>
+																									<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																								</then>
+																								<else>
+																									<IfThenElse>
+																										<if>
+																											<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																										</if>
+																										<then>
+																											<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																										</then>
+																										<else>
+																											<IfThenElse>
+																												<if>
+																													<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																												</if>
+																												<then>
+																													<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																												</then>
+																												<else>
+																													<IfThenElse>
+																														<if>
+																															<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																														</if>
+																														<then>
+																															<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																														</then>
+																														<else>
+																															<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[contains(@id,'lovDialogId')]/../button[text()='Cancel']</findElement>
+															                                                                <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																														</else>
+																													</IfThenElse>
+																												</else>
+																											</IfThenElse>
+																										</else>
+																									</IfThenElse>
+																								</else>
+																							</IfThenElse>
+																						</else>
+																					</IfThenElse>
+																				</else>
+																			</IfThenElse>
+																		</else>
+																	</IfThenElse>
+																</else>
+															</IfThenElse>
+                                                            <IfThenElse>
+                                                                <if>
+                                                                    <findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[contains(@id,'lovDialogId')]/../button[text()='OK']</findElement>
+                                                                </if>
+                                                                <then>
+                                                                    <findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[contains(@id,'lovDialogId')]/../button[text()='OK']</findElement>
+                                                                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                                                                </then>
+                                                                <else>
+                                                                </else>
+                                                            </IfThenElse>															
+														</then>
+														<else>
+															<IfThenElse>
+																<if>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																</if>
+																<then>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																</then>
+																<else/>
+															</IfThenElse>
+															<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../..//label[text()='SEARCH_1']/../..//input</findElement>
+															<sendKeys isClear="true" isENTERKey="true" isSkipCheckDomError="true" waitForPageToFinishRendering="true">
+																<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>
+															</sendKeys>
+															<IfThenElse>
+																<if>
+																	<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																</if>
+																<then>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																</then>
+																<else/>
+															</IfThenElse>
+															<IfThenElse>
+																<if>
+																	<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../..//label[text()='SEARCH_1']/../..//input[not(@title)]</findElement>
+																</if>
+																<then>
+																	<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../..//label[text()='SEARCH_1']/../..//input</findElement>
+																	<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+																		<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>
+																	</sendKeys>
+																</then>
+																<else/>
+															</IfThenElse>
+															<IfThenElse>
+																<if>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																</if>
+																<then>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																</then>
+																<else/>
+															</IfThenElse>
+															<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../..//button[text()='Search']</findElement>
+															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+															<IfThenElse>
+																<if>
+																	<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[1][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																</if>
+																<then>
+																	<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[1][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																</then>
+																<else>
+																	<IfThenElse>
+																		<if>
+																			<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																		</if>
+																		<then>
+																			<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																		</then>
+																		<else>
+																			<IfThenElse>
+																				<if>
+																					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[1][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																				</if>
+																				<then>
+																					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[1][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																				</then>
+																				<else>
+																					<IfThenElse>
+																						<if>
+																							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																						</if>
+																						<then>
+																							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																						</then>
+																						<else>
+																							<IfThenElse>
+																								<if>
+																									<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[1]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																								</if>
+																								<then>
+																									<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[1]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																								</then>
+																								<else>
+																									<IfThenElse>
+																										<if>
+																											<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																										</if>
+																										<then>
+																											<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																										</then>
+																										<else>
+																											<IfThenElse>
+																												<if>
+																													<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[1]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																												</if>
+																												<then>
+																													<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[1]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																												</then>
+																												<else>
+																													<IfThenElse>
+																														<if>
+																															<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																														</if>
+																														<then>
+																															<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																														</then>
+																														<else>
+																															<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../../../../..//button[contains(@id,'lovDialogId')]/../button[text()='Cancel']</findElement>
+															                                                                <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																														</else>
+																													</IfThenElse>
+																												</else>
+																											</IfThenElse>
+																										</else>
+																									</IfThenElse>
+																								</else>
+																							</IfThenElse>
+																						</else>
+																					</IfThenElse>
+																				</else>
+																			</IfThenElse>
+																		</else>
+																	</IfThenElse>
+																</else>
+															</IfThenElse>
+                                                            <IfThenElse>
+                                                                <if>
+                                                                    <findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../../../../..//button[contains(@id,'lovDialogId')]/../button[text()='OK']</findElement>
+                                                                </if>
+                                                                <then>
+                                                                    <findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../../../../..//button[contains(@id,'lovDialogId')]/../button[text()='OK']</findElement>
+                                                                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                                                                </then>
+                                                                <else>
+                                                                </else>
+                                                            </IfThenElse>
+														</else>
+													</IfThenElse>
+												</then>
+												<else>
+													<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...' or text()='More...']/..//a[text()='Search...' or text()='More...']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<IfThenElse>
+														<if>
+															<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='SEARCH_1']/../..//input</findElement>
+														</if>
+														<then>
+															<IfThenElse>
+																<if>
+																	<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																</if>
+																<then>
+																	<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																</then>
+																<else/>
+															</IfThenElse>
+															<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='SEARCH_1']/../..//input</findElement>
+															<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+																<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>
+															</sendKeys>
+															<IfThenElse>
+																<if>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																</if>
+																<then>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																</then>
+																<else/>
+															</IfThenElse>
+															<IfThenElse>
+																<if>
+																	<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='SEARCH_1']/../..//input[not(@title)]</findElement>
+																</if>
+																<then>
+																	<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='SEARCH_1']/../..//input</findElement>
+																	<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+																		<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>
+																	</sendKeys>
+																</then>
+																<else/>
+															</IfThenElse>
+															<IfThenElse>
+																<if>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																</if>
+																<then>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																</then>
+																<else/>
+															</IfThenElse>
+															<findElement isDisplayed="false" isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Search']</findElement>
+															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+															<IfThenElse>
+																<if>
+																	<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																</if>
+																<then>
+																	<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																</then>
+																<else>
+																	<IfThenElse>
+																		<if>
+																			<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																		</if>
+																		<then>
+																			<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																		</then>
+																		<else>
+																			<IfThenElse>
+																				<if>
+																					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																				</if>
+																				<then>
+																					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																				</then>
+																				<else>
+																					<IfThenElse>
+																						<if>
+																							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																						</if>
+																						<then>
+																							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																						</then>
+																						<else>
+																							<IfThenElse>
+																								<if>
+																									<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																								</if>
+																								<then>
+																									<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																								</then>
+																								<else>
+																									<IfThenElse>
+																										<if>
+																											<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																										</if>
+																										<then>
+																											<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																										</then>
+																										<else>
+																											<IfThenElse>
+																												<if>
+																													<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																												</if>
+																												<then>
+																													<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																												</then>
+																												<else>
+																													<IfThenElse>
+																														<if>
+																															<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																														</if>
+																														<then>
+																															<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																														</then>
+																														<else>
+																															<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[contains(@id,'lovDialogId')]/../button[text()='Cancel']</findElement>
+															                                                                <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																														</else>
+																													</IfThenElse>
+																												</else>
+																											</IfThenElse>
+																										</else>
+																									</IfThenElse>
+																								</else>
+																							</IfThenElse>
+																						</else>
+																					</IfThenElse>
+																				</else>
+																			</IfThenElse>
+																		</else>
+																	</IfThenElse>
+																</else>
+															</IfThenElse>
+                                                            <IfThenElse>
+                                                                <if>
+                                                                    <findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[contains(@id,'lovDialogId')]/../button[text()='OK']</findElement>
+                                                                </if>
+                                                                <then>
+                                                                    <findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[contains(@id,'lovDialogId')]/../button[text()='OK']</findElement>
+                                                                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                                                                </then>
+                                                                <else>
+                                                                </else>
+                                                            </IfThenElse>															
+														</then>
+														<else>
+															<IfThenElse>
+																<if>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																</if>
+																<then>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																</then>
+																<else/>
+															</IfThenElse>
+															<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../..//label[text()='SEARCH_1']/../..//input</findElement>
+															<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+																<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>
+															</sendKeys>
+															<IfThenElse>
+																<if>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																</if>
+																<then>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																</then>
+																<else/>
+															</IfThenElse>
+															<IfThenElse>
+																<if>
+																	<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../..//label[text()='SEARCH_1']/../..//input[not(@title)]</findElement>
+																</if>
+																<then>
+																	<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../..//label[text()='SEARCH_1']/../..//input</findElement>
+																	<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+																		<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>
+																	</sendKeys>
+																</then>
+																<else/>
+															</IfThenElse>
+															<IfThenElse>
+																<if>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																</if>
+																<then>
+																	<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																</then>
+																<else/>
+															</IfThenElse>
+															<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../..//button[text()='Search']</findElement>
+															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+															<IfThenElse>
+																<if>
+																	<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[1][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																</if>
+																<then>
+																	<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[1][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																</then>
+																<else>
+																	<IfThenElse>
+																		<if>
+																			<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																		</if>
+																		<then>
+																			<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																		</then>
+																		<else>
+																			<IfThenElse>
+																				<if>
+																					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[1][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																				</if>
+																				<then>
+																					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[1][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																				</then>
+																				<else>
+																					<IfThenElse>
+																						<if>
+																							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																						</if>
+																						<then>
+																							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)][normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																						</then>
+																						<else>
+																							<IfThenElse>
+																								<if>
+																									<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[1]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																								</if>
+																								<then>
+																									<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[1]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																								</then>
+																								<else>
+																									<IfThenElse>
+																										<if>
+																											<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																										</if>
+																										<then>
+																											<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																										</then>
+																										<else>
+																											<IfThenElse>
+																												<if>
+																													<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[1]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																												</if>
+																												<then>
+																													<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[1]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																												</then>
+																												<else>
+																													<IfThenElse>
+																														<if>
+																															<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																														</if>
+																														<then>
+																															<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../..//table[@_rowcount]/tbody//td[string(//span[text()='SEARCH_1']/../../@_d_index)]//*[normalize-space(text())=normalize-space('<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization Name"/>')]</findElement>
+																															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																														</then>
+																														<else>
+																															<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../../../../..//button[contains(@id,'lovDialogId')]/../button[text()='Cancel']</findElement>
+															                                                                <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+																														</else>
+																													</IfThenElse>
+																												</else>
+																											</IfThenElse>
+																										</else>
+																									</IfThenElse>
+																								</else>
+																							</IfThenElse>
+																						</else>
+																					</IfThenElse>
+																				</else>
+																			</IfThenElse>
+																		</else>
+																	</IfThenElse>
+																</else>
+															</IfThenElse>
+                                                            <IfThenElse>
+                                                                <if>
+                                                                    <findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../../../../..//button[contains(@id,'lovDialogId')]/../button[text()='OK']</findElement>
+                                                                </if>
+                                                                <then>
+                                                                    <findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Search']//../../../../../../../../../../../../../../..//button[contains(@id,'lovDialogId')]/../button[text()='OK']</findElement>
+                                                                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                                                                </then>
+                                                                <else>
+                                                                </else>
+                                                            </IfThenElse>
+														</else>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</then>
+										<else/>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+        <block name="MANNUAL_GO_TO_TASK">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//h1[text()='Manage Accounting Cost Organization Relationships']</findElement>
+                </if>
+                <then/>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">//h1[text()='Search']</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath"> //tr/td/div[div/table/tbody//label[text()='Match With'] and div/table/tbody//input]//input</findElement>
+                            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                                <valueText>Manage Cost Organization Relationships</valueText>
+                            </sendKeys>
+                            <IfThenElse>
+                                <if>
+                                    <findElement by="xpath">//a[text()='Manage Cost Organization Relationships']</findElement>
+                                </if>
+                                <then>
+                                    <findElement by="xpath">//a[text()='Manage Cost Organization Relationships']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                </then>
+                                <else>
+                                    <error message=""/>
+                                </else>
+                            </IfThenElse>
+                        </then>
+                        <else>
+                            <error message=""/>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Delete_No_Data_Filled_Inventory_Organizations">            
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table[@summary='Table displays inventory organizations of selected cost organization']//tr[contains(@class,'Select')]//span[span/input[@value=''] or span/input[not(@value)]]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Table displays inventory organizations of selected cost organization']//tr[contains(@class,'Select')]//span[span/input[@value=''] or span/input[not(@value)]]/../../td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//table[@summary='Table displays inventory organizations of selected cost organization']/../../../..//a[img[contains(@src,'func_remove')][@title='Delete']]</findElement>
+					<click waitForPageToFinishRendering="true"/>                    
+				</then>
+				<else>
+					<IfThenElse>
+                        <if>
+                            <findElement isDisplayed="true" by="xpath">//table[@summary='Table displays inventory organizations of selected cost organization']//tr[contains(@class,'Select')]//span[span/input[@value=''] or span/input[not(@value)]]</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath">//table[@summary='Table displays inventory organizations of selected cost organization']//tr[contains(@class,'Select')]//span[span/input[@value=''] or span/input[not(@value)]]/../../td[1]</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                            <findElement by="xpath">//table[@summary='Table displays inventory organizations of selected cost organization']/../../../..//a[img[contains(@src,'func_remove')][@title='Delete']]</findElement>
+                            <click waitForPageToFinishRendering="true"/>                    
+                        </then>
+                        <else>
+                            <break/>	
+                        </else>
+                    </IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+            <executeBlock name="MANNUAL_GO_TO_TASK"/>
+			<executeBlock name="Search_Cost_Organizations"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="Search_Inventory_Organizations"/>
+				<repeat inventoryName="REPEAT_3_MAIN">
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@summary='Table displays inventory organizations of selected cost organization']//tr[contains(@class,'Select')]//a[@title='Expand']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Table displays inventory organizations of selected cost organization']//tr[contains(@class,'Select')]//a[@title='Expand']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+					<executeBlock name="GLOBAL_ALL_DFF">
+						<parameters>
+							<parameter name="INV_NAME" value="Manage Cost Organization Relationships - Inventory Organizations - DFF"/>
+						</parameters>
+					</executeBlock>					
+				</repeat>
+				<IfThenElse>
+					<if>
+						<findElement isDisplayed="true" by="xpath">//table[@summary='Table displays inventory organizations of selected cost organization']//tr[contains(@class,'Select')]//a[@title='Collapse']</findElement>
+					</if>
+					<then>
+						<findElement isDisplayed="true" by="xpath">//table[@summary='Table displays inventory organizations of selected cost organization']//tr[contains(@class,'Select')]//a[@title='Collapse']</findElement>
+						<click waitForPageToFinishRendering="true"/>
+					</then>
+					<else/>
+				</IfThenElse>
+                <executeBlock name="Delete_No_Data_Filled_Inventory_Organizations"/>
+				<executeBlock name="GLOBAL_SAVE"/>
+			</repeat>
+		</repeat>
+		<executeBlock name="Save_Error"/>
+		<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+	</fusionNavigation>
+</navigation>

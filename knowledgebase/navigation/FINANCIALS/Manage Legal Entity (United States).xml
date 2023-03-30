@@ -1,0 +1,2306 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Legal Entity (United States)</name>
+	<svn>
+		<revision xmlns="http://xsdutility.configurator.erapidsuite.com">$Revision: 80516 $:</revision>
+		<author xmlns="http://xsdutility.configurator.erapidsuite.com">$Author: chanawee.punsumniang $:</author>
+		<date xmlns="http://xsdutility.configurator.erapidsuite.com">$Date: 2023-03-22 14:10:46 +0700 (Wed, 22 Mar 2023) $:</date>
+		<headURL xmlns="http://xsdutility.configurator.erapidsuite.com">$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Legal%20Entity%20(United%20States).xml $:</headURL>
+		<id xmlns="http://xsdutility.configurator.erapidsuite.com">$Id: Manage Legal Entity (United States).xml 80516 2023-03-22 07:10:46Z chanawee.punsumniang $:</id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isIgnoreTaskSearchNavigation="true" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Legal Entity" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Legal Addresses (United States)"/>
+			<navigation name="Manage Legal Entity Configurator Descriptive Flexfield"/>
+			<navigation name="Manage Legal Jurisdictions"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Legal Entity (United States) - Manage Legal Entities"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Legal Entity (United States) - Manage Legal Entities - DFF"/>
+		</parameters>	
+		<block name="DFF_FAKE_US">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']/../..//input</findElement>	
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Name"/>']/../..//input</findElement>
+		</block>		
+		<block name="SEARCH_BUTTON">
+			<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="UPDATE">
+			<!-- Start Date -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>	
+
+			<!-- End Date -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>	
+
+			<!-- Payroll statutory unit(Flag) -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Payroll statutory unit']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Payroll statutory unit(Flag)"/>
+				</parameters>
+			</executeBlock>
+			<!-- Legal employer -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legal employer']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Legal employer"/>
+				</parameters>
+			</executeBlock>
+			<!-- Payroll Statutory Unit -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="OR">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Payroll Statutory Unit']/../..//input[@disabled]</findElement>
+						</if>
+						<then>
+							<error message="The field 'Payroll Statutory Unit' is disabled - you cannot change its value."/>
+						</then>
+						<else>
+							<executeBlock
+                                name="SEARCH_PAYROLL_STATUTTORY_UNIT" isRepeatUntilBreak="true"/>
+							<findElement by="xpath">//div[contains(@data-afr-popupid,'dynamicRegion1')]//a[text()='Search...']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<!-- Payroll Statutory Unit 1 column -->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//span[text()='d']/../..//button</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueText>Equals</valueText>
+											</select>								
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+									</sendKeys>
+									<executeBlock name="SEARCH_BUTTON"/>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>']/../../../../../../..//tr[2]</findElement>
+										</if>
+										<then>
+											<error message="The field 'Payroll Statutory Unit' doesn't exist."/>
+										</then>
+										<else>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+							<!-- Payroll Statutory Unit 2 column name,number-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//span[text()='d']/../..//button</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueText>Equals</valueText>
+											</select>								
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+									</sendKeys>
+									<executeBlock name="SEARCH_BUTTON"/>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>']]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>']]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<error message="The field 'Payroll Statutory Unit' doesn't exist."/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+							<!-- Payroll Statutory Unit 2 column name,country-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//span[text()='d']/../..//button</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//span[text()='Add Fields']/../../..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//td[text()='Country']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueText>Equals</valueText>
+											</select>								
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+									</sendKeys>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueText>Equals</valueText>
+											</select>								
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+									</sendKeys>
+									<executeBlock name="SEARCH_BUTTON"/>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>']]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>']]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<error message="The field 'Payroll Statutory Unit' doesn't exist."/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+							<!-- Payroll Statutory Unit 3 column -->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//span[text()='d']/../..//button</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//span[text()='Add Fields']/../../..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//td[text()='Country']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueText>Equals</valueText>
+											</select>								
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+									</sendKeys>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueText>Equals</valueText>
+											</select>								
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+									</sendKeys>
+									<executeBlock name="SEARCH_BUTTON"/>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Registration Number"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>']]//td[1]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Registration Number"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>']]//td[1]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<error message="The field 'Payroll Statutory Unit' doesn't exist."/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="WAITING_DATA_SHOW">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'PopupMenu')]//ul[contains(@id,'legalAddress')]//*[contains(@class,'Suggest')]</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SCROLLBAR_ADDRESS_INNER">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">SCROLLBAR_ADDRESS_FIND_ROW</findElement>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR_ADDRESS_UPDATE_BLOCK"/>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">SCROLLBAR_ADDRESS_FIND_ROW_1</findElement>
+						</if>
+						<then>
+							<executeBlock name="SCROLLBAR_ADDRESS_UPDATE_BLOCK"/>
+							<break/>
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_ADDRESS_SCROLLER</findElement>
+							<IfThenElse>
+								<if>
+									<isEndOfScroll/>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" by="xpath">SCROLLBAR_ADDRESS_FIND_ROW</findElement>
+										</if>
+										<then>
+											<executeBlock name="SCROLLBAR_ADDRESS_UPDATE_BLOCK"/>
+											<break/>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement isDisplayed="true" by="xpath">SCROLLBAR_ADDRESS_FIND_ROW_1</findElement>
+												</if>
+												<then>
+													<executeBlock name="SCROLLBAR_ADDRESS_UPDATE_BLOCK"/>
+													<break/>
+												</then>
+												<else>
+													<error message="The field 'Address' doesn't exist."/>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+									<break/>
+								</then>
+								<else>
+									<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_ADDRESS_SCROLLER</findElement>
+									<scroll direction="DOWN"/>
+									<pause durationInSecs="1"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			
+		</block>
+		<block name="SCROLLBAR_ADDRESS">
+			<!-- check if there is no data found returned after the search, if so then we create a new record if applicable -->
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">SCROLLBAR_ADDRESS_NO_DATA</findElement>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR_ADDRESS_CREATE_BLOCK"/>
+				</then>
+				<else>
+					<!-- resetting the scollbar back to the Top because the form remembers where it was even when searching a new record -->
+					<executeBlock name="SCROLLBAR_ADDRESS_INNER" isRepeatUntilBreak="true"/>
+				</else>
+			</IfThenElse>
+		</block>	
+		<block name="SELECT_ADDRESS">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">SCROLLBAR_ADDRESS_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">SCROLLBAR_ADDRESS_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<findElement by="xpath">SCROLLBAR_ADDRESS_FIND_ROW_1</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		
+		</block>			
+		<block name="CREATE">
+			<!-- Country -->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Country']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Country"/>
+					<parameter name="SEARCH_1" value="Country"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="2"/>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Country']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Country"/>
+					<parameter name="SEARCH_1" value="Country"/>
+				</parameters>
+			</executeBlock>
+			<!-- Name -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+
+			<!-- Legal Entity Identifier -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legal Entity Identifier']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Legal Entity Identifier"/>
+				</parameters>
+			</executeBlock>	
+
+			<!-- Start Date -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>	
+
+			<!-- End Date -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>	
+
+			<!-- Payroll statutory unit(Flag) -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Payroll statutory unit']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Payroll statutory unit(Flag)"/>
+				</parameters>
+			</executeBlock>
+			<!-- Legal employer -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legal employer']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Legal employer"/>
+				</parameters>
+			</executeBlock>
+			<!-- Payroll Statutory Unit -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="OR">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Payroll Statutory Unit']/../..//input[@disabled]</findElement>
+						</if>
+						<then>
+							<error message="The field 'Payroll Statutory Unit' is disabled - you cannot change its value."/>
+						</then>
+						<else>
+							<executeBlock
+                                name="SEARCH_PAYROLL_STATUTTORY_UNIT" isRepeatUntilBreak="true"/>
+							<findElement by="xpath">//div[contains(@data-afr-popupid,'dynamicRegion1')]//a[text()='Search...']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<!-- Payroll Statutory Unit 1 column -->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//span[text()='d']/../..//button</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueText>Equals</valueText>
+											</select>								
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+									</sendKeys>
+									<executeBlock name="SEARCH_BUTTON"/>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>']/../../../../../../..//tr[2]</findElement>
+										</if>
+										<then>
+											<error message="The field 'Payroll Statutory Unit' doesn't exist."/>
+										</then>
+										<else>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+							<!-- Payroll Statutory Unit 2 column name,number-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//span[text()='d']/../..//button</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueText>Equals</valueText>
+											</select>								
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+									</sendKeys>
+									<executeBlock name="SEARCH_BUTTON"/>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>']]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>']]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<error message="The field 'Payroll Statutory Unit' doesn't exist."/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+							<!-- Payroll Statutory Unit 2 column name,country-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//span[text()='d']/../..//button</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//span[text()='Add Fields']/../../..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//td[text()='Country']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueText>Equals</valueText>
+											</select>								
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+									</sendKeys>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueText>Equals</valueText>
+											</select>								
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+									</sendKeys>
+									<executeBlock name="SEARCH_BUTTON"/>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>']]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>']]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<error message="The field 'Payroll Statutory Unit' doesn't exist."/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+							<!-- Payroll Statutory Unit 3 column -->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//span[text()='d']/../..//button</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//span[text()='Add Fields']/../../..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//td[text()='Country']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueText>Equals</valueText>
+											</select>								
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+									</sendKeys>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueText>Equals</valueText>
+											</select>								
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+									</sendKeys>
+									<executeBlock name="SEARCH_BUTTON"/>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Registration Number"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>']]//td[1]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Registration Number"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>']]//td[1]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<error message="The field 'Payroll Statutory Unit' doesn't exist."/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- Legal Address -->
+
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>	
+					<findElement by="xpath">//label[text()='Legal Address']/../..//input</findElement>
+                    <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                        <valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>
+                    </sendKeys>
+                    <executeBlock name="WAITING_DATA_SHOW" isRepeatUntilBreak="true"/>
+					<findElement by="xpath">//label[text()='Legal Address']/../..//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueText>""</valueText>
+					</sendKeys>	
+					<findElement by="xpath">//label[text()='Legal Address']/../..//input</findElement>
+                    <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                        <valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>
+                    </sendKeys>
+                    <executeBlock name="WAITING_DATA_SHOW" isRepeatUntilBreak="true"/>					
+                    <IfThenElse>
+                        <if>
+                            <findElement isDisplayed="true" by="xpath">//li[text()='No results found.']</findElement>
+                        </if>
+                        <then>
+							<findElement by="xpath">//label[text()='Legal Address']/../..//a[contains(@id,'lovIconId')]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="5"/>
+							<findElement by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="3"/>
+							<findElement by="xpath">//div[text()='Search and Select: Legal Address']/../../../../../../..//button[text()='Search']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="3"/>
+							<executeBlock name="SCROLLBAR_ADDRESS">
+								<parameters>
+									<parameter name="SCROLLBAR_ADDRESS_NO_DATA" value="//div[contains(text(),'XXX No data to display.')]"/>
+									<parameter name="SCROLLBAR_ADDRESS_FIRST_ROW" value="((//div[text()='Search and Select: Legal Address']/../../../../../../..//table[@_rowcount]//tr)[1]//td)[1]"/>
+									<parameter name="SCROLLBAR_ADDRESS_SCROLLER" value="//div[text()='Search and Select: Legal Address']/../../../../../../..//div[contains(@id,'scroller')]"/>
+									<parameter name="SCROLLBAR_ADDRESS_FIND_ROW">//div[text()='Search and Select: Legal Address']/../../../../../../..//td[contains(normalize-space(text()),normalize-space('<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>'))]</parameter>					
+									<parameter name="SCROLLBAR_ADDRESS_CREATE_BLOCK" value="SELECT_ADDRESS"/>
+									<parameter name="SCROLLBAR_ADDRESS_UPDATE_BLOCK" value="SELECT_ADDRESS"/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath">//div[text()='Search and Select: Legal Address']/../../../../../../..//button[text()='OK']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+                        </then>
+                        <else>
+                            <IfThenElse>
+                                <if>
+                                    <findElement isDisplayed="true" by="xpath">//div[contains(@class,'PopupMenu')]//ul[contains(@id,'legalAddress')]//li[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>']</findElement>
+                                </if>
+                                <then>
+                                    <findElement isDisplayed="true" by="xpath">//div[contains(@class,'PopupMenu')]//ul[contains(@id,'legalAddress')]//li[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                </then>
+                                <else>
+                                    <error message="Please check your Legal Address because It is not existing in application."/>
+                                </else>
+                            </IfThenElse>
+                        </else>
+                    </IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- Place of Registration -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Place of Registration']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Place of Registration"/>
+				</parameters>
+			</executeBlock>	
+		</block>
+		<block name="CASE_2_CREATE">
+			<!-- Country -->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Country']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Country"/>
+					<parameter name="SEARCH_1" value="Country"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="2"/>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Country']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Country"/>
+					<parameter name="SEARCH_1" value="Country"/>
+				</parameters>
+			</executeBlock>
+			<!-- Name -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+
+			<!-- Legal Entity Identifier -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legal Entity Identifier']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Legal Entity Identifier"/>
+				</parameters>
+			</executeBlock>	
+
+			<!-- Start Date -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>	
+
+			<!-- End Date -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>	
+
+			<!-- Payroll statutory unit(Flag) -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Payroll statutory unit']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Payroll statutory unit(Flag)"/>
+				</parameters>
+			</executeBlock>
+			<!-- Legal employer -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legal employer']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Legal employer"/>
+				</parameters>
+			</executeBlock>
+			<!-- Payroll Statutory Unit -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="OR">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Payroll Statutory Unit']/../..//input[@disabled]</findElement>
+						</if>
+						<then>
+							<error message="The field 'Payroll Statutory Unit' is disabled - you cannot change its value."/>
+						</then>
+						<else>
+							<executeBlock
+                                name="SEARCH_PAYROLL_STATUTTORY_UNIT" isRepeatUntilBreak="true"/>
+							<findElement by="xpath">//div[contains(@data-afr-popupid,'dynamicRegion1')]//a[text()='Search...']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<!-- Payroll Statutory Unit 1 column -->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//span[text()='d']/../..//button</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueText>Equals</valueText>
+											</select>								
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+									</sendKeys>
+									<executeBlock name="SEARCH_BUTTON"/>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>']/../../../../../../..//tr[2]</findElement>
+										</if>
+										<then>
+											<error message="The field 'Payroll Statutory Unit' doesn't exist."/>
+										</then>
+										<else>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+							<!-- Payroll Statutory Unit 2 column name,number-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//span[text()='d']/../..//button</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueText>Equals</valueText>
+											</select>								
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+									</sendKeys>
+									<executeBlock name="SEARCH_BUTTON"/>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>']]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>']]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<error message="The field 'Payroll Statutory Unit' doesn't exist."/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+							<!-- Payroll Statutory Unit 2 column name,country-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//span[text()='d']/../..//button</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//span[text()='Add Fields']/../../..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//td[text()='Country']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueText>Equals</valueText>
+											</select>								
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+									</sendKeys>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueText>Equals</valueText>
+											</select>								
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+									</sendKeys>
+									<executeBlock name="SEARCH_BUTTON"/>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>']]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>']]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<error message="The field 'Payroll Statutory Unit' doesn't exist."/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+							<!-- Payroll Statutory Unit 3 column -->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Registration Number"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//span[text()='d']/../..//button</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//span[text()='Add Fields']/../../..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//td[text()='Country']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueText>Equals</valueText>
+											</select>								
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Legal Entity Name']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Legal Entity Name"/>
+									</sendKeys>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//select</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//select</findElement>
+											<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+												<valueText>Equals</valueText>
+											</select>								
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" />
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//label[text()='Country']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>
+									</sendKeys>
+									<executeBlock name="SEARCH_BUTTON"/>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Registration Number"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>']]//td[1]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payroll Statutory Unit']/../../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payroll Statutory Unit - Registration Number"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payroll Statutory Unit - Country"/>']]//td[1]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[contains(text(),'Search and Select: Payroll Statutory Unit')]/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<error message="The field 'Payroll Statutory Unit' doesn't exist."/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- Legal Address -->
+			<executeBlock name="LEGAL_ENTITY_ADDRESS"/>
+			<!-- Place of Registration -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Place of Registration']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Place of Registration"/>
+				</parameters>
+			</executeBlock>	
+		</block>
+		<block name="Scroll_Right_Scope">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//*[text()='###TASK_NAME###']/../../td[(string(//span[text()='Scope']/../../@_d_index))+1]/a</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Tasks']/../..//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="RIGHT"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SELECT_SCOPE">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='Select Scope']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Legal Entity']/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//label[text()='Legal Entity']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Create New</valueText>
+							</select>								
+						</then>
+						<else>
+							<findElement by="xpath">//label[text()='Legal Entity']/../..//input/..//div//li[text()='Create New']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true" />
+						</else>
+					</IfThenElse>
+					<findElement by="xpath">//div[text()='Select Scope']/../../../../../../..//button[text()='Apply and Go to Task']</findElement>
+					<click waitForPageToFinishRendering="true"/>								
+				</then>
+				<else>
+				</else>
+			</IfThenElse>		
+		</block>
+		<block name="Edit_Button">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a[text()='Actions']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//a[text()='Actions']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Edit']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>     					
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a[text()='Actions']/../../../../../../../../../../../..</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//a[text()='Actions']/../../../../../../../../../../../..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//a[text()='Actions']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>														
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Edit']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>				
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//span[normalize-space(text())='Edit']</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//span[normalize-space(text())='Edit']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//span[normalize-space(text())='Edit']/../../../../../../../../../../../..</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath">//span[normalize-space(text())='Edit']/../../../../../../../../../../../..</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+											<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//span[normalize-space(text())='Edit']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>						
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a/img[@title='Edit']</findElement>
+												</if>
+												<then>
+													<findElement isSkipCheckDomError="true" by="xpath">//a/img[@title='Edit']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a/img[@title='Edit']/../../../../../../../..</findElement>
+														</if>
+														<then>
+															<findElement isSkipCheckDomError="true" by="xpath">//a/img[@title='Edit']/../../../../../../../..</findElement>
+															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+															<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//a/img[@title='Edit']</findElement>
+															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>						
+														</then>
+														<else>
+
+														</else>
+													</IfThenElse>							
+												</else>
+											</IfThenElse>						
+										</else>
+									</IfThenElse>							
+								</else>
+							</IfThenElse>						
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SCOPE_LE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//a[text()='###TASK_NAME###']</findElement>
+				</if>
+				<then>
+					<executeBlock name="Scroll_Right_Scope" isRepeatUntilBreak="true"/>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='###TASK_NAME###']/../../td[(string(//span[text()='Scope']/../../@_d_index))+1]/a</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='###TASK_NAME###']/../../td[(string(//span[text()='Scope']/../../@_d_index))+1]/a</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>				
+						</then>
+						<else>
+						</else>
+					</IfThenElse>			
+				</then>
+				<else>
+					<error message="The task doesn't exist."/>
+				</else>
+			</IfThenElse>
+		</block>				
+		<block name="SEARCH_LE_NAME">
+			<!-- Search Name -->
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>			
+			<findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+			</sendKeys>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>		
+			<findElement by="xpath">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Search Results']//tr[td[number(//table[@summary='Search Results']/../..//th//span[text()='Name']/../../@_d_index)]//*[normalize-space(text())='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>'] and td[number(//table[@summary='Search Results']/../..//th//span[text()='Legal Entity Identifier']/../../@_d_index)][normalize-space(text())='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Entity Identifier"/>']]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Search Results']//tr[td[number(//table[@summary='Search Results']/../..//th//span[text()='Name']/../../@_d_index)]//*[normalize-space(text())='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>'] and td[number(//table[@summary='Search Results']/../..//th//span[text()='Legal Entity Identifier']/../../@_d_index)][normalize-space(text())='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Entity Identifier"/>']]/../../../../../td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="Edit_Button"/>
+					<executeBlock name="UPDATE"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_CREATE"/>
+					<executeBlock name="CREATE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SEARCH_CASE_2_LE_NAME">
+			<!-- Search Name -->
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>			
+			<findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+			</sendKeys>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>		
+			<findElement by="xpath">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Search Results']//tr[td[number(//table[@summary='Search Results']/../..//th//span[text()='Name']/../../@_d_index)]//*[normalize-space(text())='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>'] and td[number(//table[@summary='Search Results']/../..//th//span[text()='Legal Entity Identifier']/../../@_d_index)][normalize-space(text())='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Entity Identifier"/>']]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Search Results']//tr[td[number(//table[@summary='Search Results']/../..//th//span[text()='Name']/../../@_d_index)]//*[normalize-space(text())='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>'] and td[number(//table[@summary='Search Results']/../..//th//span[text()='Legal Entity Identifier']/../../@_d_index)][normalize-space(text())='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Entity Identifier"/>']]/../../../../../td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="Edit_Button"/>
+					<executeBlock name="UPDATE"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_CREATE"/>
+					<executeBlock name="CASE_2_CREATE"/>
+				</else>
+			</IfThenElse>
+		</block>		
+		<block name="SEARCH_PAYROLL_STATUTTORY_UNIT">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[contains(@data-afr-popupid,'dynamicRegion1')]//a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement by="xpath">//label[text()='Payroll Statutory Unit']/../..//span//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="LEGAL_ENTITY">
+			<executeBlock name="SCOPE_LE"/>
+			<executeBlock name="SELECT_SCOPE"/>
+			<executeBlock name="SEARCH_LE_NAME"/>			
+		</block>
+		<block name="LOOKUP_SUGGEST_ADDRESS">
+			<defineVariable name="LOOKUP_ADDRESS_STD" type="text"/>
+			<setVariable name="LOOKUP_ADDRESS_STD" append="false">
+				<valueText/>
+			</setVariable>
+			<defineVariable name="LOOKUP_ADDRESS_1" type="text"/>
+			<setVariable name="LOOKUP_ADDRESS_1" append="false">
+				<valueText/>
+			</setVariable>
+			<defineVariable name="LOOKUP_ADDRESS_2" type="text"/>
+			<setVariable name="LOOKUP_ADDRESS_2" append="false">
+				<valueText/>
+			</setVariable>
+			
+			<setVariable name="LOOKUP_ADDRESS_STD" append="true">//div[contains(@class,'PopupMenu')]//ul[contains(@id,'legalAddress')]//*[normalize-space(translate(text(), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'))=normalize-space(translate("</setVariable>
+			<setVariable name="LOOKUP_ADDRESS_STD" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>
+			</setVariable>
+			<setVariable name="LOOKUP_ADDRESS_STD" append="true">", "abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"))]</setVariable>
+			
+			<setVariable name="LOOKUP_ADDRESS_1" append="true">//div[contains(@class,'PopupMenu')]//ul[contains(@id,'legalAddress')]//*[normalize-space(translate(text(), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'))=normalize-space(translate("</setVariable>
+			<setVariable name="LOOKUP_ADDRESS_1" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Country"/>
+			</setVariable>
+			<setVariable name="LOOKUP_ADDRESS_1" append="true">,</setVariable>
+			<setVariable name="LOOKUP_ADDRESS_1" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>
+			</setVariable>
+			<setVariable name="LOOKUP_ADDRESS_1" append="true">", "abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"))]</setVariable>
+			
+			<setVariable name="LOOKUP_ADDRESS_2" append="true">//div[contains(@class,'PopupMenu')]//ul[contains(@id,'legalAddress')]//*[normalize-space(translate(text(), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'))=normalize-space(translate("</setVariable>
+			<setVariable name="LOOKUP_ADDRESS_2" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>
+			</setVariable>
+			<setVariable name="LOOKUP_ADDRESS_2" append="true">,</setVariable>
+			<setVariable name="LOOKUP_ADDRESS_2" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Country"/>
+			</setVariable>			
+			<setVariable name="LOOKUP_ADDRESS_2" append="true">", "abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"))]</setVariable>
+
+
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath"><valueVariable name="LOOKUP_ADDRESS_STD"/></findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true"><valueVariable name="LOOKUP_ADDRESS_STD"/></findElement>
+					<click waitForPageToFinishRendering="false" isSkipCheckDomError="true" isSkipBrowserTitleChange="true" />				
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" by="xpath"><valueVariable name="LOOKUP_ADDRESS_1"/></findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true"><valueVariable name="LOOKUP_ADDRESS_1"/></findElement>
+							<click waitForPageToFinishRendering="false" isSkipCheckDomError="true" isSkipBrowserTitleChange="true" />				
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" by="xpath"><valueVariable name="LOOKUP_ADDRESS_2"/></findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true"><valueVariable name="LOOKUP_ADDRESS_2"/></findElement>
+									<click waitForPageToFinishRendering="false" isSkipCheckDomError="true" isSkipBrowserTitleChange="true" />				
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Legal Address' or text()='Address Line 1']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>
+									</sendKeys>
+									<executeBlock name="WAITING_DATA_SHOW" isRepeatUntilBreak="true"/>
+									<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Legal Address']/../..//input</findElement>
+									<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+										<valueText>""</valueText>
+									</sendKeys>	
+									<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Legal Address' or text()='Address Line 1']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>
+									</sendKeys>
+									<executeBlock name="WAITING_DATA_SHOW" isRepeatUntilBreak="true"/>					
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//*[text()='No results found.']</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Legal Address']/../..//a[contains(@id,'lovIconId')]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement isSkipCheckDomError="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Search and Select: Legal Address']/../../../../../../..//button[text()='Search']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<executeBlock name="SCROLLBAR_ADDRESS">
+												<parameters>
+													<parameter name="SCROLLBAR_ADDRESS_NO_DATA" value="//div[contains(text(),'No data to display.') or contains(text(),'No rows to display')]"/>
+													<parameter name="SCROLLBAR_ADDRESS_FIRST_ROW" value="((//div[text()='Search and Select: Legal Address']/../../../../../../..//table[@_rowcount]//tr)[1]//td)[1]"/>
+													<parameter name="SCROLLBAR_ADDRESS_SCROLLER" value="//div[text()='Search and Select: Legal Address']/../../../../../../..//div[contains(@id,'scroller')]"/>
+													<parameter name="SCROLLBAR_ADDRESS_FIND_ROW">//div[text()='Search and Select: Legal Address']/../../../../../../..//td[contains(normalize-space(text()),normalize-space('<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>'))]</parameter>
+													<parameter name="SCROLLBAR_ADDRESS_FIND_ROW_1">//div[text()='Search and Select: Legal Address']/../../../../../../..//td[normalize-space(translate(text(), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'))=normalize-space(translate("<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>", "abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"))]</parameter>
+													<parameter name="SCROLLBAR_ADDRESS_CREATE_BLOCK" value="SELECT_ADDRESS"/>
+													<parameter name="SCROLLBAR_ADDRESS_UPDATE_BLOCK" value="SELECT_ADDRESS"/>
+												</parameters>
+											</executeBlock>
+											<findElement by="xpath">//div[text()='Search and Select: Legal Address']/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'PopupMenu')]//ul[contains(@id,'legalAddress')]//li[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>']</findElement>
+												</if>
+												<then>
+													<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'PopupMenu')]//ul[contains(@id,'legalAddress')]//li[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>']</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else>
+													<error message="Please check your Legal Address because It is not existing in application."/>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>		
+		</block>
+		<block name="LEGAL_ENTITY_ADDRESS">
+			<defineVariable name="VALUE_INPUT_ADDRESS_1" type="text"/>
+			<setVariable name="VALUE_INPUT_ADDRESS_1" append="false">
+				<valueText/>
+			</setVariable>
+			<defineVariable name="VALUE_INPUT_ADDRESS_2" type="text"/>
+			<setVariable name="VALUE_INPUT_ADDRESS_2" append="false">
+				<valueText/>
+			</setVariable>
+			<setVariable name="VALUE_INPUT_ADDRESS_1" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Country"/>
+			</setVariable>
+			<setVariable name="VALUE_INPUT_ADDRESS_1" append="true">,</setVariable>
+			<setVariable name="VALUE_INPUT_ADDRESS_1" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>
+			</setVariable>
+			
+			<setVariable name="VALUE_INPUT_ADDRESS_2" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>
+			</setVariable>
+			<setVariable name="VALUE_INPUT_ADDRESS_2" append="true">,</setVariable>
+			<setVariable name="VALUE_INPUT_ADDRESS_2" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Country"/>
+			</setVariable>
+	
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Legal Address']/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>
+					</sendKeys>
+					<executeBlock name="WAITING_DATA_SHOW" isRepeatUntilBreak="true"/>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'PopupMenu')]//ul[contains(@id,'legalAddress')]//*[contains(text(),'No results found')]</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Country"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>Japan</valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Legal Address']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+										<valueVariable name="VALUE_INPUT_ADDRESS_1"/>
+									</sendKeys>
+									<executeBlock name="WAITING_DATA_SHOW" isRepeatUntilBreak="true"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<comparisons separator="AND">
+												<comparison operator="EQUAL">
+													<leftOperand>
+														<valueKB inventoryName="MAIN_REPEAT_1" columnName="Country"/>
+													</leftOperand>
+													<rightOperand>
+														<valueText>China</valueText>
+													</rightOperand>
+												</comparison>
+											</comparisons>
+										</if>
+										<then>
+											<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Legal Address']/../..//input</findElement>
+											<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+												<valueVariable name="VALUE_INPUT_ADDRESS_1"/>
+											</sendKeys>
+											<executeBlock name="WAITING_DATA_SHOW" isRepeatUntilBreak="true"/>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<comparisons separator="AND">
+														<comparison operator="EQUAL">
+															<leftOperand>
+																<valueKB inventoryName="MAIN_REPEAT_1" columnName="Country"/>
+															</leftOperand>
+															<rightOperand>
+																<valueText>United States</valueText>
+															</rightOperand>
+														</comparison>
+													</comparisons>
+												</if>
+												<then>
+													<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Legal Address']/../..//input</findElement>
+													<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+														<valueVariable name="VALUE_INPUT_ADDRESS_2"/>
+													</sendKeys>
+													<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Legal Address']/../..//input</findElement>
+													<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+														<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Address"/>
+													</sendKeys>
+													<executeBlock name="WAITING_DATA_SHOW" isRepeatUntilBreak="true"/>
+												</then>
+												<else>
+													<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Legal Address']/../..//input</findElement>
+													<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+														<valueVariable name="VALUE_INPUT_ADDRESS_2"/>
+													</sendKeys>
+													<executeBlock name="WAITING_DATA_SHOW" isRepeatUntilBreak="true"/>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>		
+							<executeBlock name="LOOKUP_SUGGEST_ADDRESS"/>
+						</then>
+						<else>
+							<executeBlock name="LOOKUP_SUGGEST_ADDRESS"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+
+		<block name="CASE_2_LEGAL_ENTITY">
+			<executeBlock name="SCOPE_LE"/>
+			<executeBlock name="SELECT_SCOPE"/>
+			<executeBlock name="SEARCH_CASE_2_LE_NAME"/>			
+		</block>
+		
+		<block name="ADDITIONAL_US">
+			<!-- EIN or TIN -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//input[contains(@id,'RegCodeLe')]/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="EIN or TIN"/>
+				</parameters>
+			</executeBlock>	
+
+			<!-- Legal Reporting Unit Registration Number -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//input[contains(@id,'RegCodeEtb')]/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Legal Reporting Unit Registration Number"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="MANUAL_SEARCH_TASK">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//*[text()='Functional Areas']</findElement>
+				</if>
+				<then>			
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[contains(text(),'Setup and Maintenance')]</findElement>
+					<click waitForPageToFinishRendering="false" isSkipCheckDomError="true" isSkipBrowserTitleChange="true" />
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>	
+
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Setup: Financials']/..</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath" setFocus="true">(//*[contains(text(),'Setup:')]/../../..//a)[1]</findElement>
+					<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>	
+					<pause durationInSecs="2"/>						
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()="Financials"]</findElement>
+					<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>		
+					<pause durationInSecs="2"/>			
+				</else>
+			</IfThenElse>			
+
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='###TASK_NAME###']/../../td[(string(//span[text()='Scope']/../../@_d_index))+1]/a</findElement>
+				</if>
+				<then>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Search Tasks']/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueText>###TASK_NAME###</valueText>
+					</sendKeys>		
+					<pause durationInSecs="2"/>			
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Search Tasks']/../../../../../..//a</findElement>
+					<click waitForPageToFinishRendering="false" isSkipCheckDomError="true" isSkipBrowserTitleChange="true" />				
+					<pause durationInSecs="2"/>		
+					<findElement by="xpath">//*[text()='Search Task Results']/../../../../../../..//a[text()='###TASK_NAME###']</findElement>
+					<click waitForPageToFinishRendering="true"/>	
+					<pause durationInSecs="2"/>										
+				</else>
+			</IfThenElse>
+		</block>
+
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="MANUAL_SEARCH_TASK"/>
+			<executeBlock name="CASE_2_LEGAL_ENTITY"/>
+			
+			<executeBlock name="ADDITIONAL_US"/>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+					<parameters>
+						<parameter name="DFF_NAME" value="MAIN_REPEAT_2"/>
+					</parameters>
+				</executeBlock>	
+			</repeat>
+			<executeBlock name="GLOBAL_SAVE"/>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//div[text()='Confirmation']/../../../../../../..//*[text()='OK']</findElement>
+				</if>
+				<then>	
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Confirmation']/../../../../../../..//*[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="false" isSkipCheckDomError="true" isSkipBrowserTitleChange="true" />				
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>			
+			
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

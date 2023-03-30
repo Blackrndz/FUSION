@@ -1,0 +1,333 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Learning Catalog (Communities)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isIgnoreTaskSearchNavigation="true" hasScope="false" taskName="Communities" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<parameters>
+			<parameter name="INV_1" value="Learning Catalog - Communities"/>
+		</parameters>
+		
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Community Title"/>']</findElement>
+		</block>
+		
+		<block name="Expand_navigator">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//span[contains(text(),'My Client Groups')]/../../../..//span[contains(text(),'Learning')]/../../a</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='My Client Groups']/../..//a[contains(text(),'Learning')]</findElement>
+						</if>
+						<then>
+							<pause durationInSecs="2"/>
+							<break/>
+						</then>
+						<else>
+							<findElement isSkipCheckDomError="true" by="xpath">//span[contains(text(),'My Client Groups')]/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="2"/>				
+						</else>
+					</IfThenElse>		
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="MANUAL_LEARNING">
+			<findElement isSkipCheckDomError="true" by="xpath">//a[contains(@id,'UISmmLink') or @title='Navigator']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+			<pause durationInSecs="2"/>
+			<executeBlock name="Expand_navigator" isRepeatUntilBreak="true"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='My Client Groups']/../..//a[contains(text(),'Learning')]</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//*[text()='My Client Groups']/../..//a[contains(text(),'Learning')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+					<pause durationInSecs="2"/>	
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath">//span[contains(text(),'My Client Groups')]/../../../..//span[contains(text(),'Learning')]/../../a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+					<pause durationInSecs="2"/>				
+				</else>
+			</IfThenElse>
+			<executeBlock name="Skip_Error"/>
+			<executeBlock name="LEARNING_CATALOG"/>
+			<executeBlock name="Skip_Error"/>
+		</block>
+		<block name="LEARNING_CATALOG">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[text()='Learning Catalog']/..</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath" >//div[text()='Learning Catalog']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>	
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Learning Catalog']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>				
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Skip_Error">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Error']/../../../../../../..//*[text()='OK']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Error']/../../../../../../..//*[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>	
+		
+		<block name="SEARCH">
+			<!--Communities-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_TAB">
+				<parameters>
+					<parameter name="TAB_NAME" value="Communities"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="2"/>
+			<!--GLOBAL_EXPAND-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<!--BUTTON-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<!--GLOBAL_EXPAND-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="MANUAL_Community_Title"/>
+			<!--BUTTON-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="INV_1" columnName="Community Title"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="INV_1" columnName="Community Title"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="5"/>
+					<executeBlock name="EDIT"/>
+				</then>
+				<else>
+					<findElement by="xpath">//*[text()='Create']/..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="INV_1" columnName="Community Type"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Category Community</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<findElement by="xpath">//td[text()='Category Community']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="INV_1" columnName="Community Type"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>Topic Community</valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement by="xpath">//td[text()='Topic Community']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="2"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<comparisons separator="AND">
+												<comparison operator="EQUAL">
+													<leftOperand>
+														<valueKB inventoryName="INV_1" columnName="Community Type"/>
+													</leftOperand>
+													<rightOperand>
+														<valueText>Official Community</valueText>
+													</rightOperand>
+												</comparison>
+											</comparisons>
+										</if>
+										<then>
+											<findElement by="xpath">//td[text()='Official Community']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="2"/>
+										</then>
+										<else/>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<pause durationInSecs="2"/>
+		</block>
+		<block name="MANUAL_Community_Title">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Community Title']/../..//a</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Community Title']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//*[text()='Equals']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<!--Community Title-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Community Title']/../..//tr/td[2]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Community Title"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="EDIT">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//button[contains(text(),'Edit')]</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//button[contains(text(),'Edit')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="COMMUNITIES">
+			<!--Community Title-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Community Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Community Title"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Privacy-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Privacy']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Privacy"/>
+				</parameters>
+			</executeBlock>
+			<!--Member Contributions-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Member Contributions']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Member Contributions"/>
+				</parameters>
+			</executeBlock>
+			<!--Override conversation system setup configuration-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Override conversation system setup configuration']/../../../../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Override conversation system setup configuration"/>
+				</parameters>
+			</executeBlock>
+			<!--Enable conversations for self service users on the catalog page-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enable conversations for self service users on the catalog page']/../../../../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Enable conversations for self service users on the catalog page"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="Back_button">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//a[@title='Done']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[@title='Done']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock name="MANUAL_LEARNING"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="SEARCH"/>
+			<executeBlock name="COMMUNITIES"/>
+			<pause durationInSecs="2"/>
+			<findElement by="xpath">//button[text()='Submit']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="5"/>
+			<executeBlock name="Back_button"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

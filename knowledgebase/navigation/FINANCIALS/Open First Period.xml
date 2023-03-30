@@ -1,0 +1,290 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Open First Period</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="true" defaultBatchSize="3" isIgnoreTaskSearchNavigation="true" taskName="Open First Period" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Data Access Set Data Access for Users"/>
+		</dependencies>
+		<block name="Submit_Button">
+			<findElement by="xpath">//span[text()='m']/../..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Confirm_Pop_up">
+			<findElement by="xpath">//div[text()='Confirmation']/../../../../../../..//button[text()='OK']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Save And Close">
+			<findElement by="xpath" isSkipCheckDomError="true">//span[text()='S']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="Click Via Project">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[text()='Manage Implementation Projects']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//a[text()='Setup and Maintenance']</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//a[contains(@class,'menu')]</findElement>
+								</if>
+								<then>
+									<pause durationInSecs="2"/>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//a[contains(@class,'menu')]</findElement>
+									<click waitForPageToFinishRendering="false" isSkipCheckDomError="true" isSkipBrowserTitleChange="true" />	
+									<pause durationInSecs="2"/>	
+								</then>
+								<else>	
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//a[contains(@id,'UIScm')]</findElement>
+										</if>
+										<then>
+											<pause durationInSecs="2"/>
+											<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//a[contains(@id,'UIScm')]</findElement>
+											<click waitForPageToFinishRendering="false" isSkipCheckDomError="true" isSkipBrowserTitleChange="true" />	
+											<pause durationInSecs="2"/>	
+										</then>
+										<else>													
+										</else>
+									</IfThenElse>																							
+								</else>
+							</IfThenElse>
+							<findElement by="xpath">//a[text()='Setup and Maintenance...' or text()='Setup and Maintenance']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</else>
+					</IfThenElse>
+					<findElement by="xpath">//a[text()='Manage Implementation Projects']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">//span[text()='Implementation Projects']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<findElement by="xpath">//a[text()='###IMPLEMENTATION_PROJECT###']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//tr[td/label = 'Task']//input</findElement>
+			<sendKeys isClear="true">
+				<valueText>###TASK_NAME###</valueText>
+			</sendKeys>
+			<findElement by="xpath">//tr[td[2]//label[text()='Task']] //td[4]//a/img[@title='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//a[text()='###TASK_NAME###']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Search_Primary_Ledgers">
+			<pause durationInSecs="3"/>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//a[@title='Clear All']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//input[contains(@id,'primaryLedgerNameId')]</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="Open First Period - Open First Period" columnName="Primary Ledger"/>
+					</sendKeys>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Select and Add: Primary Ledger']/../../../../../../..//div[text()='No data to display.']//table</findElement>
+						</if>
+						<then>
+							<error message="Data issue: The field 'Primary Ledger' No results found."/>
+						</then>
+						<else>
+							<findElement isSkipCheckDomError="true" by="xpath">//td[text()='<valueKB inventoryName="Open First Period - Open First Period" columnName="Primary Ledger"/>']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<executeBlock name="Save And Close"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" by="xpath">//td[text()='<valueKB inventoryName="Open First Period - Open First Period" columnName="Primary Ledger"/>']</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//td[text()='<valueKB inventoryName="Open First Period - Open First Period" columnName="Primary Ledger"/>']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<executeBlock name="Save And Close"/>
+						</then>
+						<else>
+							<error message="Data issue: The field 'Primary Ledger' No results found."/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Open_First_Period">
+			<!--Notify me when this process ends-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Notify me when this process ends']/../.."/>
+					<parameter name="INV_NAME" value="Open First Period - Open First Period"/>
+					<parameter name="COL_NAME" value="Notify me when this process ends"/>
+				</parameters>
+			</executeBlock>
+			<!--Submission Notes-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Submission Notes']/../../.."/>
+					<parameter name="INV_NAME" value="Open First Period - Open First Period"/>
+					<parameter name="COL_NAME" value="Submission Notes"/>
+				</parameters>
+			</executeBlock>
+			<!--Data Access Set-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Data Access Set']/../.."/>
+					<parameter name="INV_NAME" value="Open First Period - Open First Period"/>
+					<parameter name="COL_NAME" value="Data Access Set"/>
+				</parameters>
+			</executeBlock>
+			<!-- Ledger or Ledger Set-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Ledger or Ledger Set']/../.."/>
+					<parameter name="INV_NAME" value="Open First Period - Open First Period"/>
+					<parameter name="COL_NAME" value="Ledger or Ledger Set"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Accounting Period']/../.."/>
+					<parameter name="INV_NAME" value="Open First Period - Open First Period"/>
+					<parameter name="COL_NAME" value="Accounting Period"/>
+					<parameter name="SEARCH_1" value="Accounting Period"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="MANUAL_SEARCH_TASK">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//*[text()='Functional Areas']</findElement>
+				</if>
+				<then>			
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[contains(text(),'Setup and Maintenance')]</findElement>
+					<click waitForPageToFinishRendering="false" isSkipCheckDomError="true" isSkipBrowserTitleChange="true" />
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>	
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Setup: Financials']/..</findElement>
+				</if>
+				<then>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath" setFocus="true">(//*[contains(text(),'Setup:')]/../../..//a)[1]</findElement>
+					<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>	
+					<pause durationInSecs="2"/>						
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()="Financials"]</findElement>
+					<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>		
+					<pause durationInSecs="2"/>			
+				</else>
+			</IfThenElse>			
+			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Search Tasks']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+				<valueText>###TASK_NAME###</valueText>
+			</sendKeys>		
+			<pause durationInSecs="2"/>			
+			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Search Tasks']/../../../../../..//a</findElement>
+			<click waitForPageToFinishRendering="false" isSkipCheckDomError="true" isSkipBrowserTitleChange="true" />				
+			<pause durationInSecs="5"/>	
+		</block>
+		<block name="Scroll_Right_Scope">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//*[text()='###TASK_NAME###']/../../td[(string(//span[text()='Scope']/../../@_d_index))+1]/a</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Tasks']/../..//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="RIGHT"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SELECTED_SCOPE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='###TASK_NAME###']</findElement>
+				</if>
+				<then>
+					<executeBlock name="Scroll_Right_Scope" isRepeatUntilBreak="true"/>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='###TASK_NAME###']/../../td[(string(//span[text()='Scope']/../../@_d_index))+1]/a</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='###TASK_NAME###']/../../td[(string(//span[text()='Scope']/../../@_d_index))+1]/a</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>				
+						</then>
+						<else>
+						</else>
+					</IfThenElse>			
+				</then>
+				<else>
+					<error message="The task doesn't exist."/>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[text()='Select Scope']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//label[text()='Primary Ledger']/../..//select</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//label[text()='Primary Ledger']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+								<valueText>Select and Add</valueText>
+							</select>								
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Primary Ledger']/../..//input/..//div//li[text()='Select and Add']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+						</else>
+					</IfThenElse>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select Scope']/../../../../../../..//button[text()='Apply and Go to Task'][1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+					<executeBlock name="Search_Primary_Ledgers"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>		
+		<executeBlock name="MANUAL_SEARCH_TASK"/>
+		<repeat inventoryName="Open First Period - Open First Period">
+			<executeBlock name="SELECTED_SCOPE"/>
+			<executeBlock name="Open_First_Period"/>
+			<executeBlock name="Submit_Button"/>
+			<executeBlock name="Confirm_Pop_up"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

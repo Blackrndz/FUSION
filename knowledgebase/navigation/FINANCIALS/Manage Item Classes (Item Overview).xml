@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Item Classes (Item Overview)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Item Classes" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Item Classes"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_1_REPEAT" value="Manage Item Classes - Item Overview"/>
+		</parameters>
+		<block name="Expand_Search">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//a[@title='Expand Search']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//a[@title='Expand Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Search">
+			<executeBlock name="Expand_Search"/>
+			<findElement by="xpath">//button[text()='Reset']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<executeBlock name="Expand_Search"/>
+			<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Item Class']/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//label[text()='Item Class']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Equals</valueText>
+							</select>								
+						</then>
+						<else>              
+							<findElement by="xpath">//label[text()='Item Class']/../..//input/..//div//li[text()='Equals']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true" />
+						</else>
+					</IfThenElse>
+			<findElement by="xpath">//label[text()='Item Class']/../..//span/input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_1_REPEAT" columnName="Item Class"/>
+			</sendKeys>
+			<pause durationInSecs="2"/>
+			<executeBlock name="Expand_Search"/>
+			<findElement by="xpath">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="1"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='Search Results']/../../../../../../..//table[@summary='Item Class Hierarchy']//td[1][text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Item Class"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Search Results']/../../../../../../..//table[@summary='Item Class Hierarchy']//td[1][text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Item Class"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//div[text()='Search Results']/../../../../../../..//span[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="GLOBAL_UPDATE"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[text()='Search Results']/../../../../../../..//table[@summary='Item Class Hierarchy']//tr//td[1]//span['<valueKB inventoryName="MAIN_1_REPEAT" columnName="Item Class"/>']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[text()='Search Results']/../../../../../../..//table[@summary='Item Class Hierarchy']//td[1]//span[text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Item Class"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//div[text()='Search Results']/../../../../../../..//span[text()='K']/..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="GLOBAL_UPDATE"/>
+						</then>
+						<else>
+							<error message="Data Doesn't Exists, Please Make Data Create on Navigation 'Manage Item Classes'"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		    <block name="Item_Overview">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//a[contains(@class,'Select')][text()='Pages and Attribute Groups']</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement by="xpath">//a[text()='Pages and Attribute Groups']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//a[contains(@class,'Select')][text()='Item Overview']</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement by="xpath">//a[text()='Item Overview']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+            <executeBlock name="SCROLLBAR">
+                <parameters>
+                    <parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Item Overview']/../..//div[contains(text(),'No data to display')]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Item Overview']//tr[1]//td)[1]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Item Overview']/../..//div[contains(@id,'scroller')]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Item Overview']//tr[td[2]/span/select[@title='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Entity Type"/>'] and td[3]//*[@title='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Entity Group"/>']]</parameter>
+                    <parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[@summary='Item Overview']//tr[td[2]//span[text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Entity Type"/>'] and td[3]//span[text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Entity Group"/>']]</parameter>
+					<parameter name="SCROLLBAR_GENERIC_3_FIND_ROW">//table[@summary='Item Overview']//tr[td[2][text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Entity Type"/>'] and td[3][text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Entity Group"/>']]</parameter>
+					<parameter name="SCROLLBAR_GENERIC_4_FIND_ROW">//table[@summary='Item Overview']//tr[td[2][text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Entity Type"/>'] and td[3]//span[text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Entity Group"/>']]</parameter>
+					<parameter name="SCROLLBAR_GENERIC_5_FIND_ROW">//table[@summary='Item Overview']//tr[td[2]//span[text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Entity Type"/>'] and td[3][text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Entity Group"/>']]</parameter>
+                    <parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Item_Overview"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Item_Overview"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Create_Item_Overview">
+       
+                    <executeBlock name="GLOBAL_ADD"/>
+					<!--Entity Type-->
+					<executeBlock name="SELECT_KB">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Item Overview']//tr[contains(@class,'Select')]//label[text()='Entity Type']/.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="Entity Type"/>
+						</parameters>
+					</executeBlock>	
+                   <!--Entity Group-->
+					<executeBlock name="SELECT_KB">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Item Overview']//tr[contains(@class,'Select')]//label[text()='Entity Group']/.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="Entity Group"/>
+						</parameters>
+					</executeBlock>	
+
+        </block>
+        <block name="Update_Item_Overview"/>
+       
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_1_REPEAT">
+		<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//label[text()='Item Class']/../..//input[@value='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Item Class"/>']</findElement>
+				</if>
+				<then>
+					<executeBlock name="Item_Overview"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+					<executeBlock name="Search"/>
+					<executeBlock name="Item_Overview"/>
+				</else>
+			</IfThenElse>
+			<executeBlock name="GLOBAL_SAVE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>
+		 

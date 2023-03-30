@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Export Benefits Plan Configuration</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Export Benefits Plan Configuration" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Create Implementation Users"/>
+			<navigation name="Manage Benefit Programs (Benefit Programs)"/>
+			<navigation name="Manage Benefit Plans (Benefit Plans)"/>
+			<navigation name="Manage Eligibility Profiles"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Export Benefits Plan Configuration - Benefits Plan Configuration"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='Process Name']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="Export Name"/>
+			</click>
+		</block>
+		<block name="Create">
+			<executeBlock name="GLOBAL_CREATE"/>
+		</block>
+		<block name="Update">
+			<findElement isSkipCheckDomError="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+		</block>
+		<block name="Configure">
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Export Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Export Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>		
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Export Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Export Type"/>
+				</parameters>
+			</executeBlock>					
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Eligibility Profile' or text()='Program Name' or text()='Plan Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Export Type Value"/>
+					<parameter name="SEARCH_1" value="Name' or text()='Program Name' or text()='Plan Name"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="WAITING_CONFIRM">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Confirmation']/../../../../../../..//*[text()='OK']</findElement>
+				</if>
+				<then>
+					<break/>				
+				</then>
+				<else>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>	
+		</block>		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Export Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Export Name"/>
+				</parameters>
+			</executeBlock>		
+			<findElement isSkipCheckDomError="true" by="xpath">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  	
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Export Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Export Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>				
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_CREATE"/>
+				</else>
+			</IfThenElse>		
+			<executeBlock name="Configure"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Save']/..//*[@aria-disabled='true']</findElement>
+				</if>
+				<then>
+					<executeBlock name="GLOBAL_SAVE"/>
+					<findElement by="xpath">//*[text()='Submit']</findElement>
+					<click waitForPageToFinishRendering="true"/>	
+					<executeBlock name="WAITING_CONFIRM" isRepeatUntilBreak="true"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//*[text()='Confirmation']/../../../../../../..//*[text()='OK']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//*[text()='Confirmation']/../../../../../../..//*[text()='OK']</findElement>
+							<click waitForPageToFinishRendering="true"/>	
+						</then>
+						<else/>
+					</IfThenElse>						
+				</then>
+				<else>
+					<findElement by="xpath">//*[text()='Submit']/../..//button[text()='Cancel']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>			
+			
+			
+		</repeat>
+	</fusionNavigation>
+</navigation>

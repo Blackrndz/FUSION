@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Expense Report Templates (Expense Types Project Expenditure Type Mapping)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Expense Report Templates" isBatchingAllowed="false" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Chart of Accounts Structures (Deploy)"/>
+			<navigation name="SegmentValues"/>
+			<navigation name="Manage Create Business Unit"/>
+			<navigation name="Manage Expenditure Types"/>
+			<navigation name="Manage Policies by Expense Category (Miscellaneous)"/>
+			<navigation name="Manage Policies by Expense Category (Rates Miscellaneous)"/>
+			<navigation name="Manage Policies by Expense Category (Mileage)"/>
+			<navigation name="Manage Policies by Expense Category (Rates Mileage)"/>
+			<navigation name="Manage Policies by Expense Category (Accommodations)"/>
+			<navigation name="Manage Policies by Expense Category (Rates Accommodations)"/>
+			<navigation name="Manage Policies by Expense Category (Car Rental)"/>
+			<navigation name="Manage Policies by Expense Category (Rates Car Rental)"/>
+			<navigation name="Manage Policies by Expense Category (Entertainment)"/>
+			<navigation name="Manage Policies by Expense Category (Rates Entertainment)"/>
+			<navigation name="Manage Policies by Expense Category (Meals)"/>
+			<navigation name="Manage Policies by Expense Category (Rates Meals)"/>
+			<navigation name="Manage Policies by Expense Category (Airfare)"/>
+			<navigation name="Manage Policies by Expense Category (Rates Airfare)"/>
+			<navigation name="Manage Policies by Expense Category (Activate)"/>
+			<navigation name="Manage Expense Report Templates"/>
+			<navigation name="Manage Expense Report Templates (Expense Types)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_1_REPEAT" value="Manage Expense Report Templates - Expense Report Templates"/>
+			<parameter name="MAIN_2_REPEAT" value="Manage Expense Report Templates - Expense Types"/>
+			<parameter name="MAIN_5_REPEAT" value="Manage Expense Report Templates - Expense Types (Project Expenditure Type Mapping)"/>
+			<parameter name="MAIN_6_REPEAT" value="Manage Expense Report Templates - Expense Types (Project Expenditure Type)"/>
+		</parameters>
+		
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Business Unit"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_2_REPEAT" columnName="Business Unit"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_5_REPEAT" columnName="Business Unit"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_6_REPEAT" columnName="Business Unit"/>']</findElement>		
+		</block>
+
+		<block name="TAB_PROJECT_EXPEND_TYPE_MAPPING">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//a[contains(@class,'Disabled')][text()='Project Expenditure Type Mapping']</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[text()='Project Expenditure Type Mapping']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="PROJECT_EXPEND_TYPE_MAPPING">
+			<!--Enable projects-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enable projects']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_5_REPEAT"/>
+					<parameter name="COL_NAME" value="Enable projects"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[text()='Warning']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[contains(@class,'Expansion')]/..//div[text()='Warning']/../../../../../../..//button[text()='Yes']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Default Project Expenditure Type-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Default Project Expenditure Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_5_REPEAT"/>
+					<parameter name="COL_NAME" value="Default Project Expenditure Type"/>
+					<parameter name="SEARCH_1" value="Expenditure Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Require receipts for project expenses-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Require receipts for project expenses']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_5_REPEAT"/>
+					<parameter name="COL_NAME" value="Require receipts for project expenses"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="NEW_EXPENDITURE_MAPPING">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Project Expenditure Type Mapping']/../../../..//div[@title='Add Row']"/>
+				</parameters>   
+			</executeBlock>	
+		</block>
+		
+		<block name="UPDATE_EXPENDITURE_MAPPING">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="EXPENDITURE_MAPPING">
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Project Expenditure Type Mapping']//tr[contains(@class,'Select')]//label[text()='Project Unit']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_6_REPEAT"/>
+					<parameter name="COL_NAME" value="Project Unit"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Project Expenditure Type Mapping']//tr[contains(@class,'Select')]//label[text()='Project Expenditure Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_6_REPEAT"/>
+					<parameter name="COL_NAME" value="Project Expenditure Type"/>
+					<parameter name="SEARCH_1" value="Expenditure Type"/>
+				</parameters>
+			</executeBlock>
+		</block>
+	
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_1_REPEAT">
+			<executeBlock navigationName="Manage Expense Report Templates (Expense Types)" name="SEARCH_EXPENSE_REPORT_TEMPLATES"/>
+			<repeat inventoryName="MAIN_2_REPEAT">
+				<executeBlock navigationName="Manage Expense Report Templates (Expense Types)" name="TAB_EXPENSE_TYPES"/>
+				<executeBlock navigationName="Manage Expense Report Templates (Expense Types)" name="SEARCH_UPDATE_EXPENSE_TYPES"/>
+				<repeat inventoryName="MAIN_5_REPEAT">
+					<executeBlock name="TAB_PROJECT_EXPEND_TYPE_MAPPING"/>
+					<executeBlock name="PROJECT_EXPEND_TYPE_MAPPING"/>
+					<repeat inventoryName="MAIN_6_REPEAT">
+						<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+							<parameters>
+								<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Project Expenditure Type Mapping']/../..//div[contains(text(),'No data to display.')]"/>
+								<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Project Expenditure Type Mapping'][@_rowcount]//tr[1]//td)[1]"/>
+								<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Project Expenditure Type Mapping']/../..//div[contains(@id,'scroller')]"/>
+								<parameter name="TEMPLATE_1_FIND_ROW">//table[contains(@summary,'Project Expenditure Type Mapping')]//tr[td//*[@value='<valueKB inventoryName="MAIN_6_REPEAT" columnName="Project Unit"/>']]</parameter>
+								<parameter name="TEMPLATE_2_FIND_ROW">//table[contains(@summary,'Project Expenditure Type Mapping')]//tr//select[@title='<valueKB inventoryName="MAIN_6_REPEAT" columnName="Project Unit"/>']</parameter>
+								<parameter name="TEMPLATE_CREATE" value="NEW_EXPENDITURE_MAPPING"/>
+								<parameter name="TEMPLATE_UPDATE" value="UPDATE_EXPENDITURE_MAPPING"/>
+							</parameters>
+						</executeBlock>
+						<executeBlock name="EXPENDITURE_MAPPING"/>
+						<executeBlock name="GLOBAL_SAVE"/>
+					</repeat>
+				</repeat>
+				<executeBlock navigationName="Manage Expense Report Templates (Expense Types)" name="SAVE_EXPENSE_TYPE"/>
+				<executeBlock navigationName="Manage Expense Report Templates (Expense Types)" name="SAVE_AND_CLOSE_EXPENSE_TYPE"/>
+				<pause durationInSecs="2"/>
+				<executeBlock navigationName="Manage Expense Report Templates (Expense Types)" name="WARING_EXPENSE_TYPE"/>
+				<executeBlock navigationName="Manage Expense Report Templates (Expense Types)" name="WARING"/>
+			</repeat>
+			<executeBlock navigationName="Manage Expense Report Templates (Expense Types)" name="SAVE"/>
+			<executeBlock navigationName="Manage Expense Report Templates (Expense Types)" name="SAVE_AND_CLOSE"/>
+			<executeBlock navigationName="Manage Expense Report Templates (Expense Types)" name="WARING"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

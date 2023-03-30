@@ -1,0 +1,225 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Financial Plan Types (Reporting Options)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Financial Plan Types" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Financial Plan Types"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Financial Plan Types - Reporting Options"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+			</click>
+		</block>
+		<block name="SREACH_PLAN_TYPE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Manage Financial Plan Types']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Manage Financial Plan Types')]/../../../../../../.."/>
+						</parameters>   
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//a[@title='Clear All']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//a[@title='Clear All']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+					<IfThenElse>
+						<if> <!-- 23A -->
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//table[@summary='Manage Financial Plan Types']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Manage Financial Plan Types']/../..//tr//span[text()='Name']/../../@_d_index)]//input</findElement> 
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_AND_ENTER">
+								<parameters>
+									<parameter name="XPATH" value="//table[@summary='Manage Financial Plan Types']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Manage Financial Plan Types']/../..//tr//span[text()='Name']/../../@_d_index)]"/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Name"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else> <!-- 22D -->
+							<findElement by="xpath">//table[@summary='Manage Financial Plan Types']/../..//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Manage Financial Plan Types']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Manage Financial Plan Types'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Manage Financial Plan Types']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Manage Financial Plan Types']//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</parameter>
+							<parameter name="TEMPLATE_CREATE" value="CREATE_PLAN_TYPE"/>
+							<parameter name="TEMPLATE_UPDATE" value="UPDATE_PLAN_TYPE"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+        </block>
+		<block name="CREATE_PLAN_TYPE">
+			<error message="Please create plan types." />
+		</block>
+		<block name="UPDATE_PLAN_TYPE">
+			<findElement by="xpath">(TEMPLATE_1_FIND_ROW/../../../../../../..//td)[1]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<executeBlock name="GLOBAL_UPDATE"/>
+		</block>
+		<block name="TAB_REPORTING_OPTIONS">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='Reporting Options'][contains(@class,'Selected')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[text()='Reporting Options']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="REPORTING_OPTIONS">
+			<!--Report Quantity Using-->
+			<IfThenElse>
+					<if>
+						<comparisons separator="AND">
+							<comparison operator="NOT_EQUAL">
+								<leftOperand>
+									<valueKB inventoryName="REPEAT_1_MAIN" columnName="Report Quantity Using"/>
+								</leftOperand>
+								<rightOperand>
+									<valueText/>
+								</rightOperand>
+							</comparison>
+						</comparisons>
+					</if>
+					<then>
+						<IfThenElse>
+							<if>					
+								<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//legend[text()='Report Quantity Using']/..//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Report Quantity Using"/>']/..//input[not(@disabled)]</findElement>	
+							</if>
+							<then>
+								<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//legend[text()='Report Quantity Using']/..//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Report Quantity Using"/>']/..//input</findElement>	
+								<click waitForPageToFinishRendering="true"/>			
+							</then>
+							<else>
+								<IfThenElse>
+									<if>					
+										<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//input[@id=//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Report Quantity Using"/>']//@for][not(@disabled)]</findElement>	
+									</if>
+									<then>
+										<findElement highlightTurnedOff="true" by="xpath">//input[@id=//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Report Quantity Using"/>']//@for]</findElement>	
+										<click waitForPageToFinishRendering="true"/>			
+									</then>
+									<else/>
+								</IfThenElse>	
+							</else>
+						</IfThenElse>
+					</then>
+					<else/>
+				</IfThenElse>
+				<!--Report Cost-->
+				<IfThenElse>
+					<if>
+						<comparisons separator="AND">
+							<comparison operator="NOT_EQUAL">
+								<leftOperand>
+									<valueKB inventoryName="REPEAT_1_MAIN" columnName="Report Cost"/>
+								</leftOperand>
+								<rightOperand>
+									<valueText/>
+								</rightOperand>
+							</comparison>
+						</comparisons>
+					</if>
+					<then>
+						<IfThenElse>
+							<if>					
+								<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//legend[text()='Report Cost']/..//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Report Cost"/>']/..//input[not(@disabled)]</findElement>	
+							</if>
+							<then>
+								<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//legend[text()='Report Cost']/..//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Report Cost"/>']/..//input</findElement>	
+								<click waitForPageToFinishRendering="true"/>			
+							</then>
+							<else>
+								<IfThenElse>
+									<if>					
+										<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//input[@id=//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Report Cost"/>']//@for][not(@disabled)]</findElement>	
+									</if>
+									<then>
+										<findElement highlightTurnedOff="true" by="xpath">//input[@id=//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Report Cost"/>']//@for]</findElement>	
+										<click waitForPageToFinishRendering="true"/>			
+									</then>
+									<else/>
+								</IfThenElse>	
+							</else>
+						</IfThenElse>
+					</then>
+					<else/>
+				</IfThenElse>
+				<!--Amount Scale-->
+				<executeBlock name="SELECT_KB">
+					<parameters>
+						<parameter name="XPATH" value="//label[text()='Amount Scale']/../.."/>
+						<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+						<parameter name="COL_NAME" value="Amount Scale"/>
+					</parameters>
+				</executeBlock>	
+				<!--Currency Type-->
+				<executeBlock name="SELECT_KB">
+					<parameters>
+						<parameter name="XPATH" value="//label[text()='Currency Type']/../.."/>
+						<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+						<parameter name="COL_NAME" value="Currency Type"/>
+					</parameters>
+				</executeBlock>	
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//label[text()='Name']/../..//input[@value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<executeBlock name="TAB_REPORTING_OPTIONS"/>
+					<executeBlock name="REPORTING_OPTIONS"/>
+					<executeBlock name="GLOBAL_SAVE"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+					<executeBlock name="SREACH_PLAN_TYPE"/>
+					<executeBlock name="TAB_REPORTING_OPTIONS"/>
+					<executeBlock name="REPORTING_OPTIONS"/>
+					<executeBlock name="GLOBAL_SAVE"/>
+				</else>
+			</IfThenElse>
+		</repeat>
+	</fusionNavigation>
+</navigation>

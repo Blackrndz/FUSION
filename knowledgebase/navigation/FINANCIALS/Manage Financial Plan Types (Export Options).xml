@@ -1,0 +1,540 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Financial Plan Types (Export Options)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Financial Plan Types" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Financial Plan Types"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Financial Plan Types - Export Options"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Financial Plan Types - Cost Measures"/>
+			<parameter name="REPEAT_3_MAIN" value="Manage Financial Plan Types - Revenue Measures"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Name"/>']/../..//input</findElement>
+		</block>
+		
+		<block name="SREACH_PLAN_TYPE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Manage Financial Plan Types']</findElement>
+				</if>
+				<then>
+					<!-- <executeBlock name="SPECIFY_QUERY_BY_EXAMPLE">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Manage Financial Plan Types')]/../../../../../../.."/>
+						</parameters>   
+					</executeBlock>
+					<findElement by="xpath">//table[@summary='Manage Financial Plan Types']/../..//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement> -->
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Manage Financial Plan Types']/../../../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath">//table[@summary='Manage Financial Plan Types']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Manage Financial Plan Types']/../..//tr//span[text()='Name']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+						<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>	
+							<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Manage Financial Plan Types']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Manage Financial Plan Types'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Manage Financial Plan Types']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Manage Financial Plan Types']//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</parameter>
+							<parameter name="TEMPLATE_CREATE" value="CREATE_PLAN_TYPE"/>
+							<parameter name="TEMPLATE_UPDATE" value="UPDATE_PLAN_TYPE"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="CREATE_PLAN_TYPE">
+			<error message="Please create plan types." />
+		</block>
+		<block name="UPDATE_PLAN_TYPE">
+			<findElement by="xpath">(TEMPLATE_1_FIND_ROW/../../../../../../..//td)[1]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Financial Plan Types']/../../../..//div[@title='Edit']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Financial Plan Types']/../../../..//div[@title='Edit']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="TAB_EXPORT_OPTIONS">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='Export Options'][contains(@class,'Selected')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_TAB">
+						<parameters>
+							<parameter name="TAB_NAME" value="Export Options"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Display_Options">
+			<!--Cost - Display currency conversion attributes and amounts in multiple transaction currencies-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="(//label[text()='Display currency conversion attributes and amounts in multiple transaction currencies']/../..)[1]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Cost - Display currency conversion attributes and amounts in multiple transaction currencies"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="1"/>
+			<!--Cost - Display commitments-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="(//label[text()='Display commitments']/../..)[1]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Cost - Display commitments"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="1"/>
+			<!--Revenue - Display currency conversion attributes and amounts in multiple transaction currencies-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="(//label[text()='Display currency conversion attributes and amounts in multiple transaction currencies']/../..)[2]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Revenue - Display currency conversion attributes and amounts in multiple transaction currencies"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="1"/>
+			<!--Revenue - Display commitments-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="(//label[text()='Display commitments']/../..)[2]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Revenue - Display commitments"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Cost_Options_Measures">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Cost Date Type')]</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[contains(text(),'Cost Date Type')]/../../../../../../..//legend[text()='Export Options Selected Measures']/..//label[text()='<valueKB
+														inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//div[contains(text(),'Cost Date Type')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//label[text()='<valueKB
+														inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Cost Date Type')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//li[contains(@class,'Disabled')]/label[text()='<valueKB
+														inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+										</if>
+										<then>
+											<error message="Cannot Move to Selected Entities"/>
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Cost Date Type')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//label[text()='<valueKB
+														inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Cost Date Type')]/../../../../../../..//a[@title='Move selected items to: Selected Measures']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Effective Multiplier')]</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//div[contains(text(),'Effective Multiplier')]/../../../../../../..//legend[text()='Export Options Selected Measures']/..//label[text()='<valueKB
+														inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+								</if>
+								<then/>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Effective Multiplier')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//label[text()='<valueKB
+														inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+										</if>
+										<then>
+											<IfThenElse>
+												<if>
+													<findElement by="xpath">//div[contains(text(),'Effective Multiplier')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//li[contains(@class,'Disabled')]/label[text()='<valueKB
+														inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+												</if>
+												<then>
+													<error message="Cannot Move to Selected Entities"/>
+												</then>
+												<else>
+													<findElement by="xpath">//div[contains(text(),'Effective Multiplier')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//label[text()='<valueKB
+														inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+													<click waitForPageToFinishRendering="true"/>
+													<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Effective Multiplier')]/../../../../../../..//a[@title='Move selected items to: Selected Measures']</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</else>
+											</IfThenElse>
+										</then>
+										<else/>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Requisition Commitments')]</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Requisition Commitments')]/../../../../../../..//legend[text()='Export Options Selected Measures']/..//label[text()='<valueKB
+																			inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+										</if>
+										<then/>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement by="xpath">//div[contains(text(),'Requisition Commitments')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//label[text()='<valueKB
+																			inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+												</if>
+												<then>
+													<IfThenElse>
+														<if>
+															<findElement by="xpath">//div[contains(text(),'Requisition Commitments')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//li[contains(@class,'Disabled')]/label[text()='<valueKB
+																			inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+														</if>
+														<then>
+															<error message="Cannot Move to Selected Entities"/>
+														</then>
+														<else>
+															<findElement by="xpath">//div[contains(text(),'Requisition Commitments')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//label[text()='<valueKB
+																			inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+															<click waitForPageToFinishRendering="true"/>
+															<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Requisition Commitments')]/../../../../../../..//a[@title='Move selected items to: Selected Measures']</findElement>
+															<click waitForPageToFinishRendering="true"/>
+														</else>
+													</IfThenElse>
+												</then>
+												<else/>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Burdened Cost in Project Ledger Currency')]</findElement>
+										</if>
+										<then>
+											<IfThenElse>
+												<if>
+													<findElement by="xpath">//div[contains(text(),'Burdened Cost in Project Ledger Currency')]/../../../../../../..//legend[text()='Export Options Selected Measures']/..//label[text()='<valueKB
+																		inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+												</if>
+												<then/>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement by="xpath">//div[contains(text(),'Burdened Cost in Project Ledger Currency')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//label[text()='<valueKB
+																		inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+														</if>
+														<then>
+															<IfThenElse>
+																<if>
+																	<findElement by="xpath">//div[contains(text(),'Burdened Cost in Project Ledger Currency')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//li[contains(@class,'Disabled')]/label[text()='<valueKB
+																		inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+																</if>
+																<then>
+																	<error message="Cannot Move to Selected Entities"/>
+																</then>
+																<else>
+																	<findElement by="xpath">//div[contains(text(),'Burdened Cost in Project Ledger Currency')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//label[text()='<valueKB
+																		inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+																	<click waitForPageToFinishRendering="true"/>
+																	<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Burdened Cost in Project Ledger Currency')]/../../../../../../..//a[@title='Move selected items to: Selected Measures']</findElement>
+																	<click waitForPageToFinishRendering="true"/>
+																</else>
+															</IfThenElse>
+														</then>
+														<else/>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</then>
+										<else>
+											<IfThenElse>
+													<if>
+														<findElement by="xpath">//div[contains(text(),'Revenue Date Type')]/../../../../../../..//legend[text()='Export Options Selected Measures']/..//label[text()='<valueKB
+																			inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+													</if>
+													<then/>
+													<else>
+														<IfThenElse>
+															<if>
+																<findElement by="xpath">//div[contains(text(),'Revenue Date Type')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//label[text()='<valueKB
+																			inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+															</if>
+															<then>
+																<IfThenElse>
+																	<if>
+																		<findElement by="xpath">//div[contains(text(),'Revenue Date Type')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//li[contains(@class,'Disabled')]/label[text()='<valueKB
+																			inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+																	</if>
+																	<then>
+																		<error message="Cannot Move to Selected Entities"/>
+																	</then>
+																	<else>
+																		<findElement by="xpath">//div[contains(text(),'Revenue Date Type')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//label[text()='<valueKB
+																			inventoryName="REPEAT_2_MAIN" columnName="Selected Measures"/>']</findElement>
+																		<click waitForPageToFinishRendering="true"/>
+																		<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Revenue Date Type')]/../../../../../../..//a[@title='Move selected items to: Selected Measures']</findElement>
+																		<click waitForPageToFinishRendering="true"/>
+																	</else>
+																</IfThenElse>
+															</then>
+															<else/>
+														</IfThenElse>
+													</else>
+												</IfThenElse>
+										</else>
+									</IfThenElse>
+								
+									
+								</else>
+							</IfThenElse>
+
+						</else>
+					</IfThenElse>
+
+				</else>
+			</IfThenElse>
+
+		</block>
+
+		<block name="Revenue_Options_Measures">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Revenue Date Type')]</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[contains(text(),'Revenue Date Type')]/../../../../../../..//legend[text()='Export Options Selected Measures']/..//label[text()='<valueKB
+													inventoryName="REPEAT_3_MAIN" columnName="Selected Measures"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//div[contains(text(),'Revenue Date Type')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//label[text()='<valueKB
+													inventoryName="REPEAT_3_MAIN" columnName="Selected Measures"/>']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Revenue Date Type')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//li[contains(@class,'Disabled')]/label[text()='<valueKB
+													inventoryName="REPEAT_3_MAIN" columnName="Selected Measures"/>']</findElement>
+										</if>
+										<then>
+											<error message="Cannot Move to Selected Entities"/>
+										</then>
+										<else>
+											<findElement by="xpath">//div[contains(text(),'Revenue Date Type')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//label[text()='<valueKB
+													inventoryName="REPEAT_3_MAIN" columnName="Selected Measures"/>']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Revenue Date Type')]/../../../../../../..//a[@title='Move selected items to: Selected Measures']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Effective Rate')]</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//div[contains(text(),'Effective Rate')]/../../../../../../..//legend[text()='Export Options Selected Measures']/..//label[text()='<valueKB
+																	inventoryName="REPEAT_3_MAIN" columnName="Selected Measures"/>']</findElement>
+								</if>
+								<then/>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Effective Rate')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//label[text()='<valueKB
+																	inventoryName="REPEAT_3_MAIN" columnName="Selected Measures"/>']</findElement>
+										</if>
+										<then>
+											<IfThenElse>
+												<if>
+													<findElement by="xpath">//div[contains(text(),'Effective Rate')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//li[contains(@class,'Disabled')]/label[text()='<valueKB
+																	inventoryName="REPEAT_3_MAIN" columnName="Selected Measures"/>']</findElement>
+												</if>
+												<then>
+													<error message="Cannot Move to Selected Entities"/>
+												</then>
+												<else>
+													<findElement by="xpath">//div[contains(text(),'Effective Rate')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//label[text()='<valueKB
+																	inventoryName="REPEAT_3_MAIN" columnName="Selected Measures"/>']</findElement>
+													<click waitForPageToFinishRendering="true"/>
+													<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Effective Rate')]/../../../../../../..//a[@title='Move selected items to: Selected Measures']</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</else>
+											</IfThenElse>
+										</then>
+										<else>
+
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Quantity')]</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Quantity')]/../../../../../../..//legend[text()='Export Options Selected Measures']/..//label[text()='<valueKB
+																	inventoryName="REPEAT_3_MAIN" columnName="Selected Measures"/>']</findElement>
+										</if>
+										<then/>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement by="xpath">//div[contains(text(),'Quantity')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//label[text()='<valueKB
+																	inventoryName="REPEAT_3_MAIN" columnName="Selected Measures"/>']</findElement>
+												</if>
+												<then>
+													<IfThenElse>
+														<if>
+															<findElement by="xpath">//div[contains(text(),'Quantity')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//li[contains(@class,'Disabled')]/label[text()='<valueKB
+																	inventoryName="REPEAT_3_MAIN" columnName="Selected Measures"/>']</findElement>
+														</if>
+														<then>
+															<error message="Cannot Move to Selected Entities"/>
+														</then>
+														<else>
+															<findElement by="xpath">//div[contains(text(),'Quantity')]/../../../../../../..//legend[text()='Export Options Available Measures']/..//label[text()='<valueKB
+																	inventoryName="REPEAT_3_MAIN" columnName="Selected Measures"/>']</findElement>
+															<click waitForPageToFinishRendering="true"/>
+															<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Quantity')]/../../../../../../..//a[@title='Move selected items to: Selected Measures']</findElement>
+															<click waitForPageToFinishRendering="true"/>
+														</else>
+													</IfThenElse>
+												</then>
+												<else>
+
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+									
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<!-- <block name="Done">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//a[@accesskey='o']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//a[@accesskey='o']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block> -->
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//label[text()='Name']/../..//input[@value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<executeBlock name="TAB_EXPORT_OPTIONS"/>
+					<executeBlock name="Display_Options"/>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+					<executeBlock name="SREACH_PLAN_TYPE"/>
+					<executeBlock name="TAB_EXPORT_OPTIONS"/>
+					<executeBlock name="Display_Options"/>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+				</else>
+			</IfThenElse>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="Cost_Options_Measures"/>
+				<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			</repeat>
+			<repeat inventoryName="REPEAT_3_MAIN">
+				<executeBlock name="Revenue_Options_Measures"/>
+				<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			</repeat>
+		</repeat>
+		<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+		<!-- <executeBlock name="Done"/> -->
+	</fusionNavigation>
+</navigation>

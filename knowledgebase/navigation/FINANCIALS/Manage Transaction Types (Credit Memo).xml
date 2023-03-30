@@ -1,0 +1,1640 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Transaction Types (Credit Memo)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Transaction Types" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Receivables Payment Terms"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Transaction Types - Transaction Types"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Transaction Types - Transaction Types - DFF"/>
+			<parameter name="MAIN_REPEAT_4" value="Manage Transaction Types - Transaction Types - GDF"/>
+			<parameter name="MAIN_REPEAT_3" value="Manage Transaction Types - Reference Accounts"/>
+		</parameters>
+
+		<block name="OK_BUTTON_TRANSACTIOLN_TYPES">
+			<findElement by="xpath">//span[text()='K']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="DONE_BUTTON_TRANSACTIOLN_TYPES">
+			<findElement by="xpath">//span[text()='o']/../../button</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<!-- MAIN_REPEAT_1 -->
+		<block name="EXPAND_SEARCH">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Transaction_Type_Set_Search...">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<pause durationInSecs="2"/>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//label[text()='Transaction Type Set']/../..//span/a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SEARCH_CLOUMN_LEGAL_ENTITY_MANUAL">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Entity Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Legal Entity']/../..//input[@value='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Entity Name"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock name="Search...Legal Entity" isRepeatUntilBreak="true"/>
+							<findElement by="xpath">//div[a[contains(@id,'legalEntity')]]//a[text()='Search...']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//div[text()='Search and Select: Legal Entity']/../../../../../../..//label[text()='Legal Entity Name']/../..//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Entity Name"/>
+							</sendKeys>
+							
+							
+							<findElement by="xpath">//div[text()='Search and Select: Legal Entity']/../../../../../../..//button[text()='Search']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Legal Entity Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Legal Entity Identifier"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Registration Number"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">(//div[text()='Search and Select: Legal Entity']/../../../../../../..//tr[td[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Entity Name"/>']])[2]</findElement>
+										</if>
+										<then>
+											<error message="The field 'Legal Entity Name' doesn't exist."/>
+										</then>
+										<else>
+											<findElement by="xpath">//div[text()='Search and Select: Legal Entity']/../../../../../../..//tr[td[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Legal Entity Name"/>']]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Legal Entity Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Legal Entity Identifier"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Registration Number"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement
+                                    by="xpath">//div[text()='Search and Select: Legal Entity']/../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Legal Entity Identifier"/>']]//td[1]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Legal Entity Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Legal Entity Identifier"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Registration Number"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement
+                                    by="xpath">//div[text()='Search and Select: Legal Entity']/../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Registration Number"/>']]//td[1]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Legal Entity Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Legal Entity Identifier"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Registration Number"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement
+                                    by="xpath">//div[text()='Search and Select: Legal Entity']/../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Legal Entity Name"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Legal Entity Identifier"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Registration Number"/>']]//td[1]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+							<findElement by="xpath">//div[text()='Search and Select: Legal Entity']/../../../../../../..//button[text()='OK']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="SEARCH_TRANSACTION TYPER">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Search']/../../../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Search']/../../../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<!--Search Name-->
+			<findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+			<sendKeys isClear="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+			</sendKeys>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Search']/../../../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<!--search Transaction Set-->
+			<findElement by="xpath">//label[text()='Transaction Type Set']/../..//a</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//table[@style="position: relative;"]//a[text()='Search...']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//div[text()='Search and Select: Transaction Type Set']/../../../../../../..//label[text()='Reference Data Set Name']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Type Set"/>
+			</sendKeys>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Search']/../../../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath">//div[text()='Search and Select: Transaction Type Set']/../../../../../../..//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='Search and Select: Transaction Type Set']/../../../../../../..//td[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Type Set"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Search and Select: Transaction Type Set']/../../../../../../..//td[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Type Set"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//div[text()='Search and Select: Transaction Type Set']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<error message="The field 'Transaction Type Set' doesn't exist."/>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="SECTION_HEAD">
+			<!--Transaction Type Set-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Type Set"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Type Set"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>""</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()='Transaction Type Set']/../..//input[@value='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Type Set"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath">//label[text()='Transaction Type Set']/../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Type Set"/>']</findElement>
+								</if>
+								<then/>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//label[text()='Transaction Type Set']/../..//input[not(@disabled)]</findElement>
+										</if>
+										<then>
+											<executeBlock name="Transaction_Type_Set_Search..." isRepeatUntilBreak="true"/>
+											<IfThenElse>
+												<if>
+													<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']/..//a[text()='Search...']/..//tr//td[2][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Type Set"/>']</findElement>
+												</if>
+												<then>
+													<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']/..//a[text()='Search...']/..//tr//td[2][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Type Set"/>']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+												</then>
+												<else>
+													<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']/..//a[text()='Search...']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<executeBlock name="EXPAND_SEARCH"/>
+													<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Reference Data Set Name']/../..//input</findElement>
+													<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+														<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Type Set"/>
+													</sendKeys>
+													<executeBlock name="EXPAND_SEARCH"/>
+													<IfThenElse>
+														<if>
+															<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Reference Data Set Name']/../..//input[not(@title)]</findElement>
+														</if>
+														<then>
+															<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Reference Data Set Name']/../..//input</findElement>
+															<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+																<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Type Set"/>
+															</sendKeys>
+														</then>
+														<else/>
+													</IfThenElse>
+													<executeBlock name="EXPAND_SEARCH"/>
+													<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Search']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<IfThenElse>
+														<if>
+															<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[2][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Type Set"/>']</findElement>
+														</if>
+														<then>
+															<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[2][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Type Set"/>']</findElement>
+															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+														</then>
+														<else>
+															<error message="No results found."/>
+														</else>
+													</IfThenElse>
+													<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='OK']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+												</else>
+											</IfThenElse>
+										</then>
+										<else/>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Type Set"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>""</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//label[text()='Transaction Type Set']/../..//input[not(@disabled)]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//label[text()='Transaction Type Set']/../..//input[not(@disabled)]</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Type Set"/>
+									</sendKeys>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_2_ADV_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legal Entity']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_1_NAME" value="Legal Entity Name"/>
+					<parameter name="COL_2_NAME" value="Legal Entity Identifier"/>
+					<parameter name="SEARCH_1_LABEL" value="Legal Entity Name"/>
+					<parameter name="SEARCH_2_LABEL" value="Legal Entity Identifier"/>
+				</parameters>
+			</executeBlock>
+			<!--
+			<executeBlock name="SEARCH_CLOUMN_LEGAL_ENTITY_MANUAL"/>
+			-->
+			<!--NAME-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--SELECT COLUMN TRANSACTION CLASS-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Transaction Class']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Transaction Class"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="2"/>
+			<!--SELECT COLUMN TRANSACTION STATUS-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Transaction Status']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Transaction Status"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="3"/>
+			<!--From Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='From Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="From Date"/>
+				</parameters>
+			</executeBlock>
+			<!--To Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='To Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="To Date"/>
+				</parameters>
+			</executeBlock>
+			<!--SELECT COLUMN CREATION SIGN-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Creation Sign']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Creation Sign"/>
+				</parameters>
+			</executeBlock>
+			<!--Generate Bill-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Generate Bill']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Generate Bill"/>
+				</parameters>
+			</executeBlock>
+			<!--LOV COLUMN INVOICE TYPE-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Invoice Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Invoice Type"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--LOV COLUMN CREDIT MEMO TYPE-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Credit Memo Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Credit Memo Type"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--LOV COLUMN APPLICATION RULE SET-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Application Rule Set']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Application Rule Set"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--LOV COLUMN PAYMENT TERMS-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payment Terms"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payment Terms Set"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//label[text()='Payment Terms']/../..//input[@disabled]</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" by="xpath">//label[text()='Payment Terms']/../..//input[@value='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payment Terms"/>']</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="Search...Payment Terms" isRepeatUntilBreak="true"/>
+									<findElement by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="1" />
+									<executeBlock name="EXPAND_SEARCH"/>
+									<findElement by="xpath">//div[text()='Search and Select: Payment Terms']/../../../../../../..//label[text()='Name']/../..//input</findElement>
+									<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payment Terms"/>
+									</sendKeys>
+									<executeBlock name="EXPAND_SEARCH"/>
+									<findElement by="xpath">//div[text()='Search and Select: Payment Terms']/../../../../../../..//label[text()='Payment Terms Set']/../..//input</findElement>
+									<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payment Terms Set"/>
+									</sendKeys>
+									<executeBlock name="EXPAND_SEARCH"/>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Name']/../..//input[not(@title)]</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Name']/../..//input</findElement>
+											<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payment Terms"/>
+											</sendKeys>		
+										</then>
+										<else/>
+									</IfThenElse>
+									<executeBlock name="EXPAND_SEARCH"/>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Payment Terms Set']/../..//input[not(@title)]</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Name']/../..//input</findElement>
+											<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payment Terms Set"/>
+											</sendKeys>		
+										</then>
+										<else/>
+									</IfThenElse>
+									<executeBlock name="EXPAND_SEARCH"/>
+									<pause durationInSecs="1" />
+									<findElement by="xpath">//div[text()='Search and Select: Payment Terms']/../../../../../../..//button[text()='Search']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payment Terms']/../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payment Terms"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payment Terms Set"/>']]//td[1]</findElement>
+										</if>
+										<then>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Payment Terms']/../../../../../../..//tr[td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1"
+                                    columnName="Payment Terms"/>'] and td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payment Terms Set"/>']]//td[1]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<error message="The field 'Payment Terms' doesn't exist."/>
+										</else>
+									</IfThenElse>
+									<findElement by="xpath">//div[text()='Search and Select: Payment Terms']/../../../../../../..//button[text()='OK']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payment Terms"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Payment Terms Set"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" by="xpath">//label[text()='Payment Terms']/../..//input[@disabled]</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//label[text()='Payment Terms']/../..//input[@value='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payment Terms"/>']</findElement>
+										</if>
+										<then/>
+										<else>
+											
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" by="xpath">//label[text()='Payment Terms']/../..//input[@value='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payment Terms"/>']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement by="xpath">//*[@title='Search: Payment Terms']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//table[@style='position: relative;']//a[text()='Search...']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="1" />
+											<executeBlock name="EXPAND_SEARCH"/>
+											<findElement by="xpath">//div[text()='Search and Select: Payment Terms']/../../../../../../..//label[text()='Name']/../..//input</findElement>
+											<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payment Terms"/>
+											</sendKeys>
+											<executeBlock name="EXPAND_SEARCH"/>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Name']/../..//input[not(@title)]</findElement>
+												</if>
+												<then>
+													<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Name']/../..//input</findElement>
+													<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+														<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payment Terms"/>
+													</sendKeys>		
+												</then>
+												<else/>
+											</IfThenElse>
+											<executeBlock name="EXPAND_SEARCH"/>
+											<findElement by="xpath">//div[text()='Search and Select: Payment Terms']/../../../../../../..//button[text()='Search']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<IfThenElse>
+												<if>
+													<evaluateXPATHBoolean>count(//div[text()='Search and Select: Payment Terms']/../../../../../../..//tr[td[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payment Terms"/>']])=1</evaluateXPATHBoolean>
+												</if>
+												<then>
+													<findElement by="xpath">//div[text()='Search and Select: Payment Terms']/../../../../../../..//tr[td[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payment Terms"/>']]</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement by="xpath">//div[text()='Search and Select: Payment Terms']/../../../../../../..//tr[td[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payment Terms"/>']]/../../../../../..//tr[2]</findElement>
+														</if>
+														<then>
+															<error message="Cannot Choose 'Payment Terms', Please Identify value Payment Term Set"/>
+														</then>
+														<else>
+															<findElement by="xpath">//div[text()='Search and Select: Payment Terms']/../../../../../../..//tr[td[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payment Terms"/>']]</findElement>
+															<click waitForPageToFinishRendering="true"/>
+														</else>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+											<findElement by="xpath">//div[text()='Search and Select: Payment Terms']/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<!--SELECT COLUMN LEVEL of CONTROL of TRANSACTION COMPLETION-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Level of Control of Transaction Completion']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Level of Control of Transaction Completion"/>
+				</parameters>
+			</executeBlock>
+			<!--CHECKBOX COLUMN OPEN RECEIVABLE-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Open Receivable']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Open Receivable"/>
+				</parameters>
+			</executeBlock>
+			<!--CHECKBOX COLUMN ALLOW FREIGHT-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allow freight']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Allow freight"/>
+				</parameters>
+			</executeBlock>
+			<!--CHECKBOX COLUMN POST TO GL-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Post to GL']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Post to GL"/>
+				</parameters>
+			</executeBlock>
+			<!--CHECKBOX COLUMN ALLOW ADJUSTMENT POSTING-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allow adjustment posting']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Allow adjustment posting"/>
+				</parameters>
+			</executeBlock>
+			<!--CHECKBOX COLUMN DEFAULT TAX CLASSIFICATION CODE-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Default tax classification code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Default tax classification code"/>
+				</parameters>
+			</executeBlock>
+			<!--CHECKBOX COLUMN NATURAL APPLICATION ONLY-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Natural application only']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Natural application only"/>
+				</parameters>
+			</executeBlock>
+			<!--CHECKBOX COLUMN ALLOW OVERAPPLICATION-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allow overapplication']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Allow overapplication"/>
+				</parameters>
+			</executeBlock>
+			<!--CHECKBOX COLUMN EXCLUDE FROM LATE CHARGES CALCULATION-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Exclude from late charges calculation']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Exclude from late charges calculation"/>
+				</parameters>
+			</executeBlock>
+			<!--CHECKBOX COLUMN NO FUTURE DATES WITH CHRONOLOGICAL DOCUMENT SEQUENCING-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='No future dates with chronological document sequencing']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="No future dates with chronological document sequencing"/>
+				</parameters>
+			</executeBlock>
+			<!--If Transaction Class = Bills receivable-->
+			<!--CHECKBOX COLUMN SIGNED-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Signed']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Signed"/>
+				</parameters>
+			</executeBlock>
+			<!--CHECKBOX COLUMN ISSUED BY DRAWEE-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Issued by drawee']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Issued by drawee"/>
+				</parameters>
+			</executeBlock>
+			<!--LOV LEGAL ENTITY NAME-->
+            <executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Legal Entity']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Legal Entity Name"/>
+                    <parameter name="SEARCH_1" value="Legal Entity Name"/>
+                </parameters>
+            </executeBlock>
+		</block>
+		<!-- MAIN_REPEAT_3 -->
+		<block name="Detect_Data_account">
+			<pause durationInSecs="2"/>	
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//td[text()='Hide Segments']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']</findElement>
+						</if>
+						<then>
+							<error message="Payables Account doesn't exist. Please check your data" />
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<pause durationInSecs="2"/>	
+		</block>
+		<block name="Column_Business Unit">
+			<findElement by="xpath">//label[text()='Business Unit']/../..//*[@title='Search: Business Unit']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//table[@style='position: relative;']//a[text()='Search...']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//div[text()='Search and Select: Business Unit']/../../../../../../..//label[text()='Name']/../..//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>
+			</sendKeys>
+			<findElement by="xpath">//div[text()='Search and Select: Business Unit']/../../../../../../..//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			 <IfThenElse>
+				<if>
+					<findElement
+                    by="xpath">//div[text()='Search and Select: Business Unit']/../../../../../../..//td[text()='<valueKB
+                    inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>']/../../../..</findElement>
+				</if>
+				<then>
+					<findElement
+                    by="xpath">//div[text()='Search and Select: Business Unit']/../../../../../../..//td[text()='<valueKB
+                    inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>']/../../../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//div[text()='Search and Select: Business Unit']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<error message="No Business Unit found" />
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SECTION_REFERENCE_ACCOUNTS_CREATE">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Class"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Bills receivable</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<!-- Receivable/Bills Receivable -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Bills Receivable']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Receivable/Bills Receivable"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+					<!-- Unpaid Bills Receivable -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Unpaid Bills Receivable']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Unpaid Bills Receivable"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+					<!-- Remitted Bills Receivable -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Remitted Bills Receivable']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Remitted Bills Receivable"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+					<!-- Factored Bills Receivable -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Factored Bills Receivable']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Factored Bills Receivable"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+				</then>
+				<else>
+					<!-- Revenue -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//td[not(@style)]/label[text()='Revenue']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Revenue"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+					<!-- Receivable/Bills Receivable -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//td[not(@style)]/label[text()='Receivable']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Receivable/Bills Receivable"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+					<!-- Tax -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//td[not(@style)]/label[text()='Tax']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Tax"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+					<!-- Freight -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//td[not(@style)]/label[text()='Freight']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Freight"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+					<!-- Unearned Revenue -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//td[not(@style)]/label[text()='Unearned Revenue']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Unearned Revenue"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+					<!-- Unbilled Receivable -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//td[not(@style)]/label[text()='Unbilled Receivable']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Unbilled Receivable"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+					<!-- AutoInvoice Clearing -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//td[not(@style)]/label[text()='AutoInvoice Clearing']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="AutoInvoice Clearing"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SECTION_REFERENCE_ACCOUNTS_UPDATE">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Class"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Bills receivable</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<!-- Receivable/Bills Receivable -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Bills Receivable']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Receivable/Bills Receivable"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+					<!-- Unpaid Bills Receivable -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Unpaid Bills Receivable']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Unpaid Bills Receivable"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+					<!-- Remitted Bills Receivable -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Remitted Bills Receivable']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Remitted Bills Receivable"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+					<!-- Factored Bills Receivable -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Factored Bills Receivable']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Factored Bills Receivable"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+				</then>
+				<else>
+					<!-- Revenue -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//td/label[text()='Revenue']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Revenue"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+					<!-- Receivable/Bills Receivable -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Receivable']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Receivable/Bills Receivable"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+					<!-- Tax -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Tax']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Tax"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+					<!-- Freight -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Freight']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Freight"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+					<!-- Unearned Revenue -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Unearned Revenue']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Unearned Revenue"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+					<!-- Unbilled Receivable -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Unbilled Receivable']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Unbilled Receivable"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+					<!-- AutoInvoice Clearing -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='AutoInvoice Clearing']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="AutoInvoice Clearing"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Detect_Data_account"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<!--DFF FAKE-->
+		<block name="DFF_FAKE">
+			<findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="MAIN_REPEAT_2" columnName="Field Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_2" columnName="Field Value"/>
+			</click>
+		</block>
+		<!--MAIN_REPEAT_4-->
+		<block name="GDF">
+			<!--Field Name,Field Value-->
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//label[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Field Name"/>']/../..//*[@type='checkbox']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH">//label[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Field Name"/>']/../..</parameter>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_4"/>
+							<parameter name="COL_NAME" value="Field Value"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//label[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Field Name"/>']/../..//*[@type='radio']</findElement>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+								<parameters>
+									<parameter name="XPATH">//label[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Field Name"/>']/../..</parameter>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_4"/>
+									<parameter name="COL_NAME" value="Field Value"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//label[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Field Name"/>']/../..//*[contains(@title,'Date')]</findElement>
+								</if>
+								<then>
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH">//label[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Field Name"/>']/../..</parameter>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_4"/>
+											<parameter name="COL_NAME" value="Field Value"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//label[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Field Name"/>']/../..//select</findElement>
+										</if>
+										<then>
+											<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+												<parameters>
+													<parameter name="XPATH">//label[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Field Name"/>']/../..</parameter>
+													<parameter name="INV_NAME" value="MAIN_REPEAT_4"/>
+													<parameter name="COL_NAME" value="Field Value"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//label[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Field Name"/>']/../..//li</findElement>
+												</if>
+												<then>
+													<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+														<parameters>
+															<parameter name="XPATH">//label[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Field Name"/>']/../..</parameter>
+															<parameter name="INV_NAME" value="MAIN_REPEAT_4"/>
+															<parameter name="COL_NAME" value="Field Value"/>
+														</parameters>
+													</executeBlock>
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//label[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Field Name"/>']/../..//a</findElement>
+														</if>
+														<then>
+															<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+																<parameters>
+																	<parameter name="XPATH">//label[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Field Name"/>']/../..</parameter>
+																	<parameter name="INV_NAME" value="MAIN_REPEAT_4"/>
+																	<parameter name="COL_NAME" value="Field Value"/>
+																	<parameter name="SEARCH_1" value="Value"/>
+																</parameters>
+															</executeBlock>
+														</then>
+														<else>
+															<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+																<parameters>
+																	<parameter name="XPATH">//label[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Field Name"/>']/../..</parameter>
+																	<parameter name="INV_NAME" value="MAIN_REPEAT_4"/>
+																	<parameter name="COL_NAME" value="Field Value"/>
+																</parameters>
+															</executeBlock>
+														</else>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...Transaction Type Set">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//*[@title='Search: Transaction Type Set']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...Legal Entity">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//*[@title='Search: Legal Entity']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...Invoice Type">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//*[@title='Search: Invoice Type']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...Credit Memo Type">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//*[@title='Search: Credit Memo Type']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...Application Rule Set">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//*[@title='Search: Application Rule Set']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...Payment Terms">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//*[@title='Search: Payment Terms']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...Business Unit">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//*[@title='Search: Business Unit']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Business_Unit">
+			<!-- <findElement by="xpath" isSkipCheckDomError="true">//label[text()='Business Unit']/../..//select</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/> -->
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Business Unit']/../..//option[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>']</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath" setFocus="true">//label[text()='Business Unit']/../..//option[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<executeBlock name="SECTION_REFERENCE_ACCOUNTS_UPDATE"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Business Unit']/../..//select</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Business Unit']/../../..//a[@title='Go to Last Record']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Business Unit']/../..//option[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>']</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath" setFocus="true">//label[text()='Business Unit']/../..//option[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<executeBlock name="SECTION_REFERENCE_ACCOUNTS_UPDATE"/>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Business Unit']/../..//select</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Business Unit']/../../..//a[@title='Go to First Record']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="2"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Business Unit']/../..//option[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>']</findElement>
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath" setFocus="true">//label[text()='Business Unit']/../..//option[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<executeBlock name="SECTION_REFERENCE_ACCOUNTS_UPDATE"/>
+								</then>
+								<else>
+									<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_CREATE"/>
+									<executeBlock name="Column_Business Unit"/>
+									<executeBlock name="OK_BUTTON_TRANSACTIOLN_TYPES"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Business Unit']/../..//option[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>']</findElement>
+										</if>
+										<then>
+											<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath" setFocus="true">//label[text()='Business Unit']/../..//option[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Business Unit']/../..//select</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+											<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Business Unit']/../../..//a[@title='Go to Last Record']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="2"/>
+											<IfThenElse>
+												<if>
+													<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Business Unit']/../..//option[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>']</findElement>
+												</if>
+												<then>
+													<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath" setFocus="true">//label[text()='Business Unit']/../..//option[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="1"/>
+												</then>
+												<else>
+													<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Business Unit']/../..//select</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="1"/>
+													<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Business Unit']/../../..//a[@title='Go to First Record']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="2"/>
+													<IfThenElse>
+														<if>
+															<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Business Unit']/../..//option[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>']</findElement>
+														</if>
+														<then>
+															<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath" setFocus="true">//label[text()='Business Unit']/../..//option[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>']</findElement>
+															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+															<pause durationInSecs="1"/>
+														</then>
+														<else>
+															
+														</else>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath" setFocus="true">//label[text()='Business Unit']/../..//option[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<executeBlock name="SECTION_REFERENCE_ACCOUNTS_CREATE"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true">//div[text()='Error']</findElement>
+				</if>
+				<then>
+					<error message="Please see error App"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Save">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//*[text()='Save']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//*[text()='Save']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Save_and_Close">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//td/a/*[text()='ave and Close']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//td/a/*[text()='ave and Close']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="SEARCH_TRANSACTION TYPER"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Search Results']//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']/../..//a</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Search Results']//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="SECTION_HEAD"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_CREATE"/>
+					<executeBlock name="SECTION_HEAD"/>
+				</else>
+			</IfThenElse>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+					<parameters>
+						<parameter name="DFF_NAME" value="MAIN_REPEAT_2"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<repeat inventoryName="MAIN_REPEAT_4">
+				<executeBlock name="GDF"/>
+			</repeat>
+			<repeat inventoryName="MAIN_REPEAT_3">
+				<IfThenElse>
+					<if>
+						<comparisons separator="AND">
+							<comparison operator="NOT_EQUAL">
+								<leftOperand>
+									<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>
+								</leftOperand>
+								<rightOperand>
+									<valueText></valueText>
+								</rightOperand>
+							</comparison>
+						</comparisons>
+					</if>
+					<then>
+						<executeBlock name="Business_Unit"/>
+						<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+					</then>
+					<else>
+						
+					</else>
+				</IfThenElse>
+			</repeat>
+			<executeBlock name="Save"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']</findElement>
+				</if>
+				<then>
+					<error message="Please check Error on the Oracle screen" />
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+			<executeBlock name="Save_and_Close"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

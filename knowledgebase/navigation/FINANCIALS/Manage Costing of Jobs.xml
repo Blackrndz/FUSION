@@ -1,0 +1,902 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Costing of Jobs</name>
+	<svn>
+		<xsd:revision>$Revision: 79479 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2022-10-11 14:46:56 +0700 (Tue, 11 Oct 2022) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Costing%20of%20Jobs.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Costing of Jobs.xml 79479 2022-10-11 07:46:56Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Costing of Jobs" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<dependencies>
+			<navigation name="Manage Job"/>
+		</dependencies>
+		<parameters>
+			<parameter name="INV_1" value="Manage Costing of Jobs - Costing of Jobs"/>
+			<parameter name="INV_2" value="Manage Costing of Jobs - Cost Accounts"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Job"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Job"/>']/../..//input</findElement>
+		</block>
+		<block name="SEARCH">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Job']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Job"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legislative Data Group']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Legislative Data Group"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//button[text()='Search']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//button[text()='Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Search Results']/../../../../../../..//td//a[text()='<valueKB inventoryName="INV_1" columnName="Job"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Search Results']/../../../../../../..//td//a[text()='<valueKB inventoryName="INV_1" columnName="Job"/>']/../..//*[@class='xi6']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//*[text()='Search Results']/../../../../../../..//*[@title='Create Costing of Job' and @alt='Create Costing of Job']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//*[text()='Search Results']/../../../../../../..//*[@title='Create Costing of Job' and @alt='Create Costing of Job']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>	
+			</IfThenElse>
+		</block>
+			
+		<block name="CREATE_COSTING_OF_JOBS">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="///*[text()='Create Costing of Job']/../../../../../../..//*[text()='Effective Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Effective Start Date"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Create Costing of Job']/../../../../../../..//*[@accesskey='u']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Create Costing of Job']/../../../../../../..//*[@accesskey='u']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="COST_ACCOUNT_1">
+			<defineVariable name="VALUE_ASSET_KEY" type="text"/>
+			<setVariable name="VALUE_ASSET_KEY" append="false">
+				<valueText/>
+			</setVariable>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 1"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 1"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[not(string())]]\
+					</setVariable>
+				</else>
+			</IfThenElse>
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@title='Cost Accounts']/../../../../../..//*[text()='No data to display.']"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[@title='Cost Accounts']/../../../../../..[@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[@title='Cost Accounts']/../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">
+						<valueVariable name="VALUE_ASSET_KEY"/>
+					</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_COST_ACCOUNT"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="COST_ACCOUNT_2">
+			<defineVariable name="VALUE_ASSET_KEY" type="text"/>
+			<setVariable name="VALUE_ASSET_KEY" append="false">
+				<valueText/>
+			</setVariable>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 2"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 2"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[not(string())]]\
+					</setVariable>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 2"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true"> and td[2]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 2"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true"> and td[2]//span[not(string())]]</setVariable>
+				</else>
+			</IfThenElse>
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@title='Cost Accounts']/../../../../../..//*[text()='No data to display.']"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[@title='Cost Accounts']/../../../../../..[@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[@title='Cost Accounts']/../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">
+						<valueVariable name="VALUE_ASSET_KEY"/>
+					</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_COST_ACCOUNT"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="COST_ACCOUNT_3">
+			<defineVariable name="VALUE_ASSET_KEY" type="text"/>
+			<setVariable name="VALUE_ASSET_KEY" append="false">
+				<valueText/>
+			</setVariable>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 3"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 3"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[not(string())]]\
+					</setVariable>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 3"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true"> and td[3]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 3"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true"> and td[3]//span[not(string())]]</setVariable>
+				</else>
+			</IfThenElse>
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@title='Cost Accounts']/../../../../../..//*[text()='No data to display.']"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[@title='Cost Accounts']/../../../../../..[@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[@title='Cost Accounts']/../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">
+						<valueVariable name="VALUE_ASSET_KEY"/>
+					</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_COST_ACCOUNT"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="COST_ACCOUNT_4">
+			<defineVariable name="VALUE_ASSET_KEY" type="text"/>
+			<setVariable name="VALUE_ASSET_KEY" append="false">
+				<valueText/>
+			</setVariable>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 4"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 4"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[not(string())]]\
+					</setVariable>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 4"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true"> and td[4]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 4"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true"> and td[4]//span[not(string())]]</setVariable>
+				</else>
+			</IfThenElse>
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@title='Cost Accounts']/../../../../../..//*[text()='No data to display.']"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[@title='Cost Accounts']/../../../../../..[@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[@title='Cost Accounts']/../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">
+						<valueVariable name="VALUE_ASSET_KEY"/>
+					</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_COST_ACCOUNT"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="COST_ACCOUNT_5">
+			<defineVariable name="VALUE_ASSET_KEY" type="text"/>
+			<setVariable name="VALUE_ASSET_KEY" append="false">
+				<valueText/>
+			</setVariable>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 5"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 5"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[not(string())]]\
+					</setVariable>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 5"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true"> and td[5]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 5"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true"> and td[5]//span[not(string())]]</setVariable>
+				</else>
+			</IfThenElse>
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@title='Cost Accounts']/../../../../../..//*[text()='No data to display.']"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[@title='Cost Accounts']/../../../../../..[@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[@title='Cost Accounts']/../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">
+						<valueVariable name="VALUE_ASSET_KEY"/>
+					</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_COST_ACCOUNT"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="COST_ACCOUNT_6">
+			<defineVariable name="VALUE_ASSET_KEY" type="text"/>
+			<setVariable name="VALUE_ASSET_KEY" append="false">
+				<valueText/>
+			</setVariable>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 6"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 6"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[not(string())]]\
+					</setVariable>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 6"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true"> and td[6]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 6"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true"> and td[6]//span[not(string())]]</setVariable>
+				</else>
+			</IfThenElse>
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@title='Cost Accounts']/../../../../../..//*[text()='No data to display.']"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[@title='Cost Accounts']/../../../../../..[@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[@title='Cost Accounts']/../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">
+						<valueVariable name="VALUE_ASSET_KEY"/>
+					</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_COST_ACCOUNT"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="COST_ACCOUNT_7">
+			<defineVariable name="VALUE_ASSET_KEY" type="text"/>
+			<setVariable name="VALUE_ASSET_KEY" append="false">
+				<valueText/>
+			</setVariable>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 7"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 7"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[not(string())]]\
+					</setVariable>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 7"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true"> and td[7]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 7"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true"> and td[7]//span[not(string())]]</setVariable>
+				</else>
+			</IfThenElse>
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@title='Cost Accounts']/../../../../../..//*[text()='No data to display.']"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[@title='Cost Accounts']/../../../../../..[@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[@title='Cost Accounts']/../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">
+						<valueVariable name="VALUE_ASSET_KEY"/>
+					</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_COST_ACCOUNT"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="COST_ACCOUNT_8">
+			<defineVariable name="VALUE_ASSET_KEY" type="text"/>
+			<setVariable name="VALUE_ASSET_KEY" append="false">
+				<valueText/>
+			</setVariable>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 8"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 8"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[not(string())]]\
+					</setVariable>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 8"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true"> and td[8]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 8"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true"> and td[8]//span[not(string())]]</setVariable>
+				</else>
+			</IfThenElse>
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@title='Cost Accounts']/../../../../../..//*[text()='No data to display.']"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[@title='Cost Accounts']/../../../../../..[@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[@title='Cost Accounts']/../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">
+						<valueVariable name="VALUE_ASSET_KEY"/>
+					</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_COST_ACCOUNT"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="COST_ACCOUNT_9">
+			<defineVariable name="VALUE_ASSET_KEY" type="text"/>
+			<setVariable name="VALUE_ASSET_KEY" append="false">
+				<valueText/>
+			</setVariable>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 9"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 9"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[not(string())]]\
+					</setVariable>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 9"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true"> and td[9]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 9"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true"> and td[9]//span[not(string())]]</setVariable>
+				</else>
+			</IfThenElse>
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@title='Cost Accounts']/../../../../../..//*[text()='No data to display.']"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[@title='Cost Accounts']/../../../../../..[@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[@title='Cost Accounts']/../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">
+						<valueVariable name="VALUE_ASSET_KEY"/>
+					</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_COST_ACCOUNT"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="COST_ACCOUNT_10">
+			<defineVariable name="VALUE_ASSET_KEY" type="text"/>
+			<setVariable name="VALUE_ASSET_KEY" append="false">
+				<valueText/>
+			</setVariable>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 10"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 10"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true">//table[@summary='Search Results']//tr[td[1]//span[not(string())]]\
+					</setVariable>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_2" columnName="Cost Account 10"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_ASSET_KEY" append="true"> and td[10]//span[text()='</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">
+						<valueKB inventoryName="INV_2" columnName="Cost Account 10"/>
+					</setVariable>
+					<setVariable name="VALUE_ASSET_KEY" append="true">']]</setVariable>
+				</then>
+				<else>
+					<setVariable name="VALUE_ASSET_KEY" append="true"> and td[10]//span[not(string())]]</setVariable>
+				</else>
+			</IfThenElse>
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@title='Cost Accounts']/../../../../../..//*[text()='No data to display.']"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[@title='Cost Accounts']/../../../../../..[@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[@title='Cost Accounts']/../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">
+						<valueVariable name="VALUE_ASSET_KEY"/>
+					</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_COST_ACCOUNT"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="CREATE_COST_ACCOUNT">
+		
+		</block>
+		
+		<block name="UPDATE">
+		
+		</block>
+		
+		<block name="FIND_COST_ACCOUNTS">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="(//*[text()='Cost Accounts']/../../../../../../..//tr[1]//td[2]//div//table//tbody//tr//td[@title='Percentage']/..)[1]"/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Percentage"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<evaluateXPATHBoolean>count(//tr[*]/th[contains(@id,'keyFlexCol_flex')])=1</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<executeBlock name="COST_ACCOUNT_1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+						<IfThenElse>
+				<if>
+					<evaluateXPATHBoolean>count(//tr[*]/th[contains(@id,'keyFlexCol_flex')])=2</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<executeBlock name="COST_ACCOUNT_2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<evaluateXPATHBoolean>count(//tr[*]/th[contains(@id,'keyFlexCol_flex')])=3</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<executeBlock name="COST_ACCOUNT_3"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<evaluateXPATHBoolean>count(//tr[*]/th[contains(@id,'keyFlexCol_flex')])=4</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<executeBlock name="COST_ACCOUNT_4"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<evaluateXPATHBoolean>count(//tr[*]/th[contains(@id,'keyFlexCol_flex')])=5</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<executeBlock name="COST_ACCOUNT_5"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<evaluateXPATHBoolean>count(//tr[*]/th[contains(@id,'keyFlexCol_flex')])=6</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<executeBlock name="COST_ACCOUNT_6"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<evaluateXPATHBoolean>count(//tr[*]/th[contains(@id,'keyFlexCol_flex')])=7</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<executeBlock name="COST_ACCOUNT_7"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<evaluateXPATHBoolean>count(//tr[*]/th[contains(@id,'keyFlexCol_flex')])=8</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<executeBlock name="COST_ACCOUNT_8"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<evaluateXPATHBoolean>count(//tr[*]/th[contains(@id,'keyFlexCol_flex')])=9</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<executeBlock name="COST_ACCOUNT_9"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<evaluateXPATHBoolean>count(//tr[*]/th[contains(@id,'keyFlexCol_flex')])=10</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<executeBlock name="COST_ACCOUNT_10"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			
+		</block>
+		
+		<block name="SUBMIT_BUTTON">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Submit']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Submit']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+	
+		<block name="WARNING_BUTTON">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Warning']/../../../../../../../..//*[text()='Continue']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Warning']/../../../../../../../..//*[text()='Continue']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+					
+					
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="SEARCH"/>
+			
+			<repeat inventoryName="INV_2">
+				<executeBlock name="FIND_COST_ACCOUNTS"/>
+			</repeat>	
+			<executeBlock name="SUBMIT_BUTTON"/>
+			<executeBlock name="WARNING_BUTTON"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

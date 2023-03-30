@@ -1,0 +1,653 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Customers (Account Site Debit Authorizations)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Customers" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+
+		<dependencies>
+			<navigation name="Manage Bank Accounts"/>
+		</dependencies>
+
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Customers - Account Site Debit Authorizations"/>
+		</parameters>
+
+		<block name="SEARCH_CUSTOMER">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<!--Registry ID-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../../../../../..//label[text()='Registry ID']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Registry ID"/>
+				</parameters>
+			</executeBlock>
+			<!--Account Number-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../../../../../..//label[text()='Account Number']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Account Number"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[@summary='Organizations']//tr[td//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Registry ID"/>']]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[@summary='Organizations']//tr[td//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Registry ID"/>']]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<error message="The field 'Registry ID' doesn't exist."/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="ACCOUNTS">
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@summary='Accounts']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Accounts'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Accounts']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Accounts']//tr[td//span[text()='<valueKB
+                    inventoryName="REPEAT_1_MAIN" columnName="Account Number"/>']]</parameter>
+					<parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//span[text()='NEED TO CREATE']</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="ERROR_ACCOUNTS"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_ACCOUNTS"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="UPDATE_ACCOUNTS">
+			<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="ERROR_ACCOUNTS">
+			<error message="The field 'Accounts' doesn't exist."/>
+		</block>
+		<block name="SITE">
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@summary='Addresses']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Addresses'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Addresses']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Addresses']//a[text()='<valueKB
+                    inventoryName="REPEAT_1_MAIN" columnName="Site Number"/>']</parameter>
+					<parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//span[text()='NEED TO CREATE']</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="ERROR_SITE"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_SITE"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="UPDATE_SITE">
+			<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="ERROR_SITE">
+			<error message="The field 'Sites' doesn't exist."/>
+		</block>
+		<block name="BANK_ACCOUNTS">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[text()='Payment Details'][contains(@class,'Select')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[text()='Payment Details']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[@title='Payment Instruments']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[text()='Bank Accounts'][contains(@class,'Select')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[text()='Bank Accounts']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@summary='Bank Accounts']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Bank Accounts'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Bank Accounts']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Bank Accounts']//tr[td//span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Bank Accounts Name"/>']]</parameter>
+					<parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[@summary='Bank Accounts']//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Bank Accounts Name"/>']]</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="ERROR_BANK_ACCOUNTS"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_BANK_ACCOUNTS"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="UPDATE_BANK_ACCOUNTS">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>			
+		</block>
+		<block name="ERROR_BANK_ACCOUNTS">
+			<error message="The field 'Bank Accounts Number' doesn't exist."/>
+		</block>
+		<block name="DEBIT_AUTHORIZATIONS">
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@summary='Debit Authorization']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Debit Authorization'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Debit Authorization']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Debit Authorization']//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Reference Identifier"/>']</parameter>
+					<parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//span[text()='NEED TO CREATE']</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_DEBIT_AUTHORIZATIONS"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_DEBIT_AUTHORIZATIONS"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Search...">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<pause durationInSecs="2"/>
+					<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/../..//label[text()='Legal Entity']/../..//span/a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="LEGAL_ENTITY">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Legal Entity"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Legal Entity Identifier"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Search..." isRepeatUntilBreak="true"/>
+							<findElement isDisplayed="true"  by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='Search...']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+								</if>
+								<then>
+									<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//span[text()='d']/..</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//span[text()='d']/..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+							
+							<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Equals</valueText>
+							</select>
+							<findElement by="xpath">//label[text()='Legal Entity Name']/../..//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Legal Entity"/>
+							</sendKeys>
+							<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Search']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">(//div[contains(text(),'Search and Select')]/../../../../../../..//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Legal Entity"/>']])[2]</findElement>
+								</if>
+								<then>
+									<error message="This 'Legal Entity' doesn't exist."/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Legal Entity"/>']]</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Legal Entity"/>']]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<error message="This 'Legal Entity' doesn't exist."/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+							<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='OK']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Legal Entity"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Legal Entity Identifier"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Search..." isRepeatUntilBreak="true"/>
+							<findElement isDisplayed="true"  by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='Search...']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+								</if>
+								<then>
+									<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//span[text()='d']/..</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//span[text()='d']/..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+							<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//td[text()='Legal Entity Identifier']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Legal Entity Identifier']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Equals</valueText>
+							</select>
+							<findElement by="xpath">//label[text()='Legal Entity Identifier']/../..//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Legal Entity Identifier"/>
+							</sendKeys>
+							<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Legal Entity Name']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Equals</valueText>
+							</select>
+							<findElement by="xpath">//label[text()='Legal Entity Name']/../..//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Legal Entity"/>
+							</sendKeys>
+							<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Search']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Legal Entity"/>']]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//tr[td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Legal Entity"/>']]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<error message="This 'Legal Entity' doesn't exist."/>
+								</else>
+							</IfThenElse>
+							<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='OK']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CREATE_DEBIT_AUTHORIZATIONS">
+			<executeBlock name="BUTTON_CREATE_DEBIT_AUTHORIZATIONS"/>
+			<executeBlock name="LEGAL_ENTITY"/>
+			<!--Identification Number-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//label[text()='Identification Number']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Identification Number"/>
+				</parameters>
+			</executeBlock>
+			<!--Reference Identifier-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//label[text()='Reference Identifier']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Reference Identifier"/>
+				</parameters>
+			</executeBlock>
+			<!--Signing Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//label[text()='Signing Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Signing Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Cancellation Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//label[text()='Cancellation Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Cancellation Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Transaction Type-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//label[text()='Transaction Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Transaction Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Frequency-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//label[text()='Frequency']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Frequency"/>
+				</parameters>
+			</executeBlock>
+			<!--Final Collection Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//label[text()='Final Collection Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Final Collection Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Authorization Method-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//label[text()='Authorization Method']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Authorization Method"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="SAVE_AND_CLOSE_POPUP"/>
+		</block>
+		<block name="UPDATE_DEBIT_AUTHORIZATIONS">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock name="GLOBAL_SPECIFY_UPDATE">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//table[@summary='Debit Authorization']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<!--Legal Entity-->
+			<executeBlock name="LEGAL_ENTITY"/>
+			<!--Identification Number-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//label[text()='Identification Number']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Identification Number"/>
+				</parameters>
+			</executeBlock>
+			<!--Signing Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//label[text()='Signing Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Signing Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Cancellation Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//label[text()='Cancellation Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Cancellation Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Transaction Type-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//label[text()='Transaction Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Transaction Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Frequency-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//label[text()='Frequency']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Frequency"/>
+				</parameters>
+			</executeBlock>
+			<!--Final Collection Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//label[text()='Final Collection Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Final Collection Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Authorization Method-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//label[text()='Authorization Method']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Authorization Method"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="SAVE_AND_CLOSE_POPUP"/>
+		</block>
+		<block name="BUTTON_CREATE_DEBIT_AUTHORIZATIONS">
+			<findElement by="xpath">//table[@summary='Debit Authorization']/../../../..//img[@title = 'Create Debit Authorization']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="SAVE_AND_CLOSE_POPUP">
+			<IfThenElse>
+				<if>					
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/../..//span[text()='S']/..[@disabled]</findElement>	
+				</if>
+				<then>
+					<error message= "This button cannot be clicked"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>					
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/../..//span[text()='S']/..</findElement>	
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/../..//span[text()='S']/..</findElement>	
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock name="CONFIRMATION"/>
+		</block>
+		<block name="CONFIRMATION">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Confirmation']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Confirmation']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="PRIMARY">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Primary"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Yes</valueText>
+							</rightOperand> 
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//table[@summary='Debit Authorization']/../../../..//img[@title = 'Set Primary']</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Debit Authorization']/../../../..//img[@title = 'Set Primary']</findElement>
+							<click waitForPageToFinishRendering="true"/>  					
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//table[@summary='Debit Authorization']/../../../..//img[@title = 'Set Primary']/../../../../../../../..</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//table[@summary='Debit Authorization']/../../../..//img[@title = 'Set Primary']/../../../../../../../..</findElement>
+									<click waitForPageToFinishRendering="true"/>  
+									<findElement by="xpath">//table[@summary='Debit Authorization']/../../../..//img[@title = 'Set Primary']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>						
+								</then>
+								<else/>  
+							</IfThenElse>
+						</else>   
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="Manage Customers - Account Site Debit Authorizations">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[@title='Manage Customers']/..//*[text()='Manage Customers']</findElement>
+				</if>
+				<then>
+					<executeBlock name="SEARCH_CUSTOMER"/>
+					<executeBlock name="ACCOUNTS"/>
+					<executeBlock name="SITE"/>
+					<executeBlock name="BANK_ACCOUNTS"/>
+					<executeBlock name="DEBIT_AUTHORIZATIONS"/>
+					<executeBlock name="PRIMARY"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//*[contains(text(),'Edit Site: <valueKB inventoryName="REPEAT_1_MAIN" columnName="Site Number"/>')]</findElement>
+						</if>
+						<then>
+							<!--<executeBlock name="ACCOUNTS"/>
+							<executeBlock name="SITE"/>>-->
+							<executeBlock name="BANK_ACCOUNTS"/>
+							<executeBlock name="DEBIT_AUTHORIZATIONS"/>
+							<executeBlock name="PRIMARY"/>
+						</then>
+						<else>
+							<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+							<executeBlock name="CONFIRMATION"/>
+							<executeBlock name="SEARCH_CUSTOMER"/>
+							<executeBlock name="ACCOUNTS"/>
+							<executeBlock name="SITE"/>
+							<executeBlock name="BANK_ACCOUNTS"/>
+							<executeBlock name="DEBIT_AUTHORIZATIONS"/>
+							<executeBlock name="PRIMARY"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</repeat>
+	</fusionNavigation>
+</navigation>

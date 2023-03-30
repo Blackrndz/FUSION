@@ -1,0 +1,1126 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Policies by Expense Category (Rates Entertainment)</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id: $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        taskName="Manage Policies by Expense Category"
+        isBatchingAllowed="true"
+        isBatchingBasedOnRootInventoryUniqueRecords="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Policies by Expense Category (Entertainment)"/>
+        </dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Policies by Expense Category - Entertainment"/>
+            <parameter name="MAIN_REPEAT_2" value="Manage Policies by Expense Category - Rates Employee (Entertainment)"/>
+            <parameter name="MAIN_REPEAT_3" value="Manage Policies by Expense Category - Rates Nonemployee (Entertainment)"/>
+        </parameters>
+        <block name="Expand_Search">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Collapse Search']</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement by="xpath">//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="SEARCH_POLICIES">
+            <executeBlock name="Expand_Search"/>
+            <findElement by="xpath">//button[text()='Reset']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <executeBlock name="Expand_Search"/>
+            <findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Policy Name"/>
+            </sendKeys>
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Expense Category']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Expense Category"/>
+				</parameters>
+			</executeBlock>	
+            <executeBlock name="Expand_Search"/>
+            <findElement by="xpath">//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="BUTTON_SAVE_AND_CLOSER">
+            <findElement by="xpath">//span[text()='S']/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Check_Button">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[contains(text(),'Rates')]</findElement>
+                </if>
+                <then/>
+                <else>
+                    <executeBlock name="BUTTON_Rates"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <!--Rates-->
+        <block name="LK_Rates">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//span[contains(text(),'Single instance limit')]</findElement>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement highlightTurnedOff="true" by="xpath">//span[contains(text(),'Yearly limit')]</findElement>
+                        </if>
+                        <then>
+                            <!--Single instance limit/Yearly-->
+                            <!--Passenger Rate Calculation Method-->
+                            <executeBlock name="SCROLLBAR">
+                                <parameters>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[contains(@summary,'Rates')]/../..//div[contains(text(),'No data to display.')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[contains(@summary,'Rates')]/..//table[@_rowcount]//tr[1]//td)[1]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[contains(@summary,'Rates')]/../..//div[contains(@id,'scroller')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Single instance limit"/>'] and td[2]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Yearly limit"/>'] and td[3]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Single instance limit"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Yearly limit"/>'] and td[3]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_3_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Single instance limit"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Yearly limit"/>'] and td[4]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Rates"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Rates"/>
+                                </parameters>
+                            </executeBlock>
+                        </then>
+                        <else>
+                            <!--Single instance limit-->
+                            <executeBlock name="SCROLLBAR">
+                                <parameters>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[contains(@summary,'Rates')]/../..//div[contains(text(),'No data to display.')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[contains(@summary,'Rates')]/..//table[@_rowcount]//tr[1]//td)[1]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[contains(@summary,'Rates')]/../..//div[contains(@id,'scroller')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Single instance limit"/>'] and td[2]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Single instance limit"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_3_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Single instance limit"/>'] and td[3]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Rates"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Rates"/>
+                                </parameters>
+                            </executeBlock>
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else>
+                    <!--Yearly-->
+                    <executeBlock name="SCROLLBAR">
+                        <parameters>
+                            <parameter
+                                name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[contains(@summary,'Rates')]/../..//div[contains(text(),'No data to display.')]"/>
+                            <parameter
+                                name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[contains(@summary,'Rates')]/..//table[@_rowcount]//tr[1]//td)[1]"/>
+                            <parameter
+                                name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[contains(@summary,'Rates')]/../..//div[contains(@id,'scroller')]"/>
+                            <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Yearly limit"/>'] and td[2]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                            <parameter
+                                    name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Yearly limit"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                            <parameter
+                                    name="SCROLLBAR_GENERIC_3_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Yearly limit"/>'] and td[3]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                            <parameter
+                                    name="SCROLLBAR_GENERIC_4_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Yearly limit"/>'] and td[3]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                            <parameter
+                                name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Rates"/>
+                            <parameter
+                                name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Rates"/>
+                        </parameters>
+                    </executeBlock>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Create_Rates">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//table[contains(@summary,'Rates')]/../..//label[contains(text(),'Single instance limit')]/../..//input[not(@value)]</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//table[contains(@summary,'Rates')]/../..//label[contains(text(),'Single instance limit')]/../..//input[not(@value)]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">//table[contains(@summary,'Rates')]/../..//label[contains(text(),'Yearly limit')]/../..//input[not(@value)]</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath">//table[contains(@summary,'Rates')]/../..//label[contains(text(),'Yearly limit')]/../..//input[not(@value)]</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </then>
+                        <else>
+                            <executeBlock name="GLOBAL_SPECIFY_ADD">
+                                <parameters>
+                                    <parameter name="SPECIFY_XPATH" value="//table[contains(@summary,'Rates')]/../../../../../../.."/>
+                                </parameters>
+                            </executeBlock>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+            <executeBlock name="DeFine_Rates"/>
+        </block>
+        <block name="DeFine_Rates">
+            <!--Single instance limit-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[contains(@summary,'Rates')]/../..//tr[contains(@class,'Selected')]//label[contains(text(),'Single instance limit')]/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+                    <parameter name="COL_NAME" value="Single instance limit"/>
+                </parameters>
+            </executeBlock>
+            <!--Yearly limit-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[contains(@summary,'Rates')]/../..//tr[contains(@class,'Selected')]//label[contains(text(),'Yearly limit')]/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+                    <parameter name="COL_NAME" value="Yearly limit"/>
+                </parameters>
+            </executeBlock>
+            <!--Currency-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//table[contains(@summary,'Rates')]/../..//tr[contains(@class,'Selected')]//label[text()='Currency']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+                    <parameter name="COL_NAME" value="Currency"/>
+                </parameters>
+            </executeBlock>
+            <!--Start Date-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[contains(@summary,'Rates')]/../..//tr[contains(@class,'Selected')]//label[text()='Start Date']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+                    <parameter name="COL_NAME" value="Start Date"/>
+                </parameters>
+            </executeBlock>
+            <!--End Date-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[contains(@summary,'Rates')]/../..//tr[contains(@class,'Selected')]//label[text()='End Date']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+                    <parameter name="COL_NAME" value="End Date"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Update_Rates">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">(SCROLLBAR_GENERIC_1_FIND_ROW/../../../../..//td)[1]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath">(SCROLLBAR_GENERIC_2_FIND_ROW/../../../../..//td)[1]</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </then>
+                        <else>
+                            <IfThenElse>
+                                <if>
+                                    <findElement by="xpath">SCROLLBAR_GENERIC_3_FIND_ROW</findElement>
+                                </if>
+                                <then>
+                                    <findElement by="xpath">(SCROLLBAR_GENERIC_3_FIND_ROW/../../../../..//td)[1]</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                </then>
+                                <else>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement by="xpath">SCROLLBAR_GENERIC_4_FIND_ROW</findElement>
+                                    </if>
+                                    <then>
+                                    <findElement by="xpath">(SCROLLBAR_GENERIC_4_FIND_ROW/../../../../..//td)[1]</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    </then>
+                                    <else>
+                                    <findElement by="xpath">(SCROLLBAR_GENERIC_4_FIND_ROW/../../../../..//td)[1]</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    </else>
+                                    </IfThenElse>
+                                </else>
+                            </IfThenElse>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+            <!--End Date-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[contains(@summary,'Rates')]/../..//tr[contains(@class,'Selected')]//label[text()='End Date']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+                    <parameter name="COL_NAME" value="End Date"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <!--Employee_Rates-->
+        <block name="LK_Employee_Rates">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/../../..//*[text()='Employee']/../../../../..//span[contains(text(),'Single instance limit')]</findElement>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/../../..//*[text()='Employee']/../../../../..//span[contains(text(),'Yearly limit')]</findElement>
+                        </if>
+                        <then>
+                            <!--Single instance limit/Yearly-->
+                            <!--Passenger Rate Calculation Method-->
+                            <executeBlock name="SCROLLBAR">
+                                <parameters>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_NO_DATA" value="//div[contains(@class,'Expansion')]/..//*[text()='Employee']/../../../../..//div[contains(text(),'No data to display.')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//div[contains(@class,'Expansion')]/..//*[text()='Employee']/../../../../..//table[@_rowcount]//tr[1]//td)[1]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_SCROLLER" value="//div[contains(@class,'Expansion')]/..//*[text()='Employee']/../../../../..//div[contains(@id,'scroller')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//tr[td[1]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Single instance limit"/>'] and td[2]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Yearly limit"/>'] and td[3]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_2_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Single instance limit"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Yearly limit"/>'] and td[3]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_3_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Single instance limit"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Yearly limit"/>'] and td[4]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_4_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//tr[td[1]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Single instance limit"/>'] and td[2]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Yearly limit"/>'] and td[4]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Employee_Rates"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Employee_Rates"/>
+                                </parameters>
+                            </executeBlock>
+                        </then>
+                        <else>
+                            <!--Single instance limit-->
+                            <executeBlock name="SCROLLBAR">
+                                <parameters>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_NO_DATA" value="//div[contains(@class,'Expansion')]/..//*[text()='Employee']/../../../../..//div[contains(text(),'No data to display.')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//div[contains(@class,'Expansion')]/..//*[text()='Employee']/../../../../..//table[@_rowcount]//tr[1]//td)[1]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_SCROLLER" value="//div[contains(@class,'Expansion')]/..//*[text()='Employee']/../../../../..//div[contains(@id,'scroller')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//tr[td[1]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Single instance limit"/>'] and td[2]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_2_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Single instance limit"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_3_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Single instance limit"/>'] and td[3]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_4_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//tr[td[1]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Single instance limit"/>'] and td[3]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Employee_Rates"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Employee_Rates"/>
+                                </parameters>
+                            </executeBlock>
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else>
+                    <!--Yearly-->
+                    <executeBlock name="SCROLLBAR">
+                        <parameters>
+                            <parameter
+                                name="SCROLLBAR_GENERIC_1_NO_DATA" value="//div[contains(@class,'Expansion')]/..//*[text()='Employee']/../../../../..//div[contains(text(),'No data to display.')]"/>
+                            <parameter
+                                name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//div[contains(@class,'Expansion')]/..//*[text()='Employee']/../../../../..//table[@_rowcount]//tr[1]//td)[1]"/>
+                            <parameter
+                                name="SCROLLBAR_GENERIC_1_SCROLLER" value="//div[contains(@class,'Expansion')]/..//*[text()='Employee']/../../../../..//div[contains(@id,'scroller')]"/>
+                            <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//tr[td[1]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Yearly limit"/>'] and td[2]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                            <parameter
+                                    name="SCROLLBAR_GENERIC_2_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Yearly limit"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                            <parameter
+                                    name="SCROLLBAR_GENERIC_3_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Yearly limit"/>'] and td[3]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                            <parameter
+                                    name="SCROLLBAR_GENERIC_4_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//tr[td[1]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Yearly limit"/>'] and td[3]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>']]</parameter>
+                            <parameter
+                                name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Employee_Rates"/>
+                            <parameter
+                                name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Employee_Rates"/>
+                        </parameters>
+                    </executeBlock>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Create_Employee_Rates">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//table[@_rowcount]//tr[2]</findElement>
+                </if>
+                <then>
+                    <executeBlock name="GLOBAL_SPECIFY_ADD">
+                        <parameters>
+                            <parameter name="SPECIFY_XPATH" value="//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../.."/>
+                        </parameters>
+                    </executeBlock>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//label[contains(text(),'Single instance limit')]/../..//input[not(@value)]</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath">//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//label[contains(text(),'Single instance limit')]/../..//input[not(@value)]</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </then>
+                        <else>
+                            <IfThenElse>
+                                <if>
+                                    <findElement by="xpath">//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//label[contains(text(),'Yearly limit')]/../..//input[not(@value)]</findElement>
+                                </if>
+                                <then>
+                                    <findElement by="xpath">//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//label[contains(text(),'Yearly limit')]/../..//input[not(@value)]</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                </then>
+                                <else>
+                                    <executeBlock name="GLOBAL_SPECIFY_ADD">
+                                    <parameters>
+                                    <parameter
+                                    name="SPECIFY_XPATH" value="//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../.."/>
+                                    </parameters>
+                                    </executeBlock>
+                                </else>
+                            </IfThenElse>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+            <executeBlock name="DeFine_Employee_Rates"/>
+        </block>
+        <block name="DeFine_Employee_Rates">
+            <!--Single instance limit-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//tr[contains(@class,'Selected')]//label[contains(text(),'Single instance limit')]/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+                    <parameter name="COL_NAME" value="Single instance limit"/>
+                </parameters>
+            </executeBlock>
+            <!--Yearly limit-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//tr[contains(@class,'Selected')]//label[contains(text(),'Yearly limit')]/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+                    <parameter name="COL_NAME" value="Yearly limit"/>
+                </parameters>
+            </executeBlock>
+            <!--Currency-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//tr[contains(@class,'Selected')]//label[text()='Currency']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+                    <parameter name="COL_NAME" value="Currency"/>
+                </parameters>
+            </executeBlock>
+            <!--Start Date-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//tr[contains(@class,'Selected')]//label[text()='Start Date']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+                    <parameter name="COL_NAME" value="Start Date"/>
+                </parameters>
+            </executeBlock>
+            <!--End Date-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//tr[contains(@class,'Selected')]//label[text()='End Date']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+                    <parameter name="COL_NAME" value="End Date"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Update_Employee_Rates">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">(SCROLLBAR_GENERIC_1_FIND_ROW/../../../../..//td)[1]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath">(SCROLLBAR_GENERIC_2_FIND_ROW/../../../../..//td)[1]</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </then>
+                        <else>
+                            <IfThenElse>
+                                <if>
+                                    <findElement by="xpath">SCROLLBAR_GENERIC_3_FIND_ROW</findElement>
+                                </if>
+                                <then>
+                                    <findElement by="xpath">(SCROLLBAR_GENERIC_3_FIND_ROW/../../../../..//td)[1]</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                </then>
+                                <else>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement by="xpath">SCROLLBAR_GENERIC_4_FIND_ROW</findElement>
+                                    </if>
+                                    <then>
+                                    <findElement by="xpath">(SCROLLBAR_GENERIC_4_FIND_ROW/../../../../..//td)[1]</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    </then>
+                                    <else>
+                                    <executeBlock name="Employee"/>
+                                    </else>
+                                    </IfThenElse>
+                                </else>
+                            </IfThenElse>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+            <!--End Date-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//*[text()='Employee']/../../../../..//tr[contains(@class,'Selected')]//label[text()='End Date']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+                    <parameter name="COL_NAME" value="End Date"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <!--Nonemployee-->
+        <block name="LK_Nonemployee_Rates">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/../../..//*[text()='Nonemployee']/../../../../..//span[contains(text(),'Nonemployee Attendee Types')]</findElement>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/../../..//*[text()='Nonemployee']/../../../../..//span[contains(text(),'Single instance limit')]</findElement>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <findElement
+                                    highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/../../..//*[text()='Nonemployee']/../../../../..//span[contains(text(),'Yearly limit')]</findElement>
+                                </if>
+                                <then>
+                                    <!--Nonemployee Attendee Types/Single instance limit/Yearly-->
+                                    <!--Passenger Rate Calculation Method-->
+                                    <executeBlock name="SCROLLBAR">
+                                    <parameters>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_NO_DATA" value="//div[contains(@class,'Expansion')]/..//*[text()='Nonemployee']/../../../../..//div[contains(text(),'No data to display.')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//div[contains(@class,'Expansion')]/..//*[text()='Nonemployee']/../../../../..//table[@_rowcount]//tr[1]//td)[1]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_SCROLLER" value="//div[contains(@class,'Expansion')]/..//*[text()='Nonemployee']/../../../../..//div[contains(@id,'scroller')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[td[1]//*[@title='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Nonemployee Attendee Types"/>'] and td[2]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Single instance limit"/>'] and td[3]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Yearly limit"/>'] and td[4]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_3" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_2_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Nonemployee Attendee Types"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Single instance limit"/>'] and td[3]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Yearly limit"/>'] and td[4]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_3_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Nonemployee Attendee Types"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Single instance limit"/>'] and td[3]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Yearly limit"/>'] and td[5]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_4_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[td[1]//*[@title='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Nonemployee Attendee Types"/>'] and td[2]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Single instance limit"/>'] and td[3]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Yearly limit"/>'] and td[5]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_3" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Nonemployee_Rates"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Nonemployee_Rates"/>
+                                    </parameters>
+                                    </executeBlock>
+                                </then>
+                                <else>
+                                    <!--Nonemployee Attendee Types/Single instance limit-->
+                                    <executeBlock name="SCROLLBAR">
+                                    <parameters>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_NO_DATA" value="//div[contains(@class,'Expansion')]/..//*[text()='Nonemployee']/../../../../..//div[contains(text(),'No data to display.')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//div[contains(@class,'Expansion')]/..//*[text()='Nonemployee']/../../../../..//table[@_rowcount]//tr[1]//td)[1]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_SCROLLER" value="//div[contains(@class,'Expansion')]/..//*[text()='Nonemployee']/../../../../..//div[contains(@id,'scroller')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[td[1]//*[@title='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Nonemployee Attendee Types"/>'] and td[2]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Single instance limit"/>'] and td[3]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_3" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_2_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Nonemployee Attendee Types"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Single instance limit"/>'] and td[3]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_3" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_3_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Nonemployee Attendee Types"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Single instance limit"/>'] and td[4]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_3" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_4_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[td[1]//*[@title='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Nonemployee Attendee Types"/>'] and td[2]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Single instance limit"/>'] and td[4]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_3" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Nonemployee_Rates"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Nonemployee_Rates"/>
+                                    </parameters>
+                                    </executeBlock>
+                                </else>
+                            </IfThenElse>
+                        </then>
+                        <else>
+                            <IfThenElse>
+                                <if>
+                                    <findElement
+                                    highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/../../..//*[text()='Nonemployee']/../../../../..//span[contains(text(),'Yearly limit')]</findElement>
+                                </if>
+                                <then>
+                                    <!--Nonemployee Attendee Types/Yearly limit-->
+                                    <!--Passenger Rate Calculation Method-->
+                                    <executeBlock name="SCROLLBAR">
+                                    <parameters>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_NO_DATA" value="//div[contains(@class,'Expansion')]/..//*[text()='Nonemployee']/../../../../..//div[contains(text(),'No data to display.')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//div[contains(@class,'Expansion')]/..//*[text()='Nonemployee']/../../../../..//table[@_rowcount]//tr[1]//td)[1]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_SCROLLER" value="//div[contains(@class,'Expansion')]/..//*[text()='Nonemployee']/../../../../..//div[contains(@id,'scroller')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[td[1]//*[@title='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Nonemployee Attendee Types"/>'] and td[2]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Yearly limit"/>'] and td[3]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_3" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_2_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Nonemployee Attendee Types"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Yearly limit"/>'] and td[3]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_3_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Nonemployee Attendee Types"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Yearly limit"/>'] and td[4]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_4_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[td[1]//*[@title='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Nonemployee Attendee Types"/>'] and td[2]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Yearly limit"/>'] and td[4]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_3" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Nonemployee_Rates"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Nonemployee_Rates"/>
+                                    </parameters>
+                                    </executeBlock>
+                                </then>
+                                <else>
+                                    <!--Nonemployee Attendee Types-->
+                                    <executeBlock name="SCROLLBAR">
+                                    <parameters>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_NO_DATA" value="//div[contains(@class,'Expansion')]/..//*[text()='Nonemployee']/../../../../..//div[contains(text(),'No data to display.')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//div[contains(@class,'Expansion')]/..//*[text()='Nonemployee']/../../../../..//table[@_rowcount]//tr[1]//td)[1]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_SCROLLER" value="//div[contains(@class,'Expansion')]/..//*[text()='Nonemployee']/../../../../..//div[contains(@id,'scroller')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[td[1]//*[@title='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Nonemployee Attendee Types"/>'] and td[2]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_3" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_2_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Nonemployee Attendee Types"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_3_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Nonemployee Attendee Types"/>'] and td[3]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_3" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_4_FIND_ROW">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[td[1]//*[@title='<valueKB
+                                    inventoryName="MAIN_REPEAT_3"
+                                    columnName="Nonemployee Attendee Types"/>'] and td[3]//input[@Value='<valueKB
+                                    inventoryName="MAIN_REPEAT_3" columnName="Start Date"/>']]</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Nonemployee_Rates"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Nonemployee_Rates"/>
+                                    </parameters>
+                                    </executeBlock>
+                                </else>
+                            </IfThenElse>
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Create_Nonemployee_Rates">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//label[contains(text(),'Single instance limit')]/../..//input[not(@value)]</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//label[contains(text(),'Single instance limit')]/../..//input[not(@value)]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//label[contains(text(),'Yearly limit')]/../..//input[not(@value)]</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//label[contains(text(),'Yearly limit')]/../..//input[not(@value)]</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </then>
+                        <else>
+                            <IfThenElse>
+                                <if>
+                                    <findElement by="xpath">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//label[text()='Nonemployee Attendee Types']/../..//select[not(@title)]</findElement>
+                                </if>
+                                <then>
+                                    <findElement by="xpath">(//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//label[text()='Nonemployee Attendee Types']/../..//select[not(@title)]/../../../../../../../..//td)[1]</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                </then>
+                                <else>
+                                    <executeBlock name="GLOBAL_SPECIFY_ADD">
+                                    <parameters>
+                                    <parameter
+                                    name="SPECIFY_XPATH" value="//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../.."/>
+                                    </parameters>
+                                    </executeBlock>
+                                </else>
+                            </IfThenElse>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+            <executeBlock name="DeFine_Nonemployee_Rates"/>
+        </block>
+        <block name="DeFine_Nonemployee_Rates">
+            <!--Nonemployee Attendee Types-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[contains(@class,'Selected')]//label[text()='Nonemployee Attendee Types']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+                    <parameter name="COL_NAME" value="Nonemployee Attendee Types"/>
+                </parameters>
+            </executeBlock>
+            <!--Single instance limit-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[contains(@class,'Selected')]//label[contains(text(),'Single instance limit')]/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+                    <parameter name="COL_NAME" value="Single instance limit"/>
+                </parameters>
+            </executeBlock>
+            <!--Yearly limit-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[contains(@class,'Selected')]//label[contains(text(),'Yearly limit')]/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+                    <parameter name="COL_NAME" value="Yearly limit"/>
+                </parameters>
+            </executeBlock>
+            <!--Currency-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[contains(@class,'Selected')]//label[text()='Currency']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+                    <parameter name="COL_NAME" value="Currency"/>
+                </parameters>
+            </executeBlock>
+            <!--Start Date-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[contains(@class,'Selected')]//label[contains(text(),'Start Date')]/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+                    <parameter name="COL_NAME" value="Start Date"/>
+                </parameters>
+            </executeBlock>
+            <!--End Date-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[contains(@class,'Selected')]//label[text()='End Date']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+                    <parameter name="COL_NAME" value="End Date"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Update_Nonemployee_Rates">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">(SCROLLBAR_GENERIC_1_FIND_ROW/../../../../..//td)[1]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath">(SCROLLBAR_GENERIC_2_FIND_ROW/../../../../..//td)[1]</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </then>
+                        <else>
+                            <IfThenElse>
+                                <if>
+                                    <findElement by="xpath">SCROLLBAR_GENERIC_3_FIND_ROW</findElement>
+                                </if>
+                                <then>
+                                    <findElement by="xpath">(SCROLLBAR_GENERIC_3_FIND_ROW/../../../../..//td)[1]</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                </then>
+                                <else>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement by="xpath">SCROLLBAR_GENERIC_4_FIND_ROW</findElement>
+                                    </if>
+                                    <then>
+                                    <findElement by="xpath">(SCROLLBAR_GENERIC_4_FIND_ROW/../../../../..//td)[1]</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    </then>
+                                    <else>
+                                    <executeBlock name="Error Nonemployee"/>
+                                    </else>
+                                    </IfThenElse>
+                                </else>
+                            </IfThenElse>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+            <!--End Date-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//tr[contains(@class,'Selected')]//label[text()='End Date']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+                    <parameter name="COL_NAME" value="End Date"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="BUTTON_SAVE_RATES">
+            <findElement by="xpath">//div[contains(@class,'Expansion')]/..//span[text()='S']/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Delete">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//a/img[@title='Delete']</findElement>
+                </if>
+                <then>
+                    <findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//a/img[@title='Delete']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement highlightTurnedOff="true"
+                                isDisplayed="true"
+                                isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//a/img[@title='Delete']/../../../../../../../..</findElement>
+                        </if>
+                        <then>
+                            <findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//a/img[@title='Delete']/../../../../../../../..</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                            <findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//a/img[@title='Delete']</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="DEL_ROW_FRIST">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//label[contains(text(),'Single instance limit')]/../..//input[not(@value)]</findElement>
+                </if>
+                <then>
+                    <executeBlock name="Delete"/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//label[contains(text(),'Yearly limit')]/../..//input[not(@value)]</findElement>
+                        </if>
+                        <then>
+                            <executeBlock name="Delete"/>
+                        </then>
+                        <else>
+                            <IfThenElse>
+                                <if>
+                                    <findElement by="xpath">//div[contains(@class,'Expansion')]/../..//*[text()='Nonemployee']/../../../../..//label[text()='Nonemployee Attendee Types']/../..//select[not(@title)]</findElement>
+                                </if>
+                                <then>
+                                    <executeBlock name="Delete"/>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="BUTTON_Rates">
+            <findElement by="xpath">//button[contains(text(),'Rates')]</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="MAIN_REPEAT_1">
+            <executeBlock name="SEARCH_POLICIES"/>
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                            by="xpath">//a[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Policy Name"/>']</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true"
+                            by="xpath">//a[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Policy Name"/>']/../..//td[1]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <executeBlock name="GLOBAL_UPDATE"/>
+                    <IfThenElse>
+                        <if>
+                            <findElement highlightTurnedOff="true"
+                                isDisplayed="true" by="xpath">//button[contains(text(),'Rates')]</findElement>
+                        </if>
+                        <then>
+                            <executeBlock name="BUTTON_Rates"/>
+                            <pause durationInSecs="1"/>
+                            <IfThenElse>
+                                <if>
+                                    <evaluateXPATHBoolean>count(//table[contains(@summary,'Rates')])=2</evaluateXPATHBoolean>
+                                </if>
+                                <then>
+                                    <repeat inventoryName="MAIN_REPEAT_2">
+                                    <executeBlock name="Check_Button"/>
+                                    <pause durationInSecs="1"/>
+                                    <executeBlock name="DEL_ROW_FRIST"/>
+                                    <executeBlock name="LK_Employee_Rates"/>
+                                    <executeBlock name="BUTTON_SAVE_RATES"/>
+                                    </repeat>
+                                    <repeat inventoryName="MAIN_REPEAT_3">
+                                    <executeBlock name="Check_Button"/>
+                                    <pause durationInSecs="1"/>
+                                    <executeBlock name="LK_Nonemployee_Rates"/>
+                                    <executeBlock name="BUTTON_SAVE_RATES"/>
+                                    </repeat>
+                                </then>
+                                <else>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement
+                                    highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Nonemployee']</findElement>
+                                    </if>
+                                    <then>
+                                    <repeat inventoryName="MAIN_REPEAT_3">
+                                    <executeBlock name="Check_Button"/>
+                                    <pause durationInSecs="1"/>
+                                    <executeBlock name="LK_Nonemployee_Rates"/>
+                                    <executeBlock name="BUTTON_SAVE_RATES"/>
+                                    </repeat>
+                                    </then>
+                                    <else>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement
+                                    highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[text()='Employee']</findElement>
+                                    </if>
+                                    <then>
+                                    <repeat inventoryName="MAIN_REPEAT_2">
+                                    <executeBlock name="Check_Button"/>
+                                    <pause durationInSecs="1"/>
+                                    <executeBlock name="LK_Employee_Rates"/>
+                                    <executeBlock name="BUTTON_SAVE_RATES"/>
+                                    </repeat>
+                                    </then>
+                                    <else>
+                                    <repeat inventoryName="MAIN_REPEAT_2">
+                                    <executeBlock name="Check_Button"/>
+                                    <pause durationInSecs="1"/>
+                                    <executeBlock name="LK_Rates"/>
+                                    <executeBlock name="BUTTON_SAVE_RATES"/>
+                                    </repeat>
+                                    </else>
+                                    </IfThenElse>
+                                    </else>
+                                    </IfThenElse>
+                                </else>
+                            </IfThenElse>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else>
+                    <error message="Please Define Policy."/>
+                </else>
+            </IfThenElse>
+             <executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

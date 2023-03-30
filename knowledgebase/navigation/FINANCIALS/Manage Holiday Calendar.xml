@@ -1,0 +1,202 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Holiday Calendar</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Manage Holiday Calendar" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<parameters>
+			<parameter name="INV_1" value="Manage Holiday Calendar - Holiday Calendar"/>
+			<parameter name="INV_2" value="Manage Holiday Calendar - Events"/>
+		</parameters>
+		
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Calendar ID"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Calendar ID"/>']</findElement>
+		</block>
+		
+		<block name="WAITING">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Calendar ID']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="20"/>
+					<break/>
+				</then>
+				<else>
+					<pause durationInSecs="15"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="SEARCH_HOLIDAY_CALENDAR">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Holiday Calendar']/..//input[contains(@class,'inputsearch')]/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Calendar ID"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="2"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//*[text()='Holiday Calendar']/../..//td[3]//*[text()='<valueKB inventoryName="INV_1" columnName="Calendar ID"/>']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//*[text()='Holiday Calendar']/../..//td[3]//*[text()='<valueKB inventoryName="INV_1" columnName="Calendar ID"/>']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//*[text()='Holiday Calendar']/..//*[text()='Add']/../../../..[@class]//button</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="CREATE_HOLIDAY_CALENDAR">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//input[contains(@id,'CalendarId')]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Calendar ID"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../../../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Valid from Date']/../../../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Valid from Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Valid to Date']/../../../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Valid to Date"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="SEARCH_EVENT">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Events']/..//input[contains(@class,'inputsearch')]/.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Event ID"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//*[text()='Events']/..//td[3][text()='<valueKB inventoryName="INV_2" columnName="Event ID"/>']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//*[text()='Events']/..//td[3][text()='<valueKB inventoryName="INV_2" columnName="Event ID"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//*[text()='Events']/..//*[text()='Add']/../../../..[@class]//div[contains(@class,'icon-wrapper')]</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" by="xpath">//*[text()='Events']/..//*[text()='Add']/../../../..[@class]//button</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else>
+							<findElement by="xpath">//*[text()='Events']/..//*[text()='Add']/../../../..[not(@class)]//button</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="2"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="CREATE_EVENT">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Event ID']/../../../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Event ID"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Event Date']/../../../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Event Date"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Event Details']/../../../../../../..//label[text()='Description']/../../../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Event Description"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='Event Details']/../../../../../..//*[text()='Save']/../..</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='Event Details']/../../../../../..//*[text()='Save']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="SAVE">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='Holiday Calendar Details']/../../..//*[text()='Save']/../..</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='Holiday Calendar Details']/../../..//*[text()='Save']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SAVE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<window action="open"/>
+		<executeBlock name="WAITING"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="SEARCH_HOLIDAY_CALENDAR"/>
+			<executeBlock name="CREATE_HOLIDAY_CALENDAR"/>
+			<repeat inventoryName="INV_2">
+				<executeBlock name="SEARCH_EVENT"/>
+				<executeBlock name="CREATE_EVENT"/>
+			</repeat>
+			<executeBlock name="SAVE"/>
+		</repeat>
+		<window action="close"/>
+	</fusionNavigation>
+</navigation>

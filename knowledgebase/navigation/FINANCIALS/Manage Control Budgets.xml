@@ -1,0 +1,1053 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Control Budgets</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Control Budgets" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Review and Submit Accounting Configuration"/>
+			<navigation name="Manage Business Unit Set Assignment"/>
+			<navigation name="Manage Budget Calendars"/>
+        </dependencies>
+        <parameters>
+            <parameter name="INV_1" value="Manage Control Budgets - Details"/>
+			<parameter name="INV_2" value="Manage Control Budgets - Structure"/>
+        </parameters>
+        <block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Name"/>']/../..//input</findElement>
+        </block>
+
+		<!--INV_1-->
+		<block name="Search_Control_Budgets">
+			<IfThenElse>	
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//a[@aria-pressed='false']//img[@title='Query By Example']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//a[@aria-pressed='false']//img[@title='Query By Example']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>	
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@summary='Manage Control Budgets']/../../..//a[@title='Clear All']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Control Budgets']/../../..//a[@title='Clear All']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//th[@_d_index='1']/span"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="1"/>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Manage Control Budgets']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Manage Control Budgets'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Manage Control Budgets']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Manage Control Budgets']//a[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="Create_Control_Budgets"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Control_Budgets"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Control_Budgets_Details"/>
+		</block>
+		<block name="Create_Control_Budgets">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Manage Control Budgets']/../../../.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Update_Control_Budgets">
+			<findElement isSkipCheckDomError="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+		</block>
+		<block name="Control_Budgets_Details">
+			<executeBlock name="Check_Status"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[@title='Create Control Budget']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//div[contains(@id,'AP2:pfl2')]//label[text()='Name']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Name"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//div[contains(@id,'AP2:pfl2')]//label[text()='Description']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Description"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//select/..//label[text()='Budget Calendar']/../../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Budget Calendar"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//select/..//label[text()='From Period']/../../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="From Period"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='To Period']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="To Period"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//select/..//label[text()='Source Budget Type']/../../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Source Budget Type"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Source Budget Name']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Source Budget Name"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Release Budget for Consumption']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Release Budget for Consumption"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Currency']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Currency"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//select/..//label[text()='Default Rate Type']/../../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Default Rate Type"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//select/..//label[text()='Control Level']/../../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Control Level"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="(//label[text()='Tolerance Percentage']/../..)[1]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Tolerance Percentage"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Tolerance Amount']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Tolerance Amount"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="(//label[text()='Ledger']/../..)[1]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Ledger"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Project']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Project"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Budget Manager']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Budget Manager"/>
+							<parameter name="SEARCH_1" value="Name"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Allow budget increase adjustments']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Allow budget increase adjustments"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Allow budget decrease adjustments']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Allow budget decrease adjustments"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Allow budget decrease adjustments below funds available']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Allow budget decrease adjustments below funds available"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//div[contains(@id,'AP2:pfl2')]//label[text()='Description']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Description"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//select/..//label[text()='Budget Calendar']/../../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Budget Calendar"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//select/..//label[text()='From Period']/../../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="From Period"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='To Period']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="To Period"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//select/..//label[text()='Source Budget Type']/../../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Source Budget Type"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Source Budget Name']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Source Budget Name"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Release Budget for Consumption']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Release Budget for Consumption"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Currency']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Currency"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//select/..//label[text()='Default Rate Type']/../../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Default Rate Type"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//select/..//label[text()='Control Level']/../../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Control Level"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="(//label[text()='Tolerance Percentage']/../..)[1]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Tolerance Percentage"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Tolerance Amount']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Tolerance Amount"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="(//label[text()='Ledger']/../..)[1]"/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Ledger"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Project']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Project"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Budget Manager']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Budget Manager"/>
+							<parameter name="SEARCH_1" value="Name"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Allow budget increase adjustments']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Allow budget increase adjustments"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Allow budget decrease adjustments']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Allow budget decrease adjustments"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Allow budget decrease adjustments below funds available']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Allow budget decrease adjustments below funds available"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		<!--Status-->
+		<block name="Status">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_1" columnName="Status"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>In use</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Status']/../..//*[text()='In use']</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//label[text()='Status']/../..//*[text()='Permanently closed']</findElement>
+								</if>
+								<then/>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath">//a[text()='Action']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//a[text()='Action']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											<findElement by="xpath">//div[@aria-label='Action']//a</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="1"/>
+										</else>
+									</IfThenElse>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//td[text()='Prepare for Use']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath" isDisplayed="true">//table[@style='position: relative;']//td[text()='Prepare for Use']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="2"/>
+										</then>
+										<else/>
+									</IfThenElse>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//div[text()='Warning']</findElement>
+										</if>
+										<then>
+											<IfThenElse>
+												<if>
+													<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//*[@accesskey='Y']</findElement>
+												</if>
+												<then>
+													<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[@accesskey='Y']</findElement>
+													<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="2"/>
+												</then>
+												<else>
+													<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='Yes']</findElement>
+													<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="2"/>
+												</else>
+											</IfThenElse>
+										</then>
+										<else/>
+									</IfThenElse>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//div[text()='Confirmation']</findElement>
+										</if>
+										<then>
+											<IfThenElse>
+												<if>
+													<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//*[@accesskey='K']</findElement>
+												</if>
+												<then>
+													<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[@accesskey='K']</findElement>
+													<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="2"/>
+												</then>
+												<else>
+													<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='OK']</findElement>
+													<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="2"/>
+												</else>
+											</IfThenElse>
+										</then>
+										<else/>
+									</IfThenElse>
+								</else>
+							</IfThenElse>	
+						</else>
+					</IfThenElse>	
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_1" columnName="Status"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Closed</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Status']/../..//*[text()='Closed']</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//label[text()='Status']/../..//*[text()='In use']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath">//a[text()='Action']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//a[text()='Action']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											<findElement by="xpath">//div[@aria-label='Action']//a</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="1"/>
+										</else>
+									</IfThenElse>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//td[text()='Close']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath" isDisplayed="true">//table[@style='position: relative;']//td[text()='Close']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="2"/>
+										</then>
+										<else/>
+									</IfThenElse>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//div[text()='Warning']</findElement>
+										</if>
+										<then>
+											<IfThenElse>
+												<if>
+													<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//*[@accesskey='Y']</findElement>
+												</if>
+												<then>
+													<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[@accesskey='Y']</findElement>
+													<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="2"/>
+												</then>
+												<else>
+													<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='Yes']</findElement>
+													<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="2"/>
+												</else>
+											</IfThenElse>
+										</then>
+										<else/>
+									</IfThenElse>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//div[text()='Confirmation']</findElement>
+										</if>
+										<then>
+											<IfThenElse>
+												<if>
+													<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//*[@accesskey='K']</findElement>
+												</if>
+												<then>
+													<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[@accesskey='K']</findElement>
+													<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="2"/>
+												</then>
+												<else>
+													<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='OK']</findElement>
+													<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="2"/>
+												</else>
+											</IfThenElse>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>	
+						</else>
+					</IfThenElse>	
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_1" columnName="Status"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Not ready for use - redefining</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Status']/../..//*[text()='Not ready for use - redefining']</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//label[text()='Status']/../..//*[text()='Closed']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath">//a[text()='Action']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//a[text()='Action']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											<findElement by="xpath">//div[@aria-label='Action']//a</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="1"/>
+										</else>
+									</IfThenElse>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//td[text()='Redefine']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath" isDisplayed="true">//table[@style='position: relative;']//td[text()='Redefine']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="2"/>
+										</then>
+										<else/>
+									</IfThenElse>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//div[text()='Warning']</findElement>
+										</if>
+										<then>
+											<IfThenElse>
+												<if>
+													<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//*[@accesskey='Y']</findElement>
+												</if>
+												<then>
+													<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[@accesskey='Y']</findElement>
+													<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="2"/>
+												</then>
+												<else>
+													<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='Yes']</findElement>
+													<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="2"/>
+												</else>
+											</IfThenElse>
+										</then>
+										<else/>
+									</IfThenElse>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//div[text()='Confirmation']</findElement>
+										</if>
+										<then>
+											<IfThenElse>
+												<if>
+													<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//*[@accesskey='K']</findElement>
+												</if>
+												<then>
+													<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[@accesskey='K']</findElement>
+													<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="2"/>
+												</then>
+												<else>
+													<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='OK']</findElement>
+													<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="2"/>
+												</else>
+											</IfThenElse>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>	
+						</else>
+					</IfThenElse>	
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+
+
+		<!--INV_2-->
+		<block name="Control_Budget_Structure">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[@title='Expand Control Budget Structure']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[@title='Expand Control Budget Structure']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Control Budget Structure']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Control Budget Structure']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Control Budget Structure'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Control Budget Structure']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Control Budget Structure']//tr[td/span/select[@title='<valueKB inventoryName="INV_2" columnName="Budget Segment"/>']]/../../../../../td[1]</parameter>
+							<parameter name="TEMPLATE_2_FIND_ROW">//table[@summary='Control Budget Structure']//tr[td/span/span[text()='<valueKB inventoryName="INV_2" columnName="Budget Segment"/>']]/../../../../../td[1]</parameter>
+							<parameter name="TEMPLATE_CREATE" value="Create_Control_Budget_Structure"/>
+							<parameter name="TEMPLATE_UPDATE" value="Update_Control_Budget_Structure"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>	
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<pause durationInSecs="1"/>
+		</block>
+		<block name="Create_Control_Budget_Structure">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@summary='Control Budget Structure']/../../../..//div[contains(@id,'ATtb1::eoi')]</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Control Budget Structure']/../../../..//div[contains(@id,'ATtb1::eoi')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//img[@title='Add Row']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Control Budget Structure']/../../../.."/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Control Budget Structure']//tr[contains(@class,'Select')]//label[text()='Budget Segment']/../..//select[not(@title)]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Control Budget Structure']//label[text()='Budget Segment']/../..//select[not(@title)]/../../../../../../../../td[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Control Budget Structure']//tr[contains(@class,'Select')]//label[text()='Budget Segment']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Budget Segment"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Update_Control_Budget_Structure">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath">TEMPLATE_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		
+		<!--Save and Close-->
+		<block name="Save_and_Close">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[@title='Manage Control Budgets']</findElement>
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//a[@title='Save']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//a[@title='Save']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//*[text()='S']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='S']/..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='Save and Close']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="1"/>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//span[text()='Save']/../../../td[2]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Save']/../../../td[2]//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="1"/>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//*[text()='S']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='S']/..</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='Save and Close']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="1"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>	
+		</block>
+		<!--Warning-->
+		<block name="Warning">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//div[text()='Warning']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//*[@accesskey='Y']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[@accesskey='Y']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else>
+							<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='Yes']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="2"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<!--Check Status-->
+		<block name="Check_Status">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//label[text()='Status']/../..//*[text()='In use']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//a[text()='Action']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//a[text()='Action']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<findElement by="xpath">//div[@aria-label='Action']//a</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//td[text()='Close']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isDisplayed="true">//table[@style='position: relative;']//td[text()='Close']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else/>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//div[text()='Warning']</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//*[@accesskey='Y']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[@accesskey='Y']</findElement>
+									<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+								</then>
+								<else>
+									<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='Yes']</findElement>
+									<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//div[text()='Confirmation']</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//*[@accesskey='K']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[@accesskey='K']</findElement>
+									<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+								</then>
+								<else>
+									<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='OK']</findElement>
+									<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//label[text()='Status']/../..//*[text()='Closed']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//a[text()='Action']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//a[text()='Action']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<findElement by="xpath">//div[@aria-label='Action']//a</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//td[text()='Redefine']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isDisplayed="true">//table[@style='position: relative;']//td[text()='Redefine']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else/>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//div[text()='Warning']</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//*[@accesskey='Y']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[@accesskey='Y']</findElement>
+									<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+								</then>
+								<else>
+									<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='Yes']</findElement>
+									<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//div[text()='Confirmation']</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//*[@accesskey='K']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[@accesskey='K']</findElement>
+									<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+								</then>
+								<else>
+									<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='OK']</findElement>
+									<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//label[text()='Status']/../..//*[text()='Permanently closed']</findElement>
+				</if>
+				<then>
+					<error message="Data Issue: Status is Permanently closed, Can not update."/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="Search_Control_Budgets"/>
+			<repeat inventoryName="INV_2">
+				<executeBlock name="Control_Budget_Structure"/>
+			</repeat>
+			<executeBlock name="Status"/>
+			<executeBlock name="Save_and_Close"/>
+		</repeat>
+    </fusionNavigation>
+</navigation>

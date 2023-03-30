@@ -1,0 +1,246 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Profile Types</name>
+    <svn>
+        <xsd:revision>$Revision: 79583 $:</xsd:revision>
+        <xsd:author>$Author: sudarak.unchan $:</xsd:author>
+        <xsd:date>$Date: 2022-10-28 14:32:32 +0700 (Fri, 28 Oct 2022) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Profile%20Types.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Profile Types.xml 79583 2022-10-28 07:32:32Z sudarak.unchan $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Profile Types"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Enterprise HCM Information"/>
+			<navigation name="Manage Reference Data Sets"/>
+        </dependencies>
+        <parameters>
+            <parameter name="REPEAT_1_MAIN" value="Manage Profile Types - Profile Types"/>
+			<parameter name="REPEAT_3_MAIN" value="Manage Profile Types - Content Sections"/>
+			<parameter name="REPEAT_5_MAIN" value="Manage Profile Types - Profile Talent Ratings"/>
+        </parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Profile Type"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Profile Type"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_5_MAIN" columnName="Profile Type"/>']/../..//input</findElement>
+		</block>
+		
+		<!--REPEAT_1-->
+		<block name="Search_Profile_Type">
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+                <parameters>
+                    <parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Summary']/../..//div[contains(text(),'No data to display.')]"/>
+                    <parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Summary'][@_rowcount]//tr[1]//td)[1]"/>
+                    <parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Summary']/../..//div[contains(@id,'scroller')]"/>
+                    <parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Summary']/..//tr[td//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>'] and td//*[text()=translate('<valueKB inventoryName="REPEAT_1_MAIN" columnName="Profile Type"/>', 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')]]/td[1]</parameter>
+                    <parameter name="TEMPLATE_CREATE" value="CREATE_Profile_Type"/>
+                    <parameter name="TEMPLATE_UPDATE" value="UPDATE_Profile_Type"/>
+                </parameters>
+            </executeBlock>
+        </block>
+		<block name="CREATE_Profile_Type">
+			<error message="Data not exist."/>
+		</block>
+		<block name="UPDATE_Profile_Type">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Summary']/..//tr[contains(@class,'Select')]//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="5"/>
+			<executeBlock name="Profile_Type"/>
+		</block>
+		<block name="Profile_Type">
+			<!--Profile Type-->
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Profile Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Profile Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Status-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Status']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Status"/>
+				</parameters>
+			</executeBlock>
+			<!--Autocreate Person Profiles-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Autocreate Person Profiles']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Autocreate Person Profiles"/>
+				</parameters>
+			</executeBlock>
+			<!--Include Job Description-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Include Job Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Include Job Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Include Job Responsibilities-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Include Job Responsibilities']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Include Job Responsibilities"/>
+				</parameters>
+			</executeBlock>
+			<!--Include Job Qualifications-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Include Job Qualifications']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Include Job Qualifications"/>
+				</parameters>
+			</executeBlock>
+			<!--Include Position Description-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Include Position Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Include Position Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Include Position Responsibilities-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Include Position Responsibilities']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Include Position Responsibilities"/>
+				</parameters>
+			</executeBlock>
+			<!--Include Position Qualifications-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Include Position Qualifications']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Include Position Qualifications"/>
+				</parameters>
+			</executeBlock>
+			<!--Include Organization Description-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Include Organization Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Include Organization Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Include Organization Responsibilities-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Include Organization Responsibilities']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Include Organization Responsibilities"/>
+				</parameters>
+			</executeBlock>
+			<!--Include Organization Qualifications-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Include Organization Qualifications']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Include Organization Qualifications"/>
+				</parameters>
+			</executeBlock>
+			<!--Include Criticality-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Include Criticality']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Include Criticality"/>
+				</parameters>
+			</executeBlock>
+        </block>
+
+		<!--REPEAT_3-->
+		<block name="Search_Content_Sections">
+			<!--<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//div/div/div/div/a[text()='Content Sections'][contains(@class,'Selected')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//div/div/div/div/a[text()='Content Sections']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>-->
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+                <parameters>
+                    <parameter name="TEMPLATE_NO_DATA" value="//*[text()='Content Sections']/../..//table[@summary='Summary']/../..//div[contains(text(),'No data to display.')]"/>
+                    <parameter name="TEMPLATE_FIRST_ROW" value="(//*[text()='Content Sections']/../..//table[@summary='Summary'][@_rowcount]//tr[1]//td)[1]"/>
+                    <parameter name="TEMPLATE_SCROLLER" value="//*[text()='Content Sections']/../..//table[@summary='Summary']/../..//div[contains(@id,'scroller')]"/>
+                    <parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Summary']/..//tr[td//a[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Section Name"/>'] and td[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Section Description"/>'] and td[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Template"/>']]</parameter>
+                    <parameter name="TEMPLATE_CREATE" value="CREATE_Content_Sections"/>
+                    <parameter name="TEMPLATE_UPDATE" value="UPDATE_Content_Sections"/>
+                </parameters>
+            </executeBlock>	
+        </block>
+		<block name="CREATE_Content_Sections">
+			<error message="The field 'Name' doesn't exist."/>
+        </block>
+		<block name="UPDATE_Content_Sections">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+        </block>		
+		<!--REPEAT_5-->
+		<block name="Profile_Talent_Rating">
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+                <parameters>
+                    <parameter name="TEMPLATE_NO_DATA" value="//*[text()='Profile Talent Ratings']/../..//table[@summary='Summary']/../..//div[contains(text(),'No data to display.')]"/>
+                    <parameter name="TEMPLATE_FIRST_ROW" value="(//*[text()='Profile Talent Ratings']/../..//table[@summary='Summary'][@_rowcount]//tr[1]//td)[1]"/>
+                    <parameter name="TEMPLATE_SCROLLER" value="//*[text()='Profile Talent Ratings']/../..//table[@summary='Summary']//div[contains(@id,'scroller')]"/>
+                    <parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Summary']/..//tr[td//*[text()='<valueKB inventoryName="REPEAT_5_MAIN" columnName="Section Name"/>'] and td//*[text()='<valueKB inventoryName="REPEAT_5_MAIN" columnName="Section Description"/>'] and td//*[text()='<valueKB inventoryName="REPEAT_5_MAIN" columnName="Active"/>']]</parameter>
+                    <parameter name="TEMPLATE_CREATE" value="CREATE_Profile_Talent_Rating"/>
+                    <parameter name="TEMPLATE_UPDATE" value="UPDATE_Profile_Talent_Rating"/>
+                </parameters>
+            </executeBlock>
+		</block>
+		<block name="CREATE_Profile_Talent_Rating">
+			<error message="The field 'Name' doesn't exist."/>
+		</block>
+		<block name="UPDATE_Profile_Talent_Rating">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		
+        <executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+        <repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search_Profile_Type"/>
+			<repeat inventoryName="REPEAT_3_MAIN">
+				<executeBlock name="Search_Content_Sections"/>
+			</repeat>
+			<repeat inventoryName="REPEAT_5_MAIN">
+				<executeBlock name="Profile_Talent_Rating"/>
+			</repeat>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<pause durationInSecs="5"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

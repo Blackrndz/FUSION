@@ -1,0 +1,361 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Task Configurations for Financials (Task Status)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Task Configurations for Financials"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Users"/>
+			<navigation name="Manage Approval Groups"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Task Configurations for Financials - Notification Task Status"/>
+		</parameters>
+
+
+		<block name="SAVE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Save'][contains(@class,'Disabled')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[@title='Save']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="waiting_TOP">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true"
+                        highlightTurnedOff="true" by="xpath">(//div[contains(@id,'notificatinActionTable')]//table[@_rowcount]//tr[@ _afrrk='0']//td)[1]</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					<scroll direction="TOP"/>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<block name="waiting_DOWN">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true"
+                        highlightTurnedOff="true" by="xpath">((//*[text()='Notification Settings']/../../../../../../../../../..//table[@_rowcount]//tr)[last()]/../../../../..//td)[1]</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					<scroll direction="DOWN"/>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					<scroll direction="DOWN"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<block name="TAB_TASK">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='Task']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//a[text()='Task'][contains(@class,'Selected')]</findElement>
+						</if>
+						<then/>
+						<else>
+							<findElement by="xpath">//a[text()='Task']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//span[text()='Notifications']/../..//a</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//span[text()='Notifications']/../..//a[contains(@class,'active')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//span[text()='Notifications']/../..//a</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[@title='Expand Notification Settings']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[@title='Expand Notification Settings']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+
+		<block name="SEACH">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Task Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement by="xpath">//label[text()='Search']/../..//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Task Name"/>
+					</sendKeys>
+					<findElement by="xpath">//a[@title='Search task types']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement
+                            by="xpath">//span[contains(text(),'<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Task Name"/>')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<error message="The field 'Task Name' doesn't exist." />
+				</else>
+			</IfThenElse>
+		</block>
+
+		<block name="UPDATE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Edit task'][contains(@class,'Disabled')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[@title='Edit task']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="OK_COMMENT">
+			<findElement by="xpath">//div[text()='Enter Comments']/../../../../../../..//button[text()='OK']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="INFORMATION">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//div[text()='Information']/../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Information']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+
+		<block name="CLICK_LAST_ROW">
+			<!--<executeBlock name="waiting_DOWN" isRepeatUntilBreak="true"/>-->
+			<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="BT_Commit_Task">
+			<findElement by="xpath">//img[@title='Commit task']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="2"/>
+			<findElement by="xpath">//div[text()='Enter Comments']/../../../../../../..//button[text()='OK']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[contains(@class,'Expansion')]/..//div[text()='Error']</findElement>
+				</if>
+				<then>
+					<error message="Please fix the data is correct."/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<pause durationInSecs="1"/>
+			<findElement by="xpath">//div[text()='Information']/../../../../../../..//button[text()='OK']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+
+		<block name="Update_Status">
+			<findElement by="xpath" setFocus="true">(SCROLLBAR_GENERIC_1_FIND_ROW//td)[1]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<!--  Notification Message -->
+
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Notification Message"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" setFocus="true">//*[text()='Notification Settings']/../../../../../../../../../..//tr[contains(@class,'Selected')]//tr//td//img[contains(@src,'pencil')]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" setFocus="true">//*[text()='Notification Settings']/../../../../../../../../../..//tr[contains(@class,'Selected')]//tr//td//img[contains(@src,'pencil')]</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript ="true"/>
+							<findElement by="xpath">//div[text()='Edit Notification Message']/../../../../../../../../..//textarea</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true">
+								<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Notification Message"/>
+							</sendKeys>
+							<findElement by="xpath">//div[text()='Edit Notification Message']/../../../../../../../../../../../../..//button[text()='OK']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="DOWN"/>
+							<findElement by="xpath" isDisplayed="true" setFocus="true">//*[text()='Notification Settings']/../../../../../../../../../..//tr[contains(@class,'Selected')]//tr//td//img[contains(@src,'pencil')]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//div[text()='Edit Notification Message']/../../../../../../../../..//textarea</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true">
+								<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Notification Message"/>
+							</sendKeys>
+							<findElement by="xpath">//div[text()='Edit Notification Message']/../../../../../../../../../../../../..//button[text()='OK']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Create_Status">
+			<executeBlock name="waiting_TOP" isRepeatUntilBreak="true"/>
+			<findElement by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<findElement by="xpath">//img[contains(@title,'Add Notification')]/../..//a</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//span[text()='Notifications']/../../../../../../../../../..//table[@ _rowcount='0']"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//span[text()='Notifications']/../../../../../../../../../..//table[@_rowcount]//tr[@ _afrrk='0']//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//span[text()='Notifications']/../../../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">((//*[text()='Notifications']/../../../../../../../../../..//table[@_rowcount]//tr)[last()]/../../../../..//td)[1]</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CLICK_LAST_ROW"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="CLICK_LAST_ROW"/>
+				</parameters>
+			</executeBlock>
+			<!--  Task Status -->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//tr//td[1]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Task Status"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--  Recipient -->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//tr//td[2]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Recipient"/>
+				</parameters>
+			</executeBlock>	
+
+			<!--  Notification Message -->
+
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Notification Message"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement setFocus="true" by="xpath">//*[text()='Notifications']/../../../../../../../../../..//tr[contains(@class,'Selected')]//tr//td//img[contains(@src,'pencil')]</findElement>
+					<click waitForPageToFinishRendering="true" isJavaScript ="true"/>
+					<findElement by="xpath">//div[text()='Edit Notification Message']/../../../../../../../../..//textarea</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Notification Message"/>
+					</sendKeys>
+					<findElement by="xpath">//div[text()='Edit Notification Message']/../../../../../../../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<window action="open"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="SEACH"/>
+			<executeBlock name="UPDATE"/>
+			<executeBlock name="TAB_TASK"/>
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Notifications']/../../../../../../../../../..//table[@ _rowcount='0']"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Notifications']/../../../../../../../../..//table[@_rowcount]//tr[@ _afrrk='0']//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Notifications']/../../../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter
+                            name="SCROLLBAR_GENERIC_1_FIND_ROW">
+								//tr[@class][td//*[@title='<valueKB
+                            inventoryName="MAIN_REPEAT_1"
+                            columnName="Task Status"/>'] and td//*[@title='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Recipient"/>']]</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Status"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Status"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="SAVE"/>
+			<executeBlock name="OK_COMMENT"/>
+			<executeBlock name="INFORMATION"/>
+			<executeBlock name="BT_Commit_Task"/>
+		</repeat>
+		<window action="close"/>
+	</fusionNavigation>
+</navigation>

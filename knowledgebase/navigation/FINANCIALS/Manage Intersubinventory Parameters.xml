@@ -1,0 +1,621 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Intersubinventory Parameters</name>
+    <svn>
+        <xsd:revision>$Revision: 79323 $:</xsd:revision>
+        <xsd:author>$Author: phetchinda.ruangwilai $:</xsd:author>
+        <xsd:date>$Date: 2022-09-13 13:32:32 +0700 (Tue, 13 Sep 2022) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Intersubinventory%20Parameters.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Intersubinventory Parameters.xml 79323 2022-09-13 06:32:32Z phetchinda.ruangwilai $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Intersubinventory Parameters" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Units of Measure"/>
+            <navigation name="Manage Inventory Organizations"/>
+        </dependencies>
+        <parameters>
+            <parameter name="REPEAT_1_MAIN" value="Manage Intersubinventory Parameters - Intersubinventory Parameters"/>
+            <parameter name="REPEAT_2_MAIN" value="Manage Intersubinventory Parameters - Intersubinventory Parameters - DFF"/>
+        </parameters>
+        <block name="FAKE_KB">
+            <findElement highlightTurnedOff="true" by="xpath">//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Organization"/>']</findElement>
+            <findElement highlightTurnedOff="true" by="xpath">//a[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Organization"/>']</findElement>      
+        </block>
+		<block name="Search_Intersubinventory_Parameters">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<!--Organization-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+                <parameters>
+                    <parameter name="XPATH" value="(//label[text()='Organization']/../..)[1]"/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Organization"/>
+                    <parameter name="SEARCH_1" value="Organization"/>
+                </parameters>
+            </executeBlock>
+			<!--Destination Subinventory-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Destination Subinventory"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../..//label[text()='Destination Subinventory']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Destination Subinventory"/>
+							<parameter name="SEARCH_1" value="Subinventory"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+			<!--Source Subinventory-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Source Subinventory"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Source Subinventory"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>All</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<findElement by="xpath">//a[@title='Collapse Search']/../../../../../..//label[text()='Source Subinventory']/../..//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+								<valueText>""</valueText>
+							</sendKeys>	
+						</then>
+						<else>
+							<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../..//label[text()='Source Subinventory']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Source Subinventory"/>
+									<parameter name="SEARCH_1" value="Subinventory"/>
+								</parameters>
+							</executeBlock>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Intersubinventory_Parameters">
+			<!--INTERSUBINVENTORY_PARAMETERS_1-->
+			<defineVariable name="INTERSUBINVENTORY_PARAMETERS_1" type="text"/>
+			<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="false">
+				<valueText/>
+			</setVariable>
+			<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true">//table[@summary='Manage Intersubinventory Parameters']//tr[td[number(//table[@summary='Manage Intersubinventory Parameters']/../..//th//span[text()='Organization']/../../@_d_index)]/..//*[text()='</setVariable>
+			<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="Organization"/>
+			</setVariable>
+			<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true">']</setVariable>
+				<!--Destination Type-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Destination Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true"> and </setVariable>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true">td[number(//table[@summary='Manage Intersubinventory Parameters']/../..//th//span[text()='Destination Type']/../../@_d_index)]/..//*[text()='</setVariable>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true">
+						<valueKB inventoryName="REPEAT_1_MAIN" columnName="Destination Type"/>
+					</setVariable>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true">']</setVariable>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+				<!--Destination Subinventory-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Destination Subinventory"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true"> and </setVariable>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true">td[number(//table[@summary='Manage Intersubinventory Parameters']/../..//th//span[text()='Destination Subinventory']/../../@_d_index)]/..//*[text()='</setVariable>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true">
+						<valueKB inventoryName="REPEAT_1_MAIN" columnName="Destination Subinventory"/>
+					</setVariable>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true">']</setVariable>
+				</then>
+				<else>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true"> and </setVariable>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true">td[number(//table[@summary='Manage Intersubinventory Parameters']/../..//th//span[text()='Destination Subinventory']/../../@_d_index)]/..//*[@title='']</setVariable>
+				</else>
+			</IfThenElse>
+				<!--Source Subinventory-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Source Subinventory"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Source Subinventory"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>All</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true"> and </setVariable>
+							<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true">td[number(//table[@summary='Manage Intersubinventory Parameters']/../..//th//span[text()='Source Subinventory']/../../@_d_index)]/..//*[text()='All']</setVariable>
+						</then>
+						<else>
+							<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true"> and </setVariable>
+							<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true">td[number(//table[@summary='Manage Intersubinventory Parameters']/../..//th//span[text()='Source Subinventory']/../../@_d_index)]/..//*[text()='</setVariable>
+							<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Source Subinventory"/>
+							</setVariable>
+							<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true">']</setVariable>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+			<setVariable name="INTERSUBINVENTORY_PARAMETERS_1" append="true">]/td[1]</setVariable>
+			<!--INTERSUBINVENTORY_PARAMETERS_2-->
+			<defineVariable name="INTERSUBINVENTORY_PARAMETERS_2" type="text"/>
+			<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="false">
+				<valueText/>
+			</setVariable>
+			<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true">//table[@summary='Manage Intersubinventory Parameters']//tr[td[number(//table[@summary='Manage Intersubinventory Parameters']/../..//th//span[text()='Organization']/../../@_d_index)]/..//input[@value='</setVariable>
+			<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="Organization"/>
+			</setVariable>
+			<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true">']</setVariable>
+				<!--Destination Type-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Destination Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true"> and </setVariable>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true">td[number(//table[@summary='Manage Intersubinventory Parameters']/../..//th//span[text()='Destination Type']/../../@_d_index)]/..//select[@title='</setVariable>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true">
+						<valueKB inventoryName="REPEAT_1_MAIN" columnName="Destination Type"/>
+					</setVariable>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true">']</setVariable>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+				<!--Destination Subinventory-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Destination Subinventory"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true"> and </setVariable>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true">td[number(//table[@summary='Manage Intersubinventory Parameters']/../..//th//span[text()='Destination Subinventory']/../../@_d_index)]/..//input[@value='</setVariable>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true">
+						<valueKB inventoryName="REPEAT_1_MAIN" columnName="Destination Subinventory"/>
+					</setVariable>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true">']</setVariable>
+				</then>
+				<else>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true"> and </setVariable>
+					<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true">td[number(//table[@summary='Manage Intersubinventory Parameters']/../..//th//span[text()='Destination Subinventory']/../../@_d_index)]/..//input[@value='']</setVariable>
+				</else>
+			</IfThenElse>
+				<!--Source Subinventory-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Source Subinventory"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Source Subinventory"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>All</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true"> and </setVariable>
+							<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true">td[number(//table[@summary='Manage Intersubinventory Parameters']/../..//th//span[text()='Source Subinventory']/../../@_d_index)]/..//input[@value='All']</setVariable>
+						</then>
+						<else>
+							<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true"> and </setVariable>
+							<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true">td[number(//table[@summary='Manage Intersubinventory Parameters']/../..//th//span[text()='Source Subinventory']/../../@_d_index)]/..//input[@value='</setVariable>
+							<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Source Subinventory"/>
+							</setVariable>
+							<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true">']</setVariable>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+			<setVariable name="INTERSUBINVENTORY_PARAMETERS_2" append="true">]/td[1]</setVariable>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Manage Intersubinventory Parameters']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Manage Intersubinventory Parameters'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Manage Intersubinventory Parameters']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW"><valueVariable name="INTERSUBINVENTORY_PARAMETERS_1"/></parameter>
+					<parameter name="TEMPLATE_2_FIND_ROW"><valueVariable name="INTERSUBINVENTORY_PARAMETERS_2"/></parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_Intersubinventory_Parameters"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Intersubinventory_Parameters"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="New_Intersubinventory_Parameters">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_ADD_ROW"/>
+			<!--Organization-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Manage Intersubinventory Parameters']/..//tr[contains(@class,'Selected')]//label[text()='Organization']/.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Organization"/>
+                    <parameter name="SEARCH_1" value="Organization"/>
+                </parameters>
+            </executeBlock>
+			<!--Destination Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					 <parameter name="XPATH" value="//table[@summary='Manage Intersubinventory Parameters']/..//tr[contains(@class,'Selected')]//label[text()='Destination Type']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Destination Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Source Subinventory-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Source Subinventory"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Source Subinventory"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>All</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Intersubinventory Parameters']/..//tr[contains(@class,'Selected')]//label[text()='Source Subinventory']/../..//input</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Intersubinventory Parameters']/..//tr[contains(@class,'Selected')]//label[text()='Source Subinventory']/../..//input[@value='All']</findElement>
+										</if>
+										<then>
+											
+										</then>
+										<else>
+											<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Intersubinventory Parameters']/..//tr[contains(@class,'Selected')]//label[text()='Source Subinventory']/..//a</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="2"/>
+											<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='All']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="2"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+									
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+								<parameters>
+									<parameter name="XPATH" value="//table[@summary='Manage Intersubinventory Parameters']/..//tr[contains(@class,'Selected')]//label[text()='Source Subinventory']/.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Source Subinventory"/>
+									<parameter name="SEARCH_1" value="Subinventory"/>
+								</parameters>
+							</executeBlock>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+			<!--Destination Subinventory-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Manage Intersubinventory Parameters']/..//tr[contains(@class,'Selected')]//label[text()='Destination Subinventory']/.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Destination Subinventory"/>
+                    <parameter name="SEARCH_1" value="Subinventory"/>
+                </parameters>
+            </executeBlock>
+			<!--Receipt Required at Expense Destination-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Manage Intersubinventory Parameters']/..//tr[contains(@class,'Selected')]//input[@type='checkbox']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Receipt Required at Expense Destination"/>
+				</parameters>
+			</executeBlock>
+			<!--Inventory Destination Transfer Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					 <parameter name="XPATH" value="//table[@summary='Manage Intersubinventory Parameters']/..//tr[contains(@class,'Selected')]//label[text()='Inventory Destination Transfer Type']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Inventory Destination Transfer Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Receipt Routing-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					 <parameter name="XPATH" value="//table[@summary='Manage Intersubinventory Parameters']/..//tr[contains(@class,'Selected')]//label[text()='Receipt Routing']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Receipt Routing"/>
+				</parameters>
+			</executeBlock>
+			<!--Start Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_GREATER_THAN_EQUAL">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Manage Intersubinventory Parameters']/..//tr[contains(@class,'Select')]//label[text()='Start Date']/.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Start Date"/>
+                </parameters>
+            </executeBlock>
+			<!--End Date-->
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_GREATER_THAN_EQUAL">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Manage Intersubinventory Parameters']/..//tr[contains(@class,'Select')]//label[text()='End Date']/.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="End Date"/>
+                </parameters>
+            </executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+		</block>
+        <block name="Update_Intersubinventory_Parameters">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+			<!--Destination Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					 <parameter name="XPATH" value="//table[@summary='Manage Intersubinventory Parameters']/..//tr[contains(@class,'Selected')]//label[text()='Destination Type']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Destination Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Receipt Required at Expense Destination-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Manage Intersubinventory Parameters']/..//tr[contains(@class,'Selected')]//input[@type='checkbox']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Receipt Required at Expense Destination"/>
+				</parameters>
+			</executeBlock>
+			<!--Inventory Destination Transfer Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					 <parameter name="XPATH" value="//table[@summary='Manage Intersubinventory Parameters']/..//tr[contains(@class,'Selected')]//label[text()='Inventory Destination Transfer Type']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Inventory Destination Transfer Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Receipt Routing-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					 <parameter name="XPATH" value="//table[@summary='Manage Intersubinventory Parameters']/..//tr[contains(@class,'Selected')]//label[text()='Receipt Routing']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Receipt Routing"/>
+				</parameters>
+			</executeBlock>
+			<!--End Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_GREATER_THAN_EQUAL">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Manage Intersubinventory Parameters']/..//tr[contains(@class,'Select')]//label[text()='End Date']/.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="End Date"/>
+                </parameters>
+            </executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+		</block>
+		<block name="DFF_2_REPEAT">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[text()='Additional Information']</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Manage Intersubinventory Parameters']//tr[contains(@class,'Select')]//img[@title='Additional Information']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </else>
+            </IfThenElse>
+            <executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+                <parameters>
+                    <parameter name="DFF_NAME" value="Manage Intersubinventory Parameters - Intersubinventory Parameters - DFF"/>
+                </parameters>
+            </executeBlock>
+        </block>
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+            <executeBlock name="Search_Intersubinventory_Parameters"/>
+			<executeBlock name="Intersubinventory_Parameters"/>
+            <repeat inventoryName="REPEAT_2_MAIN">
+                <executeBlock name="DFF_2_REPEAT"/>
+            </repeat>
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[text()='Additional Information']</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//span[text()='K']/..</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>
+		
+		
+		
+		

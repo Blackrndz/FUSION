@@ -1,0 +1,419 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Job Roles (Role Function Security Policies)</name>
+   <svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Job Roles" isFailedParentLevelRecordRetry="true" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Job Roles (Roles)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Job Roles - Role Function Security Policies"/>
+		</parameters>
+		
+		<block name="Search_Role">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Create Role']</findElement>
+				</if>
+				<then>
+					<executeBlock name="INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Search']/.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Role Name"/>
+						</parameters>
+					</executeBlock>
+					<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Search']/../../..//img[@title='Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//div[@title='Search Results']/..//tr/td/table/tbody[tr[2]//td[2]/span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Role Name"/>'] and tr[3]//td[2][text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Role Code"/>']]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[@title='Search Results']/..//tr/td/table/tbody[tr[2]//td[2]/span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Role Name"/>'] and tr[3]//td[2][text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Role Code"/>']]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<!--<executeBlock name="Update_Role"/>-->
+							<findElement by="xpath">//*[contains(@class,'Select')]//img[@title='Actions']</findElement>
+							<click waitForPageToFinishRendering="true"/>		
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//td[text()='Edit Role']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//table[@style='position: relative;']//td[text()='Edit Role']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<executeBlock name="Tab_Function_Security_Ploicies"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//*[contains(text(),'Edit Role <valueKB inventoryName="REPEAT_1_MAIN" columnName="Role Name"/>')]</findElement>
+										</if>
+										<then>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath">//span[contains(text(),'Add Function Security Policy')]/../../..//div[contains(@class,'Disabled')]</findElement>
+												</if>
+												<then/>
+												<else>
+													<executeBlock name="Add_Function_Security_Policy"/>
+													<executeBlock name="Function_Security_Policies"/>
+												</else>
+											</IfThenElse>			
+										</then>
+										<else/>
+									</IfThenElse>									
+								</then>
+								<else>
+									<!--<error message="This Role Name cannot to be Update or Edit"/>-->
+								</else>
+							</IfThenElse>							
+						</then>
+						<else>
+							<error message="The field 'Role Name' doesn't exist."/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<executeBlock name="Function_Security_Policies"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Update_Role">
+			<findElement by="xpath">//*[contains(@class,'Select')]//img[@title='Actions']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//table[@style='position: relative;']//td[text()='Edit Role']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+
+		<block name="Function_Security_Policies">
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Search']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Privilege Name"/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath">//div[contains(@class,'Expansion')]/..//a[@title='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<!-- Privilege Name , Privilege Code -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Privilege Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Privilege Code"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement
+                                    by="xpath">//div[@title='Search Results']/..//tr/td/table/tbody[tr[2]//td[2]/span/label[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN"
+                                    columnName="Privilege Name"/>'] and tr[3]//td[2][text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Privilege Code"/>']]</findElement>
+						</if>
+						<then>
+							<findElement
+                                    by="xpath">//div[@title='Search Results']/..//tr/td/table/tbody[tr[2]//td[2]/span/label[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN"
+                                    columnName="Privilege Name"/>'] and tr[3]//td[2][text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Privilege Code"/>']]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="Button_Privilege"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- Privilege Name  -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Privilege Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Privilege Code"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement
+                                    by="xpath">//div[@title='Search Results']/..//tr/td/table/tbody[tr[2]//td[2]/span/label[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Privilege Name"/>']]</findElement>
+						</if>
+						<then>
+							<findElement
+                                    by="xpath">//div[@title='Search Results']/..//tr/td/table/tbody[tr[2]//td[2]/span/label[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Privilege Name"/>']]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="Button_Privilege"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Save_and_Close">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//span[text()='C']</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//span[text()='C']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock name="Next"/>
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+			<executeBlock name="Confirmation"/>
+		</block>
+		<block name="Tab_Function_Security_Ploicies">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//a[text()='Function Security Policies']/../..//div[contains(@class,'Select')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<executeBlock name="BUTTON">
+						<parameters>
+							<parameter name="BUTTON_NAME" value="x"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Next">
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="x"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="x"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="x"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="x"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="x"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Confirmation">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//div[text()='Confirmation']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Confirmation']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+
+		<block name="Add_Function_Security_Policy">
+			<findElement by="xpath">//span[contains(text(),'Add Function Security Policy')]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Button_Privilege">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//button[text()='Add Privilege to Role'][@disabled]</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//button[text()='Add Selected Privileges'][@disabled]</findElement>
+						</if>
+						<then>
+							<error message="This button cannot be clicked"/>
+						</then>
+						<else>
+							<executeBlock name="BUTTON">
+								<parameters>
+									<parameter name="BUTTON_NAME" value="Add Selected Privileges"/>
+								</parameters>
+							</executeBlock>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<executeBlock name="BUTTON">
+						<parameters>
+							<parameter name="BUTTON_NAME" value="Add Privilege to Role"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			<executeBlock name="Confirmation"/>
+		</block>
+
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<window action="open"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Warning']/../../../../../../..//button[text()='OK']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Warning']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>						
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>			
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Roles'][contains(@class,'Select')]</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//*[contains(text(),'Edit Role <valueKB inventoryName="REPEAT_1_MAIN" columnName="Role Name"/>')]</findElement>
+						</if>
+						<then>
+							<executeBlock name="Save_and_Close"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//*[text()='Create Role']</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//div[text()='Roles']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="2"/>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" by="xpath">//div[text()='Warning']/../../../../../../..//button[text()='OK']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[text()='Warning']/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>						
+											<pause durationInSecs="2"/>
+										</then>
+										<else>
+											<pause durationInSecs="2"/>
+										</else>
+									</IfThenElse>	
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" by="xpath">//div[text()='Roles'][contains(@class,'Select')]</findElement>
+										</if>
+										<then>
+											<pause durationInSecs="2"/>
+										</then>
+										<else>
+											<findElement by="xpath">//div[text()='Roles']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="2"/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>							
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//*[text()='Create Role']</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//div[text()='Roles']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="2"/>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" by="xpath">//div[text()='Warning']/../../../../../../..//button[text()='OK']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[text()='Warning']/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>						
+											<pause durationInSecs="2"/>
+										</then>
+										<else>
+											<pause durationInSecs="2"/>
+										</else>
+									</IfThenElse>	
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" by="xpath">//div[text()='Roles'][contains(@class,'Select')]</findElement>
+										</if>
+										<then>
+											<pause durationInSecs="2"/>
+										</then>
+										<else>
+											<findElement by="xpath">//div[text()='Roles']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="2"/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>									
+				</else>
+			</IfThenElse>	
+			<executeBlock name="Search_Role"/>
+			<executeBlock name="Save_and_Close"/>			
+		</repeat>
+
+		<window action="close"/>
+	</fusionNavigation>
+</navigation>

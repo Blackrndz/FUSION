@@ -1,0 +1,830 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Work Shifts (Time Shift)</name>
+    <svn>
+        <xsd:revision>$Revision: 77923 $:</xsd:revision>
+        <xsd:author>$Author: kullada.somtragool $:</xsd:author>
+        <xsd:date>$Date: 2022-02-17 14:55:07 +0700 (Thu, 17 Feb 2022) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Work%20Shifts%20(Time%20Shift).xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Work Shifts (Time Shift).xml 77923 2022-02-17 07:55:07Z kullada.somtragool $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Work Shifts" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Create Business Unit"/>
+			<navigation name="Create Implementation Users"/>
+        </dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT1" value="Manage Work Shifts - Time Shift"/>
+            <parameter name="MAIN_REPEAT2" value="Manage Work Shifts - Time Shift Details (Flexible)"/>
+            <parameter name="MAIN_REPEAT3" value="Manage Work Shifts - Time Shift Details (Punch)"/>
+        </parameters>
+        
+		<block name="Search">
+			<!--GLOBAL_EXPAND-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<!--BUTTON-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Search_Add_Field"/>
+			<!--Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="(//label[text()='Name']/../..//input)[3]/../../../../../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Type-->
+			<findElement by="xpath" isSkipCheckDomError="true">(//label[text()='Type']/../..//a)[2]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//*[text()='Time']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			<!--BUTTON-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Shifts']/..//tr[td//td//*[text()='<valueKB inventoryName="MAIN_REPEAT1" columnName="Name"/>']]/td[1]</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Shifts']/..//tr[td//td//*[text()='<valueKB inventoryName="MAIN_REPEAT1" columnName="Name"/>']]/td[1]</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<executeBlock name="Update"/>
+                </then>
+                <else>
+                    <executeBlock name="Create"/>
+                </else>
+            </IfThenElse>
+        </block>
+		<block name="Search_Add_Field">
+			<findElement isSkipCheckDomError="true" by="xpath">//*[text()='d']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			<findElement isSkipCheckDomError="true" by="xpath">//*[text()='Add Fields']/../../../td[2]//a</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			<findElement isSkipCheckDomError="true" by="xpath">//div[@class='AFDetectExpansion']/..//*[text()='Type']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+		</block>
+        <block name="Create">
+            <findElement by="xpath" isSkipCheckDomError="true">//a[text()='Actions']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+            <findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//*[text()='Create Time Shift']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+        </block>
+		<block name="Update">
+			<findElement by="xpath" isSkipCheckDomError="true">//a[text()='Actions']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+            <findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//*[text()='Edit Shift']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+		</block>
+        <block name="Time_Shift">
+            <!--Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Time Shift')]/../../../../../../..//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+            <!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Time Shift')]/../../../../../../..//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+            <!--Code-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Time Shift')]/../../../../../../..//label[text()='Code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Code"/>
+				</parameters>
+			</executeBlock>
+            <!--Start Time	-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Time Shift')]/../../../../../../..//label[text()='Start Time']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Start Time"/>
+				</parameters>
+			</executeBlock>
+            <!--Duration - Unit-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Time Shift')]/../../../../../../..//label[text()='Duration']/../..//a/../../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Duration - Unit"/>
+				</parameters>
+			</executeBlock>
+            <!--Duration - Value-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="(//div[contains(text(),'Time Shift')]/../../../../../../..//label[text()='Duration']/../..//input)[1]/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Duration - Value"/>
+				</parameters>
+			</executeBlock>
+            <!--Category-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Time Shift')]/../../../../../../..//label[text()='Category']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Category"/>
+				</parameters>
+			</executeBlock>
+            <!--Shift Detail Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Time Shift')]/../../../../../../..//label[text()='Shift Detail Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Shift Detail Type"/>
+				</parameters>
+			</executeBlock>
+        </block>
+		
+		<block name="Detach">
+			<executeBlock name="Expand"/>
+			<IfThenElse>
+				<if>
+					 <findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Time Shift')]/../../../../../../..//a[text()='View']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Time Shift')]/../../../../../../..//a[text()='View']/../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[@class='AFDetectExpansion']/..//td/span[text()='Detach']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[@class='AFDetectExpansion']/..//*[text()='View']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[@class='AFDetectExpansion']/..//td/span[text()='Detach']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>
+        </block>
+		<block name="UnDetach">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath" isDisplayed="true">//div[text()='Detached Table']/../../../../../../..//table[@summary='Shift Details']/../../../..//div[contains(@class,'Select')]//*[@title='Detach' or text()='Detach']/..</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath" isDisplayed="true">//div[text()='Detached Table']/../../../../../../..//table[@summary='Shift Details']/../../../..//div[contains(@class,'Select')]//*[@title='Detach' or text()='Detach']/..</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[text()='Detached Table']/../../../../../../..//table[@summary='Shift Details']/../../../..//div[contains(@class,'Select')]//*[@title='Detach' or text()='Detach']/..</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[text()='Detached Table']/../../../../../../..//table[@summary='Shift Details']/../../../..//div[contains(@class,'Select')]//*[@title='Detach' or text()='Detach']/..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<findElement by="xpath">//div[text()='Detached Table']/../../../../../../..//table[@summary='Shift Details']/../../../..//div[contains(@class,'Select')]//*[@title='Detach' or text()='Detach']</findElement>
+							<click waitForPageToFinishRendering="true"/>						
+						</else>
+					</IfThenElse>				
+				</else>
+            </IfThenElse>
+			<executeBlock name="Expand"/>
+		    <IfThenElse>
+                <if>
+                    <findElement by="xpath" isDisplayed="true">//div[contains(text(),'Time Shift')]/../../../../../../..//table[@summary='Shift Details']/../../../..//a[text()='View']/../../../../../../../../../../../../..//div[contains(@id,'eoi')]/..</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath" isDisplayed="true">//div[contains(text(),'Time Shift')]/../../../../../../..//table[@summary='Shift Details']/../../../..//a[text()='View']/../../../../../../../../../../../../..//div[contains(@id,'eoi')]/..</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <findElement by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='View']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <findElement by="xpath">//div[@class='AFPopupMenuContent']//td[text()='Columns']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <findElement by="xpath">//div[@class='AFPopupMenuContent']//td[text()='Show All']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[contains(text(),'Time Shift')]/../../../../../../..//table[@summary='Shift Details']/../../../..//a[text()='View']/../../../../../../../../../../../../..//div[contains(@id,'eoi')]/..</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[contains(text(),'Time Shift')]/../../../../../../..//table[@summary='Shift Details']/../../../..//a[text()='View']/../../../../../../../../../../../../..//div[contains(@id,'eoi')]/..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='View']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//div[@class='AFPopupMenuContent']//td[text()='Columns']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//div[@class='AFPopupMenuContent']//td[text()='Show All']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Time Shift')]/../../../../../../..//table[@summary='Shift Details']/../../../..//a[text()='View']</findElement>
+								</if>
+								<then>
+									<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Time Shift')]/../../../../../../..//table[@summary='Shift Details']/../../../..//a[text()='View']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//div[@class='AFPopupMenuContent']//td[text()='Columns']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//div[@class='AFPopupMenuContent']//td[text()='Show All']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Time Shift')]/../../../../../../..//table[@summary='Shift Details']/../../../..//a[text()='View']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Time Shift')]/../../../../../../..//table[@summary='Shift Details']/../../../..//a[text()='View']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[@class='AFPopupMenuContent']//td[text()='Columns']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[@class='AFPopupMenuContent']//td[text()='Show All']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement isSkipCheckDomError="true" by="xpath">//div[@class='AFDetectExpansion']/..//*[text()='View']</findElement>
+												</if>
+												<then>
+													<findElement isSkipCheckDomError="true" by="xpath">//div[@class='AFDetectExpansion']/..//*[text()='View']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="2"/>
+													<findElement by="xpath">//div[@class='AFPopupMenuContent']//td[text()='Columns']</findElement>
+													<click waitForPageToFinishRendering="true"/>
+													<pause durationInSecs="2"/>
+													<findElement by="xpath">//div[@class='AFPopupMenuContent']//td[text()='Show All']</findElement>
+													<click waitForPageToFinishRendering="true"/>
+													<pause durationInSecs="2"/>
+												</then>
+												<else/>
+											</IfThenElse>
+										</else>
+									</IfThenElse>								
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+		<block name="Expand">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table[@summary='Shift Details']/../../../..//div[@title='Overflow']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//table[@summary='Shift Details']/../../../..//div[@title='Overflow']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="LK_Shift_Details_Flexible">
+			<defineVariable name="VALUE_RESOURCE" type="text"/>
+			<setVariable name="VALUE_RESOURCE" append="false">
+				<valueText/>
+			</setVariable>
+			<setVariable name="VALUE_RESOURCE" append="true">//table[@summary='Shift Details']//tr//tr[td//*[@value='</setVariable>
+			<setVariable name="VALUE_RESOURCE" append="true">
+				<valueKB inventoryName="MAIN_REPEAT2" columnName="Shift Details - Name"/>
+			</setVariable>
+			<setVariable name="VALUE_RESOURCE" append="true">' or @title='</setVariable>
+			<setVariable name="VALUE_RESOURCE" append="true">
+				<valueKB inventoryName="MAIN_REPEAT2" columnName="Shift Details - Name"/>
+			</setVariable>
+			<setVariable name="VALUE_RESOURCE" append="true">']</setVariable>								
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT2" columnName="Day"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>							
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_RESOURCE" append="true"> and td//*[@value='</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">
+						<valueKB inventoryName="MAIN_REPEAT2" columnName="Day"/>
+					</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">' or @title='</setVariable>		
+					<setVariable name="VALUE_RESOURCE" append="true">
+						<valueKB inventoryName="MAIN_REPEAT2" columnName="Day"/>
+					</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">']</setVariable>						
+				</then>
+				<else>
+					<setVariable name="VALUE_RESOURCE" append="true"> and td//*[@value='' or @title='']</setVariable>						
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT2" columnName="Start Time"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>							
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_RESOURCE" append="true"> and td//*[@value='</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">
+						<valueKB inventoryName="MAIN_REPEAT2" columnName="Start Time"/>
+					</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">' or @title='</setVariable>		
+					<setVariable name="VALUE_RESOURCE" append="true">
+						<valueKB inventoryName="MAIN_REPEAT2" columnName="Start Time"/>
+					</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">']</setVariable>						
+				</then>
+				<else>
+					<setVariable name="VALUE_RESOURCE" append="true"> and td//*[@value='' or @title='']</setVariable>					
+				</else>
+			</IfThenElse>			
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT2" columnName="Duration"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>							
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_RESOURCE" append="true"> and td//*[@value='</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">
+						<valueKB inventoryName="MAIN_REPEAT2" columnName="Duration"/>
+					</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">' or @title='</setVariable>		
+					<setVariable name="VALUE_RESOURCE" append="true">
+						<valueKB inventoryName="MAIN_REPEAT2" columnName="Duration"/>
+					</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">']</setVariable>						
+				</then>
+				<else>
+					<setVariable name="VALUE_RESOURCE" append="true"> and td//*[@value='' or @title='']</setVariable>					
+				</else>
+			</IfThenElse>			
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT2" columnName="Duration Unit"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>							
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_RESOURCE" append="true"> and td//*[@value='</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">
+						<valueKB inventoryName="MAIN_REPEAT2" columnName="Duration Unit"/>
+					</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">' or @title='</setVariable>		
+					<setVariable name="VALUE_RESOURCE" append="true">
+						<valueKB inventoryName="MAIN_REPEAT2" columnName="Duration Unit"/>
+					</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">']</setVariable>						
+				</then>
+				<else>
+					<setVariable name="VALUE_RESOURCE" append="true"> and td//*[@value='' or @title='']</setVariable>				
+				</else>
+			</IfThenElse>			
+			<setVariable name="VALUE_RESOURCE" append="true">]/../../../../../td[1]</setVariable>	
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Shift Details']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Shift Details']//tr)[1]//td[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Shift Details']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW"><valueVariable name="VALUE_RESOURCE"/></parameter>
+					<parameter name="TEMPLATE_CREATE" value="Add_Row"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Row"/>
+				</parameters>
+			</executeBlock>				
+        </block>
+		<block name="Add_Row">
+            <!--ADD ROW-->
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Detached Table']/../../../../../../..//table[@summary='Shift Details']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="2"/>
+        </block>
+        <block name="Update_Row">
+            <findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+        </block>
+		<block name="Shift_Details_Flexible">
+            <!--Name-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT2"/>
+					<parameter name="COL_NAME" value="Shift Details - Name"/>
+				</parameters>
+			</executeBlock>
+            <!--Day-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Day']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT2"/>
+					<parameter name="COL_NAME" value="Day"/>
+				</parameters>
+			</executeBlock>
+            <!--Start Time-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//span[contains(@id,'it4')]/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT2"/>
+					<parameter name="COL_NAME" value="Start Time"/>
+				</parameters>
+			</executeBlock>
+            <!--Duration-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Duration']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT2"/>
+					<parameter name="COL_NAME" value="Duration"/>
+				</parameters>
+			</executeBlock>
+            <!--Duration Unit-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Duration Unit']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT2"/>
+					<parameter name="COL_NAME" value="Duration Unit"/>
+				</parameters>
+			</executeBlock>
+            <!--Minimum Break Minutes-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Minimum Break Minutes']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT2"/>
+					<parameter name="COL_NAME" value="Minimum Break Minutes"/>
+				</parameters>
+			</executeBlock>
+            <!--Maximum Break Minutes-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Maximum Break Minutes']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT2"/>
+					<parameter name="COL_NAME" value="Maximum Break Minutes"/>
+				</parameters>
+			</executeBlock>
+            <!--Core Work-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Core Work']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT2"/>
+					<parameter name="COL_NAME" value="Core Work"/>
+				</parameters>
+			</executeBlock>
+        </block>
+		
+		<block name="LK_Shift_Details_Punch">
+			<defineVariable name="VALUE_RESOURCE" type="text"/>
+			<setVariable name="VALUE_RESOURCE" append="false">
+				<valueText/>
+			</setVariable>
+			<setVariable name="VALUE_RESOURCE" append="true">//table[@summary='Shift Details']//tr//tr[td//*[@value='</setVariable>
+			<setVariable name="VALUE_RESOURCE" append="true">
+				<valueKB inventoryName="MAIN_REPEAT3" columnName="Shift Details - Name"/>
+			</setVariable>
+			<setVariable name="VALUE_RESOURCE" append="true">' or @title='</setVariable>
+			<setVariable name="VALUE_RESOURCE" append="true">
+				<valueKB inventoryName="MAIN_REPEAT3" columnName="Shift Details - Name"/>
+			</setVariable>
+			<setVariable name="VALUE_RESOURCE" append="true">']</setVariable>								
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT3" columnName="Day"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>							
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_RESOURCE" append="true"> and td//*[@value='</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">
+						<valueKB inventoryName="MAIN_REPEAT3" columnName="Day"/>
+					</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">' or @title='</setVariable>		
+					<setVariable name="VALUE_RESOURCE" append="true">
+						<valueKB inventoryName="MAIN_REPEAT3" columnName="Day"/>
+					</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">']</setVariable>						
+				</then>
+				<else>
+					<setVariable name="VALUE_RESOURCE" append="true"> and td//*[@value='' or @title='']</setVariable>						
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT3" columnName="Start Time"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>							
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_RESOURCE" append="true"> and td//*[@value='</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">
+						<valueKB inventoryName="MAIN_REPEAT3" columnName="Start Time"/>
+					</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">' or @title='</setVariable>		
+					<setVariable name="VALUE_RESOURCE" append="true">
+						<valueKB inventoryName="MAIN_REPEAT3" columnName="Start Time"/>
+					</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">']</setVariable>						
+				</then>
+				<else>
+					<setVariable name="VALUE_RESOURCE" append="true"> and td//*[@value='' or @title='']</setVariable>					
+				</else>
+			</IfThenElse>			
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT3" columnName="Duration"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>							
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_RESOURCE" append="true"> and td//*[@value='</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">
+						<valueKB inventoryName="MAIN_REPEAT3" columnName="Duration"/>
+					</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">' or @title='</setVariable>		
+					<setVariable name="VALUE_RESOURCE" append="true">
+						<valueKB inventoryName="MAIN_REPEAT3" columnName="Duration"/>
+					</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">']</setVariable>						
+				</then>
+				<else>
+					<setVariable name="VALUE_RESOURCE" append="true"> and td//*[@value='' or @title='']</setVariable>					
+				</else>
+			</IfThenElse>			
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT3" columnName="Duration Unit"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>							
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_RESOURCE" append="true"> and td//*[@value='</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">
+						<valueKB inventoryName="MAIN_REPEAT3" columnName="Duration Unit"/>
+					</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">' or @title='</setVariable>		
+					<setVariable name="VALUE_RESOURCE" append="true">
+						<valueKB inventoryName="MAIN_REPEAT3" columnName="Duration Unit"/>
+					</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">']</setVariable>						
+				</then>
+				<else>
+					<setVariable name="VALUE_RESOURCE" append="true"> and td//*[@value='' or @title='']</setVariable>				
+				</else>
+			</IfThenElse>			
+			<setVariable name="VALUE_RESOURCE" append="true">]/../../../../../td[1]</setVariable>	
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Shift Details']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Shift Details']//tr)[1]//td[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Shift Details']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW"><valueVariable name="VALUE_RESOURCE"/></parameter>
+					<parameter name="TEMPLATE_CREATE" value="Add_Row"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Row"/>
+				</parameters>
+			</executeBlock>	
+		</block>
+		<block name="Shift_Details_Punch">
+            <!--Name-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT3"/>
+					<parameter name="COL_NAME" value="Shift Details - Name"/>
+				</parameters>
+			</executeBlock>
+            <!--Day-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Day']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT3"/>
+					<parameter name="COL_NAME" value="Day"/>
+				</parameters>
+			</executeBlock>
+            <!--Start Time-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//span[contains(@id,'it4')]/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT3"/>
+					<parameter name="COL_NAME" value="Start Time"/>
+				</parameters>
+			</executeBlock>
+            <!--Duration-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Duration']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT3"/>
+					<parameter name="COL_NAME" value="Duration"/>
+				</parameters>
+			</executeBlock>
+            <!--Duration Unit-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Duration Unit']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT3"/>
+					<parameter name="COL_NAME" value="Duration Unit"/>
+				</parameters>
+			</executeBlock>
+            <!--Minimum Break Minutes-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Minimum Break Minutes']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT3"/>
+					<parameter name="COL_NAME" value="Minimum Break Minutes"/>
+				</parameters>
+			</executeBlock>
+            <!--Maximum Break Minutes-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Maximum Break Minutes']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT3"/>
+					<parameter name="COL_NAME" value="Maximum Break Minutes"/>
+				</parameters>
+			</executeBlock>	
+        </block>
+		
+		<block name="Check_Error">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Error']/../../../../../../..//*[contains(text(),'You must enter a duration')]</findElement>
+				</if>
+				<then>
+					<error message="Please check error message."/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Save_And_Close">
+			<IfThenElse>
+				<if>
+					 <findElement by="xpath">//div[contains(text(),'Elapsed Shift')]/../../../../../../..//button[span[text()='S']]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[contains(text(),'Elapsed Shift')]/../../../../../../..//button[span[text()='S']]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[contains(@class,'Expansion')]/..//button[text()='ave and Close']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[contains(@class,'Expansion')]/..//button[text()='ave and Close']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else>
+							
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock name="Check_Error"/>
+        </block>
+        
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+        <repeat inventoryName="MAIN_REPEAT1">
+            <executeBlock name="Search"/>
+            <executeBlock name="Time_Shift"/>
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT1" columnName="Shift Detail Type"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText>Flexible</valueText>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <executeBlock name="Detach"/>
+                    <repeat inventoryName="MAIN_REPEAT2">
+                        <executeBlock name="LK_Shift_Details_Flexible"/>
+                        <executeBlock name="Shift_Details_Flexible"/>
+                    </repeat>
+                    <executeBlock name="UnDetach"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT1" columnName="Shift Detail Type"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText>Punch</valueText>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <executeBlock name="Detach"/>
+                    <repeat inventoryName="MAIN_REPEAT3">
+                        <executeBlock name="LK_Shift_Details_Punch"/>
+                        <executeBlock name="Shift_Details_Punch"/>
+                    </repeat>
+                    <executeBlock name="UnDetach"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <executeBlock name="Save_And_Close"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

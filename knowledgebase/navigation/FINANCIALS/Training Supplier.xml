@@ -1,0 +1,300 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Training Supplier</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Training Supplier" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Contact Lookups"/>
+		</dependencies>
+        <parameters>
+            <parameter name="REPEAT_1_MAIN" value="Catalog Resources - Training Supplier"/>
+			<parameter name="REPEAT_2_MAIN" value="Catalog Resources - Training Supplier - DFF"/>
+        </parameters>
+        <block name="FAKE_INV">
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Title"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Title"/>']/../..//input</findElement>
+        </block>
+		<block name="Search_Training_Suppliers">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Search_by"/>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Title"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Title"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Title"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_CREATE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<!--Change "Saved Search" to be search by "Name"-->
+		<block name="Search_by">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//label[text()='Saved Search']/../..//span//input[@value='Find Suppliers by Name']/../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//label[text()='Saved Search']/../..//span//input[@value='Find Suppliers by Name']/../../../../../../..</findElement>
+				</then>
+				<else>
+					<findElement by="xpath">//label[text()='Saved Search']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//*[text()='Find Suppliers by Name']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Training_Supplier_Details">
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Title']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Title"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT_TEXTAREA">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Contact']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Contact"/>
+					<parameter name="SEARCH_1" value="Contact Name"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="DFF">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..//*[@type='checkbox']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" >//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..</parameter>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Field Value"/>
+						</parameters>
+					</executeBlock>				
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..//*[@type='radio']</findElement>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+								<parameters>
+									<parameter name="XPATH" >//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..</parameter>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Field Value"/>
+								</parameters>
+							</executeBlock>				
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..//*[contains(@title,'Date')]</findElement>
+								</if>
+								<then>
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" >//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..</parameter>
+											<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+											<parameter name="COL_NAME" value="Field Value"/>
+										</parameters>
+									</executeBlock>				
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..//select</findElement>
+										</if>
+										<then>
+											<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+												<parameters>
+													<parameter name="XPATH" >//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..</parameter>
+													<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+													<parameter name="COL_NAME" value="Field Value"/>
+												</parameters>
+											</executeBlock>												
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..//li</findElement>
+												</if>
+												<then>
+													<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+														<parameters>
+															<parameter name="XPATH" >//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..</parameter>
+															<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+															<parameter name="COL_NAME" value="Field Value"/>
+														</parameters>
+													</executeBlock>								
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..//a</findElement>
+														</if>
+														<then>
+															<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+																<parameters>
+																	<parameter name="XPATH" >//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..</parameter>
+																	<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+																	<parameter name="COL_NAME" value="Field Value"/>
+																	<parameter name="SEARCH_1" value="Value"/>
+																</parameters>
+															</executeBlock>							
+														</then>
+														<else>
+															<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+																<parameters>
+																	<parameter name="XPATH" >//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..</parameter>
+																	<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+																	<parameter name="COL_NAME" value="Field Value"/>
+																</parameters>
+															</executeBlock>						
+														</else>
+													</IfThenElse>					
+												</else>
+											</IfThenElse>					
+										</else>
+									</IfThenElse>				
+								</else>
+							</IfThenElse>												
+						</else>
+					</IfThenElse>								
+				</else>
+			</IfThenElse>		
+		</block>
+		
+		<block name="Expand_navigator">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//span[contains(text(),'My Client Groups')]/../../../..//span[contains(text(),'Learning')]/../../a</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='My Client Groups']/../..//a[contains(text(),'Learning')]</findElement>
+						</if>
+						<then>
+							<pause durationInSecs="2"/>
+							<break/>
+						</then>
+						<else>
+							<findElement isSkipCheckDomError="true" by="xpath">//span[contains(text(),'My Client Groups')]/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="2"/>				
+						</else>
+					</IfThenElse>		
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="MANUAL_LEARNING">
+			<findElement isSkipCheckDomError="true" by="xpath">//a[contains(@id,'UISmmLink') or @title='Navigator']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+			<pause durationInSecs="2"/>
+			<executeBlock name="Expand_navigator" isRepeatUntilBreak="true"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='My Client Groups']/../..//a[contains(text(),'Learning')]</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//*[text()='My Client Groups']/../..//a[contains(text(),'Learning')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+					<pause durationInSecs="2"/>	
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath">//span[contains(text(),'My Client Groups')]/../../../..//span[contains(text(),'Learning')]/../../a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+					<pause durationInSecs="2"/>				
+				</else>
+			</IfThenElse>			
+			<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Catalog Resources']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			<executeBlock name="Skip_Error"/>
+		</block>
+		<block name="Skip_Error">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Error']/../../../../../../..//*[text()='OK']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Error']/../../../../../../..//*[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>		
+		<executeBlock name="MANUAL_LEARNING"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="TAB">
+				<parameters>
+					<parameter name="TAB_NAME" value="Training Suppliers"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Search_Training_Suppliers"/>
+			<executeBlock name="Training_Supplier_Details"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="DFF"/>
+			</repeat>
+			<executeBlock name="GLOBAL_SAVE"/>
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</repeat>
+    </fusionNavigation>
+</navigation>

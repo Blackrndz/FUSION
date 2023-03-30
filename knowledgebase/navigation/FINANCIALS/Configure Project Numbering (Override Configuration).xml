@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Configure Project Numbering (Override Configuration)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Configure Project Numbering" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Project Types"/>
+			<navigation name="Manage Project Unit Organizations"/>
+			<navigation name="Manage Project Statuses"/>
+			<navigation name="Manage Project Roles"/>
+			<navigation name="Configure Project Accounting Business Function"/>
+			<navigation name="Configure Project Numbering"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Configure Project Numbering - Override Configuration"/>
+		</parameters>
+		<block name="Warning">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//td[contains(text(),'Do you want to continue')]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//td[contains(text(),'Do you want to continue')]/../..//button[text()='Yes']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="FAKE_TABLE">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="Configure Project Numbering - Override Configuration" columnName="Name"/>']/../..//input</findElement>
+		</block>
+
+		
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Configure By']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Configure By"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="2"/>	
+			<executeBlock name="Warning"/>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//*[text()='Warning']/../../../../../../../..//*[text()='Yes']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Warning']/../../../../../../../..//*[text()='Yes']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<pause durationInSecs="2"/>			
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_QUERY_BY"/>
+			<pause durationInSecs="2"/>			
+			<findElement highlightTurnedOff="true" by="xpath">//th//*[@title='Clear All']</findElement>
+			<click waitForPageToFinishRendering="true"/>	
+			<pause durationInSecs="2"/>						
+			<executeBlock name="INPUT_AND_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//th//*[@title='Clear All']/../../../../..//th[number(//span[text()='Name']/../../@_d_index)]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="2"/>			
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//table[@_startrow]//tr//td[1]//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>' or @value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@_startrow]//tr//td[1]//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>' or @value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+						<parameters>
+							<parameter name="XPATH" value="//table[@_startrow]/../../../.."/>
+						</parameters>
+					</executeBlock>					
+				</else>
+			</IfThenElse>			
+
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@_startrow]//tr[contains(@class,'Select')]//table[@summary]//td[1]//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//table[@_startrow]//tr[contains(@class,'Select')]//table[@summary]//td[2]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Method"/>
+				</parameters>
+			</executeBlock>
+
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//table[@_startrow]//tr[contains(@class,'Select')]//table[@summary]//td[3]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Type"/>
+				</parameters>
+			</executeBlock>			
+
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@_startrow]//tr[contains(@class,'Select')]//table[@summary]//td[4]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Prefix"/>
+				</parameters>
+			</executeBlock>
+
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@_startrow]//tr[contains(@class,'Select')]//table[@summary]//td[5]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Next Number"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Warning"/>
+			<executeBlock name="GLOBAL_SAVE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

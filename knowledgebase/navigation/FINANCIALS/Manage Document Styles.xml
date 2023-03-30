@@ -1,0 +1,345 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Document Styles</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Document Styles" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Purchasing Line Types"/>
+        </dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT1" value="Manage Document Styles - Document Style"/>
+            <parameter name="MAIN_REPEAT2" value="Manage Document Styles - Commodities (Line Types)"/>
+            <parameter name="Schedule_Type" value="Time"/>
+        </parameters>
+        <block name="Save_And_Close">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<pause durationInSecs="2"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+			<pause durationInSecs="2"/>
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[text()='Confirmation']/../../../../../../..//button[text()='OK']</findElement>
+                </if>
+                <then>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Confirmation']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+                <else/>
+            </IfThenElse>			
+        </block>
+        <block name="Search_Style">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Style']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Style"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Search']/../.."/>
+				</parameters>
+			</executeBlock>
+            <IfThenElse>
+                <if>
+					<findElement by="xpath" isDisplayed="true" highlightTurnedOff="true">//table[@summary='Search Results']/../../../..//a[normalize-space(text())='<valueKB inventoryName="MAIN_REPEAT1" columnName="Style"/>']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath" isDisplayed="true">//table[@summary='Search Results']/../../../..//a[normalize-space(text())='<valueKB inventoryName="MAIN_REPEAT1" columnName="Style"/>']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+                </then>
+                <else>
+                   <executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_CREATE"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Document_Style1">
+            <!--Style-->
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Style']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+                    <parameter name="COL_NAME" value="Style"/>
+                </parameters>
+            </executeBlock>
+            <!--Description-->
+           <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Description']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+                    <parameter name="COL_NAME" value="Description"/>
+                </parameters>
+            </executeBlock>
+            <!--Status-->
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Status']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+                    <parameter name="COL_NAME" value="Status"/>
+                </parameters>
+            </executeBlock>
+            <!--Purchase Bases - Goods-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Goods']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Purchase Bases - Goods"/>
+				</parameters>
+			</executeBlock>
+            <!--Purchase Bases - Services-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Services']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Purchase Bases - Services"/>
+				</parameters>
+			</executeBlock>
+			<!--Purchase Bases - Quantity-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Commodities']/../../../../../../../..//label[text()='Quantity']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Purchase Bases - Quantity"/>
+				</parameters>
+			</executeBlock>
+			<!--Purchase Bases - Amount-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Commodities']/../../../../../../../..//label[text()='Amount']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+					<parameter name="COL_NAME" value="Purchase Bases - Amount"/>
+				</parameters>
+			</executeBlock>
+            <!--Consignment Terms Enabled-->
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Commodities']/../../../../../../../..//label[text()='Consignment Terms Enabled']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+                    <parameter name="COL_NAME" value="Consignment Terms Enabled"/>
+                </parameters>
+            </executeBlock>
+            <!--Configuration Ordering Enabled-->
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Commodities']/../../../../../../../..//label[text()='Configuration Ordering Enabled']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+                    <parameter name="COL_NAME" value="Configuration Ordering Enabled"/>
+                </parameters>
+            </executeBlock>
+            <!--Outside Processing Enabled-->
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Commodities']/../../../../../../../..//label[text()='Outside Processing Enabled']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+                    <parameter name="COL_NAME" value="Outside Processing Enabled"/>
+                </parameters>
+            </executeBlock>
+			<!--Credit Line Types Enabled-->
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Commodities']/../../../../../../../..//label[text()='Credit Line Types Enabled']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+                    <parameter name="COL_NAME" value="Credit Line Types Enabled"/>
+                </parameters>
+            </executeBlock>
+            <!--Line Types - Option-->
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Commodities']/../../../../../../../..//label[text()='Line Types']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+                    <parameter name="COL_NAME" value="Line Types - Option"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="LK_Line_Types">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath" isDisplayed="true" highlightTurnedOff="true">//label[text()='Line Types']/../..//*[@title='Specified']</findElement>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath" highlightTurnedOff="true">//tr[contains(@class,'Disabled')]//td[1]//label[text()='Selected Line Types']</findElement>
+                        </if>
+                        <then/>
+                        <else>
+                            <IfThenElse>
+                                <if>
+                                    <findElement by="xpath" isDisplayed="true" setFocus="true">//*[text()='Selected Line Types Selected Line Types']/../../../../..//li//label[normalize-space(text())='<valueKB inventoryName="MAIN_REPEAT2" columnName="Line Types"/>']</findElement>
+                                </if>
+                                <then/>
+                                <else>
+                                    <executeBlock name="Line_Types"/>
+                                </else>
+                            </IfThenElse>
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else>
+                    <error message="If you would like to specify 'Line Types', please set column 'Line Types' to be 'Specified'"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Line_Types">
+            <!--Line Types-->
+            <IfThenElse>
+                <if>
+					<findElement by="xpath" isDisplayed="true" setFocus="true">//*[text()='Selected Line Types Available Line Types']/../../../../..//li//label[normalize-space(text())='<valueKB inventoryName="MAIN_REPEAT2" columnName="Line Types"/>']</findElement>
+                </if>
+                <then>
+					<findElement by="xpath" isDisplayed="true" setFocus="true">//*[text()='Selected Line Types Available Line Types']/../../../../..//li//label[normalize-space(text())='<valueKB inventoryName="MAIN_REPEAT2" columnName="Line Types"/>']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+                    <findElement by="xpath">//a[contains(@title,'Move selected items to')]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isDisplayed="true">//a[contains(@title,'Move selected items to')]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isDisplayed="true">//a[contains(@title,'Move selected items to')]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isDisplayed="true">//a[contains(@title,'Move selected items to')][@aria-disabled='true']</findElement>
+								</if>
+								<then>
+									<error message= "This Move selected items button cannot be clicked"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+                </then>
+                <else>
+                    <error message="The 'Line Types' doesn't exist."/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Document_Style2">
+			<!--Retainage Enabled-->
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Complex Work']/../../../../../../..//label[text()='Retainage Enabled']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+                    <parameter name="COL_NAME" value="Retainage Enabled"/>
+                </parameters>
+            </executeBlock>
+			<!--Progress Payments Enabled-->
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Complex Work']/../../../../../../..//label[text()='Progress Payments Enabled']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+                    <parameter name="COL_NAME" value="Progress Payments Enabled"/>
+                </parameters>
+            </executeBlock>
+			<!--Work Confirmation Enabled-->
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Complex Work']/../../../../../../..//label[text()='Work Confirmation Enabled']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+                    <parameter name="COL_NAME" value="Work Confirmation Enabled"/>
+                </parameters>
+            </executeBlock>
+            <!--Purchase Order - Display Name-->
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Purchase Order']/../../../../../../..//label[text()='Display Name']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+                    <parameter name="COL_NAME" value="Purchase Order - Display Name"/>
+                </parameters>
+            </executeBlock>
+            <!--Blanket Purchase Agreement - Enabled-->
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Blanket Purchase Agreement']/../../../../../../..//label[text()='Enabled']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+                    <parameter name="COL_NAME" value="Blanket Purchase Agreement - Enabled"/>
+                </parameters>
+            </executeBlock>
+            <!--Blanket Purchase Agreement - Display Name-->
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Blanket Purchase Agreement']/../../../../../../..//label[text()='Display Name']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+                    <parameter name="COL_NAME" value="Blanket Purchase Agreement - Display Name"/>
+                </parameters>
+            </executeBlock>
+            <!--Price Breaks Allowed-->
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Blanket Purchase Agreement']/../../../../../../..//label[text()='Price Breaks Allowed']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+                    <parameter name="COL_NAME" value="Price Breaks Allowed"/>
+                </parameters>
+            </executeBlock>
+            <!--Contract Purchase Agreement - Enabled-->
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Contract Purchase Agreement']/../../../../../../..//label[text()='Enabled']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+                    <parameter name="COL_NAME" value="Contract Purchase Agreement - Enabled"/>
+                </parameters>
+            </executeBlock>
+            <!--Contract Purchase Agreement - Display Name-->
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Contract Purchase Agreement']/../../../../../../..//label[text()='Display Name']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT1"/>
+                    <parameter name="COL_NAME" value="Contract Purchase Agreement - Display Name"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+        <repeat inventoryName="MAIN_REPEAT1">
+            <executeBlock name="Search_Style"/>
+            <executeBlock name="Document_Style1"/>
+            <repeat inventoryName="MAIN_REPEAT2">
+                <executeBlock name="LK_Line_Types"/>
+            </repeat>
+            <executeBlock name="Document_Style2"/>
+            <executeBlock name="Save_And_Close"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

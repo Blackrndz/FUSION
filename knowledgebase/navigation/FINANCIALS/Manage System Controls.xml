@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage System Controls</name>
+	<svn>
+		<xsd:revision>$Revision: 79603 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2022-11-09 14:43:22 +0700 (Wed, 09 Nov 2022) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20System%20Controls.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage System Controls.xml 79603 2022-11-09 07:43:22Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage System Controls"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+
+
+		<dependencies>
+			<navigation name="Manage Fixed Assets Key Flexfields (Deploy Structure Instances)"/>
+		</dependencies>
+
+
+		<block name="GO_TO_TASK">
+			<findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a[@title='Go to Task']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+
+		
+		<block name="FAEK_DFF">
+			<findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="Manage System Controls - System Controls - DFF" columnName="Field Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="Manage System Controls - System Controls - DFF" columnName="Field Value"/>
+			</click>			
+		</block>
+		<block name="FAEK_KB">
+			<findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="Manage System Controls - System Controls" columnName="Enterprise Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="Manage System Controls - System Controls" columnName="Enterprise Name"/>
+			</click>			
+		</block>
+		<block name="Manage System Controls">
+
+
+			<!--Enterprise Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enterprise Name']/../.."/>
+					<parameter name="INV_NAME" value="Manage System Controls - System Controls"/>
+					<parameter name="COL_NAME" value="Enterprise Name"/>
+				</parameters>
+			</executeBlock>
+
+			<!--Oldest Date Placed in Service-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Oldest Date Placed in Service']/../.."/>
+					<parameter name="INV_NAME" value="Manage System Controls - System Controls"/>
+					<parameter name="COL_NAME" value="Oldest Date Placed in Service"/>
+				</parameters>
+			</executeBlock>
+
+			<!--Category Flexfield-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Category Flexfield']/../.."/>
+					<parameter name="INV_NAME" value="Manage System Controls - System Controls"/>
+					<parameter name="COL_NAME" value="Category Flexfield"/>
+				</parameters>
+			</executeBlock>
+			<!--Location Flexfield-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Location Flexfield']/../.."/>
+					<parameter name="INV_NAME" value="Manage System Controls - System Controls"/>
+					<parameter name="COL_NAME" value="Location Flexfield"/>
+				</parameters>
+			</executeBlock>
+			<!--Asset Key Flexfield-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Asset Key Flexfield']/../.."/>
+					<parameter name="INV_NAME" value="Manage System Controls - System Controls"/>
+					<parameter name="COL_NAME" value="Asset Key Flexfield"/>
+				</parameters>
+			</executeBlock>
+			<!--Starting Asset Number-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Starting Asset Number']/../.."/>
+					<parameter name="INV_NAME" value="Manage System Controls - System Controls"/>
+					<parameter name="COL_NAME" value="Starting Asset Number"/>
+				</parameters>
+			</executeBlock>
+			<!--Prevent user entered asset number-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Prevent user entered asset number']/../.."/>
+					<parameter name="INV_NAME" value="Manage System Controls - System Controls"/>
+					<parameter name="COL_NAME" value="Prevent user entered asset number"/>
+				</parameters>
+			</executeBlock>
+
+		</block>
+
+
+
+		<repeat inventoryName="Manage System Controls - System Controls">
+			<executeBlock name="GLOBAL_GO_TO_TASK"/>
+			<executeBlock name="Manage System Controls"/>			
+			<executeBlock name="GLOBAL_SAVE"/>
+			<repeat inventoryName="Manage System Controls - System Controls - DFF">
+				<executeBlock name="GLOBAL_ALL_DFF">
+					<parameters>
+						<parameter name="INV_NAME" value="Manage System Controls - System Controls - DFF"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

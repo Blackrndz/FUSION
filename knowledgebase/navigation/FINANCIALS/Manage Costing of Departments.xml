@@ -1,0 +1,2531 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Costing of Departments</name>
+	<svn>
+		<xsd:revision>$Revision$:</xsd:revision>
+		<xsd:author>$Author$:</xsd:author>
+		<xsd:date>$Date$:</xsd:date>
+		<xsd:headURL>$HeadURL$:</xsd:headURL>
+		<xsd:id>$Id$:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Costing of Departments" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<dependencies>
+			<navigation name="Manage Departments"/>
+			<navigation name="Manage Update Departments"/>
+			<navigation name="Manage Legislative Data Groups"/>
+			<navigation name="Manage Cost Allocation Key Flexfield (Structure Instances)"/>
+			<navigation name="Manage Cost Allocation Key Flexfield (Deploy Structure Instances)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="INV_1" value="Manage Costing of Departments - Costing of Departments"/>
+			<parameter name="INV_2" value="Manage Costing of Departments - Costing of Departments Details"/>
+			<parameter name="INV_3" value="Manage Costing of Departments - Cost Accounts"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Department"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Department"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_3" columnName="Department"/>']/../..//input</findElement>
+		</block>
+		
+		<block name="SUBMIT_BUTTON">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Submit']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Submit']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="Waiting_Create_Update_Page">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[contains(@title,'Edit Costing of Department')]</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[contains(@title,'Create Costing of Department')]</findElement>
+						</if>
+						<then>
+							<break/>
+						</then>
+						<else>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Search_Costing_Department">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Department']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Department"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legislative Data Group']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Legislative Data Group"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Effective As-of Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Effective Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Search Results']/../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Search Results']//tr[td[number(//table[@summary='Search Results']/../..//th//span[text()='Department']/../../@_d_index)]/..//td//a[text()='<valueKB inventoryName="INV_1" columnName="Department"/>']])[1]/td[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Search Results']//tr[td[number(//table[@summary='Search Results']/../..//th//span[text()='Department']/../../@_d_index)]/..//td//a[text()='<valueKB inventoryName="INV_1" columnName="Department"/>']])[1]/td[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<executeBlock name="Edit"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Search Results']//tr[td[number(//table[@summary='Search Results']/../..//th//span[text()='Department']/../../@_d_index)]/..//td[text()='<valueKB inventoryName="INV_1" columnName="Department"/>']])[1]/td[1]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Search Results']//tr[td[number(//table[@summary='Search Results']/../..//th//span[text()='Department']/../../@_d_index)]/..//td[text()='<valueKB inventoryName="INV_1" columnName="Department"/>']])[1]/td[1]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Create Costing Details']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Create Costing Details']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+								</then>
+								<else/>
+							</IfThenElse>
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Effective Date']/../.."/>
+									<parameter name="INV_NAME" value="INV_1"/>
+									<parameter name="COL_NAME" value="Effective Start Date"/>
+								</parameters>
+							</executeBlock>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Create Costing of Department']/../../../../../../..//button[text()='Contin']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Create Costing of Department']/../../../../../../..//button[text()='Contin']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+								</then>
+								<else/>
+							</IfThenElse>
+							<executeBlock name="Waiting_Create_Update_Page" isRepeatUntilBreak="true"/>
+						</then>
+						<else>
+							<error message="No data found." />
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Search_Costing_Department_Details">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Department']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Department"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legislative Data Group']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Legislative Data Group"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Effective As-of Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Effective Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search Results']/../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Search Results']//tr[td[number(//table[@summary='Search Results']/../..//th//span[text()='Department']/../../@_d_index)]/..//td//a[text()='<valueKB inventoryName="INV_1" columnName="Department"/>']])[1]/td[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Search Results']//tr[td[number(//table[@summary='Search Results']/../..//th//span[text()='Department']/../../@_d_index)]/..//td//a[text()='<valueKB inventoryName="INV_1" columnName="Department"/>']])[1]/td[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<executeBlock name="Edit_Details"/>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Search Results']//tr[td[number(//table[@summary='Search Results']/../..//th//span[text()='Department']/../../@_d_index)]/..//td[text()='<valueKB inventoryName="INV_1" columnName="Department"/>']])[1]/td[1]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Search Results']//tr[td[number(//table[@summary='Search Results']/../..//th//span[text()='Department']/../../@_d_index)]/..//td[text()='<valueKB inventoryName="INV_1" columnName="Department"/>']])[1]/td[1]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Create Costing Details']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Create Costing Details']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+								</then>
+								<else/>
+							</IfThenElse>
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Effective Date']/../.."/>
+									<parameter name="INV_NAME" value="INV_2"/>
+									<parameter name="COL_NAME" value="Effective Start Date"/>
+								</parameters>
+							</executeBlock>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Create Costing of Department']/../../../../../../..//button[text()='Contin']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Create Costing of Department']/../../../../../../..//button[text()='Contin']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+								</then>
+								<else/>
+							</IfThenElse>
+							<executeBlock name="Waiting_Create_Update_Page" isRepeatUntilBreak="true"/>
+						</then>
+						<else>
+							<error message="No data found." />
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Edit">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//th//*[text()='Effective Start Date']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='View']</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//*[text()='View']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[text()='Columns']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[text()='Effective Start Date']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>		
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Search Results']//td[number(//th//*[text()='Effective Start Date']/../../@_d_index)][text()='<valueKB inventoryName="INV_1" columnName="Effective Start Date"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//a/*[text()='Edit']/../../..//div/a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[text()='Correct']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<executeBlock name="Waiting_Create_Update_Page" isRepeatUntilBreak="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[text()='No results found.']</findElement>
+						</if>
+						<then>
+							<error message="Data issue: Please create data Department"/>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//a/*[text()='Edit']/../../..//div/a</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[text()='Update']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="2"/>
+							<executeBlock name="Waiting_Create_Update_Page" isRepeatUntilBreak="true"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Edit_Details">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//th//*[text()='Effective Start Date']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='View']</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//*[text()='View']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[text()='Columns']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[text()='Effective Start Date']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>		
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Search Results']//td[number(//th//*[text()='Effective Start Date']/../../@_d_index)][text()='<valueKB inventoryName="INV_2" columnName="Effective Start Date"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//a/*[text()='Edit']/../../..//div/a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[text()='Correct']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<executeBlock name="Waiting_Create_Update_Page" isRepeatUntilBreak="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[text()='No results found.']</findElement>
+						</if>
+						<then>
+							<error message="Data issue: Please create data Department"/>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//a/*[text()='Edit']/../../..//div/a</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[text()='Update']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="2"/>
+							<executeBlock name="Waiting_Create_Update_Page" isRepeatUntilBreak="true"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Suspense_and_Default_Accounts">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Suspense Account']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Suspense Account"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']</findElement>
+						</if>
+						<then>
+							<error message="Suspense Account doesn't exist. Please check your data" />
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Default Account']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Default Account"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="2"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']</findElement>
+						</if>
+						<then>
+							<error message="Default Account doesn't exist. Please check your data" />
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="CREATE_COST_ACCOUNT">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Cost Accounts']/../../../.."/>
+				</parameters>   
+			</executeBlock>
+		</block>
+		
+		<block name="FIND_COST_ACCOUNTS">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']//tbody/tr/td/div/table/tbody[1]/tr[1][td//span//span[text()='<valueKB inventoryName="INV_3" columnName="Percentage"/>']]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']//tbody/tr/td/div/table/tbody[1]/tr[1][td//span//span[text()='<valueKB inventoryName="INV_3" columnName="Percentage"/>']]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+					<!--<executeBlock name="SUBMIT_BUTTON"/>-->
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@summary='Cost Accounts']//tbody/tr[1]/td/div/table/tbody[1]/tr[1][td//span//input[@value='<valueKB inventoryName="INV_3" columnName="Percentage"/>']]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Cost Accounts']//tbody/tr[1]/td/div/table/tbody[1]/tr[1][td//span//input[@value='<valueKB inventoryName="INV_3" columnName="Percentage"/>']]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<executeBlock name="CREATE_COST_ACCOUNT"/>
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//label[text()='Percentage']/.."/>
+									<parameter name="INV_NAME" value="INV_3"/>
+									<parameter name="COL_NAME" value="Percentage"/>
+								</parameters>
+							</executeBlock>
+						</else>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//th[contains(@id,'flex') or contains(@id,'keyFlexCol_flex')])=1</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<executeBlock name="COST_ACCOUNT_1"/>
+						</then>
+						<else/>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//th[contains(@id,'flex') or contains(@id,'keyFlexCol_flex')])=2</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<executeBlock name="COST_ACCOUNT_2"/>
+						</then>
+						<else/>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//th[contains(@id,'flex') or contains(@id,'keyFlexCol_flex')])=3</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<executeBlock name="COST_ACCOUNT_3"/>
+						</then>
+						<else/>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//th[contains(@id,'flex') or contains(@id,'keyFlexCol_flex')])=4</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<executeBlock name="COST_ACCOUNT_4"/>
+						</then>
+						<else/>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//th[contains(@id,'flex') or contains(@id,'keyFlexCol_flex')])=5</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<executeBlock name="COST_ACCOUNT_5"/>
+						</then>
+						<else/>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//th[contains(@id,'flex') or contains(@id,'keyFlexCol_flex')])=6</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<executeBlock name="COST_ACCOUNT_6"/>
+						</then>
+						<else/>
+					</IfThenElse>
+								<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//th[contains(@id,'flex') or contains(@id,'keyFlexCol_flex')])=7</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<executeBlock name="COST_ACCOUNT_7"/>
+						</then>
+						<else/>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//th[contains(@id,'flex') or contains(@id,'keyFlexCol_flex')])=8</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<executeBlock name="COST_ACCOUNT_8"/>
+						</then>
+						<else/>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//th[contains(@id,'flex') or contains(@id,'keyFlexCol_flex')])=9</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<executeBlock name="COST_ACCOUNT_9"/>
+						</then>
+						<else/>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//th[contains(@id,'flex') or contains(@id,'keyFlexCol_flex')])=10</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<executeBlock name="COST_ACCOUNT_10"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="COST_ACCOUNT_1">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="COST_ACCOUNT_2">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[3]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[3]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="COST_ACCOUNT_3">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[3]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[3]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[4]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[4]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="COST_ACCOUNT_4">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[3]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[3]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[4]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[4]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[5]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[5]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="COST_ACCOUNT_5">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[3]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[3]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[4]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[4]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[5]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[5]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 5"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[6]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 5"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[6]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 5"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="COST_ACCOUNT_6">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[3]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[3]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[4]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[4]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[5]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[5]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 5"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[6]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 5"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[6]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 5"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 6"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[7]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 6"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[7]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 6"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="COST_ACCOUNT_7">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[3]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[3]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[4]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[4]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[5]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[5]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 5"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[6]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 5"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[6]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 5"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 6"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[7]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 6"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[7]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 6"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 7"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[8]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 7"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[8]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 7"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="COST_ACCOUNT_8">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[3]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[3]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[4]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[4]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[5]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[5]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 5"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[6]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 5"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[6]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 5"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 6"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[7]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 6"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[7]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 6"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 7"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[8]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 7"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[8]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 7"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 8"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[9]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 8"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[9]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 8"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="COST_ACCOUNT_9">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[3]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[3]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[4]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[4]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[5]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[5]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 5"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[6]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 5"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[6]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 5"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 6"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[7]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 6"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[7]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 6"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 7"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[8]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 7"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[8]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 7"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 8"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[9]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 8"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[9]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 8"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 9"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[10]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 9"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[10]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 9"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="COST_ACCOUNT_10">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[2]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 1"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[3]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[3]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 2"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[4]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[4]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 3"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[5]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[5]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 4"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 5"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[6]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 5"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[6]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 5"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 6"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[7]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 6"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[7]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 6"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 7"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[8]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 7"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[8]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 7"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 8"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[9]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 8"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[9]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 8"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 9"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[10]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 9"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[10]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 9"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Cost Account 10"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[11]//input[@value='<valueKB inventoryName="INV_3" columnName="Cost Account 10"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Cost Accounts']/..//tr[contains(@class,'Selected')]//tr[not(@class)]/td[11]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="INV_3" columnName="Cost Account 10"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="WARNING_BUTTON">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Warning']/../../../../../../../..//*[text()='Continue']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Warning']/../../../../../../../..//*[text()='Continue']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="End_Date">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_1" columnName="Effective End Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>					
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//th//*[text()='Effective End Date']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='View']</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//*[text()='View']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[text()='Columns']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[text()='Effective End Date']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+							<parameter name="BUTTON_NAME" value="Reset"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Department']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Department"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Legislative Data Group']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Legislative Data Group"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Effective As-of Date']/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Effective End Date"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+							<parameter name="BUTTON_NAME" value="Search"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Search Results']/../../../../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Search Results']//a[text()='<valueKB inventoryName="INV_1" columnName="Department"/>']/../..//td[number(//th//*[text()='Effective End Date']/../../@_d_index)][text()='<valueKB inventoryName="INV_1" columnName="Effective End Date"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Search Results']//td[1]/a[text()='<valueKB inventoryName="INV_1" columnName="Department"/>']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="2"/>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//a[@title='Edit']</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//a[@title='Edit']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[text()='End Date']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//div[text()='End Date']/../../../../../../../..</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='End Date']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='End Date']/../../../../../../../..//label[text()='Effective Date']/../../../../../table[contains(@class,'Error')]</findElement>
+										</if>
+										<then>
+											<error message="Error: The date is outside the valid range."/>
+										</then>
+										<else>
+											<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//div[text()='End Date']/../../../../../../../..//*[text()='O']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="2"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" by="xpath">//table[@style='position: relative;']//div[text()='Warning' ]/../../../../../../..</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//table[@style='position: relative;']//div[text()='Warning' ]/../../../../../../..//*[text()='es' or text()='K']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="2"/>				
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock name="SUBMIT_BUTTON"/>
+			<executeBlock name="WARNING_BUTTON"/>
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="Search_Costing_Department"/>
+			<repeat inventoryName="INV_2">
+				<IfThenElse>
+					<if>
+						<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[contains(@title,'Edit Costing of Department') or contains(@title,'Create Costing of Department')]</findElement>
+					</if>
+					<then>
+						
+					</then>
+					<else>
+						<executeBlock name="Search_Costing_Department_Details" isRepeatUntilBreak="true"/>
+					</else>
+				</IfThenElse>
+				<repeat inventoryName="INV_3">
+					<executeBlock name="FIND_COST_ACCOUNTS"/>
+				</repeat>
+				<executeBlock name="Suspense_and_Default_Accounts"/>
+			</repeat>
+			<executeBlock name="SUBMIT_BUTTON"/>
+			<executeBlock name="WARNING_BUTTON"/>
+			<executeBlock name="End_Date"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

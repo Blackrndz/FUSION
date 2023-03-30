@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Tax Regions</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Tax Regions" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+       
+		<parameters>
+			<parameter name="INV_1" value="Manage Tax Regions - Manage Tax Regions"/>
+        </parameters>
+		
+        <block name="FAKE_INV">
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="State"/>']</findElement>
+        </block>
+			
+		<block name="New_Tax_Region">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Add Row']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Add Row']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_ADD"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Upgrade_Tax_Region">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		
+		<block name="Create_Tax_Region">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='State']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="State"/>
+				</parameters>
+			</executeBlock> 
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Code']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Code"/>
+				</parameters>
+			</executeBlock> 
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Description']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Amount']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Amount (USD)"/>
+				</parameters>
+			</executeBlock> 
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Method']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Method"/>
+				</parameters>
+			</executeBlock> 
+		</block>
+		
+		<block name="Save">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Save']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Save']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="Save_and_Close">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='ave and Close']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='ave and Close']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Income Tax Regions']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Income Tax Regions']/../../../../../../..//table[@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Income Tax Regions']/../../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Income Tax Regions']/../..//span[text()='<valueKB inventoryName="INV_1" columnName="State"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_Tax_Region"/>
+					<parameter name="TEMPLATE_UPDATE" value="Upgrade_Tax_Region"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Create_Tax_Region"/>
+			<executeBlock name="Save"/>
+			<executeBlock name="Save_and_Close"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

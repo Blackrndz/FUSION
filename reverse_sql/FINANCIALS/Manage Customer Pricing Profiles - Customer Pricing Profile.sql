@@ -1,0 +1,58 @@
+/* ****************************************************************************
+ * $Revision: 60928 $:
+ * $Author: pisan.jariyasettachok $:
+ * $Date: 2017-02-06 17:14:01 +0700 (Mon, 06 Feb 2017) $:
+ * $HeadURL: http://svn01.rapidesuite.com:999/svn/a/dev/rapidesuite/controldata/FUSION_11.1.9/trunk/core/reverse_sql/FINANCIALS/Complete%20Primary%20to%20Secondary%20Ledger%20Mapping%20-%20Journal%20Conversion%20Rules.sql $:
+ * $Id: Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules.sql 60928 2017-02-06 10:14:01Z pisan.jariyasettachok $:
+ * ****************************************************************************
+ * Description:
+ * ************************************************************************** */
+ 
+-- RSC_PREREQUISITE_OBJECTS=QP_CUST_PRICING_PROFILES
+
+SELECT (SELECT PARTY_NAME
+	FROM HZ_PARTIES
+	WHERE PARTY_ID = QpCustomerProfilesE0.CUSTOMER_PARTY_ID
+	) RES_CUSTOMER_NAME
+,(SELECT MEANING
+	FROM FND_LOOKUPS
+	WHERE LOOKUP_TYPE = 'ORA_QP_REV_POTENTIAL_VALUES'
+	AND LOOKUP_CODE = QpCustomerProfilesE0.REVENUE_POTENTIAL_CODE
+	) RES_REVENUE_POTENTIAL
+,(SELECT MEANING
+	FROM FND_LOOKUPS
+	WHERE LOOKUP_TYPE = 'ORA_QP_COST_TO_SERVE'
+	AND LOOKUP_CODE = QpCustomerProfilesE0.COST_TO_SERVE_CODE
+	) RES_COST_TO_SERVE
+,(SELECT MEANING
+	FROM FND_LOOKUPS
+	WHERE LOOKUP_TYPE = 'ORA_QP_CUSTOMER_VALUE_RANKINGS'
+	AND LOOKUP_CODE = QpCustomerProfilesE0.CUSTOMER_VALUE_CODE
+	) RES_CUSTOMER_VALUE
+,(SELECT MEANING
+	FROM FND_LOOKUPS
+	WHERE LOOKUP_TYPE = 'ORA_QP_CUSTOMER_RATING_VALUES'
+	AND LOOKUP_CODE = QpCustomerProfilesE0.CUSTOMER_RATING_CODE
+	) RES_CUSTOMER_RATING
+,(SELECT MEANING
+	FROM FND_LOOKUPS
+	WHERE LOOKUP_TYPE = 'ORA_QP_CUSTOMER_SIZE_VALUES'
+	AND LOOKUP_CODE = QpCustomerProfilesE0.CUSTOMER_SIZE_CODE
+	) RES_CUSTOMER_SIZE
+,TO_CHAR(QpCustomerProfilesE0.START_DATE,'DD-Mon-YYYY') RES_START_DATE
+,TO_CHAR(QpCustomerProfilesE0.END_DATE,'DD-Mon-YYYY') RES_END_DATE
+,QpCustomerProfilesE0.LAST_UPDATED_BY RSC_LAST_UPDATED_BY
+,QpCustomerProfilesE0.LAST_UPDATE_DATE RSC_LAST_UPDATE_DATE
+,QpCustomerProfilesE0.CREATED_BY RSC_CREATED_BY
+,QpCustomerProfilesE0.CREATION_DATE RSC_CREATION_DATE
+,NULL RSC_LEDGER_ID
+,NULL RSC_CHART_OF_ACCOUNTS_ID
+,NULL RSC_BUSINESS_UNIT_ID
+,NULL RSC_LEGAL_ENTITY_ID
+,NULL RSC_ORGANIZATION_ID
+,NULL RSC_BUSINESS_GROUP_ID
+,NULL RSC_ENTERPRISE_ID
+,NULL RSC_COUNTRY_ID
+
+FROM QP_CUST_PRICING_PROFILES QpCustomerProfilesE0
+ORDER BY 1

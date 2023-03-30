@@ -1,0 +1,356 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Invoice Methods</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Invoice Methods" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+			<navigation name="Manage Billing Extensions"/>
+		</dependencies>
+		<parameters>
+            <parameter name="REPEAT_1_MAIN" value="Manage Invoice Methods - Invoice Method"/>
+            <parameter name="REPEAT_2_MAIN" value="Manage Invoice Methods - Billing Extension Assignments"/>
+        </parameters>
+        <!--REPEAT_1_MAIN-->
+        <block name="Search_Invoice_Method">
+            <executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Manage Invoice Methods']/../../../.."/>
+                </parameters>
+            </executeBlock>
+            <findElement by="xpath">//table[@summary='Manage Invoice Methods']/../../../..//a[@title='Clear All']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <findElement by="xpath">(//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]/../..//input)[1]</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_1_MAIN" columnName="Invoice Method Name"/>
+            </sendKeys>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//table[@summary='Manage Invoice Methods']//tr[td/a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Invoice Method Name"/>']]</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//table[@summary='Manage Invoice Methods']//tr[td/a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Invoice Method Name"/>']]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_UPDATE">
+                        <parameters>
+                            <parameter name="SPECIFY_XPATH" value="//table[@summary='Manage Invoice Methods']/../../../.."/>
+                        </parameters>
+                    </executeBlock>
+                    <executeBlock name="Invoice_Method"/>
+                </then>
+                <else>
+                   <executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+                        <parameters>
+                            <parameter name="SPECIFY_XPATH" value="//table[@summary='Manage Invoice Methods']/../../../.."/>
+                        </parameters>
+                    </executeBlock>
+                    <executeBlock name="Invoice_Method"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Invoice_Method">
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//tr[contains(@id,'inputText2')]//label[text()='Name']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Invoice Method Name"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Invoice Method Classification']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Invoice Method Classification"/>
+                </parameters>
+            </executeBlock>
+             <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Method Assignment Type']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Method Assignment Type"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//tr[contains(@id,'selectOneChoice1')]//label[text()='Status']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Status"/>
+                </parameters>
+            </executeBlock>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//label[text()='Use Invoice Method for Intercompany Billing']/../..//input[@disabled]</findElement>
+                </if>
+                <then/>
+                <else>
+                    <executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+                        <parameters>
+                            <parameter name="XPATH" value="//label[text()='Use Invoice Method for Intercompany Billing']/../.."/>
+                            <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                            <parameter name="COL_NAME" value="Use Invoice Method for Intercompany Billing"/>
+                        </parameters>
+                    </executeBlock>
+                </else>
+            </IfThenElse>
+            <executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Labor Schedule Type']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Labor Schedule Type"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Nonlabor Schedule Type']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Nonlabor Schedule Type"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock name="GLOBAL_SAVE"/>
+        </block>
+        <!--REPEAT_2_MAIN-->
+        <block name="Check_Method_Assignment_Type">
+            <IfThenElse>
+				<if>
+					<comparisons separator="AND">
+                        <comparison operator="EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="REPEAT_1_MAIN" columnName="Method Assignment Type"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText>Process Configurator Based</valueText>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                        <parameters>
+                            <parameter name="XPATH" value="//label[text()='Calculation Level']/../.."/>
+                            <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                            <parameter name="COL_NAME" value="Calculation Level"/>
+                        </parameters>
+                    </executeBlock>
+                    <executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+                        <parameters>
+                            <parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Billing Extension Assignments']/../..//div[text()='No data to display.']"/>
+                            <parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Billing Extension Assignments'][@_rowcount]//tr[1]//td)[1]"/>
+                            <parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Billing Extension Assignments']/../..//div[contains(@id,'scroller')]"/>
+                            <parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Billing Extension Assignments']//span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']/../../../../../../../../td[1]</parameter>
+                            <parameter name="TEMPLATE_2_FIND_ROW">//table[@summary='Billing Extension Assignments']//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']/../../../../../../../../td[1]</parameter>
+                            <parameter name="TEMPLATE_CREATE" value="Select_Project_Process_Configurator_Assignments"/>
+                            <parameter name="TEMPLATE_UPDATE" value="Select_Project_Process_Configurator_Assignments"/>
+                        </parameters>
+                    </executeBlock>
+                    <executeBlock name="Project_Process_Configurator_Assignments"/>
+				</then>
+				<else>
+					<executeBlock name="Search_Billing_Extension_Assignments"/>
+				</else>
+			</IfThenElse>
+        </block>
+        <block name="Select_Project_Process_Configurator_Assignments">
+            <IfThenElse>
+				<if>
+					<findElement by="xpath" highlightTurnedOff="true">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" highlightTurnedOff="true">TEMPLATE_1_FIND_ROW</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <pause durationInSecs="2"/>
+				</then>
+				<else>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath" highlightTurnedOff="true">TEMPLATE_2_FIND_ROW</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath" highlightTurnedOff="true">TEMPLATE_2_FIND_ROW</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                            <pause durationInSecs="2"/>
+                        </then>
+                        <else>
+                            <IfThenElse>
+                                <if>
+                                    <comparisons separator="AND">
+                                        <comparison operator="EQUAL">
+                                            <leftOperand>
+                                                <valueKB inventoryName="REPEAT_2_MAIN" columnName="Processing Order"/>
+                                            </leftOperand>
+                                            <rightOperand>
+                                                <valueText></valueText>
+                                            </rightOperand>
+                                        </comparison>
+                                    </comparisons>
+                                </if>
+                                <then>
+                                    
+                                </then>
+                                <else>
+                                    <findElement by="xpath" isDisplayed="true">//table[@summary='Billing Extension Assignments']/../../../..//div[@title='Add Row']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <pause durationInSecs="2"/>
+                                    <findElement by="xpath">(//table[@summary='Billing Extension Assignments'][@_rowcount]//tr[1]//td)[1]</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <pause durationInSecs="2"/>
+                                </else>
+                            </IfThenElse>
+                        </else>
+                    </IfThenElse>
+				</else>
+			</IfThenElse>
+        </block>
+        <block name="Project_Process_Configurator_Assignments">
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Billing Extension Assignments']/../..//label[text()='Processing Order']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Processing Order"/>
+				</parameters>
+			</executeBlock>
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Billing Extension Assignments']/../..//label[text()='Name']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Name"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Billing Extension Assignments']/../..//label[text()='Transaction']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Transaction"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Billing Extension Assignments']/../..//label[text()='Transaction Type']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Transaction Type"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock name="GLOBAL_SAVE"/>
+        </block>
+        <block name="Search_Billing_Extension_Assignments">
+            <executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Billing Extension Assignments']/../../../.."/>
+                </parameters>
+            </executeBlock>
+            <IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Billing Extension Assignments']/../../../..//a[@title='Clear All']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Billing Extension Assignments']/../../../..//a[@title='Clear All']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <findElement by="xpath">(//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]/../..//input)[1]</findElement>
+                    <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                        <valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>
+                    </sendKeys>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+            <IfThenElse>
+                <if>
+                    <findElement
+                            by="xpath">//table[@summary='Billing Extension Assignments']//tr[td/span/span[text()='<valueKB
+                            inventoryName="REPEAT_2_MAIN" columnName="Name"/>']]</findElement>
+                </if>
+                <then>
+                    <findElement
+                            by="xpath">//table[@summary='Billing Extension Assignments']//tr[td/span/span[text()='<valueKB
+                            inventoryName="REPEAT_2_MAIN" columnName="Name"/>']]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <executeBlock name="Billing_Extension_Assignments"/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="EQUAL">
+                                    <leftOperand>
+                                        <valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                        <valueText></valueText>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                        
+                        </then>
+                        <else>
+                            <executeBlock name="GLOBAL_SPECIFY_ADD">
+                                <parameters>
+                                    <parameter name="SPECIFY_XPATH" value="//table[@summary='Billing Extension Assignments']/../../../.."/>
+                                </parameters>
+                            </executeBlock>
+                            <IfThenElse>
+                                <if>
+                                    <findElement isDisplayed="true" by="xpath">(//table[@summary='Billing Extension Assignments'][@_rowcount]//tr[1]//td)[1]</findElement>
+                                </if>
+                                <then>
+                                    <findElement isDisplayed="true" by="xpath">(//table[@summary='Billing Extension Assignments'][@_rowcount]//tr[1]//td)[1]</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <!-- <IfThenElse>
+                                        <if>
+                                            <findElement isDisplayed="true" by="xpath">//table[@summary='Billing Extension Assignments']/../..//label[text()='Name']/../..//select[not(@value)]</findElement>
+                                        </if>
+                                        <then>
+                                            <findElement isDisplayed="true" by="xpath">//table[@summary='Billing Extension Assignments']/../..//label[text()='Name']/../..//select[not(@value)]</findElement>
+                                            <click waitForPageToFinishRendering="true"/>
+                                        </then>
+                                        <else/>
+                                    </IfThenElse> -->
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                            <executeBlock name="Billing_Extension_Assignments"/>
+                        </else>
+                    </IfThenElse>
+                 </else>
+            </IfThenElse>  
+        </block>
+        <block name="Billing_Extension_Assignments">
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Billing Extension Assignments']/../..//label[text()='Name']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Name"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Billing Extension Assignments']/../..//label[text()='Status']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Status"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock name="GLOBAL_SAVE"/>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="REPEAT_1_MAIN">
+            <executeBlock name="Search_Invoice_Method"/>
+            <repeat inventoryName="REPEAT_2_MAIN">
+                <executeBlock name="Check_Method_Assignment_Type"/>
+            </repeat>
+            <executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

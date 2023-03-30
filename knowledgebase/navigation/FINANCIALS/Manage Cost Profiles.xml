@@ -1,0 +1,581 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Cost Profiles</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Cost Profiles" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Valuation Structures"/>
+			<navigation name="Manage Cost Component Mappings"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Cost Profiles - Cost Profiles"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Cost Profiles - Cost Profiles - DFF"/>
+		</parameters>
+		<block name="Save_And_Close">
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</block>
+		<block name="Search_List_of_Value">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">SPECIFY_XPATH</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search_Cost_Profile">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//a[@title='Collapse Search']</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[@title='Expand Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<findElement by="xpath" isDisplayed="true">//button[text()='Reset']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//a[@title='Collapse Search']</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[@title='Expand Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Search']/../../../../../../..//label[text()='Cost Profile']/../..//select</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Search']/../../../../../../..//label[text()='Cost Profile']/../..//select</findElement>
+					<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+						<valueText>Equals</valueText>
+					</select>
+				</then>
+				<else>
+					<findElement by="xpath">//*[text()='Search']/../../../../../../..//label[text()='Cost Profile']/../..//input/..//div//li[text()='Equals']</findElement>
+					<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../../../../../..//label[text()='Cost Profile']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Cost Profile"/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath" isDisplayed="true">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Search Results']/../../../../../../..//div[contains(text(),'No results found')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Search Results']/../../../../../../..//table[@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Search Results']/../../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Search Results']/../../../../../../..//td[1]//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Cost Profile"/>']</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Add_Cost_Profile"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Cost_Profile"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="SCROLLBAR_GENERIC_INNER_1">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					<IfThenElse>
+						<if>
+							<isEndOfScroll/>
+						</if>
+						<then>
+							<executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+							<break/>
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="DOWN"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SCROLLBAR_GENERIC_1">
+			<!-- check if there is no data found returned after the search, if so then we create a new record if applicable -->
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+				</then>
+				<else>
+					<!-- resetting the scrollbar back to the Top because the form remembers where it was even when searching a new record -->
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					<scroll direction="TOP"/>
+					<findElement by="xpath" setFocus="true">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<executeBlock name="SCROLLBAR_GENERIC_INNER_1" isRepeatUntilBreak="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Update_Cost_Profile">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock name="GLOBAL_SPECIFY_UPDATE">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//*[text()='Search Results']/../../../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Update_Cost_Profile1"/>
+		</block>
+		<block name="Add_Cost_Profile">
+			<executeBlock name="GLOBAL_SPECIFY_CREATE">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//*[text()='Search Results']/../../../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Create_Cost_Profile"/>
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</block>
+		<block name="Create_Cost_Profile">
+			<!--Cost Profile Set-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Cost Profile Set']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Cost Profile Set"/>
+					<parameter name="SEARCH_1" value="Reference Data Set Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Cost Profile-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Cost Profile']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Cost Profile"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Cost Method-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Cost Method']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Cost Method"/>
+				</parameters>
+			</executeBlock>
+			<!--Process Negative Quantity-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Process Negative Quantity']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Process Negative Quantity"/>
+				</parameters>
+			</executeBlock>
+			<!--Quantity Depletion Method-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Quantity Depletion Method']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Quantity Depletion Method"/>
+				</parameters>
+			</executeBlock>
+			<!--Account Intravaluation Unit Transfers-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Account Intravaluation Unit Transfers']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Account Intravaluation Unit Transfers"/>
+				</parameters>
+			</executeBlock>			
+			<!--Valuation Structure Code-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Valuation Structure Code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Valuation Structure Code"/>
+					<parameter name="SEARCH_1" value="Valuation Structure Code' or text()='ValStructureCode"/>
+				</parameters>
+			</executeBlock>
+			<!--Cost By-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Cost By']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Cost By"/>
+				</parameters>
+			</executeBlock>
+			<!--Provisional Completions-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Provisional Completions']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Provisional Completions"/>
+				</parameters>
+			</executeBlock>
+			<!--Provisional Completions for Process Manufacturing-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Provisional Completions for Process Manufacturing']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Provisional Completions for Process Manufacturing"/>
+				</parameters>
+			</executeBlock>
+			<!--Operation Scrap Accounting-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Operation Scrap Accounting']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Operation Scrap Accounting"/>
+				</parameters>
+			</executeBlock>
+			<!--Operation Scrap Valuation-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Operation Scrap Valuation']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Operation Scrap Valuation"/>
+				</parameters>
+			</executeBlock>
+			<!--Cost Component Mapping Group-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Cost Component Mapping Group']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Cost Component Mapping Group"/>
+				</parameters>
+			</executeBlock>
+			<!--Analysis Mapping-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Analysis Mapping']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Analysis Mapping"/>
+					<parameter name="SEARCH_1" value="Code"/>
+				</parameters>
+			</executeBlock>
+			<!--Receipt Without Cost-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Receipt Without Cost']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Receipt Without Cost"/>
+				</parameters>
+			</executeBlock>
+			<!--Propagate Cost Adjustment-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Propagate Cost Adjustment']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Propagate Cost Adjustment"/>
+				</parameters>
+			</executeBlock>
+			<!--Enforce Processing of Costs by Transaction Date-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enforce Processing of Costs by Transaction Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Enforce Processing of Costs by Transaction Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Referenced RMA Cost-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Referenced RMA Cost']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Referenced RMA Cost"/>
+				</parameters>
+			</executeBlock>
+			<!--Unreferenced RMA Receipt Cost-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Unreferenced RMA Receipt Cost']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Unreferenced RMA Receipt Cost"/>
+				</parameters>
+			</executeBlock>
+			<!--Summarize Cost Transactions for Lot Controlled Items-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Summarize Cost Transactions for Lot Controlled Items']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Summarize Cost Transactions for Lot Controlled Items"/>
+				</parameters>
+			</executeBlock>
+			<!--Summarize Cost Transactions for Serial Controlled Items-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Summarize Cost Transactions for Serial Controlled Items']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Summarize Cost Transactions for Serial Controlled Items"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Update_Cost_Profile1">
+			<!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Cost Method-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Cost Method']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Cost Method"/>
+				</parameters>
+			</executeBlock>
+			<!--Process Negative Quantity-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Process Negative Quantity']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Process Negative Quantity"/>
+				</parameters>
+			</executeBlock>
+			<!--Quantity Depletion Method-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Quantity Depletion Method']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Quantity Depletion Method"/>
+				</parameters>
+			</executeBlock>
+			<!--Account Intravaluation Unit Transfers-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Account Intravaluation Unit Transfers']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Account Intravaluation Unit Transfers"/>
+				</parameters>
+			</executeBlock>	
+			<!--Valuation Structure Code-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Valuation Structure Code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Valuation Structure Code"/>
+					<parameter name="SEARCH_1" value="Valuation Structure Code"/>
+				</parameters>
+			</executeBlock>
+			<!--Cost By-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Cost By']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Cost By"/>
+				</parameters>
+			</executeBlock>
+			<!--Provisional Completions-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Provisional Completions']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Provisional Completions"/>
+				</parameters>
+			</executeBlock>
+			<!--Provisional Completions for Process Manufacturing-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Provisional Completions for Process Manufacturing']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Provisional Completions for Process Manufacturing"/>
+				</parameters>
+			</executeBlock>
+			<!--Operation Scrap Accounting-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Operation Scrap Accounting']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Operation Scrap Accounting"/>
+				</parameters>
+			</executeBlock>
+			<!--Operation Scrap Valuation-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Operation Scrap Valuation']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Operation Scrap Valuation"/>
+				</parameters>
+			</executeBlock>
+			<!--Cost Component Mapping Group-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Cost Component Mapping Group']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Cost Component Mapping Group"/>
+				</parameters>
+			</executeBlock>
+			<!--Analysis Mapping-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Analysis Mapping']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Analysis Mapping"/>
+					<parameter name="SEARCH_1" value="Code"/>
+				</parameters>
+			</executeBlock>
+			<!--Receipt Without Cost-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Receipt Without Cost']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Receipt Without Cost"/>
+				</parameters>
+			</executeBlock>
+			<!--Propagate Cost Adjustment-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Propagate Cost Adjustment']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Propagate Cost Adjustment"/>
+				</parameters>
+			</executeBlock>
+			<!--Enforce Processing of Costs by Transaction Date-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enforce Processing of Costs by Transaction Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Enforce Processing of Costs by Transaction Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Referenced RMA Cost-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Referenced RMA Cost']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Referenced RMA Cost"/>
+				</parameters>
+			</executeBlock>
+			<!--Unreferenced RMA Receipt Cost-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Unreferenced RMA Receipt Cost']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Unreferenced RMA Receipt Cost"/>
+				</parameters>
+			</executeBlock>
+			<!--Summarize Cost Transactions for Lot Controlled Items-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Summarize Cost Transactions for Lot Controlled Items']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Summarize Cost Transactions for Lot Controlled Items"/>
+				</parameters>
+			</executeBlock>
+			<!--Summarize Cost Transactions for Serial Controlled Items-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Summarize Cost Transactions for Serial Controlled Items']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Summarize Cost Transactions for Serial Controlled Items"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="DFF_FAKE">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Field Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_2" columnName="Field Value"/>
+			</click>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<executeBlock name="GLOBAL_SPECIFY_CREATE">
+			<parameters>
+				<parameter name="SPECIFY_XPATH" value="//*[text()='Search Results']/../../../../../../.."/>
+			</parameters>
+		</executeBlock>
+		<findElement by="xpath">//span[text()='C']</findElement>
+		<click waitForPageToFinishRendering="true"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="Search_Cost_Profile"/>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<IfThenElse>
+					<if>
+						<findElement by="xpath">//*[text()='Search Results']</findElement>
+					</if>
+					<then>
+						<executeBlock name="GLOBAL_SPECIFY_UPDATE">
+							<parameters>
+								<parameter name="SPECIFY_XPATH" value="//*[text()='Search Results']/../../../../../../.."/>
+							</parameters>
+						</executeBlock>
+					</then>
+					<else/>
+				</IfThenElse>
+				<IfThenElse>
+					<if>
+						<findElement isDisplayed="true" by="xpath">//div[text()='Additional Information']</findElement>
+					</if>
+					<then>
+					</then>
+					<else>
+						<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//img[@title='Additional Information']</findElement>
+						<click waitForPageToFinishRendering="true"/>
+					</else>
+				</IfThenElse>
+				<executeBlock name="GLOBAL_ALL_DFF">
+					<parameters>
+						<parameter name="INV_NAME" value="Manage Cost Profiles - Cost Profiles - DFF"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Additional Information']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Additional Information']/.././../../../../../..//span[text()='o']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

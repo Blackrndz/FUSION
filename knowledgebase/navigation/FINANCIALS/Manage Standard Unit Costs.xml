@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Standard Unit Costs</name>
+    <svn>
+        <xsd:revision>$Revision: 79320 $:</xsd:revision>
+        <xsd:author>$Author: kullada.somtragool $:</xsd:author>
+        <xsd:date>$Date: 2022-09-12 22:05:24 +0700 (Mon, 12 Sep 2022) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Standard%20Unit%20Costs.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Standard Unit Costs.xml 79320 2022-09-12 15:05:24Z kullada.somtragool $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        taskName="Manage Standard Unit Costs" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <!--<dependencies>
+			<navigation name="Manage Project Templates"/>
+		</dependencies>-->
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Standard Unit Costs - Standard Unit Costs"/>
+        </parameters>
+        <block name="FAKE_INV">
+            <findElement by="xpath">//a[@title='Save']</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Asset Book"/>
+            </sendKeys>
+        </block>
+        <block name="LK_VALUE">
+            <executeBlock name="GLOBAL_QUERY_BY_EXAMPLE"/>
+            <findElement by="xpath">//table[@summary='Manage Standard Unit Costs']/../..//th[(string(//span[text()='Asset Book']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Asset Book"/>
+            </sendKeys>
+            <executeBlock name="SCROLLBAR">
+                <parameters>
+                    <parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[contains(@summary,'Legal Entity')]/../..//div[contains(text(),'No data to display.')]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[contains(@summary,'Legal Entity')][@_rowcount]//tr[1]//td)[1]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[contains(@summary,'Legal Entity')]/../..//div[contains(@id,'scroller')]"/>
+                    <parameter
+                            name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Manage Standard Unit Costs']//tr[td[1]//span[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1"
+                            columnName="Asset Book"/>'] and td[2]//span[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Asset Category"/>']]</parameter>
+                    <parameter
+                            name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[@summary='Manage Standard Unit Costs']//tr[td[1]//input[@value='<valueKB
+                            inventoryName="MAIN_REPEAT_1"
+                            columnName="Asset Book"/>'] and td[2]//input[@value='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Asset Category"/>']]</parameter>
+                    <parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="CREATE">
+            <executeBlock name="GLOBAL_ADD"/>
+            <!--Asset Book-->
+           <executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+                <parameters>
+                    <parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Asset Book']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Asset Book"/>
+                    <parameter name="SEARCH_1" value="Book"/>
+                </parameters>
+            </executeBlock>
+            <!--Asset Category-->
+           <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Asset Category']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Asset Category"/>
+                </parameters>
+            </executeBlock>
+			<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@class,'Selected')]//label[text()='Asset Category']/../../..//a</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="3"/>
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="3"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']</findElement>
+				</if>
+				<then>
+					<error message="Asset Category doesn't exist. Please check your data" />
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+            <!--Cost per Unit-->
+           <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Cost per Unit']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Cost per Unit"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="UPDATE">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">(SCROLLBAR_GENERIC_1_FIND_ROW/../../../../..//td)[1]</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else>
+                    <findElement by="xpath">(SCROLLBAR_GENERIC_2_FIND_ROW/../../../../..//td)[1]</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </else>
+            </IfThenElse>
+            <!--Cost per Unit-->
+           <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Cost per Unit']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Cost per Unit"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="MAIN_REPEAT_1">
+            <executeBlock name="LK_VALUE"/>
+            <executeBlock name="GLOBAL_SAVE"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

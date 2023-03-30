@@ -1,0 +1,64 @@
+/* ****************************************************************************
+ * $Revision: 62668 $:
+ * $Author: pisan.jariyasettachok $:
+ * $Date: 2017-06-19 18:28:29 +0700 (Mon, 19 Jun 2017) $:
+ * $HeadURL: http://svn01.rapidesuite.com:999/svn/a/dev/rapidesuite/controldata/FUSION_11.1.12/branches/core/v2.2.0.0/reverse_sql/FINANCIALS/Assign%20Legal%20Entities%20-%20Assign%20Legal%20Entities.sql $:
+ * $Id: Assign Legal Entities - Assign Legal Entities.sql 62668 2017-06-19 11:28:29Z pisan.jariyasettachok $:
+ * ****************************************************************************
+ * Description:
+ * ************************************************************************** */
+
+
+SELECT IntercompanyOrgE0.INTERCO_ORG_NAME RES_ORGANIZATION_NAME
+,LegalEntitiesE0.NAME RES_LEGAL_ENTITY_NAME
+,LegalEntitiesE0.LEGAL_ENTITY_IDENTIFIER RES_LEGAL_ENTITY_IDENTIFIER
+,(SELECT BU_NAME
+	FROM FUN_ALL_BUSINESS_UNITS_V
+	WHERE BU_ID = IntercompanyOrgE0.REC_BU_ID
+	AND SYSDATE BETWEEN DATE_FROM AND DATE_TO
+	) RES_RECEIVABLES_BUSINESS_UNIT
+,(SELECT BU_NAME
+	FROM FUN_ALL_BUSINESS_UNITS_V
+	WHERE BU_ID = IntercompanyOrgE0.PAY_BU_ID
+	AND SYSDATE BETWEEN DATE_FROM AND DATE_TO
+	) RES_PAYABLES_BUSINESS_UNIT
+,ContactDetailE0.LIST_NAME RES_DEFAULT_ORGANIZATION_CONTA
+,ContactDetailE0.NAME RES_DEFAULT_ORGANIZATION_CON_0
+,DECODE(IntercompanyOrgE0.ENABLED_FLAG,'Y','Yes','No') RES_ENABLED
+,IntercompanyOrgE0.DESCRIPTION RES_DESCRIPTION
+,IntercompanyOrgE0.LAST_UPDATED_BY  RSC_LAST_UPDATED_BY
+,IntercompanyOrgE0.LAST_UPDATE_DATE  RSC_LAST_UPDATE_DATE
+,IntercompanyOrgE0.CREATED_BY  RSC_CREATED_BY
+,IntercompanyOrgE0.CREATION_DATE  RSC_CREATION_DATE
+,null RSC_LEDGER_ID
+,null RSC_CHART_OF_ACCOUNTS_ID
+,(CASE
+	WHEN IntercompanyOrgE0.PAY_BU_ID IS NOT NULL OR IntercompanyOrgE0.REC_BU_ID IS NOT NULL THEN
+		NVL(IntercompanyOrgE0.PAY_BU_ID,IntercompanyOrgE0.REC_BU_ID)
+	END) RSC_BUSINESS_UNIT_ID
+,null RSC_LEGAL_ENTITY_ID
+,(CASE
+	WHEN IntercompanyOrgE0.PAY_BU_ID IS NULL AND IntercompanyOrgE0.REC_BU_ID IS NULL THEN
+		IntercompanyOrgE0.INTERCO_ORG_ID
+	END) RSC_ORGANIZATION_ID
+,null RSC_BUSINESS_GROUP_ID
+,NULL RSC_ENTERPRISE_ID
+,NULL RSC_COUNTRY_ID
+   
+FROM FUN_INTERCO_ORGANIZATIONS IntercompanyOrgE0
+,XLE_ENTITY_PROFILES LegalEntitiesE0
+,(SELECT PersonNameDPEO.PERSON_ID
+	,PersonNameDPEO.LIST_NAME
+	,JobDPEO.NAME
+	FROM PER_PERSON_NAMES_F_V PersonNameDPEO
+	,PER_ALL_ASSIGNMENTS_M AssignmentDPEO
+	,PER_JOBS_F_VL JobDPEO
+	WHERE PersonNameDPEO.PERSON_ID = AssignmentDPEO.PERSON_ID
+	AND JobDPEO.JOB_ID = AssignmentDPEO.JOB_ID
+	AND TRUNC(SYSDATE) BETWEEN PersonNameDPEO.EFFECTIVE_START_DATE AND PersonNameDPEO.EFFECTIVE_END_DATE
+	AND TRUNC(SYSDATE) BETWEEN AssignmentDPEO.EFFECTIVE_START_DATE AND AssignmentDPEO.EFFECTIVE_END_DATE
+	AND TRUNC(SYSDATE) BETWEEN JobDPEO.EFFECTIVE_START_DATE AND JobDPEO.EFFECTIVE_END_DATE
+	) ContactDetailE0
+WHERE IntercompanyOrgE0.LEGAL_ENTITY_ID = LegalEntitiesE0.LEGAL_ENTITY_ID
+AND IntercompanyOrgE0.CONTACT_PERSON_ID = ContactDetailE0.PERSON_ID(+)
+ORDER BY IntercompanyOrgE0.INTERCO_ORG_NAME

@@ -1,0 +1,992 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Tax Rates and Tax Recovery Rates (Transaction Tax Recovery Rates)</name>
+	<svn>
+		<xsd:revision>$Revision: 80258 $:</xsd:revision>
+		<xsd:author>$Author: chanawee.punsumniang $:</xsd:author>
+		<xsd:date>$Date: 2023-02-21 15:08:49 +0700 (Tue, 21 Feb 2023) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Tax%20Rates%20and%20Tax%20Recovery%20Rates%20(Transaction%20Tax%20Recovery%20Rates).xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Tax Rates and Tax Recovery Rates (Transaction Tax Recovery Rates).xml 80258 2023-02-21 08:08:49Z chanawee.punsumniang $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Tax Rates and Tax Recovery Rates"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Tax Statuses (Transaction Tax)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Tax Rates and Tax Recovery Rates - Transaction Tax Recovery Rate"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Tax Rates and Tax Recovery Rates - Transaction Recovery Rate Periods"/>
+			<parameter name="MAIN_REPEAT_3" value="Manage Tax Rates and Tax Recovery Rates - Transaction Recovery Rate Account Details"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax Regime Code"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tax Regime Code"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Tax Regime Code"/>']/../..//input</findElement>
+		</block>
+		<block name="Save_And_Close">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[contains(text(),'Edit Tax')]</findElement>
+				</if>
+				<then>
+					<executeBlock name="GLOBAL_SPECIFY_SAVE_AND_CLOSE">
+						<parameters>
+							<parameter name="SPECIFY_XPATH" value="//*[contains(text(),'Edit Tax')]/../../../../../../../../../../.."/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SPECIFY_SAVE_AND_CLOSE">
+						<parameters>
+							<parameter name="SPECIFY_XPATH" value="//*[contains(text(),'Create Tax')]/../../../../../../../../../../.."/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Save">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[contains(text(),'Edit Tax')]</findElement>
+				</if>
+				<then>
+					<executeBlock name="GLOBAL_SPECIFY_SAVE">
+						<parameters>
+							<parameter name="SPECIFY_XPATH" value="//*[contains(text(),'Edit Tax')]/../../../../../../../../../../.."/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SPECIFY_SAVE">
+						<parameters>
+							<parameter name="SPECIFY_XPATH" value="//*[contains(text(),'Create Tax')]/../../../../../../../../../../.."/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		<!--MAIN_REPEAT_1-->
+		<block name="Search_Tax_Recovery_Rate">
+			<!-- ***Need to use sendKey instead of templateInput cause of DOM and cache error***  -->
+			<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//label[normalize-space(text())='Transaction Tax']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+			<findElement by="xpath">//label[text()='Rate Type']/../..//select</findElement>
+			<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+				<valueText>Tax Recovery Rates</valueText>
+			</select>
+			<pause durationInSecs="1"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[contains(@title,'Expand Search')]/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[contains(@title,'Collapse Search')]/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="1"/>
+			<!-- Tax Regime Code -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax Regime Code"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Tax Regime Code']/../..//input</findElement>
+					<sendKeys isClear="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax Regime Code"/>
+					</sendKeys>
+					<pause durationInSecs="1"/>
+					<!-- <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Tax Regime Code']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Tax Regime Code"/>
+						</parameters>
+					</executeBlock> -->
+				</then>
+				<else></else>
+			</IfThenElse>
+			<!-- Tax -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Tax']/../..//input</findElement>
+					<sendKeys isClear="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax"/>
+					</sendKeys>
+					<pause durationInSecs="1"/>
+					<!-- <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Tax']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Tax"/>
+						</parameters>
+					</executeBlock> -->
+				</then>
+				<else></else>
+			</IfThenElse>
+			<!-- Configuration Owner -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Configuration Owner"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Configuration Owner']/../..//input</findElement>
+					<sendKeys isClear="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Configuration Owner"/>
+					</sendKeys>
+					<pause durationInSecs="1"/>
+					<!-- <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Configuration Owner']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Configuration Owner"/>
+						</parameters>
+					</executeBlock> -->
+				</then>
+				<else></else>
+			</IfThenElse>
+			<!-- Tax Recovery Rate Code -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax Recovery Rate Code"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Tax Rate Code']/../..//input</findElement>
+					<sendKeys isClear="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax Recovery Rate Code"/>
+					</sendKeys>
+					<pause durationInSecs="1"/>
+					<!-- <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Tax Rate Code']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Tax Recovery Rate Code"/>
+						</parameters>
+					</executeBlock> -->
+				</then>
+				<else></else>
+			</IfThenElse>
+
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<!-- Lookup Logic -->
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//tr[td[number(//table[@summary='Search Results']/../..//th//span[text()='Tax Rate Code']/../../@_d_index)]//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax Recovery Rate Code"/>'] and td[number(//table[@summary='Search Results']/../..//th//span[text()='Tax']/../../@_d_index)][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax"/>'] and td[number(//table[@summary='Search Results']/../..//th//span[text()='Tax Regime Code']/../../@_d_index)][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax Regime Code"/>']]//a</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//tr[td[number(//table[@summary='Search Results']/../..//th//span[text()='Tax Rate Code']/../../@_d_index)]//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax Recovery Rate Code"/>'] and td[number(//table[@summary='Search Results']/../..//th//span[text()='Tax']/../../@_d_index)][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax"/>'] and td[number(//table[@summary='Search Results']/../..//th//span[text()='Tax Regime Code']/../../@_d_index)][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax Regime Code"/>']]//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isDisplayed="true">//button[text()='Edit'][@disabled]</findElement>
+						</if>
+						<then/>
+						<else>
+							<findElement by="xpath">//button[text()='Edit']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<findElement by="xpath">//a[text()='Actions']/../..//div</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//td[text()='Create']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<!--<defineVariable name="TRANS_TAX_RATE" type="text"/>
+			<setVariable name="TRANS_TAX_RATE" append="false">
+				<valueText/>
+			</setVariable>
+			<!{1}**Tax Recovery Rate Code**{1}>
+			<setVariable name="TRANS_TAX_RATE" append="true">//tr[td[number(//table[@summary='Search Results']/../..//th//span[text()='Tax Rate Code']/../../@_d_index)]//a[text()='</setVariable>
+			<setVariable name="TRANS_TAX_RATE" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax Recovery Rate Code"/>
+			</setVariable>
+			<setVariable name="TRANS_TAX_RATE" append="true">']</setVariable>
+			<setVariable name="TRANS_TAX_RATE" append="true"> and </setVariable>
+			<!{1}**Tax Regime Code**{1}>
+			<setVariable name="TRANS_TAX_RATE" append="true">td[number(//table[@summary='Search Results']/../..//th//span[text()='Tax']/../../@_d_index)][text()='</setVariable>
+			<setVariable name="TRANS_TAX_RATE" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax"/>
+			</setVariable>
+			<setVariable name="TRANS_TAX_RATE" append="true">']</setVariable>
+			<setVariable name="TRANS_TAX_RATE" append="true"> and </setVariable>
+			<!{1}**Tax Regime Code**{1}>
+			<setVariable name="TRANS_TAX_RATE" append="true">td[number(//table[@summary='Search Results']/../..//th//span[text()='Tax Regime Code']/../../@_d_index)][text()='</setVariable>
+			<setVariable name="TRANS_TAX_RATE" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Tax Regime Code"/>
+			</setVariable>
+			<setVariable name="TRANS_TAX_RATE" append="true">']</setVariable>
+			<setVariable name="TRANS_TAX_RATE" append="true">]//a</setVariable>-->
+		</block>
+		<block name="Tax_Recovery_Rate">
+			<!-- Tax Regime Code -->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Tax Regime Code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Tax Regime Code"/>
+					<parameter name="SEARCH_1" value="Tax Regime Code"/>
+				</parameters>
+			</executeBlock>
+			<!-- Configuration Owner -->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Configuration Owner']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Configuration Owner"/>
+					<parameter name="SEARCH_1" value="Configuration Owner"/>
+				</parameters>
+			</executeBlock>
+			<!-- Tax -->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Tax']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Tax"/>
+					<parameter name="SEARCH_1" value="Tax"/>
+				</parameters>
+			</executeBlock>
+			<!-- Tax Recovery Rate Code -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Tax Recovery Rate Code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Tax Recovery Rate Code"/>
+				</parameters>
+			</executeBlock>
+			<!-- Recovery Type -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Recovery Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Recovery Type"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<!--MAIN_REPEAT_2-->
+		<block name="Recovery_Rate_Period">
+			<defineVariable name="RECOVERY_RATE_1" type="text"/>
+			<setVariable name="RECOVERY_RATE_1" append="false">
+				<valueText/>
+			</setVariable>
+			<defineVariable name="RECOVERY_RATE_2" type="text"/>
+			<setVariable name="RECOVERY_RATE_2" append="false">
+				<valueText/>
+			</setVariable>
+			<defineVariable name="RECOVERY_RATE_3" type="text"/>
+			<setVariable name="RECOVERY_RATE_3" append="false">
+				<valueText/>
+			</setVariable>
+			<!--Rate Percentage-->
+			<setVariable name="RECOVERY_RATE_1" append="true">//table[@summary='Recovery Rate Periods']//tr[td[number(//table[@summary='Recovery Rate Periods']/../..//th//span[text()='Rate Percentage']/../../@_d_index)][normalize-space(text())='</setVariable>
+			<setVariable name="RECOVERY_RATE_1" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_2" columnName="Rate Percentage"/>
+			</setVariable>
+			<setVariable name="RECOVERY_RATE_1" append="true">']</setVariable>
+			
+			<setVariable name="RECOVERY_RATE_2" append="true">//table[@summary='Recovery Rate Periods']//tr[td[number(//table[@summary='Recovery Rate Periods']/../..//th//span[text()='Rate Percentage']/../../@_d_index)]//*[normalize-space(text())='</setVariable>
+			<setVariable name="RECOVERY_RATE_2" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_2" columnName="Rate Percentage"/>
+			</setVariable>
+			<setVariable name="RECOVERY_RATE_2" append="true">']</setVariable>
+			
+			<setVariable name="RECOVERY_RATE_3" append="true">//table[@summary='Recovery Rate Periods']//tr[td[number(//table[@summary='Recovery Rate Periods']/../..//th//span[text()='Rate Percentage']/../../@_d_index)]//input[@value='</setVariable>
+			<setVariable name="RECOVERY_RATE_3" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_2" columnName="Rate Percentage"/>
+			</setVariable>
+			<setVariable name="RECOVERY_RATE_3" append="true">']</setVariable>
+			<!--Recovery Rate Period Name-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Recovery Rate Period Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="RECOVERY_RATE_1" append="true"> and </setVariable>
+					<setVariable name="RECOVERY_RATE_1" append="true">td[number(//table[@summary='Recovery Rate Periods']/../..//th//span[text()='Recovery Rate Period Name']/../../@_d_index)][normalize-space(text())='</setVariable>
+					<setVariable name="RECOVERY_RATE_1" append="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Recovery Rate Period Name"/>
+					</setVariable>
+					<setVariable name="RECOVERY_RATE_1" append="true">']</setVariable>
+					
+					<setVariable name="RECOVERY_RATE_2" append="true"> and </setVariable>
+					<setVariable name="RECOVERY_RATE_2" append="true">td[number(//table[@summary='Recovery Rate Periods']/../..//th//span[text()='Recovery Rate Period Name']/../../@_d_index)]//input[@value='</setVariable>
+					<setVariable name="RECOVERY_RATE_2" append="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Recovery Rate Period Name"/>
+					</setVariable>
+					<setVariable name="RECOVERY_RATE_2" append="true">']</setVariable>
+					
+					<setVariable name="RECOVERY_RATE_3" append="true"> and </setVariable>
+					<setVariable name="RECOVERY_RATE_3" append="true">td[number(//table[@summary='Recovery Rate Periods']/../..//th//span[text()='Recovery Rate Period Name']/../../@_d_index)]//input[@value='</setVariable>
+					<setVariable name="RECOVERY_RATE_3" append="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Recovery Rate Period Name"/>
+					</setVariable>
+					<setVariable name="RECOVERY_RATE_3" append="true">']</setVariable>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+			<setVariable name="RECOVERY_RATE_1" append="true">]/../../../../../td[1]</setVariable>
+			<setVariable name="RECOVERY_RATE_2" append="true">]/../../../../../td[1]</setVariable>
+			<setVariable name="RECOVERY_RATE_3" append="true">]/../../../../../td[1]</setVariable>
+
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Recovery Rate Periods']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Recovery Rate Periods'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Recovery Rate Periods']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW"><valueVariable name="RECOVERY_RATE_1"/></parameter>
+					<parameter name="TEMPLATE_2_FIND_ROW"><valueVariable name="RECOVERY_RATE_2"/></parameter>
+					<parameter name="TEMPLATE_3_FIND_ROW"><valueVariable name="RECOVERY_RATE_3"/></parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_Recovery_Rate_Period"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Recovery_Rate_Period"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="New_Recovery_Rate_Period">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Recovery Rate Periods']//td[1]//input[not(@value)]</findElement>
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Recovery Rate Periods']/../../../..//div[@title='Add Row']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Recovery Rate Periods']/../../../..//div[@title='Add Row']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Periods']/..//tr[contains(@class,'Selected')]//label[text()='Rate Percentage']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Rate Percentage"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Periods']/..//tr[contains(@class,'Selected')]//label[text()='Rate Period Name']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Recovery Rate Period Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Periods']/..//tr[contains(@class,'Selected')]//label[text()='Effective Start Date']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Effective Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Periods']/..//tr[contains(@class,'Selected')]//label[text()='Effective End Date']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Effective End Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Periods']/..//tr[contains(@class,'Selected')]//td[string(//span[text()='Set as Default Rate']/../..//@_d_index)+0]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Set as Default Rate"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Periods']/..//tr[contains(@class,'Selected')]//label[text()='Effective Start Date']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Effective Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Periods']/..//tr[contains(@class,'Selected')]//label[text()='Default Start Date']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Default Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Periods']/..//tr[contains(@class,'Selected')]//label[text()='Default End Date']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Default End Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Periods']/..//tr[contains(@class,'Selected')]//td[string(//span[text()='Allow Ad Hoc Recovery Rate']/../..//@_d_index)+0]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Allow Ad Hoc Recovery Rate"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Update_Recovery_Rate_Period">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_2_FIND_ROW</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_2_FIND_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_3_FIND_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Periods']/..//tr[contains(@class,'Selected')]//label[text()='Rate Period Name']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Recovery Rate Period Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Periods']/..//tr[contains(@class,'Selected')]//label[text()='Effective Start Date']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Effective Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Periods']/..//tr[contains(@class,'Selected')]//label[text()='Effective End Date']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Effective End Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Periods']/..//tr[contains(@class,'Selected')]//td[string(//span[text()='Set as Default Rate']/../..//@_d_index)+0]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Set as Default Rate"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Periods']/..//tr[contains(@class,'Selected')]//label[text()='Effective Start Date']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Effective Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Periods']/..//tr[contains(@class,'Selected')]//label[text()='Default Start Date']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Default Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Periods']/..//tr[contains(@class,'Selected')]//label[text()='Default End Date']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Default End Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Periods']/..//tr[contains(@class,'Selected')]//td[string(//span[text()='Allow Ad Hoc Recovery Rate']/../..//@_d_index)+0]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Allow Ad Hoc Recovery Rate"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<!--MAIN_REPEAT_3-->
+		<block name="Recovery_Rate_Account">
+			<defineVariable name="RECOVERY_ACC_1" type="text"/>
+			<setVariable name="RECOVERY_ACC_1" append="false">
+				<valueText/>
+			</setVariable>
+			<defineVariable name="RECOVERY_ACC_2" type="text"/>
+			<setVariable name="RECOVERY_ACC_2" append="false">
+				<valueText/>
+			</setVariable>
+			<defineVariable name="RECOVERY_ACC_3" type="text"/>
+			<setVariable name="RECOVERY_ACC_3" append="false">
+				<valueText/>
+			</setVariable>
+			<defineVariable name="RECOVERY_ACC_4" type="text"/>
+			<setVariable name="RECOVERY_ACC_4" append="false">
+				<valueText/>
+			</setVariable>
+			<!--Ledger-->
+			<setVariable name="RECOVERY_ACC_1" append="true">//table[contains(@summary,'Recovery Rate Account Details')]//tr[td[number(//table[contains(@summary,'Recovery Rate Account Details')]/../..//th//span[text()='Ledger']/../../@_d_index)][normalize-space(text())='</setVariable>
+			<setVariable name="RECOVERY_ACC_1" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_3" columnName="Ledger"/>
+			</setVariable>
+			<setVariable name="RECOVERY_ACC_1" append="true">']</setVariable>
+			
+			<setVariable name="RECOVERY_ACC_2" append="true">//table[contains(@summary,'Recovery Rate Account Details')]//tr[td[number(//table[contains(@summary,'Recovery Rate Account Details')]/../..//th//span[text()='Ledger']/../../@_d_index)]//*[normalize-space(text())='</setVariable>
+			<setVariable name="RECOVERY_ACC_2" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_3" columnName="Ledger"/>
+			</setVariable>
+			<setVariable name="RECOVERY_ACC_2" append="true">']</setVariable>
+			
+			<setVariable name="RECOVERY_ACC_3" append="true">//table[contains(@summary,'Recovery Rate Account Details')]//tr[td[number(//table[contains(@summary,'Recovery Rate Account Details')]/../..//th//span[text()='Ledger']/../../@_d_index)]//input[@value='</setVariable>
+			<setVariable name="RECOVERY_ACC_3" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_3" columnName="Ledger"/>
+			</setVariable>
+			<setVariable name="RECOVERY_ACC_3" append="true">']</setVariable>
+			<!--Business Unit-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="RECOVERY_ACC_1" append="true"> and </setVariable>
+					<setVariable name="RECOVERY_ACC_1" append="true">td[number(//table[contains(@summary,'Recovery Rate Account Details')]/../..//th//span[text()='Business Unit']/../../@_d_index)][normalize-space(text())='</setVariable>
+					<setVariable name="RECOVERY_ACC_1" append="true">
+						<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>
+					</setVariable>
+					<setVariable name="RECOVERY_ACC_1" append="true">']</setVariable>
+					
+					<setVariable name="RECOVERY_ACC_2" append="true"> and </setVariable>
+					<setVariable name="RECOVERY_ACC_2" append="true">td[number(//table[contains(@summary,'Recovery Rate Account Details')]/../..//th//span[text()='Business Unit']/../../@_d_index)]//*[normalize-space(text())='</setVariable>
+					<setVariable name="RECOVERY_ACC_2" append="true">
+						<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>
+					</setVariable>
+					<setVariable name="RECOVERY_ACC_2" append="true">']</setVariable>
+					
+					<setVariable name="RECOVERY_ACC_3" append="true"> and </setVariable>
+					<setVariable name="RECOVERY_ACC_3" append="true">td[number(//table[contains(@summary,'Recovery Rate Account Details')]/../..//th//span[text()='Business Unit']/../../@_d_index)]//input[@value='</setVariable>
+					<setVariable name="RECOVERY_ACC_3" append="true">
+						<valueKB inventoryName="MAIN_REPEAT_3" columnName="Business Unit"/>
+					</setVariable>
+					<setVariable name="RECOVERY_ACC_3" append="true">']</setVariable>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+					
+			<setVariable name="RECOVERY_ACC_1" append="true">]/../../../../../td[1]</setVariable>
+			<setVariable name="RECOVERY_ACC_2" append="true">]/../../../../../td[1]</setVariable>
+			<setVariable name="RECOVERY_ACC_3" append="true">]/../../../../../td[1]</setVariable>
+			
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[contains(@summary,'Recovery Rate Account Details')]/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[contains(@summary,'Recovery Rate Account Details')][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[contains(@summary,'Recovery Rate Account Details')]/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW"><valueVariable name="RECOVERY_ACC_1"/></parameter>
+					<parameter name="TEMPLATE_2_FIND_ROW"><valueVariable name="RECOVERY_ACC_2"/></parameter>
+					<parameter name="TEMPLATE_3_FIND_ROW"><valueVariable name="RECOVERY_ACC_3"/></parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_Recovery_Rate_Account"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Recovery_Rate_Account"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Recovery_Rate_Account_Detail"/>
+		</block>
+		<block name="New_Recovery_Rate_Account">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">TEMPLATE_FIRST_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">TEMPLATE_FIRST_ROW</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[contains(@summary,'Recovery Rate Account Details')]/../../../..//div[@title='Add Row']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isDisplayed="true">//table[contains(@summary,'Recovery Rate Account Details')]//*[text()='Ledger']/..//input[@value='']/../../../../../../../../../td[1]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isDisplayed="true">//table[contains(@summary,'Recovery Rate Account Details')]//*[text()='Ledger']/..//input[@value='']/../../../../../../../../../td[1]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[contains(@summary,'Recovery Rate Account Details')]/../..//div[contains(@id,'scroller')]</findElement>
+							<scroll direction="TOP"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isDisplayed="true">//table[contains(@summary,'Recovery Rate Account Details')]//*[text()='Ledger']/..//input[@value='']/../../../../../../../../../td[1]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="2"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[contains(@summary,'Recovery Rate Account Details')]/../../../..//div[@title='Add Row']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Update_Recovery_Rate_Account">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_2_FIND_ROW</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_2_FIND_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_3_FIND_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Recovery_Rate_Account_Detail">
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Account Details']//tr[contains(@class,'Select')]//label[text()='Ledger']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Ledger"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Recovery Rate Account Details']//tr[contains(@class,'Select')]//label[text()='Business Unit']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Business Unit"/>
+					<parameter name="SEARCH_1" value="Business Unit"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_3" columnName="Tax Recoverable Account"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Recovery Rate Account Details']//tr[contains(@class,'Select')]//label[text()='Tax Recoverable Account']/../..//input[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Tax Recoverable Account"/>']</findElement>
+						</if>
+						<then>
+						</then>
+						<else>
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//table[@summary='Recovery Rate Account Details']//tr[contains(@class,'Select')]//label[text()='Tax Recoverable Account']/.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+									<parameter name="COL_NAME" value="Tax Recoverable Account"/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Recovery Rate Account Details']//tr[contains(@class,'Select')]//td[string(//span[text()='Tax Recoverable Account']/../..//@_d_index)+0])[1]//a</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="3"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="3"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']</findElement>
+								</if>
+								<then>
+									<error message="Tax Recoverable Account doesn't exist. Please check your data" />
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Select_Recovery_Rate_Period">
+			<defineVariable name="RECOVERY_RATE_1" type="text"/>
+			<setVariable name="RECOVERY_RATE_1" append="false">
+				<valueText/>
+			</setVariable>
+			<defineVariable name="RECOVERY_RATE_2" type="text"/>
+			<setVariable name="RECOVERY_RATE_2" append="false">
+				<valueText/>
+			</setVariable>
+			<defineVariable name="RECOVERY_RATE_3" type="text"/>
+			<setVariable name="RECOVERY_RATE_3" append="false">
+				<valueText/>
+			</setVariable>
+			<!--Rate Percentage-->
+			<setVariable name="RECOVERY_RATE_1" append="true">//table[@summary='Recovery Rate Periods']//tr[td[number(//table[@summary='Recovery Rate Periods']/../..//th//span[text()='Rate Percentage']/../../@_d_index)][normalize-space(text())='</setVariable>
+			<setVariable name="RECOVERY_RATE_1" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_3" columnName="Rate Percentage"/>
+			</setVariable>
+			<setVariable name="RECOVERY_RATE_1" append="true">']</setVariable>
+			
+			<setVariable name="RECOVERY_RATE_2" append="true">//table[@summary='Recovery Rate Periods']//tr[td[number(//table[@summary='Recovery Rate Periods']/../..//th//span[text()='Rate Percentage']/../../@_d_index)]//*[normalize-space(text())='</setVariable>
+			<setVariable name="RECOVERY_RATE_2" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_3" columnName="Rate Percentage"/>
+			</setVariable>
+			<setVariable name="RECOVERY_RATE_2" append="true">']</setVariable>
+			
+			<setVariable name="RECOVERY_RATE_3" append="true">//table[@summary='Recovery Rate Periods']//tr[td[number(//table[@summary='Recovery Rate Periods']/../..//th//span[text()='Rate Percentage']/../../@_d_index)]//input[@value='</setVariable>
+			<setVariable name="RECOVERY_RATE_3" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_3" columnName="Rate Percentage"/>
+			</setVariable>
+			
+			<setVariable name="RECOVERY_RATE_3" append="true">']</setVariable>
+			<setVariable name="RECOVERY_RATE_1" append="true">]/../../../../../td[1]</setVariable>
+			<setVariable name="RECOVERY_RATE_2" append="true">]/../../../../../td[1]</setVariable>
+			<setVariable name="RECOVERY_RATE_3" append="true">]/../../../../../td[1]</setVariable>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Recovery Rate Periods']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Recovery Rate Periods'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Recovery Rate Periods']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW"><valueVariable name="RECOVERY_RATE_1"/></parameter>
+					<parameter name="TEMPLATE_2_FIND_ROW"><valueVariable name="RECOVERY_RATE_2"/></parameter>
+					<parameter name="TEMPLATE_3_FIND_ROW"><valueVariable name="RECOVERY_RATE_3"/></parameter>
+					<parameter name="TEMPLATE_CREATE" value="Click_Recovery_Rate_Period"/>
+					<parameter name="TEMPLATE_UPDATE" value="Click_Recovery_Rate_Period"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Click_Recovery_Rate_Period">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_2_FIND_ROW</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_2_FIND_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_3_FIND_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Save_When_Expansion">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='ancel']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='ancel']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<break/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="Search_Tax_Recovery_Rate"/>
+			<executeBlock name="Tax_Recovery_Rate"/>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<IfThenElse>
+					<if>
+						<findElement by="xpath" isDisplayed="true">//button[text()='Edit'][@disabled]</findElement>
+					</if>
+					<then/>
+					<else>
+						<IfThenElse>
+							<if>
+								<comparisons separator="AND">
+									<comparison operator="NOT_EQUAL">
+										<leftOperand>
+											<valueKB inventoryName="MAIN_REPEAT_2" columnName="Rate Percentage"/>
+										</leftOperand>
+										<rightOperand>
+											<valueText></valueText>
+										</rightOperand>
+									</comparison>
+								</comparisons>
+							</if>
+							<then>
+								<executeBlock name="Recovery_Rate_Period"/>
+								<executeBlock name="Save"/>
+							</then>
+							<else>
+
+							</else>
+						</IfThenElse>
+					</else>
+				</IfThenElse>
+				<repeat inventoryName="MAIN_REPEAT_3">
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isDisplayed="true">//button[text()='Edit'][@disabled]</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_3" columnName="Ledger"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText></valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<executeBlock name="Select_Recovery_Rate_Period"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isSkipCheckDomError="true">//table[contains(@summary,'Recovery Rate Account Details')]//tr[td[number(//table[contains(@summary,'Recovery Rate Account Details')]/../..//th//span[text()='Ledger']/../../@_d_index)]//input[@value='']]/../../../../../td[1]</findElement>
+										</if>
+										<then>
+											<findElement by="xpath" isSkipCheckDomError="true">//table[contains(@summary,'Recovery Rate Account Details')]//tr[td[number(//table[contains(@summary,'Recovery Rate Account Details')]/../..//th//span[text()='Ledger']/../../@_d_index)]//input[@value='']]/../../../../../td[1]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="2"/>
+											<executeBlock name="Recovery_Rate_Account_Detail"/>
+											<executeBlock name="Save"/>
+										</then>
+										<else>
+											<executeBlock name="Recovery_Rate_Account"/>
+											<executeBlock name="Save"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>	
+				</repeat>
+			</repeat>
+			<executeBlock name="Save"/>
+			<executeBlock name="Save_And_Close"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>	

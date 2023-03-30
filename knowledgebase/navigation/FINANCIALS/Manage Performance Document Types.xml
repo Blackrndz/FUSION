@@ -1,0 +1,245 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Performance Document Types</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Performance Document Types" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Performance Document Types - Performance Document Type"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Performance Document Types - Performance Document Type - DFF"/>
+		</parameters>
+		
+		<block name="DFF_FAKE_MAPPER">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Value"/>
+			</click>
+		</block>
+		
+		<block name="Search_Performance">
+			<executeBlock name="GLOBAL_QUERY_BY_EXAMPLE"/>
+			<findElement highlightTurnedOff="true" by="xpath">//a[@title='Clear All']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" isSkipCheckDomError="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+			</sendKeys>
+			<findElement by="xpath">//th[(string(//span[text()='From Date']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" isSkipCheckDomError="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="From Date"/>
+			</sendKeys>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//tr[td/a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>	
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="GLOBAL_UPDATE"/>
+					<executeBlock name="Performance_Document_Types"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_CREATE"/>
+					<executeBlock name="Performance_Document_Types"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Performance_Document_Types">
+			<!--Name-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock name="INPUT_TEXTAREA">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--From Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='From Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="From Date"/>
+				</parameters>
+			</executeBlock>
+			<!--To Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='To Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="To Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Status-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Status']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Status"/>
+				</parameters>
+			</executeBlock>
+			<!--Worker can select manager when creating document-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Worker can select manager when creating document']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Worker can select manager when creating document"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Confirmation">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true"
+                        highlightTurnedOff="true" by="xpath">//div[text()='Confirmation']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Confirmation']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="DETAILS_DFF">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..//*[@type='checkbox']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" >//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..</parameter>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Field Value"/>
+						</parameters>
+					</executeBlock>				
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..//*[@type='radio']</findElement>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+								<parameters>
+									<parameter name="XPATH" >//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..</parameter>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Field Value"/>
+								</parameters>
+							</executeBlock>				
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..//*[contains(@title,'Date')]</findElement>
+								</if>
+								<then>
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" >//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..</parameter>
+											<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+											<parameter name="COL_NAME" value="Field Value"/>
+										</parameters>
+									</executeBlock>				
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..//select</findElement>
+										</if>
+										<then>
+											<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+												<parameters>
+													<parameter name="XPATH" >//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..</parameter>
+													<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+													<parameter name="COL_NAME" value="Field Value"/>
+												</parameters>
+											</executeBlock>												
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..//li</findElement>
+												</if>
+												<then>
+													<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+														<parameters>
+															<parameter name="XPATH" >//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..</parameter>
+															<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+															<parameter name="COL_NAME" value="Field Value"/>
+														</parameters>
+													</executeBlock>								
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..//a</findElement>
+														</if>
+														<then>
+															<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+																<parameters>
+																	<parameter name="XPATH" >//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..</parameter>
+																	<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+																	<parameter name="COL_NAME" value="Field Value"/>
+																	<parameter name="SEARCH_1" value="Value"/>
+																</parameters>
+															</executeBlock>							
+														</then>
+														<else>
+															<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+																<parameters>
+																	<parameter name="XPATH" >//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..</parameter>
+																	<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+																	<parameter name="COL_NAME" value="Field Value"/>
+																</parameters>
+															</executeBlock>						
+														</else>
+													</IfThenElse>					
+												</else>
+											</IfThenElse>					
+										</else>
+									</IfThenElse>				
+								</else>
+							</IfThenElse>														
+						</else>
+					</IfThenElse>								
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search_Performance"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="DETAILS_DFF"/>
+			</repeat>
+			<executeBlock name="GLOBAL_SAVE"/>
+			<executeBlock name="Confirmation"/>
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+			<executeBlock name="Confirmation"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

@@ -1,0 +1,241 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Geographies (Validation)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Manage Geographies" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<parameters>
+			<parameter name="INV_1" value="Manage Geographies - General Information"/>
+			<parameter name="INV_2" value="Manage Geographies - Address Style"/>
+			<parameter name="INV_3" value="Manage Geographies - Address Style Format Mapping"/>
+			<parameter name="INV_4" value="Manage Geographies - Geography Mapping and Validation"/>
+		</parameters>
+		
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Country Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Country Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_3" columnName="Country Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_4" columnName="Country Name"/>']</findElement>
+		</block>
+		
+		<block name="SAVE">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//button[text()='ave and Close']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//button[text()='ave and Close']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<executeBlock name="SAVE_AND_CLOSE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="SEARCH_GEOGRAPHIES">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Country Name']/../..//input/../..//*[@class='x1u']"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Country Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search Results']/../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Countries']//a[text()='<valueKB inventoryName="INV_1" columnName="Country Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Countries']//a[text()='<valueKB inventoryName="INV_1" columnName="Country Name"/>']/../..//td[7]/a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="NEW_ADDRESS_STYLE">
+			<executeBlock name="GLOBAL_SPECIFY_ADD">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//table[@summary='Address Style']/../../../..//div[@title='Add']"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="UPDATE_ADDRESS_STYLE">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="CREATE_ADDRESS_STYLE">
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Address Style']/.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Address Style Format"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_EXPAND">
+					<parameters>
+						<parameter name="XPATH" value="//div[@title='Geography Validation Control']/../../../../.."/>
+					</parameters>
+				</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Geography Validation Level for Country']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Geography Validation Level for Country"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="NEW_ADDRESS_STYLE_FORMAT_MAPPING">
+			
+		</block>
+		
+		<block name="UPDATE_ADDRESS_STYLE_FORMAT_MAPPING">
+			
+		</block>
+		
+		<block name="NEW_GEOGRAPHY_MAPPING_AND_VALIDATION">
+			
+		</block>
+		
+		<block name="UPDATE_GEOGRAPHY_MAPPING_AND_VALIDATION">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Map to Attribute']/.."/>
+					<parameter name="INV_NAME" value="INV_4"/>
+					<parameter name="COL_NAME" value="Map to Attribute"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//td[3]//label/.."/>
+					<parameter name="INV_NAME" value="INV_4"/>
+					<parameter name="COL_NAME" value="Enable List of Values"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//td[4]//label/.."/>
+					<parameter name="INV_NAME" value="INV_4"/>
+					<parameter name="COL_NAME" value="Tax Validation"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//td[5]//label/.."/>
+					<parameter name="INV_NAME" value="INV_4"/>
+					<parameter name="COL_NAME" value="Geography Validation"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="SEARCH_GEOGRAPHIES"/>
+			<repeat inventoryName="INV_2">
+				<executeBlock name="GLOBAL_EXPAND">
+					<parameters>
+						<parameter name="XPATH" value="//div[@title='Address Style']/../../../../.."/>
+					</parameters>
+				</executeBlock>
+				<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Address Style']/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Address Style'][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Address Style']/../..//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Address Style']//td[text()='<valueKB inventoryName="INV_2" columnName="Address Style Format"/>']</parameter>
+						<parameter name="TEMPLATE_2_FIND_ROW">//table[@summary='Address Style']//input[@title='<valueKB inventoryName="INV_2" columnName="Address Style Format"/>']</parameter>
+						<parameter name="TEMPLATE_CREATE" value="NEW_ADDRESS_STYLE"/>
+						<parameter name="TEMPLATE_UPDATE" value="UPDATE_ADDRESS_STYLE"/>
+					</parameters>
+				</executeBlock>
+				<executeBlock name="CREATE_ADDRESS_STYLE"/>
+				<repeat inventoryName="INV_3">
+					<executeBlock name="GLOBAL_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//div[contains(@title,'Address Style Format Mapping')]/../../../../.."/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Address Style Format Mapping']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Address Style Format Mapping'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Address Style Format Mapping']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Address Style Format Mapping']//td[text()='<valueKB inventoryName="INV_3" columnName="Prompt"/>']</parameter>
+							<parameter name="TEMPLATE_CREATE" value="NEW_ADDRESS_STYLE_FORMAT_MAPPING"/>
+							<parameter name="TEMPLATE_UPDATE" value="UPDATE_ADDRESS_STYLE_FORMAT_MAPPING"/>
+						</parameters>
+					</executeBlock>
+				</repeat>
+			</repeat>
+			<repeat inventoryName="INV_4">
+				<executeBlock name="GLOBAL_EXPAND">
+					<parameters>
+						<parameter name="XPATH" value="//div[@title='Geography Mapping and Validation']/../../../../.."/>
+					</parameters>
+				</executeBlock>
+				<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Geography Mapping and Validation']/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Geography Mapping and Validation'][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Geography Mapping and Validation']/../..//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Geography Mapping and Validation']//span[text()='<valueKB inventoryName="INV_4" columnName="Geography Type"/>']</parameter>
+						<parameter name="TEMPLATE_CREATE" value="NEW_GEOGRAPHY_MAPPING_AND_VALIDATION"/>
+						<parameter name="TEMPLATE_UPDATE" value="UPDATE_GEOGRAPHY_MAPPING_AND_VALIDATION"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<executeBlock name="SAVE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

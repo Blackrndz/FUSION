@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Expense Fields by Category (Accommodations)</name>
+    <svn>
+        <xsd:revision>$Revision: 80009 $:</xsd:revision>
+        <xsd:author>$Author: kullada.somtragool $:</xsd:author>
+        <xsd:date>$Date: 2023-01-25 18:11:03 +0700 (Wed, 25 Jan 2023) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Expense%20Fields%20by%20Category%20(Accommodations).xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Expense Fields by Category (Accommodations).xml 80009 2023-01-25 11:11:03Z kullada.somtragool $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Expense Fields by Category"
+        isBatchingAllowed="false" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>			
+			<navigation name="Manage Data Role and Security Profiles"/>
+			<navigation name="Manage Expenses System Options (All Business Units)"/>
+			<navigation name="Manage Expenses System Options (Specific Business Units)"/>
+			<navigation name="Manage Service Provider Relationships (Customer Payments Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Payables Payment Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Procurement Service Providers)"/>
+		</dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Expense Fields by Category - Accommodations"/>
+        </parameters>
+        <block name="Save">
+            <findElement by="xpath">//span[text()='Save']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Accommodations">
+			<findElement by="xpath">//table[@summary='Accommodations']//td[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Business Unit"/>']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+            <!-- Enable Fields for Accommodations -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//input[contains(@id,'enableTab')]/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Enable Fields for Accommodations"/>
+				</parameters>
+			</executeBlock>
+            
+            <!-- Merchant -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Merchant']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Merchant"/>
+				</parameters>
+			</executeBlock>	
+           
+            <!-- Checkout Date -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Checkout Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Checkout Date"/>
+				</parameters>
+			</executeBlock>	
+           
+        </block>
+        <block name="Tab Accommodations">
+            <findElement by="xpath">//a[text()='Accommodations']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="WAITING_CLEAR_ALL_INPUT">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//a[@title='Clear All']/../../../../..//input</findElement>
+                </if>
+                <then>
+                    <break/>
+                </then>
+                <else>
+                    <pause durationInSecs="1"/>
+                    <executeBlock name="WAITING_CLEAR_ALL_INPUT" isRepeatUntilBreak="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="WAITING_QUERY_INPUT">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//td[text()='Query By Example']</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true" by="xpath">//td[text()='Query By Example']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <pause durationInSecs="1"/>
+                    <break/>
+                </then>
+                <else>
+                    <findElement isDisplayed="true" by="xpath">//a[text()='View']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <pause durationInSecs="1"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Search Name">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true"
+                        highlightTurnedOff="true" by="xpath">//a[@title='Clear All']/../../../../..//input</findElement>
+                </if>
+                <then/>
+                <else>
+                    <executeBlock name="WAITING_QUERY_INPUT" isRepeatUntilBreak="true"/>
+                    <executeBlock name="WAITING_CLEAR_ALL_INPUT" isRepeatUntilBreak="true"/>
+                </else>
+            </IfThenElse>
+           
+			<IfThenElse>
+				<if>
+					 <findElement by="xpath" >//table[@summary='Accommodations']/../..//th[(string(//span[text()='Business Unit']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" >//table[@summary='Accommodations']/../..//th[(string(//span[text()='Business Unit']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Business Unit"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement by="xpath" >//table[@summary='Accommodations']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Accommodations']/../..//div//*[text()='Business Unit']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Business Unit"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true"
+                            by="xpath">//table[@summary='Accommodations']//span[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Business Unit"/>']</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true"
+                            by="xpath">//table[@summary='Accommodations']//span[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Business Unit"/>']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <pause durationInSecs="1"/>
+                    <break/>
+                </then>
+                <else>
+                     <IfThenElse>
+							<if>
+								<findElement isDisplayed="true"
+										by="xpath">//table[@summary='Accommodations']//td[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Business Unit"/>']</findElement>
+							</if>
+							<then>
+								<findElement isDisplayed="true"
+										by="xpath">//table[@summary='Accommodations']//td[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Business Unit"/>']</findElement>
+								<click waitForPageToFinishRendering="true"/>
+								<pause durationInSecs="1"/>
+								<break/>
+							</then>
+							<else>
+								<error message="The field 'Business Unit' doesn't exist."/>
+							</else>
+						</IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="MAIN_REPEAT_1">
+            <executeBlock name="Tab Accommodations"/>
+            <executeBlock name="Search Name"/>
+            <executeBlock name="Accommodations"/>
+            <executeBlock name="Save"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

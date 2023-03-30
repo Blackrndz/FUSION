@@ -1,0 +1,208 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Balance Forward Billing Cycles (Daily)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" defaultBatchSize="3"
+        taskName="Manage Balance Forward Billing Cycles" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Enterprise HCM Information"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Balance Forward Billing Cycles - Daily"/>
+		</parameters>
+		<block name="Expand">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[contains(@title,'Expand Search')]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[contains(@title,'Expand Search')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Search">
+			<findElement highlightTurnedOff="true" by="xpath">//*[text()='Search']/../../../../../../..//label[text()='Name']/../..//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+				<valueKB  inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+			</sendKeys>
+			<executeBlock name="Expand"/>
+			<findElement by="xpath">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			
+		</block>
+		<block name="CREATE_DAILY">
+			<executeBlock name="GLOBAL_CREATE"/>
+			<!--Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+			<pause durationInSecs="2"/>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//label[text()='Name']/../../..//*[contains(@class,'Error')]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//span[text()='C']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+					<pause durationInSecs="2"/>							
+				</then>
+				<else>
+					<!--Description-->
+					<executeBlock name="INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Description']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Description"/>
+						</parameters>
+					</executeBlock>	
+					<!--Start Date-->
+					<executeBlock name="INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Start Date']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Start Date"/>
+						</parameters>
+					</executeBlock>
+					<!--Frequency-->
+					<executeBlock name="SELECT_KB">
+						<parameters>
+							<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Frequency']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Frequency"/>
+						</parameters>
+					</executeBlock>
+					<!--Repeat Every-->
+					<executeBlock name="INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Repeat Every']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Repeat Every"/>
+						</parameters>
+					</executeBlock>	
+					<!--Exclude Saturdays and Sundays-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Exclude Saturdays and Sundays']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Exclude Saturdays and Sundays"/>
+						</parameters>
+					</executeBlock>	
+					<executeBlock name="DONE"/>
+					<executeBlock name="GLOBAL_SAVE"/>				
+				</else>
+			</IfThenElse>			
+		</block>
+		<block name="UPDATE_DAILY">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">TEMPLATE_2_FIND_ROW</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">TEMPLATE_2_FIND_ROW</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>		
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//*[contains(text(),'Details')]/../../../../../../..</findElement>
+				</if>
+				<then>
+					<!--Description-->
+					<executeBlock name="INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Details')]/../../../../../../..//label[text()='Description']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Description"/>
+						</parameters>
+					</executeBlock>	
+					<!--Start Date-->
+					<executeBlock name="INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Details')]/../../../../../../..//label[text()='Start Date']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Start Date"/>
+						</parameters>
+					</executeBlock>	
+					<!--Repeat Every-->
+					<executeBlock name="INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Details')]/../../../../../../..//label[text()='Repeat Every']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Repeat Every"/>
+						</parameters>
+					</executeBlock>	
+					<!--Exclude Saturdays and Sundays-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Details')]/../../../../../../..//label[text()='Exclude Saturdays and Sundays']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Exclude Saturdays and Sundays"/>
+						</parameters>
+					</executeBlock>		
+				</then>
+				<else/>
+			</IfThenElse>			
+		</block>
+		<block name="SAVE_AND_CLOSE">
+			<findElement by="xpath">//span[text()='S']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="DONE">
+			<findElement by="xpath">//div[contains(@class,'Expansion')]/..//span[text()='o']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="Expand"/>
+			<executeBlock name="Search"/>
+			<executeBlock name="CREATE_DAILY"/>
+			
+			<!--
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Search Results'][@_rowcount='-1']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Search Results'][@_rowcount='-1']//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Search Results'][@_rowcount='-1']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Search Results'][@_rowcount='-1']//td[1]//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</parameter>
+					<parameter name="TEMPLATE_2_FIND_ROW">//table[@summary='Search Results'][@_rowcount='-1']//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="UPDATE_DAILY"/>
+					<parameter name="TEMPLATE_UPDATE" value="CREATE_DAILY"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_SAVE"/>
+			-->
+		</repeat>
+	</fusionNavigation>
+</navigation>

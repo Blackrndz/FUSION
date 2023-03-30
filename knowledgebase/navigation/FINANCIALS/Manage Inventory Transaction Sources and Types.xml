@@ -1,0 +1,676 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Inventory Transaction Sources and Types</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Inventory Transaction Sources and Types"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Inventory Organizations"/>
+		</dependencies>
+        <parameters>
+            <parameter name="REPEAT_1_MAIN" value="Manage Inventory Transaction Sources and Types - Transaction Source"/>
+            <parameter name="REPEAT_2_MAIN" value="Manage Inventory Transaction Sources and Types - Transaction Source - DFF"/>
+            <parameter name="REPEAT_3_MAIN" value="Manage Inventory Transaction Sources and Types - Transaction Type"/>
+            <parameter name="REPEAT_4_MAIN" value="Manage Inventory Transaction Sources and Types - Transaction Type - DFF"/>
+        </parameters>
+        <block name="Save_And_Close">
+            <executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+        </block>
+        <block name="Save">
+          <executeBlock name="GLOBAL_SAVE"/>
+        </block>
+        <block name="Search...">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                </if>
+                <then>
+                    <pause durationInSecs="1"/>
+                    <break/>
+                </then>
+                <else>
+                    <findElement isDisplayed="true" by="xpath">SPECIFY_SEARCH</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Additional_Information">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Additional Information']</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Additional Information']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Expand_Search">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search: Transaction Sources and Types']</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search: Transaction Sources and Types']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Search_Transaction_Source">
+            <executeBlock name="Expand_Search"/>
+            <findElement highlightTurnedOff="true" by="xpath">//button[text()='Reset']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+            <executeBlock name="Expand_Search"/>
+            <findElement by="xpath">//label[text()='Transaction Source']/../..//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+            </sendKeys>
+            <executeBlock name="Expand_Search"/>
+            <findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+            <IfThenElse>
+                <if>
+                    <findElement
+                            by="xpath">//table[@summary='Transaction Sources']//td[1][text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+                </if>
+                <then>
+                    <findElement
+                            by="xpath">//table[@summary='Transaction Sources']//td[1][text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <executeBlock name="GLOBAL_SPECIFY_UPDATE">
+                        <parameters>
+                            <parameter name="SPECIFY_XPATH" value="//table[@summary='Transaction Sources']/../../../.."/>
+                        </parameters>
+                    </executeBlock>
+                    <executeBlock name="UP_Transaction_Source"/>
+                </then>
+                <else>
+                    <executeBlock name="GLOBAL_SPECIFY_CREATE">
+                        <parameters>
+                            <parameter name="SPECIFY_XPATH" value="//table[@summary='Transaction Sources']/../../../.."/>
+                        </parameters>
+                    </executeBlock>
+                    <executeBlock name="Transaction_Source"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Transaction_Source">
+            <!--Name-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Name']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Name"/>
+                </parameters>
+            </executeBlock>
+            <!--Description-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Description']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Description"/>
+                </parameters>
+            </executeBlock>
+            <!--Value Set-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Value Set']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Value Set"/>
+                </parameters>
+            </executeBlock>
+            <!-- Start Date-->
+            <executeBlock name="INPUT_GREATER_THAN_EQUAL">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Start Date']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Start Date"/>
+                </parameters>
+            </executeBlock>
+            <!-- End Date-->
+            <executeBlock name="INPUT_GREATER_THAN_EQUAL">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='End Date']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="End Date"/>
+                </parameters>
+            </executeBlock>
+        </block>
+		<block name="UP_Transaction_Source">
+            <!--Name-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Name']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Name"/>
+                </parameters>
+            </executeBlock>
+            <!--Description-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Description']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Description"/>
+                </parameters>
+            </executeBlock>
+            <!--Value Set-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Value Set']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Value Set"/>
+                </parameters>
+            </executeBlock>
+            <!-- Start Date-->
+            <IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Start Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement
+                                    highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='Start Date']/../..//input[@value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Start Date"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="GREATER_THAN_EQUAL" isDateComparing="true">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Start Date"/>
+									</leftOperand>
+									<rightOperand isCurrentDate="true"/>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if> 
+									<findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='Start Date']/../..//input[@value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Start Date"/>']</findElement> 
+								</if>
+								<then/>
+								<else>
+									<IfThenElse>
+										<if> 
+											<findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='Start Date']/../..//input</findElement> 
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='Start Date']/../..//input</findElement>
+											<sendKeys isClear="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="REPEAT_1_MAIN" columnName="Start Date"/>
+											</sendKeys> 
+										</then>
+										<else/>
+									</IfThenElse> 
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<findElement by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='Start Date']/../..//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isUsingCurrentDateAsValue="true" dateFormat="dd-MMM-yyyy">
+							</sendKeys> 
+						</else>
+					</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+            <!-- End Date-->
+            <IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="End Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement
+                                    highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='End Date']/../..//input[@value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="End Date"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="GREATER_THAN_EQUAL" isDateComparing="true">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="End Date"/>
+									</leftOperand>
+									<rightOperand isCurrentDate="true"/>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if> 
+									<findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='End Date']/../..//input[@value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="End Date"/>']</findElement> 
+								</if>
+								<then/>
+								<else>
+									<IfThenElse>
+										<if> 
+											<findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='End Date']/../..//input</findElement> 
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='End Date']/../..//input</findElement>
+											<sendKeys isClear="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="REPEAT_1_MAIN" columnName="End Date"/>
+											</sendKeys> 
+										</then>
+										<else/>
+									</IfThenElse> 
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<findElement by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='End Date']/../..//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isUsingCurrentDateAsValue="true" dateFormat="dd-MMM-yyyy">
+							</sendKeys> 
+						</else>
+					</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+        </block>
+     
+	 <block name="Search_Transaction_Type">
+            <executeBlock name="Expand_Search"/>
+            <findElement highlightTurnedOff="true" by="xpath">//button[text()='Reset']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+            <executeBlock name="Expand_Search"/>
+            <findElement by="xpath">//label[text()='Transaction Source']/../..//input</findElement>
+            <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_3_MAIN" columnName="Transaction Source - Name"/>
+            </sendKeys>
+            <findElement by="xpath">//label[text()='Transaction Type']/../..//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_3_MAIN" columnName="Transaction Type - Name"/>
+            </sendKeys>
+            <executeBlock name="Expand_Search"/>
+            <findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+            <IfThenElse>
+                <if>
+                    <findElement
+                            by="xpath">//table[@summary='Transaction Sources']//td[1][text()='<valueKB
+                            inventoryName="REPEAT_3_MAIN" columnName="Transaction Source - Name"/>']</findElement>
+                </if>
+                <then>
+                    <findElement
+                            by="xpath">//table[@summary='Transaction Sources']//td[1][text()='<valueKB
+                            inventoryName="REPEAT_3_MAIN" columnName="Transaction Source - Name"/>']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else>
+                    <error message="This 'Transaction Source' doestn't exist."/>
+                </else>
+            </IfThenElse>
+            <IfThenElse>
+                <if>
+                    <findElement
+                            by="xpath">//table[@summary='Transaction Types']//td[1]//span[text()='<valueKB
+                            inventoryName="REPEAT_3_MAIN" columnName="Transaction Type - Name"/>']</findElement>
+                </if>
+                <then>
+                    <findElement
+                            by="xpath">//table[@summary='Transaction Types']//td[1]//span[text()='<valueKB
+                            inventoryName="REPEAT_3_MAIN" columnName="Transaction Type - Name"/>']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <executeBlock name="GLOBAL_SPECIFY_UPDATE">
+                        <parameters>
+                            <parameter name="SPECIFY_XPATH" value="//table[@summary='Transaction Types']/../../../.."/>
+                        </parameters>
+                    </executeBlock>
+                    <executeBlock name="UP_Transaction_Type"/>
+                </then>
+                <else>
+                    <executeBlock name="GLOBAL_SPECIFY_CREATE">
+                        <parameters>
+                            <parameter name="SPECIFY_XPATH" value="//table[@summary='Transaction Types']/../../../.."/>
+                        </parameters>
+                    </executeBlock>
+                    <executeBlock name="Transaction_Type"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Transaction_Type">
+            <!--Transaction Type - Name-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Name']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+                    <parameter name="COL_NAME" value="Transaction Type - Name"/>
+                </parameters>
+            </executeBlock>
+            <!--Description-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Description']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+                    <parameter name="COL_NAME" value="Description"/>
+                </parameters>
+            </executeBlock>
+            <!--Action-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//tr[not(@style='display:none')][contains(@id,'TxnAction')]//label[text()='Action']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+                    <parameter name="COL_NAME" value="Action"/>
+                </parameters>
+            </executeBlock>
+            <!--Enable status control-->
+            <executeBlock name="CHECKBOX">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Enable status control']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+                    <parameter name="COL_NAME" value="Enable status control"/>
+                </parameters>
+            </executeBlock>
+            <!--Allow project transactions-->
+            <executeBlock name="CHECKBOX">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Allow project transactions']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+                    <parameter name="COL_NAME" value="Allow project transactions"/>
+                </parameters>
+            </executeBlock>
+            <!--Allow project transactions-->
+            <executeBlock name="CHECKBOX">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Location required']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+                    <parameter name="COL_NAME" value="Location required"/>
+                </parameters>
+            </executeBlock>
+            <!--Start Date-->
+            <executeBlock name="INPUT_GREATER_THAN_EQUAL">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Start Date']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+                    <parameter name="COL_NAME" value="Start Date"/>
+                </parameters>
+            </executeBlock>
+            <!-- End Date-->
+            <executeBlock name="INPUT_GREATER_THAN_EQUAL">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='End Date']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+                    <parameter name="COL_NAME" value="End Date"/>
+                </parameters>
+            </executeBlock>
+        </block>
+		 <block name="UP_Transaction_Type">
+            <!--Transaction Type - Name-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Name']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+                    <parameter name="COL_NAME" value="Transaction Type - Name"/>
+                </parameters>
+            </executeBlock>
+            <!--Description-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Description']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+                    <parameter name="COL_NAME" value="Description"/>
+                </parameters>
+            </executeBlock>
+            <!--Action-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//tr[not(@style='display:none')][contains(@id,'TxnAction')]//label[text()='Action']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+                    <parameter name="COL_NAME" value="Action"/>
+                </parameters>
+            </executeBlock>
+            <!--Enable status control-->
+            <executeBlock name="CHECKBOX">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Enable status control']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+                    <parameter name="COL_NAME" value="Enable status control"/>
+                </parameters>
+            </executeBlock>
+            <!--Allow project transactions-->
+            <executeBlock name="CHECKBOX">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Allow project transactions']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+                    <parameter name="COL_NAME" value="Allow project transactions"/>
+                </parameters>
+            </executeBlock>
+            <!--Allow project transactions-->
+            <executeBlock name="CHECKBOX">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Location required']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+                    <parameter name="COL_NAME" value="Location required"/>
+                </parameters>
+            </executeBlock>
+            <!--Start Date-->
+             <IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_3_MAIN" columnName="Start Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement
+                                    highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='Start Date']/../..//input[@value='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Start Date"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="GREATER_THAN_EQUAL" isDateComparing="true">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_3_MAIN" columnName="Start Date"/>
+									</leftOperand>
+									<rightOperand isCurrentDate="true"/>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if> 
+									<findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='Start Date']/../..//input[@value='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Start Date"/>']</findElement> 
+								</if>
+								<then/>
+								<else>
+									<IfThenElse>
+										<if> 
+											<findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='Start Date']/../..//input</findElement> 
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='Start Date']/../..//input</findElement>
+											<sendKeys isClear="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="REPEAT_3_MAIN" columnName="Start Date"/>
+											</sendKeys> 
+										</then>
+										<else/>
+									</IfThenElse> 
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<findElement by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='Start Date']/../..//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isUsingCurrentDateAsValue="true" dateFormat="dd-MMM-yyyy">
+							</sendKeys> 
+						</else>
+					</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+            <!-- End Date-->
+           <IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_3_MAIN" columnName="End Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement
+                                    highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='End Date']/../..//input[@value='<valueKB inventoryName="REPEAT_3_MAIN" columnName="End Date"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="GREATER_THAN_EQUAL" isDateComparing="true">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_3_MAIN" columnName="End Date"/>
+									</leftOperand>
+									<rightOperand isCurrentDate="true"/>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if> 
+									<findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='End Date']/../..//input[@value='<valueKB inventoryName="REPEAT_3_MAIN" columnName="End Date"/>']</findElement> 
+								</if>
+								<then/>
+								<else>
+									<IfThenElse>
+										<if> 
+											<findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='End Date']/../..//input</findElement> 
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='End Date']/../..//input</findElement>
+											<sendKeys isClear="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="REPEAT_3_MAIN" columnName="End Date"/>
+											</sendKeys> 
+										</then>
+										<else/>
+									</IfThenElse> 
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<findElement by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='End Date']/../..//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isUsingCurrentDateAsValue="true" dateFormat="dd-MMM-yyyy">
+							</sendKeys> 
+						</else>
+					</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+        </block>
+        <block name="DFF_FAKE">
+            <findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..//input</findElement>
+            <click isCheckbox="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Value"/>
+            </click>
+            <findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="REPEAT_4_MAIN" columnName="Field Name"/>']/../..//input</findElement>
+            <click isCheckbox="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_4_MAIN" columnName="Field Value"/>
+            </click>
+            <findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../..//input</findElement>
+            <click isCheckbox="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+            </click>
+            <findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="REPEAT_3_MAIN" columnName="Start Date"/>']/../..//input</findElement>
+            <click isCheckbox="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_1_MAIN" columnName="Start Date"/>
+            </click>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="REPEAT_1_MAIN">
+            <executeBlock name="Search_Transaction_Source"/>
+            <repeat inventoryName="REPEAT_2_MAIN">
+                <executeBlock name="Additional_Information"/>
+                <executeBlock name="GLOBAL_ALL_DFF">
+                    <parameters>
+                        <parameter name="INV_NAME" value="Manage Inventory Transaction Sources and Types - Transaction Source - DFF"/>
+                    </parameters>
+                </executeBlock>
+            </repeat>
+            <findElement by="xpath">//button//span[text()='S']/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <repeat inventoryName="REPEAT_3_MAIN">
+                <executeBlock name="Search_Transaction_Type"/>
+                <repeat inventoryName="REPEAT_4_MAIN">
+                    <executeBlock name="Additional_Information"/>
+                    <executeBlock name="GLOBAL_ALL_DFF">
+                        <parameters>
+                            <parameter name="INV_NAME" value="Manage Inventory Transaction Sources and Types - Transaction Type - DFF"/>
+                        </parameters>
+                    </executeBlock>
+                </repeat>
+                <findElement by="xpath">//button//span[text()='S']/..</findElement>
+                <click waitForPageToFinishRendering="true"/>
+            </repeat>
+            <executeBlock name="Save"/>
+        </repeat>
+        <executeBlock name="Save_And_Close"/>
+    </fusionNavigation>
+</navigation>

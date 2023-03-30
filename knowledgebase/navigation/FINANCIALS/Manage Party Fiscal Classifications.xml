@@ -1,0 +1,534 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Party Fiscal Classifications</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Party Fiscal Classifications"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Classification Categories"/>
+        </dependencies>
+        <parameters>
+            <parameter name="REPEAT_1_MAIN" value="Manage Party Fiscal Classifications - Party Fiscal Classification"/>
+            <parameter name="REPEAT_2_MAIN" value="Manage Party Fiscal Classifications - Fiscal Classification Type Codes"/>
+            <parameter name="REPEAT_3_MAIN" value="Manage Party Fiscal Classifications - Associated Tax Regimes"/>
+        </parameters>
+        <!--BUTTON-->
+        <block name="Edit_button">
+            <findElement by="xpath">//button[text()='Edit']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Save_button">
+            <findElement by="xpath">//span[text()='Save']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Expand_Search">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Search_button">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//button[text()='Search']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//button[text()='Search']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <!--  REPEAT_1_MAIN-->
+        <block name="Check_Case">
+            <executeBlock name="Expand_Search"/>
+            <findElement highlightTurnedOff="true" by="xpath">//label[text()='Party Classification']/../..//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_1_MAIN" columnName="Party Classification"/>
+            </sendKeys>
+            <executeBlock name="Expand_Search"/>
+            <executeBlock name="Search_button"/>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//a[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Party Classification"/>']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//a[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Party Classification"/>']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <executeBlock name="Edit_button"/>
+                </then>
+                <else>
+                    <executeBlock name="GLOBAL_CREATE"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Party_Fiscal_Classification">
+            <!--REPEAT_2_MAIN-->
+            <executeBlock name="LOV">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Party Classification']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Party Classification"/>
+                    <parameter name="SEARCH_1" value="Class Category Code"/>
+                </parameters>
+            </executeBlock>
+            <!--Number of Levels-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Number of Levels']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Number of Levels"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Fiscal_Class_Type_Code">
+            <executeBlock name="SCROLLBAR">
+                <parameters>
+                    <parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Fiscal Classification Type Codes']/../..//div[contains(text(),'No data to display.')]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Fiscal Classification Type Codes'][@_rowcount]//tr[1]//td)[1]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Fiscal Classification Type Codes']/../..//div[contains(@id,'scroller')]"/>
+                    <parameter
+                            name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Fiscal Classification Type Codes']//tr[td[1][text()='<valueKB
+                            inventoryName="REPEAT_2_MAIN"
+                            columnName="Level"/>'] and td[2]//span[text()='<valueKB
+                            inventoryName="REPEAT_2_MAIN" columnName="Type Code"/>']]</parameter>
+                    <parameter
+                            name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[@summary='Fiscal Classification Type Codes']//tr[td[1]//span[text()='<valueKB
+                            inventoryName="REPEAT_2_MAIN"
+                            columnName="Level"/>'] and td[2]//span[text()='<valueKB
+                            inventoryName="REPEAT_2_MAIN" columnName="Type Code"/>']]</parameter>
+                    <parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Fiscal_Class_Type_Code"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Fiscal_Class_Type_Code"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Create_Fiscal_Class_Type_Code">
+            <findElement
+                    by="xpath">//table[@summary='Fiscal Classification Type Codes']//tr//td//span[1][text()='<valueKB
+                    inventoryName="REPEAT_2_MAIN" columnName="Level"/>']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+			
+			
+            <!--Type Code-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Fiscal Classification Type Codes']//tr[contains(@class,'Select')]//label[text()='Type Code']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Type Code"/>
+                </parameters>
+            </executeBlock>
+            <!--Type Name-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Fiscal Classification Type Codes']//tr[contains(@class,'Select')]//label[text()='Type Name']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Type Name"/>
+                </parameters>
+            </executeBlock>
+            <!--Start Date-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <findElement by="xpath">//table[@summary='Fiscal Classification Type Codes']//tr[contains(@class,'Select')]//label[text()='Start Date']/..//input[not(@type='hidden')]</findElement>
+                    <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                        <valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>
+                    </sendKeys>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--End Date-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="REPEAT_2_MAIN" columnName="End Date"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <findElement by="xpath">//table[@summary='Fiscal Classification Type Codes']//tr[contains(@class,'Select')]//label[text()='End Date']/..//input[not(@type='hidden')]</findElement>
+                    <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                        <valueKB inventoryName="REPEAT_2_MAIN" columnName="End Date"/>
+                    </sendKeys>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Update_Fiscal_Class_Type_Code">
+            <IfThenElse>
+                <if>
+                    <findElement
+                            by="xpath">//table[@summary='Fiscal Classification Type Codes']//tr[td[1][text()='<valueKB
+                            inventoryName="REPEAT_2_MAIN"
+                            columnName="Level"/>'] and td[2]//span[text()='<valueKB
+                            inventoryName="REPEAT_2_MAIN" columnName="Type Code"/>']]</findElement>
+                </if>
+                <then>
+                    <findElement
+                            by="xpath">(//table[@summary='Fiscal Classification Type Codes']//tr[td[1][text()='<valueKB
+                            inventoryName="REPEAT_2_MAIN"
+                            columnName="Level"/>'] and td[2]//span[text()='<valueKB
+                            inventoryName="REPEAT_2_MAIN" columnName="Type Code"/>']]/../../../../..//td)[1]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement
+                                    by="xpath">//table[@summary='Fiscal Classification Type Codes']//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="REPEAT_2_MAIN"
+                                    columnName="Level"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="REPEAT_2_MAIN" columnName="Type Code"/>']]</findElement>
+                        </if>
+                        <then>
+                            <findElement
+                                    by="xpath">(//table[@summary='Fiscal Classification Type Codes']//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="REPEAT_2_MAIN"
+                                    columnName="Level"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="REPEAT_2_MAIN" columnName="Type Code"/>']]/../../../../..//td)[1]</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+            <!--Type Name-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//table[@summary='Fiscal Classification Type Codes']//tr[contains(@class,'Select')]//label[text()='Type Name']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Type Name"/>
+                </parameters>
+            </executeBlock>
+            <!--End Date-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="REPEAT_2_MAIN" columnName="End Date"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <findElement by="xpath">//table[@summary='Fiscal Classification Type Codes']//tr[contains(@class,'Select')]//label[text()='End Date']/..//input[not(@type='hidden')]</findElement>
+                    <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                        <valueKB inventoryName="REPEAT_2_MAIN" columnName="End Date"/>
+                    </sendKeys>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <!--Associated Tax Regimes-->
+		<block name="Fibd_Input_Tax_Regimes">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true" setFocus="true">//table[contains(@summary,'Associated Tax Regimes')]/../..//input[contains(@id,'taxRegimeCodeId')]/../..//a</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>	
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true" setFocus="true">//table[contains(@summary,'Associated Tax Regimes')]/../..//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="TOP"/>
+					<pause durationInSecs="2"/>	
+				</else>
+			</IfThenElse>		
+		</block>
+        <block name="Create_Tax_Regimes">
+            <executeBlock name="GLOBAL_SPECIFY_ADD">
+                <parameters>
+                    <parameter name="SPECIFY_XPATH" value="//table[contains(@summary,'Associated Tax Regimes')]/../../../../../../.."/>
+                </parameters>
+            </executeBlock>
+			<executeBlock name="Fibd_Input_Tax_Regimes" isRepeatUntilBreak="true"/>
+            <!--Tax Regime Code-->
+            <executeBlock name="LOV">
+                <parameters>
+                    <parameter name="XPATH" value="//table[contains(@summary,'Associated Tax Regimes')]/../..//input[contains(@id,'taxRegimeCodeId')]/.."/>
+                    <parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+                    <parameter name="COL_NAME" value="Tax Regime Code"/>
+                    <parameter name="SEARCH_1" value="Tax Regime Code"/>
+                </parameters>
+            </executeBlock>
+            <!--Start Date-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="REPEAT_3_MAIN" columnName="Start Date"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <findElement by="xpath">//table[contains(@summary,'Associated Tax Regimes')]//tr[contains(@class,'Select')]//label[text()='Start Date']/..//input[not(@type='hidden')]</findElement>
+                    <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                        <valueKB inventoryName="REPEAT_3_MAIN" columnName="Start Date"/>
+                    </sendKeys>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--End Date-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="REPEAT_3_MAIN" columnName="End Date"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <findElement by="xpath">//table[contains(@summary,'Associated Tax Regimes')]//tr[contains(@class,'Select')]//label[text()='End Date']/..//input[not(@type='hidden')]</findElement>
+                    <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                        <valueKB inventoryName="REPEAT_3_MAIN" columnName="End Date"/>
+                    </sendKeys>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Update_Tax_Regimes">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">(SCROLLBAR_GENERIC_1_FIND_ROW/../../../../../../../..//td)[1]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath">(SCROLLBAR_GENERIC_2_FIND_ROW/../../../../../../../..//td)[1]</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+            <!--End Date-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="REPEAT_3_MAIN" columnName="End Date"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <findElement by="xpath">//table[contains(@summary,'Associated Tax Regimes')]//tr[contains(@class,'Select')]//label[text()='End Date']/../..//input[not(@type='hidden')]</findElement>
+                    <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                        <valueKB inventoryName="REPEAT_3_MAIN" columnName="End Date"/>
+                    </sendKeys>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="View_Detach">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Associated Tax Regimes')]/../../../..//a[text()='View']</findElement>
+                </if>
+                <then>
+                    <findElement isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Associated Tax Regimes')]/../../../..//a[text()='View']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Popup')]//td//span[text()='Detach']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement highlightTurnedOff="true"
+                                isDisplayed="true"
+                                isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Associated Tax Regimes')]/../../../..//a[text()='View']/../../../../../../../../../../../..</findElement>
+                        </if>
+                        <then>
+                            <findElement isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Associated Tax Regimes')]/../../../..//a[text()='View']/../../../../../../../../../../../..</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                            <findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//a[text()='View']</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                            <findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Popup')]//td//span[text()='Detach']</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="View_Attach">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Associated Tax Regimes')]/../../../..//a[text()='View']</findElement>
+                </if>
+                <then>
+                    <findElement isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Associated Tax Regimes')]/../../../..//a[text()='View']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Popup')]//td//span[text()='Attach']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement highlightTurnedOff="true"
+                                isDisplayed="true"
+                                isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Associated Tax Regimes')]/../../../..//a[text()='View']/../../../../../../../../../../../..</findElement>
+                        </if>
+                        <then>
+                            <findElement isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Associated Tax Regimes')]/../../../..//a[text()='View']/../../../../../../../../../../../..</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                            <findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//a[text()='View']</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                            <findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Popup')]//td//span[text()='Attach']</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="REPEAT_1_MAIN">
+            <executeBlock name="Check_Case"/>
+            <executeBlock name="Party_Fiscal_Classification"/>
+            <repeat inventoryName="REPEAT_2_MAIN">
+                <executeBlock name="Fiscal_Class_Type_Code"/>
+				<executeBlock name="Save_button"/>
+                <IfThenElse>
+                    <if>
+                        <findElement
+                                by="xpath">//table[@summary='Fiscal Classification Type Codes']//tr[td[1][text()='<valueKB
+                                inventoryName="REPEAT_2_MAIN"
+                                columnName="Level"/>'] and td[2]//span[text()='<valueKB
+                                inventoryName="REPEAT_2_MAIN" columnName="Type Code"/>']]</findElement>
+                    </if>
+                    <then>
+                        <findElement
+                                by="xpath">(//table[@summary='Fiscal Classification Type Codes']//tr[td[1][text()='<valueKB
+                                inventoryName="REPEAT_2_MAIN"
+                                columnName="Level"/>'] and td[2]//span[text()='<valueKB
+                                inventoryName="REPEAT_2_MAIN" columnName="Type Code"/>']]/../../../../..//td)[1]</findElement>
+                        <click waitForPageToFinishRendering="true"/>
+                        <pause durationInSecs="1"/>
+                    </then>
+                    <else>
+                        <IfThenElse>
+                            <if>
+                                <findElement
+                                    by="xpath">//table[@summary='Fiscal Classification Type Codes']//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="REPEAT_2_MAIN"
+                                    columnName="Level"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="REPEAT_2_MAIN" columnName="Type Code"/>']]</findElement>
+                            </if>
+                            <then>
+                                <findElement
+                                    by="xpath">(//table[@summary='Fiscal Classification Type Codes']//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="REPEAT_2_MAIN"
+                                    columnName="Level"/>'] and td[2]//span[text()='<valueKB
+                                    inventoryName="REPEAT_2_MAIN" columnName="Type Code"/>']]/../../../../..//td)[1]</findElement>
+                                <click waitForPageToFinishRendering="true"/>
+                                <pause durationInSecs="1"/>
+                            </then>
+                            <else/>
+                        </IfThenElse>
+                    </else>
+                </IfThenElse>
+                <executeBlock name="GLOBAL_SPECIFY_ADD">
+                    <parameters>
+                        <parameter name="SPECIFY_XPATH" value="//table[contains(@summary,'Associated Tax Regimes')]/../../../../../../.."/>
+                    </parameters>
+                </executeBlock>
+                <findElement by="xpath">//table[contains(@summary,'Associated Tax Regimes')]/../..//input[contains(@id,'taxRegimeCodeId')]/..//input</findElement>
+                <click waitForPageToFinishRendering="true"/>
+                <findElement by="xpath">//table[contains(@summary,'Associated Tax Regimes')]/../../../../..//img[contains(@src,'func_eraser')]/..//img[contains(@src,'ena.png')]</findElement>
+                <click waitForPageToFinishRendering="true"/>
+                <repeat inventoryName="REPEAT_3_MAIN">
+                    <executeBlock name="SCROLLBAR">
+                        <parameters>
+                            <parameter
+                                name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[contains(@summary,'Associated Tax Regimes')]/../..//div[contains(text(),'No data to display.')]"/>
+                            <parameter
+                                name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[contains(@summary,'Associated Tax Regimes')][@_rowcount]//tr[1]//td)[1]"/>
+                            <parameter
+                                name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[contains(@summary,'Associated Tax Regimes')]/../..//div[contains(@id,'scroller')]"/>
+                            <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[contains(@summary,'Associated Tax Regimes')]//td[1]//span[text()='<valueKB
+                                    inventoryName="REPEAT_3_MAIN" columnName="Tax Regime Code"/>']</parameter>
+                            <parameter
+                                    name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[contains(@summary,'Associated Tax Regimes')]//td[1][text()='<valueKB
+                                    inventoryName="REPEAT_3_MAIN" columnName="Tax Regime Code"/>']</parameter>
+                            <parameter
+                                name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Tax_Regimes"/>
+                            <parameter
+                                name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Tax_Regimes"/>
+                        </parameters>
+                    </executeBlock>
+                    <executeBlock name="Save_button"/>
+                </repeat>
+            </repeat>
+            <executeBlock name="Save_button"/>
+            <executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Country Security Profiles</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" taskName="Manage Country Security Profile" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<dependencies>
+			<navigation name="Create Implementation Users"/>
+		</dependencies>
+		<parameters>
+			<parameter name="INV_1" value="Manage Country Security Profile - Country Security Profile"/>
+			<parameter name="INV_2" value="Manage Country Security Profile - Countries"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Name"/>']/../..//input</findElement>
+		</block>
+		<block name="Search_Country_Security_Profiles">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//tr//td/div[contains(@title,'Search')]/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//tr//td/div[contains(@title,'Search')]/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//tr/td/a[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']/../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//tr/td/a[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']/../../../../../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="GLOBAL_UPDATE"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_CREATE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Basic_Details">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enabled']/../../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Enabled"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='View All']/../../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="View All"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="FIND_ROW_INPUT">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Countries']//tr//tr//td[1]//input[@value='']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Countries']//tr//tr//td[1]//input[@value='']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>	
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Countries']/../..//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="TOP"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>	
+		</block>				
+			
+		<block name="Create_Country">
+			<executeBlock name="GLOBAL_ADD"/>
+			<pause durationInSecs="2"/>
+			<executeBlock name="FIND_ROW_INPUT" isRepeatUntilBreak="true"/>		
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Countries']//tr[contains(@class,'Select')]//tr//td[1]"/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Territory Name"/>
+					<parameter name="SEARCH_1" value="Country"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Not_Update"/>		
+		<block name="Edit">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//button/span[text()='E']/../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//button/span[text()='E']/../../../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<break/>
+				</else>
+			</IfThenElse>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="Search_Country_Security_Profiles"/>
+			<executeBlock name="Edit"/>
+			<executeBlock name="Basic_Details"/>
+			<repeat inventoryName="INV_2">
+				<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Countries']/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Countries']//tr)[1]//td[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Countries']/../..//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Countries']//tr//td//*[@value='<valueKB inventoryName="INV_2" columnName="Territory Name"/>' or @title='<valueKB inventoryName="INV_2" columnName="Territory Name"/>']</parameter>
+						<parameter name="TEMPLATE_CREATE" value="Create_Country"/>
+						<parameter name="TEMPLATE_UPDATE" value="Not_Update"/>
+					</parameters>
+				</executeBlock>				
+			</repeat>
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

@@ -1,0 +1,44 @@
+/* ****************************************************************************
+ * $Revision: 78229 $:
+ * $Author: pisan.jariyasettachok $:
+ * $Date: 2022-04-07 14:37:05 +0700 (Thu, 07 Apr 2022) $:
+ * $HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/reverse_sql/FINANCIALS/Manage%20Receivables%20System%20Options%20-%20System%20Options.sql $:
+ * $Id: Manage Receivables System Options - System Options.sql 78229 2022-04-07 07:37:05Z pisan.jariyasettachok $:
+ * ****************************************************************************
+ * Description:
+ * ************************************************************************** */
+
+
+SELECT QRSLT.NAME1 RES_BUSINESS_UNIT
+,QRSLT.NAME RES_LEDGER
+,QRSLT.CURRENCY_CODE RES_LEDGER_CURRENCY
+,QRSLT.LAST_UPDATED_BY RSC_LAST_UPDATED_BY
+,QRSLT.LAST_UPDATE_DATE RSC_LAST_UPDATE_DATE
+,QRSLT.CREATED_BY RSC_CREATED_BY
+,QRSLT.CREATION_DATE RSC_CREATION_DATE
+,NULL RSC_LEDGER_ID
+,NULL RSC_CHART_OF_ACCOUNTS_ID
+,QRSLT.ORG_ID RSC_BUSINESS_UNIT_ID
+,NULL RSC_LEGAL_ENTITY_ID
+,NULL RSC_ORGANIZATION_ID
+,NULL RSC_BUSINESS_GROUP_ID
+,NULL RSC_ENTERPRISE_ID
+,NULL RSC_COUNTRY_ID
+
+FROM
+	(SELECT ArSystemParametersAll.ORG_ID
+	,ARSYSTEMPARAMETERSALL.LAST_UPDATE_DATE
+	,ARSYSTEMPARAMETERSALL.LAST_UPDATED_BY
+	,ARSYSTEMPARAMETERSALL.CREATED_BY
+	,ARSYSTEMPARAMETERSALL.CREATION_DATE
+	,GlLedgers.CURRENCY_CODE
+	,GlLedgers.NAME
+	,BusinessUnitPEO.BU_NAME AS NAME1
+	FROM FUSION.AR_SYSTEM_PARAMETERS_ALL ArSystemParametersAll
+	,FUSION.GL_LEDGERS GlLedgers
+	,FUSION.FUN_ALL_BUSINESS_UNITS_V BUSINESSUNITPEO
+	WHERE(ARSYSTEMPARAMETERSALL.SET_OF_BOOKS_ID = GLLEDGERS.LEDGER_ID)
+	AND BUSINESSUNITPEO.BU_ID                   = ARSYSTEMPARAMETERSALL.ORG_ID
+	) QRSLT
+ORDER BY QRSLT.NAME1
+,QRSLT.NAME 

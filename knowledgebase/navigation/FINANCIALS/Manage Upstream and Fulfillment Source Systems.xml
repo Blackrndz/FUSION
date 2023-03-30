@@ -1,0 +1,281 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Upstream and Fulfillment Source Systems</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Upstream and Fulfillment Source Systems"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		 <dependencies>
+			<navigation name="Manage Inventory Organizations"/>
+        </dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Orchestration Source Systems - Destination System"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Orchestration Source Systems - Source Systems"/>
+		</parameters>
+		<block name="Save_And_Close">
+			<findElement by="xpath">//div[contains(@class,'Expansion')]/..//span[text()='S']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Search...Code">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Code']/../..//a[@title='Search: Code']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...Time Zone">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Time Zone']/../..//a[@title='Search: Time Zone']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<!-- REPEAT 1 -->
+		<block name="SEARCH_Destination_System">
+			<IfThenElse>
+				<if>
+					<findElement
+                            by="xpath">//*[text()='Destination System']/../../../../../../..//td[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Code"/>']</findElement>
+				</if>
+				<then>
+					<findElement
+                            by="xpath">//*[text()='Destination System']/../../../../../../..//td[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Code"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<error message="This 'Code' does not exist."/>
+				</else>
+			</IfThenElse>
+		</block>
+		<!-- REPEAT 2 -->
+		<block name="SEARCH_Code">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true"
+                        highlightTurnedOff="true" by="xpath">//a[@title='Clear All']/../../../../..//input</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//*[text()='Source Systems']/../../../../../../..//a[text()='View']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath">//td[text()='Query By Example']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/> 
+				</else>
+			</IfThenElse>
+			<findElements by="xpath" returnElementAtPosition="1">//a[@title='Clear All']/../../../../..//input</findElements>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_2_MAIN" columnName="Source Systems - Code"/>
+			</sendKeys>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true"
+                            by="xpath">//*[text()='Source Systems']/../../../../../../..//td[1][text()='<valueKB
+                            inventoryName="REPEAT_2_MAIN" columnName="Source Systems - Code"/>']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true"
+                            by="xpath">//*[text()='Source Systems']/../../../../../../..//td[1][text()='<valueKB
+                            inventoryName="REPEAT_2_MAIN" columnName="Source Systems - Code"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="GLOBAL_SPECIFY_UPDATE">
+						<parameters>
+							<parameter name="SPECIFY_XPATH" value="//*[text()='Source Systems']/../../../../../../.."/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Edit_Code"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true"
+									by="xpath">//*[text()='Source Systems']/../../../../../../..//td[1]//span[text()='<valueKB
+									inventoryName="REPEAT_2_MAIN" columnName="Source Systems - Code"/>']</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true"
+									by="xpath">//*[text()='Source Systems']/../../../../../../..//td[1]//span[text()='<valueKB
+									inventoryName="REPEAT_2_MAIN" columnName="Source Systems - Code"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="GLOBAL_SPECIFY_UPDATE">
+								<parameters>
+									<parameter name="SPECIFY_XPATH" value="//*[text()='Source Systems']/../../../../../../.."/>
+								</parameters>
+							</executeBlock>
+							<executeBlock name="Edit_Code"/>
+						</then>
+						<else>
+							<executeBlock name="GLOBAL_SPECIFY_CREATE">
+								<parameters>
+									<parameter name="SPECIFY_XPATH" value="//*[text()='Source Systems']/../../../../../../.."/>
+								</parameters>
+							</executeBlock>
+							<executeBlock name="Create_Code"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Create_Code">
+			<!--Create Code-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Create Source System ']/../../../../../../..//label[text()='Code']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Source Systems - Code"/>
+					<parameter name="SEARCH_1" value="Code"/>
+				</parameters>
+			</executeBlock>
+			<!--Time Zone-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Create Source System ']/../../../../../../..//label[text()='Time Zone']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Time Zone"/>
+					<parameter name="SEARCH_1" value="Time Zone"/>
+				</parameters>
+			</executeBlock>
+			<!--Version-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Create Source System ']/../../../../../../..//label[text()='Version']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Version"/>
+				</parameters>
+			</executeBlock>
+			<!--Order Orchestration Type-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Create Source System ']/../../../../../../..//label[text()='Order Orchestration Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Order Orchestration Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Collections allowed-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Collections allowed']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Collections allowed"/>
+				</parameters>
+			</executeBlock>
+			<!--Enable data cross-reference-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Enable data cross-reference']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Enable data cross-reference"/>
+				</parameters>
+			</executeBlock>
+			<!--Location of the Oracle Fusion Product Model and Oracle Fusion Trading Community Model-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Location of the Oracle Fusion Product Model and Oracle Fusion Trading Community Model']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Location of the Oracle Fusion Product Model and Oracle Fusion Trading Community Model"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Edit_Code">
+			<!--Time Zone-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Time Zone']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Time Zone"/>
+					<parameter name="SEARCH_1" value="Time Zone"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[text()='Warning']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[text()='Warning']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Version-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Version']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Version"/>
+				</parameters>
+			</executeBlock>
+			<!--Order Orchestration Type-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Order Orchestration Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Order Orchestration Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Collections allowed-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Edit Planning Source System:')]/../../../../../../..//label[text()='Collections allowed']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Collections allowed"/>
+				</parameters>
+			</executeBlock>
+			<!--Enable data cross-reference-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Edit Planning Source System:')]/../../../../../../..//label[text()='Enable data cross-reference']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Enable data cross-reference"/>
+				</parameters>
+			</executeBlock>
+			<!--Location of the Oracle Fusion Product Model and Oracle Fusion Trading Community Model-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Edit Planning Source System:')]/../../../../../../..//label[text()='Location of the Oracle Fusion Product Model and Oracle Fusion Trading Community Model']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Location of the Oracle Fusion Product Model and Oracle Fusion Trading Community Model"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="SEARCH_Destination_System"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="SEARCH_Code"/>
+				<executeBlock name="Save_And_Close"/>
+			</repeat>
+		</repeat>
+	</fusionNavigation>
+</navigation>

@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">  
+	<name>Manage Policies by Expense Category (Rates Airfare)</name>  
+	<svn> 
+		<xsd:revision>$Revision: 79068 $:</xsd:revision>  
+		<xsd:author>$Author: phermwit.seethong $:</xsd:author>  
+		<xsd:date>$Date: 2022-07-27 14:27:27 +0700 (Wed, 27 Jul 2022) $:</xsd:date>  
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Policies%20by%20Expense%20Category%20(Rates%20Airfare).xml $:</xsd:headURL>  
+		<xsd:id>$Id: Manage Policies by Expense Category (Rates Airfare).xml 79068 2022-07-27 07:27:27Z phermwit.seethong $:</xsd:id> 
+	</svn>  
+	<description/>  
+	<type>FUSION</type>  
+	<engine_type>SELENIUM</engine_type>  
+	<modules/>  
+	<mapper_use_type>UNDEFINED</mapper_use_type>  
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>  
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Policies by Expense Category" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE"> 
+		<dependencies>
+			<navigation name="Manage Policies by Expense Category (Airfare)"/>
+		</dependencies>
+		<parameters> 
+			<parameter name="REPEAT_1_MAIN" value="Manage Policies by Expense Category - Flight Class Policy"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Policies by Expense Category - Rates (Flight Class Policy)"/>			
+		</parameters> 
+		<block name="SEARCH_POLICIES">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='Search']/../../../../../../..//label[text()='Name']/../..//input[not(@value)]</findElement>
+				</if>
+				<then/>
+				<else>
+					<executeBlock name="BUTTON">
+						<parameters>
+							<parameter name="BUTTON_NAME" value="Reset"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="Policy Name"/>
+			</sendKeys>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Expense Category']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Expense Category"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="Delete">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a/img[@title='Delete']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//a/img[@title='Delete']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a/img[@title='Delete']/../../../../../../../..</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//a/img[@title='Delete']/../../../../../../../..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//a/img[@title='Delete']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>						
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Delete_Row_Blank">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//table[contains(@summary,'Rates')]/../..//td[1]//input[not(@value)]</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath">//table[contains(@summary,'Rates')]/../..//tr[td[1]//input[not(@value)]]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="Delete"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Meals_Rates">
+			<IfThenElse>
+				<if>
+					<!--Flight type-->
+					<findElement highlightTurnedOff="true" by="xpath">//span[text()='Domestic']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<!--Flight Duration-->
+							<findElement highlightTurnedOff="true" by="xpath">//span[text()='Flight Durations']</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<!--Role-->
+									<findElement highlightTurnedOff="true" by="xpath">//span[text()='Role']</findElement>
+								</if>
+								<then>
+									<executeBlock name="Delete_Row_Blank"/>
+									<!--Y Y Y  1-->
+									<executeBlock name="SCROLLBAR">
+										<parameters>
+											<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[contains(@summary,'Rates')]/../..//div[contains(text(),'No data to display.')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[contains(@summary,'Rates')][@_rowcount]//tr[1]//td)[1]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[contains(@summary,'Rates')]/../..//div[contains(@id,'scroller')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Role"/>'] and td[3]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Durations"/>'] and td[4]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - Domestic"/>'] and td[5]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - International"/>'] and td[6]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Role"/>'] and td[3]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Durations"/>'] and td[4]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - Domestic"/>'] and td[5]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - International"/>'] and td[6]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_3_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Role"/>'] and td[3][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Durations"/>'] and td[4]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - Domestic"/>'] and td[5]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - International"/>'] and td[6]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_4_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Role"/>'] and td[3][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Durations"/>'] and td[4]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - Domestic"/>'] and td[5]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - International"/>'] and td[6]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Rates"/>
+											<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Rates"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<executeBlock name="Delete_Row_Blank"/>
+									<!--Y Y N   5-->
+									<executeBlock name="SCROLLBAR">
+										<parameters>
+											<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[contains(@summary,'Rates')]/../..//div[contains(text(),'No data to display.')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[contains(@summary,'Rates')][@_rowcount]//tr[1]//td)[1]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[contains(@summary,'Rates')]/../..//div[contains(@id,'scroller')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Durations"/>'] and td[2]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - Domestic"/>']  and td[3]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - International"/>'] and td[4]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Durations"/>'] and td[2]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - Domestic"/>']  and td[3]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - International"/>'] and td[4]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_3_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Durations"/>'] and td[2]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - Domestic"/>']  and td[3]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - International"/>'] and td[4]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_4_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Durations"/>'] and td[2]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - Domestic"/>']  and td[3]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - International"/>'] and td[4]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Rates"/>
+											<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Rates"/>
+										</parameters>
+									</executeBlock>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<!--Role-->
+									<findElement highlightTurnedOff="true" by="xpath">//span[text()='Role']</findElement>
+								</if>
+								<then>
+									<executeBlock name="Delete_Row_Blank"/>
+									<!--Y N Y   3-->
+									<executeBlock name="SCROLLBAR">
+										<parameters>
+											<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[contains(@summary,'Rates')]/../..//div[contains(text(),'No data to display.')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[contains(@summary,'Rates')][@_rowcount]//tr[1]//td)[1]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[contains(@summary,'Rates')]/../..//div[contains(@id,'scroller')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Role"/>'] and td[3]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - Domestic"/>']  and td[4]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - International"/>'] and td[5]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Role"/>'] and td[3]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - Domestic"/>']  and td[4]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - International"/>'] and td[5]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_3_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Role"/>'] and td[3]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - Domestic"/>']  and td[4]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - International"/>'] and td[5]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_4_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Role"/>'] and td[3]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - Domestic"/>']  and td[4]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - International"/>'] and td[5]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Rates"/>
+											<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Rates"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<!--<executeBlock name="Delete_Row_Blank"/>-->
+									<!--Y N N   7-->
+									<executeBlock name="SCROLLBAR">
+										<parameters>
+											<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[contains(@summary,'Rates')]/../..//div[contains(text(),'No data to display.')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[contains(@summary,'Rates')][@_rowcount]//tr[1]//td)[1]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[contains(@summary,'Rates')]/../..//div[contains(@id,'scroller')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - Domestic"/>']  and td[2]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - International"/>'] and td[3]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - Domestic"/>']  and td[2]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - International"/>'] and td[3]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_3_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - Domestic"/>']  and td[2]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - International"/>'] and td[3]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_4_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - Domestic"/>']  and td[2]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class - International"/>'] and td[3]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Rates"/>
+											<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Rates"/>
+										</parameters>
+									</executeBlock>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<!--Flight Duration-->
+							<findElement highlightTurnedOff="true" by="xpath">//span[text()='Flight Durations']</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<!--Role-->
+									<findElement highlightTurnedOff="true" by="xpath">//span[text()='Role']</findElement>
+								</if>
+								<then>
+									<executeBlock name="Delete_Row_Blank"/>
+									<!--N Y Y  2-->
+									<executeBlock name="SCROLLBAR">
+										<parameters>
+											<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[contains(@summary,'Rates')]/../..//div[contains(text(),'No data to display.')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[contains(@summary,'Rates')][@_rowcount]//tr[1]//td)[1]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[contains(@summary,'Rates')]/../..//div[contains(@id,'scroller')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Role"/>'] and td[3]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Durations"/>'] and td[4]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class"/>'] and td[5]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Role"/>'] and td[3]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Durations"/>'] and td[4]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class"/>'] and td[5]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_3_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Role"/>'] and td[3][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Durations"/>'] and td[4]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class"/>'] and td[5]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_4_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Role"/>'] and td[3][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Durations"/>'] and td[4]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class"/>'] and td[5]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Rates"/>
+											<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Rates"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<executeBlock name="Delete_Row_Blank"/>
+									<!--N Y N  6-->
+									<executeBlock name="SCROLLBAR">
+										<parameters>
+											<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[contains(@summary,'Rates')]/../..//div[contains(text(),'No data to display.')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[contains(@summary,'Rates')][@_rowcount]//tr[1]//td)[1]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[contains(@summary,'Rates')]/../..//div[contains(@id,'scroller')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Durations"/>'] and td[2]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class"/>'] and td[3]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Durations"/>'] and td[2]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class"/>'] and td[3]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_3_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Durations"/>'] and td[2]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class"/>'] and td[3]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_4_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Durations"/>'] and td[2]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class"/>'] and td[3]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Rates"/>
+											<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Rates"/>
+										</parameters>
+									</executeBlock>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<!--Role-->
+									<findElement highlightTurnedOff="true" by="xpath">//span[text()='Role']</findElement>
+								</if>
+								<then>
+									<executeBlock name="Delete_Row_Blank"/>
+									<!--N N Y  4-->
+									<executeBlock name="SCROLLBAR">
+										<parameters>
+											<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[contains(@summary,'Rates')]/../..//div[contains(text(),'No data to display.')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[contains(@summary,'Rates')][@_rowcount]//tr[1]//td)[1]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[contains(@summary,'Rates')]/../..//div[contains(@id,'scroller')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Role"/>'] and td[3]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class"/>'] and td[4]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Role"/>'] and td[3]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class"/>'] and td[4]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_3_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Role"/>'] and td[3]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class"/>'] and td[4]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_4_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Role"/>'] and td[3]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class"/>'] and td[4]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Rates"/>
+											<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Rates"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<!--<executeBlock name="Delete_Row_Blank"/>-->
+									<!--N N N   8-->
+									<executeBlock name="SCROLLBAR">
+										<parameters>
+											<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[contains(@summary,'Rates')]/../..//div[contains(text(),'No data to display.')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[contains(@summary,'Rates')][@_rowcount]//tr[1]//td)[1]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[contains(@summary,'Rates')]/../..//div[contains(@id,'scroller')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class"/>'] and td[2]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class"/>'] and td[2]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_3_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class"/>'] and td[2]//*[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_4_FIND_ROW">//table[contains(@summary,'Rates')]//tr[td[1]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Flight Class"/>'] and td[2]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</parameter>
+											<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Rates"/>
+											<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Rates"/>
+										</parameters>
+									</executeBlock>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<block name="Create_Rates">
+
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[text()='Create Flight Class Policy']</findElement>
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>
+							<!-- Role -->
+							<findElement by="xpath">//table[contains(@summary,'Rates')]//label[text()='Role']/..//input[not(@value)]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//table[contains(@summary,'Rates')]//label[text()='Role']/..//input[not(@value)]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<!-- Flight Durations -->
+									<findElement by="xpath">//table[contains(@summary,'Rates')]//label[text()='Flight Durations']/..//input[not(@value)]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//table[contains(@summary,'Rates')]//label[text()='Flight Durations']/..//input[not(@value)]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<!-- Flight Class -->
+											<findElement by="xpath">//table[contains(@summary,'Rates')]//label[text()='Flight Class']/..//input[not(@value)]</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//table[contains(@summary,'Rates')]//label[text()='Flight Class']/..//input[not(@value)]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<!-- Flight Class - Domestic -->
+													<findElement by="xpath">//table[contains(@summary,'Rates')]//label[text()='Domestic']/..//input[not(@value)]</findElement>
+												</if>
+												<then>
+													<findElement by="xpath">//table[contains(@summary,'Rates')]//label[text()='Domestic']/..//input[not(@value)]</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<!-- Flight Class - International -->
+															<findElement by="xpath">//table[contains(@summary,'Rates')]//label[text()='International']/..//input[not(@value)]</findElement>
+														</if>
+														<then>
+															<findElement by="xpath">//table[contains(@summary,'Rates')]//label[text()='International']/..//input[not(@value)]</findElement>
+															<click waitForPageToFinishRendering="true"/>
+														</then>
+														<else>
+															<IfThenElse>
+																<if>
+																	<comparisons separator="AND">
+																		<comparison operator="EQUAL">
+																			<leftOperand>
+																				<valueKB inventoryName="REPEAT_2_MAIN" columnName="Role"/>
+																			</leftOperand>
+																			<rightOperand>
+																				<valueText>All Others</valueText>
+																			</rightOperand>
+																		</comparison>
+																	</comparisons>
+																</if>
+																<then/>
+																<else>
+																	<executeBlock name="GLOBAL_SPECIFY_ADD">
+																		<parameters>
+																			<parameter name="SPECIFY_XPATH" value="//table[contains(@summary,'Rates')]/../../../../../../.."/>
+																		</parameters>
+																	</executeBlock>
+																</else>
+															</IfThenElse>														
+														</else>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<!--Role-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'Rates')]//tr[contains(@class,'Selected')]//label[text()='Role']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Role"/>
+					<parameter name="SEARCH_1" value="Grade' or text()='Position"/>
+				</parameters>
+			</executeBlock>
+			<!--Flight Durations-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'Rates')]//tr[contains(@class,'Selected')]//label[text()='Flight Durations']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Flight Durations"/>
+				</parameters>
+			</executeBlock>	
+			<!--Flight Class-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'Rates')]//tr[contains(@class,'Selected')]//td[string(//span[text()='Flight Class']/../..//@_d_index)+0]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Flight Class"/>
+				</parameters>
+			</executeBlock>
+			<!--Flight Class - Domestic-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'Rates')]//tr[contains(@class,'Selected')]//span[contains(@id,'Domestic')]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Flight Class - Domestic"/>
+				</parameters>
+			</executeBlock>
+			<!--Flight Class - International-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'Rates')]//tr[contains(@class,'Selected')]//span[contains(@id,'Internat')]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Flight Class - International"/>
+				</parameters>
+			</executeBlock>	
+			<!--Start Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'Rates')]//tr[contains(@class,'Selected')]//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>	
+			<!--End Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'Rates')]//tr[contains(@class,'Selected')]//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>	
+		</block>
+		<block name="Update_Rates">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">(SCROLLBAR_GENERIC_1_FIND_ROW/../../../../..//td)[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">(SCROLLBAR_GENERIC_2_FIND_ROW/../../../../..//td)[1]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">SCROLLBAR_GENERIC_3_FIND_ROW</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">(SCROLLBAR_GENERIC_3_FIND_ROW/../../../../..//td)[1]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">SCROLLBAR_GENERIC_4_FIND_ROW</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">(SCROLLBAR_GENERIC_4_FIND_ROW/../../../../..//td)[1]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else/>
+									</IfThenElse>								
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<!--End Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'Rates')]//tr[contains(@class,'Selected')]//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>	
+		</block>
+		<block name="BUTTON_Rates">
+			<findElement by="xpath">//button[contains(text(),'Flight Class Policy')]</findElement>
+			<click waitForPageToFinishRendering="true"/> 
+		</block>
+		<block name="BUTTON_SAVE_RATES">
+			<findElement by="xpath">//div[contains(@class,'Expansion')]/..//button[text()='Save']</findElement>
+			<click waitForPageToFinishRendering="true"/> 
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="SEARCH_POLICIES"/>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+                                    by="xpath">//a[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Policy Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true"
+                                    by="xpath">//a[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Policy Name"/>']/../..//td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="GLOBAL_UPDATE"/>
+					<repeat inventoryName="REPEAT_2_MAIN">
+						<executeBlock name="BUTTON_Rates"/>
+						<executeBlock name="Meals_Rates"/>
+						<executeBlock name="BUTTON_SAVE_RATES"/>
+						<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//span[text()='Save']/..</findElement>	
+									<click waitForPageToFinishRendering="true"/>
+					</repeat>
+				</then>
+				<else>
+					<error message="Pleases Define Policy."/>
+				</else>
+			</IfThenElse>
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</repeat>	
+</fusionNavigation> 
+</navigation>

@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Time Device Processing Profiles (Priority Order)</name>
+    <svn>
+        <xsd:revision>$Revision: 79573 $:</xsd:revision>
+        <xsd:author>$Author: sudarak.unchan $:</xsd:author>
+        <xsd:date>$Date: 2022-10-26 16:05:10 +0700 (Wed, 26 Oct 2022) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Time%20Device%20Processing%20Profiles%20(Priority%20Order).xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Time Device Processing Profiles (Priority Order).xml 79573 2022-10-26 09:05:10Z sudarak.unchan $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Time Device Processing Profiles" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+			<navigation name="Manage Time Device Processing Profiles"/>
+		</dependencies>
+		
+		<parameters>
+            <parameter name="REPEAT_1_MAIN" value="Manage Time Device Processing Profiles - Profile Priority Order"/>
+        </parameters>
+        <block name="FAKE_INV">
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Priority"/>']/../..//input</findElement>
+        </block>
+		
+		<block name="Search_Time_Device_Processing_Profiles">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Search']/../../../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Search']/../../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Profile Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Profile Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Search']/../../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="r"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//tr[td//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Profile Name"/>']]/../../../../../td[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//tr[td//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Profile Name"/>']]/../../../../../td[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_UPDATE"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<error message="Data record not existe. Please define data in Manage Time Device Processing Profiles."/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search_Priority">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Shows Priority Information']/..//tr[td//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Profile Name"/>'] and td//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Priority"/>']]/td[1]</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement by="xpath">//table[@summary='Shows Priority Information']/..//tr[td//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Profile Name"/>']]/td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//*[text()='Move Up']/../..//button[contains(@class,'Disabled')]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//*[text()='Move Down']/..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else>
+							<findElement by="xpath">//*[text()='Move Up']/..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="2"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="NEXT">
+			<findElement by="xpath" isSkipCheckDomError="true">//span[text()='x']/../..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+		</block>
+		<block name="CONFIRMATION">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Confirmation']/../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Confirmation']/../../../../../../..</findElement>
+					<findElement by="xpath">//*[text()='Confirmation']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search_Time_Device_Processing_Profiles"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[contains(text(),': Profile Values')]</findElement>
+				</if>
+				<then>
+					<executeBlock name="NEXT"/>
+					<pause durationInSecs="5"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//*[contains(text(),': Group Assignments')]</findElement>
+						</if>
+						<then>
+							<executeBlock name="NEXT"/>
+							<pause durationInSecs="5"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock name="Search_Priority" isRepeatUntilBreak="true"/>
+			<executeBlock name="NEXT"/>
+			<pause durationInSecs="2"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+			<pause durationInSecs="2"/>
+			<executeBlock name="CONFIRMATION"/>
+		</repeat>
+    </fusionNavigation>
+</navigation>

@@ -1,0 +1,89 @@
+/* ****************************************************************************
+ * $Revision: 61060 $:
+ * $Author: pisan.jariyasettachok $:
+ * $Date: 2017-02-17 09:40:24 +0700 (Fri, 17 Feb 2017) $:
+ * $HeadURL: http://svn01.rapidesuite.com:999/svn/a/dev/rapidesuite/controldata/FUSION_11.1.9/trunk/core/reverse_sql/FINANCIALS/Manage%20Application%20Tax%20Options%20-%20Application%20Tax%20Options.sql $:
+ * $Id: Manage Application Tax Options - Application Tax Options.sql 61060 2017-02-17 02:40:24Z pisan.jariyasettachok $:
+ * ****************************************************************************
+ * Description:
+ * ************************************************************************** */
+
+
+SELECT DECODE(ZxRulesVl.SERVICE_TYPE_CODE,'DET_APPLICABLE_TAXES','Tax Applicability Rules','DET_PLACE_OF_SUPPLY',
+	'Place of Supply Rules','DET_DIRECT_RATE','Direct Tax Rate Rules','DET_RECOVERY_RATE','Recovery Rate Rules',
+	'DET_TAXABLE_BASIS','Taxable Basis Rules','CALCULATE_TAX_AMOUNTS','Tax Calculation Rules','DET_TAX_RATE',
+	'Tax Rate Rules','DET_TAX_REGISTRATION','Tax Registration Rules','DET_TAX_STATUS','Tax Status Rules',
+	'DET_DIRECT_RATE_ENF_ACCT','Account-Based Direct Tax Rate Rules','DET_DIRECT_RATE_STCC',
+	'Tax Classification-Based Direct Tax Rate Rules') RES_TAX_RULE_TYPE
+,ZxRulesVl.TAX_RULE_CODE RES_RULE_CODE
+,ZxRulesVl.TAX_REGIME_CODE RES_TAX_REGIME_CODE
+,ZxRulesVl.TAX RES_TAX
+,ZxRulesVl.DET_FACTOR_TEMPL_CODE RES_TAX_DETERMINING_FACTOR_SET
+,ZxProcessResults.CONDITION_GROUP_CODE RES_TAX_CONDITION_SET_CODE
+,ZxConditionGroupsVl.CONDITION_GROUP_NAME RES_TAX_CONDITION_SET_NAME
+,ZxProcessResults.PRIORITY RES_TAX_CONDITION_SET_ORDER
+,ZxProcessResults.PRIORITY RES_NEW_CONDITION_SET_ORDER
+,(CASE
+	WHEN ZxRulesVl.SERVICE_TYPE_CODE = 'DET_DIRECT_RATE' THEN
+		NULL
+	ELSE
+		CASE
+			WHEN ZxProcessResults.RESULT_TYPE_CODE = 'CODE' OR ZxProcessResults.RESULT_TYPE_CODE = 'FORMULA' THEN
+				ZxProcessResults.ALPHANUMERIC_RESULT
+			ELSE
+				(SELECT MEANING FROM FND_LOOKUP_VALUES
+				WHERE LOOKUP_TYPE =  
+				(CASE
+					WHEN ZxProcessResults.RESULT_TYPE_CODE = 'APPLICABILITY' THEN
+						'ZX_APPLICABILITY_TYPES'
+					WHEN ZxProcessResults.RESULT_TYPE_CODE = 'ADDRESS_TYPE' THEN
+						'ZX_PLACE_OF_SUPPLY_TYPE'
+					WHEN ZxProcessResults.RESULT_TYPE_CODE = 'PARTY_TYPE' THEN
+						'ZX_REGISTRATION_CQ'
+					END)
+				AND LANGUAGE = USERENV('LANG')
+				AND LOOKUP_CODE = ZxProcessResults.ALPHANUMERIC_RESULT)
+		END
+	END) RES_RESULT
+,ZxProcessResults.STATUS_RESULT RES_TAX_STATUS_RESULT
+,ZxProcessResults.RATE_RESULT RES_TAX_RATE_RESULT
+,(SELECT MEANING FROM FND_LOOKUP_VALUES
+	WHERE LOOKUP_TYPE = 'ZX_TAX_POINT_BASIS'
+	AND LANGUAGE = USERENV('LANG')
+	AND LOOKUP_CODE = ZxProcessResults.TAX_POINT_BASIS_RESULT
+	)RES_TAX_POINT_BASIS_RESULT
+,ZxProcessResults.MIN_TAX_RATE RES_MINIMUM_TAX_RATEAMOUNT
+,ZxProcessResults.MAX_TAX_RATE RES_MAXIMUM_TAX_RATEAMOUNT
+,DECODE(ZxProcessResults.ENABLED_FLAG,'Y','Yes','No') RES_ENABLED
+,ZxProcessResults.LAST_UPDATED_BY RSC_LAST_UPDATED_BY
+,ZxProcessResults.LAST_UPDATE_DATE RSC_LAST_UPDATE_DATE
+,ZxProcessResults.CREATED_BY RSC_CREATED_BY
+,ZxProcessResults.CREATION_DATE RSC_CREATION_DATE
+,NULL RSC_LEDGER_ID
+,NULL RSC_CHART_OF_ACCOUNTS_ID
+,(CASE
+	WHEN ZFPOMV.PARTY_TYPE_CODE = 'OU' THEN
+		ZFPOMV.BU_ID
+	END) RSC_BUSINESS_UNIT_ID
+,(CASE
+	WHEN ZFPOMV.PARTY_TYPE_CODE = 'FIRST_PARTY' THEN
+		ZFPOMV.LEGAL_ENTITY_ID
+	END) RSC_LEGAL_ENTITY_ID
+,NULL RSC_ORGANIZATION_ID
+,NULL RSC_BUSINESS_GROUP_ID
+,NULL RSC_ENTERPRISE_ID
+,NULL RSC_COUNTRY_ID
+
+FROM ZX_RULES_VL ZxRulesVl
+,ZX_FIRST_PARTY_ORGS_MOAC_V ZFPOMV
+,ZX_REGIMES_VL ZxRegimesVl
+,ZX_PROCESS_RESULTS ZxProcessResults
+,ZX_CONDITION_GROUPS_VL ZxConditionGroupsVl
+WHERE ZxRegimesVl.TAX_REGIME_CODE         = ZxRulesVl.TAX_REGIME_CODE
+AND ZxRulesVl.CONTENT_OWNER_ID            = ZFPOMV.PARTY_TAX_PROFILE_ID
+AND NVL(ZxRegimesVl.REGIME_TYPE_FLAG,'I') = 'I'
+AND ZxRulesVl.SERVICE_TYPE_CODE NOT      IN('DET_DIRECT_RATE_ENF_ACCT','DET_DIRECT_RATE_STCC','DET_TAX_BOX')
+AND ZxRulesVl.TAX_RULE_ID                 = ZxProcessResults.TAX_RULE_ID
+AND ZxProcessResults.CONDITION_GROUP_ID = ZxConditionGroupsVl.CONDITION_GROUP_ID(+)
+ORDER BY DECODE(ZxProcessResults.ENABLED_FLAG,'Y',1,2)
+,ZxRulesVl.SERVICE_TYPE_CODE,2,3

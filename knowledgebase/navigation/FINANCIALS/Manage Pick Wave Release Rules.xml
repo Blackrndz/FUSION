@@ -1,0 +1,1592 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Pick Wave Release Rules</name>
+    <svn>
+        <xsd:revision>$Revision: 80427 $:</xsd:revision>
+        <xsd:author>$Author: chanawee.punsumniang $:</xsd:author>
+        <xsd:date>$Date: 2023-03-10 14:37:19 +0700 (Fri, 10 Mar 2023) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Pick%20Wave%20Release%20Rules.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Pick Wave Release Rules.xml 80427 2023-03-10 07:37:19Z chanawee.punsumniang $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Pick Wave Release Rules"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+         <dependencies>
+            <navigation name="Manage Inventory Organizations"/>
+            <navigation name="Manage Carriers"/>
+            <!-- <navigation name="Manage Catalogs"/>  -->
+            <navigation name="Catalogs"/><!--FBDI-->
+			<navigation name="Manage Subinventories and Locators"/>
+            <navigation name="Manage Subinventories and Locators (Manage Locators)"/>
+			<navigation name="Manage Pick Slip Grouping Rules"/>
+            <navigation name="Manage Release Sequence Rules"/>
+            <navigation name="Manage Ship Confirm Rules"/>
+        </dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Pick Wave Release Rules - Pick Wave Release Rule"/>
+            <parameter name="MAIN_REPEAT_2" value="Manage Pick Wave Release Rules - Demand Selection"/>
+            <parameter name="MAIN_REPEAT_3" value="Manage Pick Wave Release Rules - Options"/>
+            <parameter name="MAIN_REPEAT_4" value="Manage Pick Wave Release Rules - Pick Wave Release Rule - DFF"/>
+        </parameters>
+        <block name="Save_And_Close">
+            <findElement isDisplayed="true" by="xpath">//span[text()='S']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Search...">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                </if>
+                <then>
+                    <pause durationInSecs="3"/>
+                    <break/>
+                </then>
+                <else>
+                    <findElement isDisplayed="true" by="xpath">SPECIFY_SEARCH</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <pause durationInSecs="3"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Search">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <findElement by="xpath">//button[text()='Reset']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+            <findElement by="xpath" isDisplayed="true">//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <IfThenElse>
+                <if>
+                    <findElement
+                            by="xpath">//table[@summary='Search Results']//td[2][text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+                </if>
+                <then>
+                    <findElement
+                            by="xpath">//table[@summary='Search Results']//td[2][text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <executeBlock name="GLOBAL_UPDATE"/>
+                </then>
+                <else>
+                    <executeBlock name="GLOBAL_CREATE"/>
+                </else>
+            </IfThenElse>
+            <executeBlock name="Pick_Wave_Release_Rule"/>
+        </block>
+        <block name="Pick_Wave_Release_Rule">
+			<!--Name-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+            <!-- Start Date -->
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath" isDisplayed="true">//*[contains(text(),'Edit Pick Wave')]</findElement>
+                </if>
+                <then/>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                        <valueKB inventoryName="MAIN_REPEAT_1" columnName="Start Date"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                        <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <findElement by="xpath" isDisplayed="true">//label[text()='Start Date']/../..//input</findElement>
+                                </if>
+                                <then>
+                                    <findElement by="xpath" isDisplayed="true">//label[text()='Start Date']/../..//input</findElement>
+                                    <sendKeys isClear="true">
+                                        <valueKB inventoryName="MAIN_REPEAT_1" columnName="Start Date"/>
+                                    </sendKeys>
+                                </then>
+                                <else>
+                                    <error message="Error: User can not change Start Date"/>
+                                </else>
+                            </IfThenElse>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+			<!--End Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>
+        </block>
+        <block name="Demand_Selection">
+            <findElement by="xpath">//a[text()='Demand Selection']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+			<!--Ship-from Organization-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Ship-from Organization']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Ship-from Organization"/>
+					<parameter name="SEARCH_1" value="Organization"/>
+				</parameters>
+			</executeBlock>
+			<!--Subinventory-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Subinventory']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Subinventory"/>
+					<parameter name="SEARCH_1" value="Subinventory"/>
+				</parameters>
+			</executeBlock>
+			<!--Release Status-->
+            <executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Release Status']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Release Status"/>
+				</parameters>
+			</executeBlock>
+			<!--Order Type-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Order Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Order Type"/>
+				</parameters>
+			</executeBlock>
+            <!--Order-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Order']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Order"/>
+					<parameter name="SEARCH_1" value="Order"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Customer"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                        <comparison operator="EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Registry ID"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Customer"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText>""</valueText>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <findElement by="xpath"
+                                    isDisplayed="true">//label[text()='Customer']/../..//input[@value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Customer"/>']</findElement>
+                                </if>
+                                <then/>
+                                <else>
+                                    <findElement by="xpath">//a[@title='Search: Customer']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <findElement by="xpath">//div[text()='Search and Select: Customer']/../../../../../../..//label[text()='Name']/../..//input</findElement>
+                                    <sendKeys isClear="true"
+                                    isENTERKey="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Customer"/>
+                                    </sendKeys>
+                                    <findElement by="xpath">//div[text()='Search and Select: Customer']/../../../../../../..//button[text()='Search']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement
+                                    by="xpath">//div[text()='Search and Select: Customer']/../../../../../../..//td//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Customer"/>']</findElement>
+                                    </if>
+                                    <then>
+                                    <findElement
+                                    by="xpath">//div[text()='Search and Select: Customer']/../../../../../../..//td//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Customer"/>']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <findElement by="xpath">//div[text()='Search and Select: Customer']/../../../../../../..//span[text()='K']/..</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    </then>
+                                    <else>
+                                    <error message="The field 'Customer' doesn't exist."/>
+                                    </else>
+                                    </IfThenElse>
+                                </else>
+                            </IfThenElse>
+                        </then>
+                        <else>
+                            <findElement by="xpath" isDisplayed="true">//label[text()='Customer']/../..//input</findElement>
+                            <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Customer"/>
+                            </sendKeys>
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Customer"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Registry ID"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <comparisons separator="AND">
+                                    <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Customer"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText>""</valueText>
+                                    </rightOperand>
+                                    </comparison>
+                                    </comparisons>
+                                </if>
+                                <then>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement by="xpath"
+                                    isDisplayed="true">//label[text()='Customer']/../..//input[@value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Customer"/>']</findElement>
+                                    </if>
+                                    <then/>
+                                    <else>
+                                    <findElement by="xpath">//a[@title='Search: Customer']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <findElement by="xpath">//div[text()='Search and Select: Customer']/../../../../../../..//label[text()='Name']/../..//input</findElement>
+                                    <sendKeys isClear="true"
+                                    isENTERKey="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Customer"/>
+                                    </sendKeys>
+                                    <findElement by="xpath">//div[text()='Search and Select: Customer']/../../../../../../..//label[text()='Registry ID']/../..//input</findElement>
+                                    <sendKeys isClear="true"
+                                    isENTERKey="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Registry ID"/>
+                                    </sendKeys>
+                                    <findElement by="xpath">//div[text()='Search and Select: Customer']/../../../../../../..//button[text()='Search']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement
+                                    by="xpath">//div[text()='Search and Select: Customer']/../../../../../../..//td//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Customer"/>']/../..//td[2][text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Registry ID"/>']</findElement>
+                                    </if>
+                                    <then>
+                                    <findElement
+                                    by="xpath">//div[text()='Search and Select: Customer']/../../../../../../..//td//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2"
+                                    columnName="Customer"/>']/../..//td[2][text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Registry ID"/>']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <findElement by="xpath">//div[text()='Search and Select: Customer']/../../../../../../..//span[text()='K']/..</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    </then>
+                                    <else>
+                                    <error message="The field 'Customer' doesn't exist."/>
+                                    </else>
+                                    </IfThenElse>
+                                    </else>
+                                    </IfThenElse>
+                                </then>
+                                <else>
+                                    <findElement by="xpath" isDisplayed="true">//label[text()='Customer']/../..//input</findElement>
+                                    <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Customer"/>
+                                    </sendKeys>
+                                </else>
+                            </IfThenElse>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+            <!--Shipment Set-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Shipment Set']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Shipment Set"/>
+					<parameter name="SEARCH_1" value="Shipment Set"/>
+				</parameters>
+			</executeBlock>
+			<!--Destination Type-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Destination Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Destination Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Geography-->
+			<IfThenElse>
+                <if>
+                    <findElement by="xpath" highlightTurnedOff="true" isDisplayed="true">//label[text()='Geography']</findElement>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Geography"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <comparisons separator="AND">
+                                    <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Geography"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText>""</valueText>
+                                    </rightOperand>
+                                    </comparison>
+                                    </comparisons>
+                                </if>
+                                <then>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement by="xpath"
+                                    isDisplayed="true">//label[text()='Geography']/../..//input[@value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Geography"/>']</findElement>
+                                    </if>
+                                    <then/>
+                                    <else>
+                                    <findElement by="xpath">//a[@title='Search: Geography']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <executeBlock name="Search...">
+                                    <parameters>
+                                    <parameter
+                                    name="SPECIFY_SEARCH" value="//label[text()='Country']/../..//span/a"/>
+                                    </parameters>
+                                    </executeBlock>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement
+                                    highlightTurnedOff="true"
+                                    isDisplayed="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Geography"/>']</findElement>
+                                    </if>
+                                    <then>
+                                    <findElement
+                                    highlightTurnedOff="true"
+                                    isDisplayed="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Geography"/>']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    </then>
+                                    <else>
+                                    <findElement by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <findElement by="xpath">//div[text()='Search and Select: Country']/../../../../../../..//label[text()='Name']/../..//input</findElement>
+                                    <sendKeys
+                                    isClear="true"
+                                    isENTERKey="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Geography"/>
+                                    </sendKeys>
+                                    <findElement by="xpath">//div[text()='Search and Select: Country']/../../../../../../..//button[text()='Search']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement
+                                    by="xpath">//div[text()='Search and Select: Country']/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Geography"/>']</findElement>
+                                    </if>
+                                    <then>
+                                    <findElement
+                                    by="xpath">//div[text()='Search and Select: Country']/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Geography"/>']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <findElement by="xpath">//div[text()='Search and Select: Country']/../../../../../../..//button[text()='OK']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    </then>
+                                    <else>
+                                    <error message="The field 'Geography' doesn't exist."/>
+                                    </else>
+                                    </IfThenElse>
+                                    </else>
+                                    </IfThenElse>
+                                    <findElement by="xpath">//div[text()='Search and Select: Geography']/../../../../../../..//span[text()='K']/..</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    </else>
+                                    </IfThenElse>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Ship-to Location-->
+			<IfThenElse>
+                <if>
+                    <findElement by="xpath" highlightTurnedOff="true" isDisplayed="true">//label[text()='Ship-to Location']</findElement>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Ship-to Location"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <comparisons separator="AND">
+                                    <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Ship-to Location"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText>""</valueText>
+                                    </rightOperand>
+                                    </comparison>
+                                    </comparisons>
+                                </if>
+                                <then>
+                                    <IfThenElse>
+										<if>
+											<findElement
+                                    by="xpath">//label[text()='Ship-to Location']/../..//input[@value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Ship-to Location"/>']</findElement>
+										</if>
+										<then/>
+										<else>
+											<executeBlock name="Search...">
+												<parameters>
+												<parameter
+												name="SPECIFY_SEARCH" value="//label[text()='Ship-to Location']/../..//span/a[@title='Search: Ship-to Location']"/>
+												</parameters>
+												</executeBlock>
+                                    <IfThenElse>
+										<if>
+											<findElement
+											highlightTurnedOff="true"
+											isDisplayed="true"
+											by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB
+											inventoryName="MAIN_REPEAT_2" columnName="Ship-to Location"/>']</findElement>
+										</if>
+										<then>
+                                    <findElement highlightTurnedOff="true"
+											isDisplayed="true"
+											by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB
+											inventoryName="MAIN_REPEAT_2" columnName="Ship-to Location"/>']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+                                    </then>
+                                    <else>
+                                    <findElement by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <findElement by="xpath">//div[text()='Search and Select: Ship-to Location']/../../../../../../..//label[text()='Name']/../..//input</findElement>
+                                    <sendKeys
+                                    isClear="true"
+                                    isENTERKey="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Ship-to Location"/>
+                                    </sendKeys>
+                                    <findElement by="xpath">//div[text()='Search and Select: Ship-to Location']/../../../../../../..//button[text()='Search']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement
+                                    by="xpath">//div[text()='Search and Select: Ship-to Location']/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Ship-to Location"/>']</findElement>
+                                    </if>
+                                    <then>
+                                    <findElement
+                                    by="xpath">//div[text()='Search and Select: Ship-to Location']/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Ship-to Location"/>']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <findElement by="xpath">//div[text()='Search and Select: Ship-to Location']/../../../../../../..//button[text()='OK']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    </then>
+                                    <else>
+                                    <error message="The field 'Ship-to Location' doesn't exist."/>
+                                    </else>
+                                    </IfThenElse>
+                                    </else>
+                                    </IfThenElse>
+                                    </else>
+                                    </IfThenElse>
+                                </then>
+                                <else>
+                                    <findElement by="xpath" isDisplayed="true">//label[text()='Ship-to Location']/../..//input</findElement>
+                                    <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Ship-to Location"/>
+                                    </sendKeys>
+                                </else>
+                            </IfThenElse>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+			<!--Zone-->
+ 		    <IfThenElse>
+                <if>
+                    <findElement by="xpath" highlightTurnedOff="true" isDisplayed="true">//label[text()='Zone']</findElement>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Zone"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <comparisons separator="AND">
+                                    <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Zone"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText>""</valueText>
+                                    </rightOperand>
+                                    </comparison>
+                                    </comparisons>
+                                </if>
+                                <then>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement
+                                    by="xpath">//label[text()='Zone']/../..//input[@value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Zone"/>']</findElement>
+                                    </if>
+                                    <then/>
+                                    <else>
+                                    <executeBlock name="Search...">
+                                    <parameters>
+                                    <parameter
+                                    name="SPECIFY_SEARCH" value="//label[text()='Zone']/../..//span/a[@title='Search: Zone']"/>
+                                    </parameters>
+                                    </executeBlock>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement
+                                    highlightTurnedOff="true"
+                                    isDisplayed="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Zone"/>']</findElement>
+                                    </if>
+                                    <then>
+                                    <findElement
+                                    highlightTurnedOff="true"
+                                    isDisplayed="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Zone"/>']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    </then>
+                                    <else>
+                                    <findElement by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <findElement by="xpath">//div[text()='Search and Select: Zone']/../../../../../../..//label[text()='Name']/../..//input</findElement>
+                                    <sendKeys
+                                    isClear="true"
+                                    isENTERKey="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Zone"/>
+                                    </sendKeys>
+                                    <findElement by="xpath">//div[text()='Search and Select: Zone']/../../../../../../..//button[text()='Search']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement
+                                    by="xpath">//div[text()='Search and Select: Zone']/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Zone"/>']</findElement>
+                                    </if>
+                                    <then>
+                                    <findElement
+                                    by="xpath">//div[text()='Search and Select: Zone']/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Zone"/>']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <findElement by="xpath">//div[text()='Search and Select: Zone']/../../../../../../..//button[text()='OK']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    </then>
+                                    <else>
+                                    <error message="The field 'Zone' doesn't exist."/>
+                                    </else>
+                                    </IfThenElse>
+                                    </else>
+                                    </IfThenElse>
+                                    </else>
+                                    </IfThenElse>
+                                </then>
+                                <else>
+                                    <findElement by="xpath" isDisplayed="true">//label[text()='Zone']/../..//input</findElement>
+                                    <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Zone"/>
+                                    </sendKeys>
+                                </else>
+                            </IfThenElse>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Prior reservations only-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Prior reservations only']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Prior reservations only"/>
+				</parameters>
+			</executeBlock>
+			<!--Scheduled Ship Start Date - Options-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//span[contains(@id,'ScheduledFromQualifier')]/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Scheduled Ship Start Date - Options"/>
+				</parameters>
+			</executeBlock>
+			<!--Scheduled Ship Start Date - Datetime-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Scheduled Ship Start Date - Datetime"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath" isDisplayed="true">//span[contains(@id,'ScheduledFromQualifier')]/../..//a[@title='Select Date and Time']</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath" isDisplayed="true">//span[contains(@id,'ScheduledFromQualifier')]/../..//a[@title='Select Date and Time']/../..//span/input</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Scheduled Ship Start Date - Datetime"/>
+                            </sendKeys>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Scheduled Ship Start Date - Days-->
+			<IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Scheduled Ship Start Date - Days"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath" isDisplayed="true">(//label[text()='Days']/..//input)[1]</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath" isDisplayed="true">(//label[text()='Days']/..//input)[1]</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Scheduled Ship Start Date - Days"/>
+                            </sendKeys>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Scheduled Ship Start Date - Time-->
+			<IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Scheduled Ship Start Date - Time"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath" isDisplayed="true">//span[contains(@id,'ScheduledFromQualifier')]/../..//label[text()='Time']/..//input</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath" isDisplayed="true">//span[contains(@id,'ScheduledFromQualifier')]/../..//label[text()='Time']/..//input</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Scheduled Ship Start Date - Time"/>
+                            </sendKeys>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Scheduled Ship End Date - Options-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//span[contains(@id,'ScheduledToQualifier')]/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Scheduled Ship End Date - Options"/>
+				</parameters>
+			</executeBlock>
+			<!--Scheduled Ship End Date - Datetime-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Scheduled Ship End Date - Datetime"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath" isDisplayed="true">//span[contains(@id,'ScheduledToQualifier')]/../..//a[@title='Select Date and Time']</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath" isDisplayed="true">//span[contains(@id,'ScheduledToQualifier')]/../..//a[@title='Select Date and Time']/../..//span/input</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Scheduled Ship End Date - Datetime"/>
+                            </sendKeys>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Scheduled Ship End Date - Days-->
+			<IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Scheduled Ship End Date - Days"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath" isDisplayed="true">(//label[text()='Days']/..//input)[2]</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath" isDisplayed="true">(//label[text()='Days']/..//input)[2]</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Scheduled Ship End Date - Days"/>
+                            </sendKeys>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Scheduled Ship End Date - Time-->
+			<IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Scheduled Ship End Date - Time"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath" isDisplayed="true">//span[contains(@id,'ScheduledToQualifier')]/../..//label[text()='Time']/..//input</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath" isDisplayed="true">//span[contains(@id,'ScheduledToQualifier')]/../..//label[text()='Time']/..//input</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Scheduled Ship End Date - Time"/>
+                            </sendKeys>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Requested Start Date - Options-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//span[contains(@id,'RequestedFromQualifier')]/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Requested Start Date - Options"/>
+				</parameters>
+			</executeBlock>
+			<!--Requested Start Date - Datetime-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Requested Start Date - Datetime"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath" isDisplayed="true">//span[contains(@id,'RequestedFromQualifier')]/../..//a[@title='Select Date and Time']</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath" isDisplayed="true">//span[contains(@id,'RequestedFromQualifier')]/../..//a[@title='Select Date and Time']/../..//span/input</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Requested Start Date - Datetime"/>
+                            </sendKeys>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Requested Start Date - Days-->
+			<IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Requested Start Date - Days"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath" isDisplayed="true">(//label[text()='Days']/..//input)[3]</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath" isDisplayed="true">(//label[text()='Days']/..//input)[3]</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Requested Start Date - Days"/>
+                            </sendKeys>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Requested Start Date - Time-->
+			<IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Requested Start Date - Time"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath" isDisplayed="true">//span[contains(@id,'RequestedFromQualifier')]/../..//label[text()='Time']/..//input</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath" isDisplayed="true">//span[contains(@id,'RequestedFromQualifier')]/../..//label[text()='Time']/..//input</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Requested Start Date - Time"/>
+                            </sendKeys>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Requested End Date - Options-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//span[contains(@id,'RequestedToQualifier')]/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Requested End Date - Options"/>
+				</parameters>
+			</executeBlock>
+			<!--Requested End Date - Datetime-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Requested End Date - Datetime"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath" isDisplayed="true">//span[contains(@id,'RequestedToQualifier')]/../..//a[@title='Select Date and Time']</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath" isDisplayed="true">//span[contains(@id,'RequestedToQualifier')]/../..//a[@title='Select Date and Time']/../..//span/input</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Requested End Date - Datetime"/>
+                            </sendKeys>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Requested End Date - Days-->
+			<IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Requested End Date - Days"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath" isDisplayed="true">(//label[text()='Days']/..//input)[4]</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath" isDisplayed="true">(//label[text()='Days']/..//input)[4]</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Requested End Date - Days"/>
+                            </sendKeys>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Requested End Date - Days-->
+			<IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Requested End Date - Days"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath" isDisplayed="true">//span[contains(@id,'RequestedToQualifier')]/../..//label[text()='Time']/..//input</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath" isDisplayed="true">//span[contains(@id,'RequestedToQualifier')]/../..//label[text()='Time']/..//input</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Requested End Date - Time"/>
+                            </sendKeys>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Shipping Priority-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Shipping Priority']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Shipping Priority"/>
+				</parameters>
+			</executeBlock>
+			<!--Shipping Method-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Shipping Method"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Shipping Method"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText>""</valueText>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <findElement
+                                    by="xpath">//label[text()='Shipping Method']/../..//input[@value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Shipping Method"/>']</findElement>
+                                </if>
+                                <then/>
+                                <else>
+                                    <findElement by="xpath">//label[text()='Shipping Method']/../..//input</findElement>
+                                    <sendKeys isClear="true"
+                                    isENTERKey="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Shipping Method"/>
+                                    </sendKeys>
+                                </else>
+                            </IfThenElse>
+                        </then>
+                        <else>
+                            <findElement by="xpath" isDisplayed="true">//label[text()='Shipping Method']/../..//input</findElement>
+                            <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Shipping Method"/>
+                            </sendKeys>
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Include assigned lines-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Include assigned lines']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Include assigned lines"/>
+				</parameters>
+			</executeBlock>
+			<!--Transportation Shipment-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Transportation Shipment']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Transportation Shipment"/>
+					<parameter name="SEARCH_1" value="Transportation Shipment"/>
+				</parameters>
+			</executeBlock>
+			<!--Initial Destination-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Initial Destination']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Initial Destination"/>
+				</parameters>
+			</executeBlock>
+			<!--Catalog Name-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Catalog Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Catalog Name"/>
+					<parameter name="SEARCH_1" value="Catalog Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Category Name-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Category Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Category Name"/>
+					<parameter name="SEARCH_1" value="Category Name"/>
+				</parameters>
+			</executeBlock>
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//span[contains(@class,'p_AFError')]</findElement>
+                </if>
+                <then>
+                    <error message="Please input value in column 'Category Name'."/>
+                </then>
+                <else/>
+            </IfThenElse>
+			<!--Item-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Item"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Item"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText>""</valueText>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <findElement
+                                    by="xpath">//label[text()='Item']/../..//input[@value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Item"/>']</findElement>
+                                </if>
+                                <then/>
+                                <else>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement by="xpath">//label[text()='Item']/../..//input[@disabled]</findElement>
+                                    </if>
+                                    <then>
+                                    <error message="The field 'Item' cannot be updated."/>
+                                    </then>
+                                    <else>
+                                    <findElement by="xpath">//label[text()='Item']/../..//td/a</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <findElement by="xpath">//*[text()='Search']/../../../../../../..//label[text()='Item']/../..//input</findElement>
+                                    <sendKeys isClear="true"
+                                    isENTERKey="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Item"/>
+                                    </sendKeys>
+                                    <findElement by="xpath">//*[text()='Search']/../../../../../../..//button[text()='Search']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement
+                                    by="xpath">//*[text()='Search']/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Item"/>']</findElement>
+                                    </if>
+                                    <then>
+                                    <findElement
+                                    by="xpath">//*[text()='Search']/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Item"/>']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <findElement by="xpath">//*[text()='Search']/../../../../../../..//span[text()='K']/..</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    </then>
+                                    <else>
+                                    <error message="The field 'Item' doesn't exist."/>
+                                    </else>
+                                    </IfThenElse>
+                                    </else>
+                                    </IfThenElse>
+                                </else>
+                            </IfThenElse>
+                        </then>
+                        <else>
+                            <findElement by="xpath" isDisplayed="true">//label[text()='Item']/../..//input</findElement>
+                            <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Item"/>
+                            </sendKeys>
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Options">
+            <findElement by="xpath">//a[text()='Options']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+			<!--Pick-from Subinventory-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Pick-from Subinventory']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Pick-from Subinventory"/>
+					<parameter name="SEARCH_1" value="Subinventory"/>
+				</parameters>
+			</executeBlock>
+			<!--Pick-from Locator-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_3" columnName="Pick-from Locator"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Pick-from Locator']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Pick-from Locator"/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Pick-from Locator']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']</findElement>
+						</if>
+						<then>
+							<error message="Pick-from Locator doesn't exist. Please check your data" />
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+			
+			<!--Staging Subinventory-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Staging Subinventory']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Staging Subinventory"/>
+					<parameter name="SEARCH_1" value="Subinventory"/>
+				</parameters>
+			</executeBlock>
+            <!--Staging Locator-->
+			<IfThenElse>
+					<if>
+						<comparisons separator="AND">
+							<comparison operator="NOT_EQUAL">
+								<leftOperand>
+									<valueKB inventoryName="MAIN_REPEAT_3" columnName="Staging Locator"/>
+								</leftOperand>
+								<rightOperand>
+									<valueText></valueText>
+								</rightOperand>
+							</comparison>
+						</comparisons>
+					</if>
+					<then>
+						<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+							<parameters>
+								<parameter name="XPATH" value="//label[text()='Staging Locator']/../.."/>
+								<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+								<parameter name="COL_NAME" value="Staging Locator"/>
+							</parameters>
+						</executeBlock>
+						<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Staging Locator']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']</findElement>
+						</if>
+						<then>
+							<error message="Staging Locator doesn't exist. Please check your data" />
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+					</then>
+					<else>
+
+					</else>
+				</IfThenElse>
+			<!--Release Sequence Rule-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Release Sequence Rule']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Release Sequence Rule"/>
+					<parameter name="SEARCH_1" value="Release Sequence Rule"/>
+				</parameters>
+			</executeBlock>
+			<!--Pick Slip Grouping Rule-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Pick Slip Grouping Rule']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Pick Slip Grouping Rule"/>
+					<parameter name="SEARCH_1" value="Pick Slip Grouping Rule"/>
+				</parameters>
+			</executeBlock>
+            <!--Autoconfirm picks-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Autoconfirm picks']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Autoconfirm picks"/>
+				</parameters>
+			</executeBlock>
+			<!--Trade Compliance Screening Method-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Trade Compliance Screening Method']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Trade Compliance Screening Method"/>
+				</parameters>
+			</executeBlock>
+			<!--Create shipments-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Create shipments']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Create shipments"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="10"/>
+			<!--Ship Confirm Rule-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Ship Confirm Rule']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Ship Confirm Rule"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Shipment Creation Criteria-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Shipment Creation Criteria']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Shipment Creation Criteria"/>
+				</parameters>
+			</executeBlock>
+			<!--Automatically pack-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Automatically pack']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Automatically pack"/>
+				</parameters>
+			</executeBlock>
+			<!--Append shipments-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Append shipments']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Append shipments"/>
+				</parameters>
+			</executeBlock>
+        </block>
+        <block name="DFF_FAKE">
+            <findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="MAIN_REPEAT_4" columnName="Field Name"/>']/../..//input</findElement>
+            <click isCheckbox="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="MAIN_REPEAT_4" columnName="Field Value"/>
+            </click>
+			<findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="MAIN_REPEAT_3" columnName="Name"/>']/../..//input</findElement>
+            <click isCheckbox="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="MAIN_REPEAT_3" columnName="Name"/>
+            </click>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="MAIN_REPEAT_1">
+            <executeBlock name="Search"/>
+            <repeat inventoryName="MAIN_REPEAT_2">
+                <executeBlock name="Demand_Selection"/>
+            </repeat>
+            <repeat inventoryName="MAIN_REPEAT_3">
+                <executeBlock name="Options"/>
+            </repeat>
+            <repeat inventoryName="MAIN_REPEAT_4">
+                <IfThenElse>
+                    <if>
+                        <findElement by="xpath" setFocus="true">//a[@title='Expand Additional Information']</findElement>
+                    </if>
+                    <then>
+                        <findElement by="xpath" setFocus="true">//a[@title='Expand Additional Information']</findElement>
+                        <click waitForPageToFinishRendering="true"/>
+                    </then>
+                    <else/>
+                </IfThenElse>
+				<executeBlock name="GLOBAL_ALL_DFF">
+					<parameters>
+						<parameter name="INV_NAME" value="Manage Pick Wave Release Rules - Pick Wave Release Rule - DFF"/>
+					</parameters>
+				</executeBlock>
+            </repeat>
+            <executeBlock name="Save_And_Close"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

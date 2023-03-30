@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Historical Rates</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" defaultBatchSize="3" taskName="Manage Historical Rates" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Currencies"/>
+			<navigation name="Manage Conversion Rate Types"/>
+		</dependencies>
+		<block name="Go To Task">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//h1[contains(text(),'Currency Rates Manager')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a[@title='Go to Task']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="FAKE_INV">
+			<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Ledger']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="Currency Rates Manager - Historical Rates" columnName="Ledger"/>
+			</click>
+		</block>
+
+		<block name="Historical Rates">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[text()='Historical Rates'][contains(@class,'Select')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[text()='Historical Rates']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>	
+			<!--Ledger-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Ledger']/../.."/>
+					<parameter name="INV_NAME" value="Currency Rates Manager - Historical Rates"/>
+					<parameter name="COL_NAME" value="Ledger"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Target Currency-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Target Currency']/../.."/>
+					<parameter name="INV_NAME" value="Currency Rates Manager - Historical Rates"/>
+					<parameter name="COL_NAME" value="Target Currency"/>
+				</parameters>
+			</executeBlock>	
+			<!-- Rate Type -->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Rate Type']/../.."/>
+					<parameter name="INV_NAME" value="Currency Rates Manager - Historical Rates"/>
+					<parameter name="COL_NAME" value="Rate Type"/>
+				</parameters>
+			</executeBlock>	
+			<!-- Accounting Period -->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Accounting Period']/../.."/>
+					<parameter name="INV_NAME" value="Currency Rates Manager - Historical Rates"/>
+					<parameter name="COL_NAME" value="Accounting Period"/>
+					<parameter name="SEARCH_1" value="Period Name"/>
+				</parameters>
+			</executeBlock>
+			<!-- Exclude rate or amount of zero -->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Exclude rate or amount of zero']/.."/>
+					<parameter name="INV_NAME" value="Currency Rates Manager - Historical Rates"/>
+					<parameter name="COL_NAME" value="Exclude rate or amount of zero"/>
+				</parameters>
+			</executeBlock>
+		</block>
+
+
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="Currency Rates Manager - Historical Rates">
+			<executeBlock name="Historical Rates"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

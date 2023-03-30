@@ -1,0 +1,352 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Journal Approval Rules (Approval Groups)</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Journal Approval Rules"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Users"/>
+        </dependencies>
+        <parameters>
+            <parameter name="REPEAT_APPROVAL_GROUP" value="Manage Journal Approval Rules - Approval Groups Details"/>
+            <parameter name="REPEAT_ASSIGN_MEMBER" value="Manage Journal Approval Rules - Approval Groups Members"/>
+        </parameters>
+        <block name="GO_TO_TASK">
+            <findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a[@title='Go to Task']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="SAVE">
+            <executeBlock name="GLOBAL_SAVE"/>
+        </block>
+        <block name="ADD_MEMBER">
+            <findElement by="xpath">//a[@title='Add Member']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="SEACH_APPROVAL_GROUPS">
+            <findElement by="xpath">//a[text()='Approval Groups']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//a[@title='Show this panel']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//a[@title='Show this panel']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!-- <findElement by="xpath">//a[@title='Hide this panel']</findElement>
+            <click waitForPageToFinishRendering="true"/>-->
+            <findElement by="xpath">//label[text()='Search']/../..//input</findElement>
+            <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_APPROVAL_GROUP" columnName="Name"/>
+            </sendKeys>
+            <findElement by="xpath">//a[@title='Search']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true"
+                            by="xpath">//span[text()='<valueKB
+                            inventoryName="REPEAT_APPROVAL_GROUP" columnName="Name"/>']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//span[text()='<valueKB
+                            inventoryName="REPEAT_APPROVAL_GROUP" columnName="Name"/>']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="REPEAT_APPROVAL_GROUP" columnName="Group Type"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <comparisons separator="AND">
+                                    <comparison operator="EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="REPEAT_APPROVAL_GROUP" columnName="Group Type"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText>Static Approval Group</valueText>
+                                    </rightOperand>
+                                    </comparison>
+                                    </comparisons>
+                                </if>
+                                <then>
+                                    <findElement by="xpath">//img[@title='Create Approval Group']/..</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                </then>
+                                <else>
+                                    <findElement by="xpath">//img[@title='Create Approval Group']/../../../..//div//a</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <findElement by="xpath">//a[text()='Create Dynamic Approval Group']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                </else>
+                            </IfThenElse>
+                        </then>
+                        <else>
+                            <findElement by="xpath">//img[@title='Create Approval Group']/..</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="APPROVAL_GROUPS">
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_APPROVAL_GROUP"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Class']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_APPROVAL_GROUP"/>
+					<parameter name="COL_NAME" value="Class"/>
+				</parameters>
+			</executeBlock>
+        </block>
+        <block name="ASSIGN_USER">
+            <findElement highlightTurnedOff="true" by="xpath">//div[text()='Add to Group']/../../../../../../..//label[text()='Member']/../../../../../..//a//img</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <findElement by="xpath">//div[text()='Identity Browser']/../../../../../../..//*[@title='Users']/../../..//input</findElement>
+            <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_ASSIGN_MEMBER" columnName="Member"/>
+            </sendKeys>
+            <findElement by="xpath">//div[text()='Identity Browser']/../../../../../../..//label[text()=' ID']/../..//input</findElement>
+            <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_ASSIGN_MEMBER" columnName="Member"/>
+            </sendKeys>
+            <findElement isDisplayed="true" by="xpath">//div[text()='Identity Browser']/../../../../../../..//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true"
+                            by="xpath">//table[@summary='Searched Items']//a[text()='<valueKB
+                            toLowerCase="true"
+                            inventoryName="REPEAT_ASSIGN_MEMBER" columnName="Member"/>']</findElement>
+                </if>
+                <then>
+                    <findElement
+                            by="xpath">//table[@summary='Searched Items']//a[text()='<valueKB
+                            toLowerCase="true"
+                            inventoryName="REPEAT_ASSIGN_MEMBER" columnName="Member"/>']/../../../../../../../../../../..//input</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//div[text()='Identity Browser']/../../../../../../..//span[text()='K']/..</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <error message="The data column 'Member' doesn't exist"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="ASSIGN_GROUP">
+            <findElement by="xpath">//div[contains(@class,'Expansion')]/..//input[@id=//label[text()='Approval Group']//@for][not(@disabled)]</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                            by="xpath">//div[text()='Add to Group']/../../../../../../..//label[text()='Member']/../..//select//option[text()='<valueKB
+                            inventoryName="REPEAT_ASSIGN_MEMBER" columnName="Member"/>']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//div[text()='Add to Group']/../../../../../../..//label[text()='Member']/../..//select</findElement>
+                    <select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+                        <valueKB inventoryName="REPEAT_ASSIGN_MEMBER" columnName="Member"/>
+                    </select>
+                </then>
+                <else>
+                    <error message="The data column 'Member' doesn't exist"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <!-- <block name="GROUP_POSITION">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//div[text()='Add to Group']/../../../../../../..//label[text()='Position:']</findElement>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="REPEAT_ASSIGN_MEMBER" columnName="Position"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <findElement
+                                    by="xpath">//div[text()='Add to Group']/../../../../../../..//label[text()='<valueKB
+                                    inventoryName="REPEAT_ASSIGN_MEMBER" columnName="Position"/>']/..//input</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>-->
+        <block name="SCROLLBAR_GENERIC_INNER_1">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+                </if>
+                <then>
+                    <executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+                    <break/>
+                </then>
+                <else>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <IfThenElse>
+                        <if>
+                            <isEndOfScroll/>
+                        </if>
+                        <then>
+                            <executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+                            <break/>
+                        </then>
+                        <else>
+                            <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                            <scroll direction="DOWN"/>
+                            <pause durationInSecs="1"/>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="SCROLLBAR_GENERIC_1">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+                </if>
+                <then>
+                    <executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+                </then>
+                <else>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <scroll direction="TOP"/>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <scroll direction="TOP"/>
+                    <findElement by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <executeBlock name="SCROLLBAR_GENERIC_INNER_1" isRepeatUntilBreak="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="CHECK_MEMBER">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                            by="xpath">//div[text()='<valueKB
+                            inventoryName="REPEAT_ASSIGN_MEMBER" columnName="Member"/>']/..//table</findElement>
+                </if>
+                <then/>
+                <else>
+                    <executeBlock name="ADD_MEMBER"/>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="REPEAT_ASSIGN_MEMBER" columnName="Member Type"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <comparisons separator="AND">
+                                    <comparison operator="EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="REPEAT_ASSIGN_MEMBER" columnName="Member Type"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText>User</valueText>
+                                    </rightOperand>
+                                    </comparison>
+                                    </comparisons>
+                                </if>
+                                <then>
+                                    <executeBlock name="ASSIGN_USER"/>
+                                </then>
+                                <else>
+                                    <executeBlock name="ASSIGN_GROUP"/>
+                                </else>
+                            </IfThenElse>
+                        </then>
+                        <else>
+                            <executeBlock name="ASSIGN_USER"/>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <window action="open"/>
+        <repeat inventoryName="REPEAT_APPROVAL_GROUP">
+            <pause durationInSecs="3"/>
+            <executeBlock name="SEACH_APPROVAL_GROUPS"/>
+            <executeBlock name="APPROVAL_GROUPS"/>
+            <repeat inventoryName="REPEAT_ASSIGN_MEMBER">
+                <executeBlock name="CHECK_MEMBER"/>
+                <!--<executeBlock name="GROUP_POSITION"/>-->
+                <IfThenElse>
+                    <if>
+                        <findElement isDisplayed="true" by="xpath">//div[text()='Add to Group']/../../../../../../..//span[text()='K']/..</findElement>
+                    </if>
+                    <then>
+                        <findElement by="xpath">//div[text()='Add to Group']/../../../../../../..//span[text()='K']/..</findElement>
+                        <click waitForPageToFinishRendering="true"/>
+                    </then>
+                    <else/>
+                </IfThenElse>
+            </repeat>
+            <executeBlock name="SAVE"/>
+        </repeat>
+        <window action="close"/>
+    </fusionNavigation>
+</navigation>

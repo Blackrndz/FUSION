@@ -1,0 +1,490 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Profile Options</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Profile Options" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Users"/>
+        </dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Profile Options - Profile Options"/>
+            <parameter name="MAIN_REPEAT_2" value="Manage Profile Options - Profile Option Levels"/>
+        </parameters>
+        <block name="RESET">
+            <findElement by="xpath">//button[text()='Reset']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="SERACH">
+            <findElement by="xpath">//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="CANCEL">
+            <findElement by="xpath">//span[text()='C']/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="SAVE_AND_CLOSE">
+            <findElement by="xpath">//span[text()='S']/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="SAVE">
+            <findElement by="xpath">//button[text()='Save']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="SCROLLBAR_GENERIC_INNER_1">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+                </if>
+                <then>
+                    <executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+                    <break/>
+                </then>
+                <else>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <IfThenElse>
+                        <if>
+                            <isEndOfScroll/>
+                        </if>
+                        <then>
+                            <executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+                            <break/>
+                        </then>
+                        <else>
+                            <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                            <scroll direction="DOWN"/>
+                            <pause durationInSecs="1"/>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="SCROLLBAR_GENERIC_1">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+                </if>
+                <then>
+                    <executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+                </then>
+                <else>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <scroll direction="TOP"/>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <scroll direction="TOP"/>
+                    <findElement by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <executeBlock name="SCROLLBAR_GENERIC_INNER_1" isRepeatUntilBreak="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Search_Module">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <pause durationInSecs="1"/>
+                    <break/>
+                </then>
+                <else>
+                    <findElement by="xpath">//label[text()='Module']/../..//a</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+       
+	   <block name="PROFILE_OPTION">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//td[text()='This data is protected against edits. All changes will be lost.']</findElement>
+                </if>
+                <then/>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Profile Option Code"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <findElement by="xpath">//label[text()='Profile Option Code']/../..//input</findElement>
+                                </if>
+                                <then>
+                                    <findElement by="xpath">//label[text()='Profile Option Code']/../..//input</findElement>
+                                    <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Profile Option Code"/>
+                                    </sendKeys>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+					
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Profile Display Name"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath">//*[contains(text(),'Edit Profile Option')]</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Profile Display Name']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="Profile Display Name"/>
+									</sendKeys>
+								</else>
+							</IfThenElse>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+					<!--Application-->
+					<executeBlock name="SELECT_KB">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Application']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Application"/>
+						</parameters>
+					</executeBlock>	
+					<!--Module-->
+                    <executeBlock name="LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Module']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Module"/>
+							<parameter name="SEARCH_1" value="User Module Name"/>
+						</parameters>
+					</executeBlock>
+					<!--Description-->
+                    <executeBlock name="INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Description"/>
+						</parameters>
+					</executeBlock>	
+                    <!--SQL Validation-->
+					<executeBlock name="INPUT_TEXTAREA">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='SQL Validation']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="SQL Validation"/>
+						</parameters>
+					</executeBlock>	
+                    <!--Start Date-->
+					<executeBlock name="INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Start Date']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Start Date"/>
+						</parameters>
+					</executeBlock>	
+                    <!--End Date-->
+					<executeBlock name="INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='End Date']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="End Date"/>
+						</parameters>
+					</executeBlock>	
+                </else>
+            </IfThenElse>
+        </block>
+       <block name="Waiting_Seacrh">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Collapse Search']</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement by="xpath">//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+       </block>
+	   <block name="FIND_PROFILE_OPTION">
+			<executeBlock name="Waiting_Seacrh"/>
+            <executeBlock name="RESET"/>
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Profile Option Code"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <findElement by="xpath">//label[text()='Profile Option Code']/../..//input</findElement>
+                    <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                        <valueKB inventoryName="MAIN_REPEAT_1" columnName="Profile Option Code"/>
+                    </sendKeys>
+                </then>
+                <else/>
+            </IfThenElse>
+			<executeBlock name="Waiting_Seacrh"/>
+            <executeBlock name="SERACH"/>
+           
+                    <IfThenElse>
+                        <if>
+                            <findElement highlightTurnedOff="true"
+                                isDisplayed="true"
+                                isSkipCheckDomError="true"
+                                    by="xpath">//*[text()='Search Results : Profile Options']/../../../../../../..//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Profile Option Code"/>']]</findElement>
+                        </if>
+                        <then>
+                            <findElement
+                                    by="xpath">//*[text()='Search Results : Profile Options']/../../../../../../..//tr[td[1]//span[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Profile Option Code"/>']]//td[1]</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                            <executeBlock name="GLOBAL_SPECIFY_UPDATE">
+                                <parameters>
+                                    <parameter name="SPECIFY_XPATH" value="//*[text()='Search Results : Profile Options']/../../../../../../.."/>
+                                </parameters>
+                            </executeBlock>
+                        </then>
+                        <else>
+                            <executeBlock name="GLOBAL_SPECIFY_ADD">
+                                <parameters>
+                                    <parameter name="SPECIFY_XPATH" value="//*[text()='Search Results : Profile Options']/../../../../../../.."/>
+                                </parameters>
+                            </executeBlock>
+                        </else>
+                    </IfThenElse>
+               
+           
+        </block>
+     
+	 <block name="PROFILE_OPTION_LEVEL">
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Level"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Enabled"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <findElement
+                                    highlightTurnedOff="true" by="xpath">//*[contains(text(),'Profile Option Levels')]/../../../../../../..//table[@_rowcount]//tr[contains(@class,'Select')]//td//td[2]//input</findElement>
+                                </if>
+                                <then>
+                                    <findElement by="xpath">//*[contains(text(),'Profile Option Levels')]/../../../../../../..//table[@_rowcount]//tr[contains(@class,'Select')]//td//td[2]//input</findElement>
+                                    <click isCheckbox="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Enabled"/>
+                                    </click>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Updateable"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <findElement
+                                    highlightTurnedOff="true" by="xpath">//*[contains(text(),'Profile Option Levels')]/../../../../../../..//table[@_rowcount]//tr[contains(@class,'Select')]//td//td[3]//input</findElement>
+                                </if>
+                                <then>
+                                    <findElement by="xpath">//*[contains(text(),'Profile Option Levels')]/../../../../../../..//table[@_rowcount]//tr[contains(@class,'Select')]//td//td[3]//input</findElement>
+                                    <click isCheckbox="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Updateable"/>
+                                    </click>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+      
+	  <block name="FIND_PROFILE_OPTION_LEVEL">
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Level"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Level"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText>Site</valueText>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <findElement by="xpath">//*[contains(text(),'Profile Option Levels')]/../../../../../../..//td//span[text()='Site']/../..</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Level"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText>Product</valueText>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <findElement by="xpath">//*[contains(text(),'Profile Option Levels')]/../../../../../../..//td//span[text()='Product']/../..</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Level"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText>User</valueText>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <findElement by="xpath">//*[contains(text(),'Profile Option Levels')]/../../../../../../..//td//span[text()='User']/../..</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="MAIN_REPEAT_1">
+            <executeBlock name="FIND_PROFILE_OPTION"/>
+            <executeBlock name="PROFILE_OPTION"/>
+           
+		   <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//td[text()='This data is protected against edits. All changes will be lost.']</findElement>
+                </if>
+                <then>
+                    <executeBlock name="CANCEL"/>
+                </then>
+                <else>
+                    <executeBlock name="SAVE_AND_CLOSE"/>
+                </else>
+            </IfThenElse>
+           
+		   <repeat inventoryName="MAIN_REPEAT_2">
+                <executeBlock name="FIND_PROFILE_OPTION_LEVEL"/>
+                <executeBlock name="PROFILE_OPTION_LEVEL"/>
+                <executeBlock name="SAVE"/>
+            </repeat>
+        </repeat>
+    </fusionNavigation>
+</navigation>

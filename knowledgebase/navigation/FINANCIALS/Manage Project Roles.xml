@@ -1,0 +1,255 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Project Roles</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Project Roles"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Enterprise HCM Information"/>
+		</dependencies>
+        <parameters>
+            <parameter name="REPEAT_1_MAIN" value="Manage Project Roles - Project Roles"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Project Roles - Qualifications and Keywords"/>
+        </parameters>
+		
+		<!--REPEAT_1-->
+		<block name="Search_Project_Roles">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Manage Project Roles']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath">//table[@summary='Manage Project Roles']/../../../..//a[@title='Clear All']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement by="xpath">//table[@summary='Manage Project Roles']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Manage Project Roles']/../..//tr//span[text()='Name']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Manage Project Roles']//tr[td/span/span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Manage Project Roles']//tr[td/span/span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="Project_Roles"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+						<parameters>
+							<parameter name="SPECIFY_XPATH" value="//table[@summary='Manage Project Roles']/../../../.."/>
+						</parameters>   
+					</executeBlock>
+					<executeBlock name="Project_Roles"/>
+				</else>
+			</IfThenElse>
+		
+        </block>
+		<block name="Project_Roles">
+			<!--Project Status-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Manage Project Roles']//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Manage Project Roles']//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Enterprise Role-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Manage Project Roles']//td[string(//span[text()='Enterprise Role']/../..//@_d_index)+0]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Enterprise Role"/>
+					<parameter name="SEARCH_1" value="Role Name"/>
+				</parameters>
+			</executeBlock>
+			<!--From Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Manage Project Roles']//label[text()='From Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="From Date"/>
+				</parameters>
+			</executeBlock>
+			<!--To Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Manage Project Roles']//label[text()='To Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="To Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_SAVE"/>
+        </block>
+		
+		<!--REPEAT_2-->
+		<block name="Add_Qualifications_and_Keywords">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[contains(text(),'Default Qualifications and Keywords')]</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<pause durationInSecs="2"/>
+					<findElement by="xpath">//table[@summary='Manage Project Roles']//tr[contains(@class,'Select')]//td[6]//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Add">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[contains(text(),'Default Qualifications and Keywords')]</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<pause durationInSecs="2"/>
+					<findElement by="xpath">//table[@summary='Manage Project Roles']//tr[contains(@class,'Select')]//img[@title='Add']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search_Qualifications_and_Keywords">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//*[contains(text(),'Default Qualifications and Keywords')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//table[@summary='Manage Project Roles']//tr[contains(@class,'Select')]//img[@title='Add']</findElement>
+						</if>
+						<then>
+							<executeBlock name="Add" isRepeatUntilBreak="true"/>
+						</then>
+						<else>
+							<executeBlock name="Add_Qualifications_and_Keywords" isRepeatUntilBreak="true"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock name="SPECIFY_QUERY_BY_EXAMPLE">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(@summary,'Default Qualifications and Keywords')]/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath">//*[contains(@summary,'Default Qualifications and Keywords')]/../../../..//a[@title='Clear All']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//*[contains(@summary,'Default Qualifications and Keywords')]/../..//th[(string(//span[text()='Requirements']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_2_MAIN" columnName="Requirements"/>
+            </sendKeys>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[contains(@summary,'Default Qualifications and Keywords')]//tr[td/span/span/input[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Requirements"/>']]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[contains(@summary,'Default Qualifications and Keywords')]//tr[td/span/span/input[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Requirements"/>']]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="Qualifications_and_Keywords"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SPECIFY_ADD">
+						<parameters>
+							<parameter name="SPECIFY_XPATH" value="//table[contains(@summary,'Default Qualifications and Keywords')]/../../../.."/>
+						</parameters>   
+					</executeBlock>
+					<executeBlock name="Qualifications_and_Keywords"/>
+				</else>
+			</IfThenElse>
+        </block>
+        <block name="Qualifications_and_Keywords">
+			<!--Requirements-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'Default Qualifications and Keywords')]//td[string(//span[text()='Requirements']/../..//@_d_index)+0]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Requirements"/>
+					<parameter name="SEARCH_1" value="Qualification"/>
+				</parameters>
+			</executeBlock>
+			<!--Reading-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'Default Qualifications and Keywords')]//label[text()='Reading']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Reading"/>
+				</parameters>
+			</executeBlock>
+			<!--Speaking-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'Default Qualifications and Keywords')]//label[text()='Speaking']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Speaking"/>
+				</parameters>
+			</executeBlock>
+			<!--Writing-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'Default Qualifications and Keywords')]//label[text()='Writing']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Writing"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_SPECIFY_SAVE_AND_CLOSE">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//div[contains(@class,'Expansion')]/.."/>
+				</parameters>
+			</executeBlock>
+        </block>
+		
+        
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="REPEAT_1_MAIN">
+            <executeBlock name="Search_Project_Roles"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="Search_Qualifications_and_Keywords"/>
+				<executeBlock name="GLOBAL_SAVE"/>
+			</repeat>
+        </repeat>
+    </fusionNavigation>
+</navigation>

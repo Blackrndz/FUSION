@@ -1,0 +1,225 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Internal Resource Organizations</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" defaultBatchSize="3"
+        taskName="Manage Internal Resource Organizations"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+            <navigation name="Manage Enterprise HCM Information"/>
+			<navigation name="Manage Departments"/>
+        </dependencies>
+        <block name="Go To Task">
+            <findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Search Button">
+            <findElement by="xpath">//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Next Button">
+            <findElement by="xpath">//button[contains(@title,'Next')]</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Finish Button">
+            <findElement by="xpath">//span[text()='i']/../..//button</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Add Row Button">
+            <findElement by="xpath">//img[contains(@title,'Add Row')]/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Create Button">
+            <findElement by="xpath">//img[contains(@title,'Create')]/../..//a</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Save And Close">
+            <findElement by="xpath">//span[text()='S']/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Done Button">
+            <findElement by="xpath">//span[text()="o"]/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Search Organization Name">
+            <findElement by="xpath">//label[text()='Organization']/../..//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB
+                    inventoryName="Manage Internal Resource Organizations - Manage Internal Resource Organizations" columnName="Organization Name"/>
+            </sendKeys>
+            <executeBlock name="Search Button"/>
+        </block>
+        <block name="Search-LOV Name">
+            <findElement by="xpath">//a[@title='Search: Name']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <findElement by="xpath">//div[contains(@data-afr-popupid,'nameId')]//a[text()='Search...']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <findElement by="xpath">//div[text()='Search and Select: Name']/../../../../../../..//label[text()='Name']/../..//input</findElement>
+            <sendKeys isClear="true">
+                <valueKB
+                    inventoryName="Manage Internal Resource Organizations - Manage Internal Resource Organizations" columnName="Organization Name"/>
+            </sendKeys>
+            <findElement by="xpath">//div[text()='Search and Select: Name']/../../../../../../..//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//div[contains(text(),'Search and Select: Name')]/../../../../../../..//div[text()='No rows to display']</findElement>
+                </if>
+                <then>
+                    <error message="Data issue: The field 'Name' No results found."/>
+                </then>
+                <else>
+                    <findElement
+                            by="xpath">//div[text()='Search and Select: Name']/../../../../../../..//td[text()='<valueKB
+                            inventoryName="Manage Internal Resource Organizations - Manage Internal Resource Organizations" columnName="Organization Name"/>']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <findElement by="xpath">//div[text()='Search and Select: Name']/../../../../../../..//button[text()='OK']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Organization Usages">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//div[text()='No data to display.']//table</findElement>
+                </if>
+                <then>
+                    <executeBlock name="Add Row Button"/>
+					<executeBlock name="SELECT_KB">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Usage']/../.."/>
+							<parameter name="INV_NAME" value="Manage Internal Resource Organizations - Manage Internal Resource Organizations"/>
+							<parameter name="COL_NAME" value="Organization Usage"/>
+						</parameters>
+					</executeBlock>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement
+                                    by="xpath">//tr[td//span[text()='<valueKB
+                                    inventoryName="Manage Internal Resource Organizations - Manage Internal Resource Organizations" columnName="Organization Usage"/>']]</findElement>
+                        </if>
+                        <then/>
+                        <else>
+                            <executeBlock name="Add Row Button"/>
+							<executeBlock name="SELECT_KB">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Usage']/../.."/>
+									<parameter name="INV_NAME" value="Manage Internal Resource Organizations - Manage Internal Resource Organizations"/>
+									<parameter name="COL_NAME" value="Organization Usage"/>
+								</parameters>
+							</executeBlock>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Enter Basic Information">
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB
+                                    inventoryName="Manage Internal Resource Organizations - Manage Internal Resource Organizations" columnName="Creation Method"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText>Create from Existing Department</valueText>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+					<executeBlock name="INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+							<parameter name="INV_NAME" value="Manage Internal Resource Organizations - Manage Internal Resource Organizations"/>
+							<parameter name="COL_NAME" value="Organization Name"/>
+						</parameters>
+					</executeBlock>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Select Creation Method">
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB
+                                    inventoryName="Manage Internal Resource Organizations - Manage Internal Resource Organizations" columnName="Creation Method"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <findElement
+                            by="xpath">//label[contains(text(),'<valueKB
+                            inventoryName="Manage Internal Resource Organizations - Manage Internal Resource Organizations" columnName="Creation Method"/>')]/../..//input[@type='radio']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="EQUAL">
+                            <leftOperand>
+                                <valueKB
+                                    inventoryName="Manage Internal Resource Organizations - Manage Internal Resource Organizations" columnName="Creation Method"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText>Create from Existing Department</valueText>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <executeBlock name="Search-LOV Name"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <executeBlock name="Next Button"/>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="Manage Internal Resource Organizations - Manage Internal Resource Organizations">
+            <executeBlock name="Search Organization Name"/>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//*[text()='Search Results']/../../../../../../..//div[text()='No results found.']//table</findElement>
+                </if>
+                <then>
+                    <executeBlock name="GLOBAL_CREATE"/>
+                    <executeBlock name="Select Creation Method"/>
+                    <executeBlock name="Enter Basic Information"/>
+                    <executeBlock name="Organization Usages"/>
+                    <executeBlock name="Finish Button"/>
+                </then>
+                <else>
+                    <findElement by="xpath">//a[text()='<valueKB
+                            inventoryName="Manage Internal Resource Organizations - Manage Internal Resource Organizations" columnName="Organization Name"/>']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <executeBlock name="Organization Usages"/>
+                    <executeBlock name="Save And Close"/>
+                </else>
+            </IfThenElse>
+        </repeat>
+    </fusionNavigation>
+</navigation>

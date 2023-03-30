@@ -1,0 +1,1183 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Catalogs</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Catalogs" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Assign Business Unit Business Function"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Catalogs - Catalog"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Catalogs - Catalog - DFF"/>
+			<parameter name="MAIN_REPEAT_3" value="Manage Catalogs - Category"/>
+			<parameter name="MAIN_REPEAT_4" value="Manage Catalogs - Category - DFF"/>			
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Catalog Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Catalog Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Catalog Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Catalog Name"/>']/../..//input</findElement>
+		</block>
+		<block name="Tab_Category_Hierarchy">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Selected')]/div[@title='Category Hierarchy']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Category Hierarchy']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Tab_Details">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Selected')]/div[@title='Details']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Details']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search_Catalog">
+			<findElement by="xpath">//input[contains(@id,'_LSSF')]</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Catalog Name"/>
+			</sendKeys>
+			<findElement by="xpath">//button[@title='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Catalogs']//td[2]//a/*[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Catalog Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Catalogs']//td[2]//a/*[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Catalog Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<executeBlock name="Update_Catalog"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Create']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<executeBlock name="Create_Catalog"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Create_Catalog">
+			<pause durationInSecs="1"/>
+			<!--Catalog Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Catalog Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Catalog Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Catalog Code-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Catalog Code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Catalog Code"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="(//div[contains(@class,'Expansion')]/..//label[text()='Description'])[1]/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Controlled At-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Controlled At']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Controlled At"/>
+				</parameters>
+			</executeBlock>
+			<!--Start Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="(//div[contains(@class,'Expansion')]/..//label[text()='Start Date'])[1]/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Start Date']/../..//input/../../../../..//*[contains(@class,'Error')]//input</findElement>
+				</if>
+				<then>
+					<executeBlock name="INPUT_GREATER_THAN_EQUAL">
+						<parameters>
+							<parameter name="XPATH" value="(//div[contains(@class,'Expansion')]/..//label[text()='Start Date'])[1]/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Start Date"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+			<!--End Date-->
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">(//div[contains(text(),'Catalog')]/../../../../../../..//label[text()='End Date'])[1]/../..//input</findElement>
+				</if>
+				<then>
+					<executeBlock name="INPUT_GREATER_THAN">
+						<parameters>
+							<parameter name="XPATH" value="(//div[contains(text(),'Catalog')]/../../../../../../..//label[text()='End Date'])[2]/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="End Date"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Assign items to leaf level categories only-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Assign items to leaf level categories only']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Assign items to leaf level categories only"/>
+				</parameters>
+			</executeBlock>
+			<!--Enable duplicate category names-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Enable duplicate category names']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Enable duplicate category names"/>
+				</parameters>
+			</executeBlock>
+			<!--Allow multiple item category assignments-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Allow multiple item category assignments']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Allow multiple item category assignments"/>
+				</parameters>
+			</executeBlock>
+			<!--Enable deletion of item category assignments-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Enable deletion of item category assignments']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Enable deletion of item category assignments"/>
+				</parameters>
+			</executeBlock>
+			<!--Enable hierarchy for catalog-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Enable hierarchy for catalog']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Enable hierarchy for catalog"/>
+				</parameters>
+			</executeBlock>
+			<!--Enable date level control for item category assignments-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Enable date level control for item category assignments']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Enable date level control for item category assignments"/>
+				</parameters>
+			</executeBlock>
+			<!--Default Category Required-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Default Category Required']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Default Category Required"/>
+				</parameters>
+			</executeBlock>
+			<!--Public-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Public']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Public"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//*[text()='Save and Continue']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//*[text()='Save and Continue']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Update_Catalog">
+			<executeBlock name="Tab_Details"/>
+			<!--Catalog Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Catalog Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Catalog Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Catalog Code-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Catalog Code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Catalog Code"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="(//label[text()='Description'])[1]/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Controlled At-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Controlled At']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Controlled At"/>
+				</parameters>
+			</executeBlock>
+			<!--Default Category-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Default Category']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Default Category"/>
+					<parameter name="SEARCH_1" value="Category Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Start Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="(//div[contains(@class,'Expansion')]/..//label[text()='Start Date'])[1]/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Start Date']/../..//input/../../../../..//*[contains(@class,'Error')]//input</findElement>
+				</if>
+				<then>
+					<executeBlock name="INPUT_GREATER_THAN_EQUAL">
+						<parameters>
+							<parameter name="XPATH" value="(//div[contains(@class,'Expansion')]/..//label[text()='Start Date'])[1]/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Start Date"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+			<!--End Date-->
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">(//label[text()='End Date'])[1]/../..//input</findElement>
+				</if>
+				<then>
+					<executeBlock name="INPUT_GREATER_THAN">
+						<parameters>
+							<parameter name="XPATH" value="(//label[text()='End Date'])[2]/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="End Date"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Assign items to leaf level categories only-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Assign items to leaf level categories only']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Assign items to leaf level categories only"/>
+				</parameters>
+			</executeBlock>
+			<!--Allow multiple item category assignments-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allow multiple item category assignments']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Allow multiple item category assignments"/>
+				</parameters>
+			</executeBlock>
+			<!--Public-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Public']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Public"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='Functional Area Parameters and Rules']/../../../..//a</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Functional Area Parameters and Rules']/../../../.."/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Enable duplicate category names-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enable duplicate category names']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Enable duplicate category names"/>
+				</parameters>
+			</executeBlock>
+			<!--Enable deletion of item category assignments-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="/label[text()='Enable deletion of item category assignments']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Enable deletion of item category assignments"/>
+				</parameters>
+			</executeBlock>
+			<!--Enable hierarchy for catalog-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enable hierarchy for catalog']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Enable hierarchy for catalog"/>
+				</parameters>
+			</executeBlock>
+			<!--Enable date level control for item category assignments-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enable date level control for item category assignments']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Enable date level control for item category assignments"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Defualt_Category">
+			<!--Default Category Required-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Default Category Required']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Default Category Required"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="New_Catalogy">
+			<!--Category Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Create Category']/../../../../../../..//label[text()='Category Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Category Name"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="2"/>
+			<!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Create Category']/../../../../../../..//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Start Date-->
+			<executeBlock name="INPUT_GREATER_THAN_EQUAL">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Create Category']/../../../../../../..//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>
+			<!--End Date-->
+			<executeBlock name="INPUT_GREATER_THAN_EQUAL">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Create Category']/../../../../../../..//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="2"/>
+			<!--Category Code-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Create Category']/../../../../../../..//label[text()='Category Code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Category Code"/>
+				</parameters>
+			</executeBlock>
+			<!--Restrict category to item assignment only-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Create Category']/../../../../../../..//label[text()='Restrict category to item assignment only']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Restrict category to item assignment only"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='O']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='O']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Click_Catalogy">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//td/div[contains(@title,'Details')]/../../../../../..//*[text()='Details']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//td/div[contains(@title,'Details')]/../../../../../..//*[text()='Details']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+			<!--Category Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//td/div[contains(@title,'Details')]/../../../../../..//label[text()='Category Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Category Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Category Code-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//td/div[contains(@title,'Details')]/../../../../../..//label[text()='Category Code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Category Code"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//td/div[contains(@title,'Details')]/../../../../../..//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Start Date-->
+			<executeBlock name="INPUT_GREATER_THAN_EQUAL">
+				<parameters>
+					<parameter name="XPATH" value="//td/div[contains(@title,'Details')]/../../../../../..//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>
+			<!--End Date-->
+			<executeBlock name="INPUT_GREATER_THAN_EQUAL">
+				<parameters>
+					<parameter name="XPATH" value="//td/div[contains(@title,'Details')]/../../../../../..//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Restrict category to item assignment only-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//td/div[contains(@title,'Details')]/../../../../../..//label[text()='Restrict category to item assignment only']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Restrict category to item assignment only"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="New_Parent_Catalogy">
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Category Hierarchy']/../../../..//div[@title='Create Category']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+			<!--Category Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Category Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Category Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Category Code-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Category Code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Category Code"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Start Date-->
+			<executeBlock name="INPUT_GREATER_THAN_EQUAL">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>
+			<!--End Date-->
+			<executeBlock name="INPUT_GREATER_THAN_EQUAL">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Restrict category to item assignment only-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Restrict category to item assignment only']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Restrict category to item assignment only"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='O']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='O']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Click_Parent_Catalogy">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="Show_Details">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//td/div[contains(@title,'Details')]/../../../../../..//*[text()='Details']</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[@title='Restore Pane']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Creat_Category">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//img[contains(@id,'createButton')]/../../../../../../../../../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//img[contains(@id,'createButton')]/../../../../../../../../../../../../../../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<findElement isSkipCheckDomError="true" by="xpath">//img[contains(@id,'createButton')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//img[contains(@id,'createButton')]</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//img[contains(@id,'createButton')]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Functional_Area_Catalog_Part_1">
+			<pause durationInSecs="5"/>
+			<executeBlock name="Search_Catalog"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<executeBlock name="Tab_Category_Hierarchy"/>
+			<executeBlock name="Show_Details" isRepeatUntilBreak="true"/>
+		</block>
+		<block name="Functional_Area_Catalog_Part_2">
+			<executeBlock name="Tab_Details"/>
+			<executeBlock name="Update_Catalog"/>
+			<executeBlock name="Defualt_Category"/>
+		</block>
+		<block name="Functional_Area_Category">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//span[text()='Basic']</findElement>
+				</if>
+				<then>
+				</then>
+				<else>
+					<findElement by="xpath">//a[text()='Advanced']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Advanced Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Advanced Search']/../../../../../../..//label[text()='Category Name Operator']/../..//select</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath">//*[text()='Advanced Search']/../../../../../../..//label[text()='Category Name Operator']/../..//select</findElement>
+					<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+						<valueText>Equals</valueText>
+					</select>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Advanced Search']/../../../../../../..//label[text()='Category Name Operator']/../..//input/..//div//li[text()='Equals']</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Advanced Search']/../../../../../../..//label[text()='Category Name Operator']/../..//input/..//div//li[text()='Equals']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Advanced Search']/../../../../../../..//label[text()='Category Name Operator']/../..//input[@role='combobox']</findElement>
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath" setFocus="true">//*[text()='Advanced Search']/../../../../../../..//label[text()='Category Name Operator']/../..//input[@role='combobox']</findElement>
+									<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath" setFocus="true">//ul[contains(@id,string(//*[text()='Advanced Search']/../../../../../../..//label[text()='Category Name Operator']/../..//input[@role='combobox']/../../@id))]//li[text()='Equals']</findElement>
+									<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Advanced Search']/../../../../../../..//label[text()='Category Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Category Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Advanced Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath">//*[text()='Advanced Search']/../../../../../../..//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_3" columnName="Parent Category Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//div[text()='No results found.']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//span[text()='C']/..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" by="xpath">//span[text()='Basic']</findElement>
+								</if>
+								<then>
+								</then>
+								<else>
+									<findElement by="xpath">//a[text()='Advanced']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Advanced Search']/../../.."/>
+								</parameters>
+							</executeBlock>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Advanced Search']/../../../../../../..//label[text()='Category Name Operator']/../..//select</findElement>
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" by="xpath">//*[text()='Advanced Search']/../../../../../../..//label[text()='Category Name Operator']/../..//select</findElement>
+									<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+										<valueText>Equals</valueText>
+									</select>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Advanced Search']/../../../../../../..//label[text()='Category Name Operator']/../..//input/..//div//li[text()='Equals']</findElement>
+										</if>
+										<then>
+											<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Advanced Search']/../../../../../../..//label[text()='Category Name Operator']/../..//input/..//div//li[text()='Equals']</findElement>
+											<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Advanced Search']/../../../../../../..//label[text()='Category Name Operator']/../..//input[@role='combobox']</findElement>
+												</if>
+												<then>
+													<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath" setFocus="true">//*[text()='Advanced Search']/../../../../../../..//label[text()='Category Name Operator']/../..//input[@role='combobox']</findElement>
+													<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+													<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath" setFocus="true">//ul[contains(@id,string(//*[text()='Advanced Search']/../../../../../../..//label[text()='Category Name Operator']/../..//input[@role='combobox']/../../@id))]//li[text()='Equals']</findElement>
+													<click waitForPageToFinishRendering="true" isJavaScript="true" isSkipCheckDomError="true"/>
+												</then>
+												<else/>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Advanced Search']/../../../../../../..//label[text()='Category Name']/../.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+									<parameter name="COL_NAME" value="Parent Category Name"/>
+								</parameters>
+							</executeBlock>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//td[1]//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Parent Category Name"/>']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//td[1]//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Parent Category Name"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//span[text()='K']/..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="1"/>
+									<executeBlock name="Creat_Category"/>
+									<executeBlock name="New_Catalogy"/>
+								</then>
+								<else>
+									<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//span[text()='K']/..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="1"/>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//*[@summary='Category Hierarchy']/../../../..//a[text()='View']</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath">//*[@summary='Category Hierarchy']/../../../..//a[text()='View']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+											<pause durationInSecs="1"/>
+											<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Scroll to First']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//*[@summary='Category Hierarchy']/../../../..//a[text()='View']/../../../../../../../../../../../..</findElement>
+												</if>
+												<then>
+													<findElement isSkipCheckDomError="true" by="xpath">//*[@summary='Category Hierarchy']/../../../..//a[text()='View']/../../../../../../../../../../../..</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+													<pause durationInSecs="1"/>
+													<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//a[text()='View']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+													<pause durationInSecs="1"/>							
+													<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Scroll to First']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+													<pause durationInSecs="1"/>							
+												</then>
+												<else>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>	
+									<findElement by="xpath">(//table[@_startrow='0'][@summary='Category Hierarchy']//tr[1]//td[1])[1]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<executeBlock name="Creat_Category"/>
+									<executeBlock name="New_Catalogy"/>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//td[1]//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Category Name"/>']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//td[1]//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Category Name"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//span[text()='K']/..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<executeBlock name="Click_Catalogy"/>
+									<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+								</then>
+								<else>
+									<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Category Name"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//span[text()='K']/..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<executeBlock name="Click_Catalogy"/>
+									<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//div[text()='No results found.']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//span[text()='C']/..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//*[@summary='Category Hierarchy']/../../../..//a[text()='View']</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//*[@summary='Category Hierarchy']/../../../..//a[text()='View']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+									<pause durationInSecs="1"/>
+									<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Scroll to First']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//*[@summary='Category Hierarchy']/../../../..//a[text()='View']/../../../../../../../../../../../..</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath">//*[@summary='Category Hierarchy']/../../../..//a[text()='View']/../../../../../../../../../../../..</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+											<pause durationInSecs="1"/>
+											<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//a[text()='View']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+											<pause durationInSecs="1"/>							
+											<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Scroll to First']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+											<pause durationInSecs="1"/>							
+										</then>
+										<else>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>	
+							<findElement by="xpath">(//table[@_startrow='0'][@summary='Category Hierarchy']//tr[1]//td[1])[1]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+							<executeBlock name="Creat_Category"/>
+							<executeBlock name="New_Catalogy"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//td[1]//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Category Name"/>']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//td[1]//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Category Name"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//span[text()='K']/..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<executeBlock name="Click_Catalogy"/>
+									<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Category Name"/>']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Category Name"/>']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[contains(text(),'Search Results:')]/../../../../../../..//span[text()='K']/..</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<executeBlock name="Click_Catalogy"/>
+											<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//*[@summary='Category Hierarchy']/../../../..//a[text()='View']</findElement>
+												</if>
+												<then>
+													<findElement isSkipCheckDomError="true" by="xpath">//*[@summary='Category Hierarchy']/../../../..//a[text()='View']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+													<pause durationInSecs="1"/>
+													<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Scroll to First']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 
+													<pause durationInSecs="1"/>
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//*[@summary='Category Hierarchy']/../../../..//a[text()='View']/../../../../../../../../../../../..</findElement>
+														</if>
+														<then>
+															<findElement isSkipCheckDomError="true" by="xpath">//*[@summary='Category Hierarchy']/../../../..//a[text()='View']/../../../../../../../../../../../..</findElement>
+															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+															<pause durationInSecs="1"/>
+															<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//a[text()='View']</findElement>
+															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+															<pause durationInSecs="1"/>							
+															<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Scroll to First']</findElement>
+															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+															<pause durationInSecs="1"/>							
+														</then>
+														<else>
+														</else>
+													</IfThenElse>
+												</else>
+											</IfThenElse>	
+											<findElement by="xpath">(//table[@_startrow='0'][@summary='Category Hierarchy']//tr[1]//td[1])[1]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="1"/>
+											<executeBlock name="Creat_Category"/>
+											<executeBlock name="New_Catalogy"/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Expand_navigator">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//span[contains(text(),'Product Information Management')]</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath">//div[@id=string(//span[contains(text(),'Product Information Management')]/parent::*/parent::*/parent::*/parent::*/parent::*/@id)]//div/div[@title]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>				
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="MANUAL_SEARCH_HOME">
+			<findElement by="xpath">//a[contains(@id,'UIShome')]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" setFocus="true" by="xpath">//div[contains(@id,'layerWrapper')]</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" setFocus="true" by="xpath">//a[contains(@id,'UISmmLink') or @title='Navigator']</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//a[contains(@id,'UISmmLink') or @title='Navigator']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+							<pause durationInSecs="2"/>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//span[contains(text(),'Product Information Management')]</findElement>
+								</if>
+								<then>
+									<executeBlock name="Expand_navigator" isRepeatUntilBreak="true"/>
+									<findElement isSkipCheckDomError="true" by="xpath">//span[contains(text(),'Product Information Management')]/../../a</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+									<pause durationInSecs="2"/>
+								</then>
+								<else>
+									<error message="Cannot find Task Product Information Management, Please Assigned Roles to User to access."/>
+								</else>
+							</IfThenElse>			
+						</then>
+						<else/>
+					</IfThenElse>		
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" isDisplayed="true" highlightTurnedOff="true" by="xpath">//a[contains(text(),'Product Information Management')]</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//a[text()=string(//a[contains(text(),'Product Information Management')])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>			
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//div[@id=string(//a[text()=string(//a[contains(text(),'Product Information Management')])]/parent::*[1]//@group)]//a</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//div[@id=string(//a[text()=string(//a[contains(text(),'Product Information Management')])]/parent::*[1]//@group)]//a</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+
+									<findElement isSkipCheckDomError="true" by="xpath">//a[text()=string(//a[contains(text(),'Product Information Management')])]</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>			
+								</then>
+								<else>
+									<error message="Cannot find Task Product Information Management, Please Assigned Roles to User to access."/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>	
+				</else>
+			</IfThenElse>	
+
+			<findElement setFocus="true" isSkipCheckDomError="true" by="xpath">//img[@title='Tasks']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<findElement isSkipCheckDomError="true" setFocus="true" by="xpath">//a[text()='Manage Catalogs']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>			
+		</block>
+		
+		<executeBlock name="MANUAL_SEARCH_HOME"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="Functional_Area_Catalog_Part_1"/>
+			<repeat inventoryName="MAIN_REPEAT_3">
+				<executeBlock name="Functional_Area_Category"/>
+				<repeat inventoryName="MAIN_REPEAT_4">
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_4" columnName="Field Name"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//td/div[contains(@title,'Details')]/../../../../../..//*[text()='Details']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//td/div[contains(@title,'Details')]/../../../../../..//*[text()='Details']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									
+								</else>
+							</IfThenElse>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Collapse Additional Information']/../.."/>
+								</parameters>
+							</executeBlock>
+							<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+								<parameters>
+									<parameter name="DFF_NAME" value="MAIN_REPEAT_4"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+
+						</else>
+					</IfThenElse>
+				</repeat>
+				<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			</repeat>
+			<executeBlock name="Functional_Area_Catalog_Part_2"/>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<IfThenElse>
+					<if>
+						<comparisons separator="AND">
+							<comparison operator="NOT_EQUAL">
+								<leftOperand>
+									<valueKB inventoryName="MAIN_REPEAT_2" columnName="Field Name"/>
+								</leftOperand>
+								<rightOperand>
+									<valueText/>
+								</rightOperand>
+							</comparison>
+						</comparisons>
+					</if>
+					<then>
+						<executeBlock name="Tab_Details"/>
+						<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+							<parameters>
+								<parameter name="XPATH" value="//a[@title='Collapse Additional Information']/../../../../.."/>
+							</parameters>
+						</executeBlock>
+						<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+							<parameters>
+								<parameter name="DFF_NAME" value="MAIN_REPEAT_2"/>
+							</parameters>
+						</executeBlock>
+						<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+					</then>
+					<else>
+
+					</else>
+				</IfThenElse>
+			</repeat>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

@@ -1,0 +1,532 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Pricing Bases</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Pricing Bases" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Pricing Lookups"/>
+		</dependencies>
+        <parameters>
+            <parameter name="REPEAT_1_MAIN" value="Manage Pricing Bases - Pricing Basis"/>
+            <parameter name="REPEAT_2_MAIN" value="Manage Pricing Bases - Criteria for Included Charges"/>
+            <parameter name="REPEAT_3_MAIN" value="Manage Pricing Bases - Criteria for Excluded Charges"/>
+        </parameters>
+        <block name="Save_And_Close">
+            <findElement by="xpath">//span[text()='S']/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Save">
+            <findElement by="xpath">//span[text()='Save']/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Add_Charge_Criteria">
+            <findElement by="xpath">//button[text()='Add Charge Criteria']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="SEARCH_PRICING">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <findElement highlightTurnedOff="true" by="xpath">//button[text()='Reset']</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <findElement highlightTurnedOff="true" by="xpath">//span[text()='r']/..</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+            <IfThenElse>
+                <if>
+                    <findElement
+                            by="xpath">//table[@summary='Search Results']//td[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+                </if>
+                <then>
+                    <findElement
+                            by="xpath">//table[@summary='Search Results']//td[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <executeBlock name="GLOBAL_UPDATE"/>
+                </then>
+                <else>
+                    <executeBlock name="GLOBAL_CREATE"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="PRICING">
+            <!-- Name -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+            
+            <!-- Usage -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Usage']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Usage"/>
+				</parameters>
+			</executeBlock>
+       
+            <!-- Price Element -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Price Element']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Price Element"/>
+				</parameters>
+			</executeBlock>	
+         
+            <!--DESCRIPTION -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+          
+            <!-- Active -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Active']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Active"/>
+				</parameters>
+			</executeBlock>
+        </block>
+        <block name="Charges_Criteria">
+            <!-- Price Type -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Price Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Price Type"/>
+				</parameters>
+			</executeBlock>	
+       
+            <!-- Charge Type -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Charge Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Charge Type"/>
+				</parameters>
+			</executeBlock>	
+            
+            <!-- Charge Subtype -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Charge Subtype']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Charge Subtype"/>
+				</parameters>
+			</executeBlock>	
+           
+            <!-- Price Periodicity -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Price Periodicity']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Price Periodicity"/>
+				</parameters>
+			</executeBlock>	
+         
+        </block>
+        <block name="Check_Included_Charges">
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="REPEAT_2_MAIN" columnName="Usage"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText>Adjustment basis</valueText>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement isDisplayed="true"
+                                highlightTurnedOff="true" by="xpath">//h3[text()='Criteria for Included Charges']</findElement>
+                        </if>
+                        <then>
+                            <executeBlock name="Criteria_for_Included_Charges"/>
+                        </then>
+                        <else>
+                            <IfThenElse>
+                                <if>
+                                    <findElement by="xpath">//button[text()='Add Charge Criteria'][@disabled]</findElement>
+                                </if>
+                                <then>
+                                    <executeBlock name="Charges_Criteria"/>
+                                </then>
+                                <else>
+                                    <executeBlock name="Add_Charge_Criteria"/>
+                                    <executeBlock name="Charges_Criteria"/>
+                                    <pause durationInSecs="2"/>
+                                </else>
+                            </IfThenElse>
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else>
+                    <error message="Cannot add Included Charges"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Criteria_for_Included_Charges">
+            <executeBlock name="SCROLLBAR_GENERIC_1">
+                <parameters>
+                    <parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Criteria for Included Charges']/../..//div[contains(text(),'No results found.')]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="//table[@summary='Criteria for Included Charges']//tr[1]/td[1][@_afrrh]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Criteria for Included Charges']/../..//div[contains(@id,'scroller')]"/>
+                    <parameter
+                            name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Criteria for Included Charges']/..//tr[td[1]//*[@title='<valueKB
+                            inventoryName="REPEAT_2_MAIN"
+                            columnName="Price Type"/>'] and td[2]//*[@title='<valueKB
+                            inventoryName="REPEAT_2_MAIN"
+                            columnName="Charge Type"/>'] and td[3]//*[@title='<valueKB
+                            inventoryName="REPEAT_2_MAIN" columnName="Charge Subtype"/>']]</parameter>
+                    <parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Add_Included_Charges"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Included_Charges"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Add_Included_Charges">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <scroll direction="TOP"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//table[@summary='Criteria for Included Charges']/../../../..//table[@_rowcount]//tr[2]</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">//table[@summary='Criteria for Included Charges']/..//tr[2]/td[1][@_afrrh]</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <executeBlock name="GLOBAL_SPECIFY_ADD">
+                <parameters>
+                    <parameter name="SPECIFY_XPATH" value="//h3[text()='Criteria for Included Charges']/../../../../../../.."/>
+                </parameters>
+            </executeBlock>
+            <!--Price Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Criteria for Included Charges']//tr[contains(@class,'Select')]//label[text()='Price Type']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Price Type"/>
+				</parameters>
+			</executeBlock>	
+            
+            <!--Price Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Criteria for Included Charges']//tr[contains(@class,'Select')]//label[text()='Charge Type']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Charge Type"/>
+				</parameters>
+			</executeBlock>	
+            
+            <!--Charge Subtype-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Criteria for Included Charges']//tr[contains(@class,'Select')]//label[text()='Charge Subtype']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Charge Subtype"/>
+				</parameters>
+			</executeBlock>	
+            
+            <!--Price Periodicity-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Criteria for Included Charges']//tr[contains(@class,'Select')]//label[text()='Charge Subtype']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Price Periodicity"/>
+				</parameters>
+			</executeBlock>	
+         
+        </block>
+        <block name="Update_Included_Charges">
+            <findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW/../../../../..//td[@_afrrh]</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+            <!--Price Periodicity-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Criteria for Included Charges']//tr[contains(@class,'Select')]//label[text()='Charge Subtype']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Price Periodicity"/>
+				</parameters>
+			</executeBlock>	
+            
+        </block>
+        <!--Excluded_Charges-->
+        <block name="Check_Excluded_Charges">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true"
+                        highlightTurnedOff="true" by="xpath">//h3[text()='Criteria for Excluded Charges']</findElement>
+                </if>
+                <then>
+                    <executeBlock name="Criteria_for_Excluded_Charges"/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">//button[text()='Add Charge Criteria'][@disabled]</findElement>
+                        </if>
+                        <then>
+                            <error message="Cannot add Excluded Charges"/>
+                        </then>
+                        <else>
+                            <executeBlock name="Add_Charge_Criteria"/>
+                            <executeBlock name="Criteria_for_Excluded_Charges"/>
+                            <pause durationInSecs="2"/>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Criteria_for_Excluded_Charges">
+            <executeBlock name="SCROLLBAR_GENERIC_1">
+                <parameters>
+                    <parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Criteria for Excluded Charges']/../..//div[contains(text(),'No results found.')]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="//table[@summary='Criteria for Excluded Charges']//tr[1]/td[1][@_afrrh]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Criteria for Excluded Charges']/../..//div[contains(@id,'scroller')]"/>
+                    <parameter
+                            name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Criteria for Excluded Charges']/..//tr[td[1]//*[@title='<valueKB
+                            inventoryName="REPEAT_3_MAIN"
+                            columnName="Price Type"/>'] and td[2]//*[@title='<valueKB
+                            inventoryName="REPEAT_3_MAIN"
+                            columnName="Charge Type"/>'] and td[3]//*[@title='<valueKB
+                            inventoryName="REPEAT_3_MAIN" columnName="Charge Subtype"/>']]</parameter>
+                    <parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Add_Excluded_Charges"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Excluded_Charges"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Add_Excluded_Charges">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <scroll direction="TOP"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//table[@summary='Criteria for Excluded Charges']/../../../..//table[@_rowcount]//tr[2]</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">//table[@summary='Criteria for Excluded Charges']/..//tr[2]/td[1][@_afrrh]</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <executeBlock name="GLOBAL_SPECIFY_ADD">
+                <parameters>
+                    <parameter name="SPECIFY_XPATH" value="//h3[text()='Criteria for Excluded Charges']/../../../../../../.."/>
+                </parameters>
+            </executeBlock>
+            <!--Price Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Criteria for Excluded Charges']//tr[contains(@class,'Select')]//td[1]//select//option[@value='']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Price Type"/>
+				</parameters>
+			</executeBlock>	
+          
+            <!--Price Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Criteria for Excluded Charges']//tr[contains(@class,'Select')]//label[text()='Charge Type']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Charge Type"/>
+				</parameters>
+			</executeBlock>
+           
+            <!--Charge Subtype-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Criteria for Excluded Charges']//tr[contains(@class,'Select')]//label[text()='Charge Subtype']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Charge Subtype"/>
+				</parameters>
+			</executeBlock>	
+          
+            <!--Price Periodicity-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Criteria for Excluded Charges']//tr[contains(@class,'Select')]//label[text()='Charge Subtype']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Price Periodicity"/>
+				</parameters>
+			</executeBlock>	
+           
+        </block>
+        <block name="Update_Excluded_Charges">
+            <findElement
+                    by="xpath">//table[@summary='Criteria for Excluded Charges']/..//tr[td[1]//*[@title='<valueKB
+                    inventoryName="REPEAT_3_MAIN"
+                    columnName="Price Type"/>'] and td[2]//*[@title='<valueKB
+                    inventoryName="REPEAT_3_MAIN"
+                    columnName="Charge Type"/>'] and td[3]//*[@title='<valueKB
+                    inventoryName="REPEAT_3_MAIN" columnName="Charge Subtype"/>']]</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+            <!--Price Periodicity-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Criteria for Excluded Charges']//tr[contains(@class,'Select')]//label[text()='Charge Subtype']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Price Periodicity"/>
+				</parameters>
+			</executeBlock>	
+        </block>
+        <block name="SCROLLBAR_GENERIC_INNER_1">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+                </if>
+                <then>
+                    <executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+                    <break/>
+                </then>
+                <else>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <IfThenElse>
+                        <if>
+                            <isEndOfScroll/>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+                                </if>
+                                <then>
+                                    <executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+                                    <break/>
+                                </then>
+                                <else>
+                                    <findElement
+                                    highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                                    <scroll direction="TOP"/>
+                                    <findElement by="xpath" setFocus="true">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+                                    <click
+                                    waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                                    <executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+                                    <break/>
+                                </else>
+                            </IfThenElse>
+                        </then>
+                        <else>
+                            <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                            <scroll direction="DOWN"/>
+                            <pause durationInSecs="1"/>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="SCROLLBAR_GENERIC_1">
+            <!-- check if there is no data found returned after the search, if so then we create a new record if applicable -->
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+                </if>
+                <then>
+                    <executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+                </then>
+                <else>
+                    <!-- resetting the scrollbar back to the Top because the form remembers where it was even when searching a new record -->
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <scroll direction="TOP"/>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <scroll direction="TOP"/>
+                    <findElement by="xpath" setFocus="true">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <executeBlock name="SCROLLBAR_GENERIC_INNER_1" isRepeatUntilBreak="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="REPEAT_1_MAIN">
+            <executeBlock name="SEARCH_PRICING"/>
+            <executeBlock name="PRICING"/>
+            <repeat inventoryName="REPEAT_2_MAIN">
+                <executeBlock name="Check_Included_Charges"/>
+                <executeBlock name="Save"/>
+                <!--<executeBlock name="Save_And_Close"/>-->
+            </repeat>
+            <repeat inventoryName="REPEAT_3_MAIN">
+                <!--  <executeBlock name="SEARCH_PRICING"/>-->
+                <executeBlock name="Check_Excluded_Charges"/>
+                <executeBlock name="Save"/>
+            </repeat>
+            <executeBlock name="Save_And_Close"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

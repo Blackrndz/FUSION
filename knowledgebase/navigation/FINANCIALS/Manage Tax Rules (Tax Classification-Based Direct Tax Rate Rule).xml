@@ -1,0 +1,735 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Tax Rules (Tax Classification-Based Direct Tax Rate Rule)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Tax Rules" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Tax Rates and Tax Recovery Rates (Transaction Tax Rates)"/>
+			<navigation name="Manage Tax Determining Factor Sets (Transaction Tax)"/>
+		</dependencies>		
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Tax Rules - Transaction Tax ClassificationBased Direct Tax Rate Determination Rule"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Tax Rules - Transaction Tax ClassificationBased Applicable Tax Rates"/>
+		</parameters>
+		<block name="Save And Close">
+			<findElement by="xpath">//button[@accesskey='S']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Save">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//button[text()='Save']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//button[text()='Save']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="SCROLLBAR_GENERIC_INNER_1">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+						</if>
+						<then>
+							<executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+							<break/>
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<IfThenElse>
+								<if>
+									<isEndOfScroll/>
+								</if>
+								<then>
+									<executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+									<break/>
+								</then>
+								<else>
+									<findElement
+                                    highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+									<scroll direction="DOWN"/>
+									<pause durationInSecs="1"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SCROLLBAR_GENERIC_1">
+			<!-- check if there is no data found returned after the search, if so then we create a new record if applicable -->
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+				</then>
+				<else>
+					<!-- resetting the scrollbar back to the Top because the form remembers where it was even when searching a new record -->
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					<scroll direction="TOP"/>
+					<findElement by="xpath" setFocus="true">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<executeBlock name="SCROLLBAR_GENERIC_INNER_1" isRepeatUntilBreak="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">SPECIFY_SEARCH</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search">
+			<findElement isDisplayed="true" by="xpath">//button[text()='Reset']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement isDisplayed="true" by="xpath">//legend[text()='Search For']/following::*[1]//div</findElement>
+			<click waitForPageToFinishRendering="true" isJavaScript="true" />
+			<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Tax Rule Type']/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//label[text()='Tax Rule Type']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Tax Classification-Based Direct Tax Rate Rules</valueText>
+							</select>								
+						</then>
+						<else>              
+							<findElement by="xpath">//label[text()='Tax Rule Type']/../..//input/..//div//li[text()='Tax Classification-Based Direct Tax Rate Rules']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true" />
+						</else>
+					</IfThenElse>
+			<!--Configuration Owner-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Configuration Owner"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+				<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Configuration Owner']/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//label[text()='Configuration Owner']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Equals</valueText>
+							</select>								
+						</then>
+						<else>              
+							<findElement by="xpath">//label[text()='Configuration Owner']/../..//input/..//div//li[text()='Equals']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true" />
+						</else>
+					</IfThenElse>
+					<executeBlock name="Search..." isRepeatUntilBreak="true">
+						<parameters>
+							<parameter name="SPECIFY_SEARCH" value="//label[text()='Configuration Owner']/../..//span/a"/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true"
+                                isDisplayed="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Configuration Owner"/>']</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true"
+                                isDisplayed="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Configuration Owner"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<findElement by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//div[text()='Search and Select: Configuration Owner']/../../../../../../..//label[text()='Configuration Owner']/../..//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Configuration Owner"/>
+							</sendKeys>
+							<findElement by="xpath">//div[text()='Search and Select: Configuration Owner']/../../../../../../..//button[text()='Search']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    by="xpath">//div[text()='Search and Select: Configuration Owner']/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Configuration Owner"/>']</findElement>
+								</if>
+								<then>
+									<findElement
+                                    by="xpath">//div[text()='Search and Select: Configuration Owner']/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Configuration Owner"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//div[text()='Search and Select: Configuration Owner']/../../../../../../..//button[text()='OK']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<error message="The field 'Configuration Owner' doesn't exist."/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Tax Regime Code-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Tax Regime Code"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+				<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Tax Regime Code']/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//label[text()='Tax Regime Code']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Equals</valueText>
+							</select>								
+						</then>
+						<else>              
+							<findElement by="xpath">//label[text()='Tax Regime Code']/../..//input/..//div//li[text()='Equals']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true" />
+						</else>
+					</IfThenElse>
+					<executeBlock name="Search..." isRepeatUntilBreak="true">
+						<parameters>
+							<parameter name="SPECIFY_SEARCH" value="//label[text()='Tax Regime Code']/../..//span/a"/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true"
+                                isDisplayed="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Tax Regime Code"/>']</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true"
+                                isDisplayed="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Tax Regime Code"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<findElement by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//div[text()='Search and Select: Tax Regime Code']/../../../../../../..//label[text()='Tax Regime Code']/../..//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Tax Regime Code"/>
+							</sendKeys>
+							<findElement by="xpath">//div[text()='Search and Select: Tax Regime Code']/../../../../../../..//button[text()='Search']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    by="xpath">//div[text()='Search and Select: Tax Regime Code']/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Tax Regime Code"/>']</findElement>
+								</if>
+								<then>
+									<findElement
+                                    by="xpath">//div[text()='Search and Select: Tax Regime Code']/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Tax Regime Code"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//div[text()='Search and Select: Tax Regime Code']/../../../../../../..//button[text()='OK']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<error message="The field 'Tax Regime Code' doesn't exist."/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Tax-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Tax"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+				<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Tax']/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//label[text()='Tax']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Equals</valueText>
+							</select>								
+						</then>
+						<else>              
+							<findElement by="xpath">//label[text()='Tax']/../..//input/..//div//li[text()='Equals']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true" />
+						</else>
+					</IfThenElse>
+					<executeBlock name="Search..." isRepeatUntilBreak="true">
+						<parameters>
+							<parameter name="SPECIFY_SEARCH" value="//label[text()='Tax']/../..//span/a"/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true"
+                                isDisplayed="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Tax"/>']</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true"
+                                isDisplayed="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Tax"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<findElement by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//div[text()='Search and Select: Tax']/../../../../../../..//label[text()='Tax']/../..//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Tax"/>
+							</sendKeys>
+							<findElement by="xpath">//div[text()='Search and Select: Tax']/../../../../../../..//button[text()='Search']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    by="xpath">//div[text()='Search and Select: Tax']/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Tax"/>']</findElement>
+								</if>
+								<then>
+									<findElement
+                                    by="xpath">//div[text()='Search and Select: Tax']/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Tax"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//div[text()='Search and Select: Tax']/../../../../../../..//button[text()='OK']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<error message="The field 'Tax' doesn't exist."/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Rule Code-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Rule Code"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Rule Code']/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//label[text()='Rule Code']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Equals</valueText>
+							</select>								
+						</then>
+						<else>              
+							<findElement by="xpath">//label[text()='Rule Code']/../..//input/..//div//li[text()='Equals']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true" />
+						</else>
+					</IfThenElse>
+					<executeBlock name="Search..." isRepeatUntilBreak="true">
+						<parameters>
+							<parameter name="SPECIFY_SEARCH" value="//label[text()='Rule Code']/../..//span/a"/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true"
+                                isDisplayed="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()=translate('<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Rule Code"/>','abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true"
+                                isDisplayed="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()=translate('<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Rule Code"/>','abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath" isDisplayed="true">//button[text()='Search']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath"
+                                    isDisplayed="true">(//table[contains(@summary,'Search Result')]//td[1]/a[text()=translate('<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Rule Code"/>','abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')]/../../../../../../..//td)[1]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath"
+                                    isDisplayed="true">(//table[contains(@summary,'Search Result')]//td[1]/a[text()=translate('<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Rule Code"/>','abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')]/../../../../../../..//td)[1]</findElement>
+									<click
+                                    waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<findElement by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//div[text()='Search and Select: Rule Code']/../../../../../../..//label[text()='Rule Code']/../..//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Rule Code"/>
+							</sendKeys>
+							<findElement by="xpath">//div[text()='Search and Select: Rule Code']/../../../../../../..//button[text()='Search']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    by="xpath">//div[text()='Search and Select: Rule Code']/../../../../../../..//td[text()=translate('<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Rule Code"/>','abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</findElement>
+								</if>
+								<then>
+									<findElement
+                                    by="xpath">//div[text()='Search and Select: Rule Code']/../../../../../../..//td[text()=translate('<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Rule Code"/>','abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//div[text()='Search and Select: Rule Code']/../../../../../../..//button[text()='OK']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<findElement by="xpath">//div[text()='Search and Select: Rule Code']/../../../../../../..//button[text()='Cancel']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<executeBlock name="GLOBAL_CREATE"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//*[text()='Manage Tax Rules']/../../div</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isDisplayed="true">//button[text()='Search']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath"
+                                    isDisplayed="true">//table[contains(@summary,'Search Result')]//td[1]/a[text()=translate('<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Rule Code"/>','abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath"
+                                    isDisplayed="true">//table[contains(@summary,'Search Result')]//td[1]/a[text()=translate('<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Rule Code"/>','abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</findElement>
+									<click
+                                    waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isDisplayed="true">//button[text()='Edit'][@disabled]</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement by="xpath">//button[text()='Edit']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+									<executeBlock name="GLOBAL_CREATE"/>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Tax Classification-Based Direct Tax Rate Rule">
+			<!--Configuration Owner-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Configuration Owner']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Configuration Owner"/>
+					<parameter name="SEARCH_1" value="Configuration Owner"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Tax Regime Code-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Tax Regime Code']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Tax Regime Code"/>
+					<parameter name="SEARCH_1" value="Tax Regime Code"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Tax-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Tax']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Tax"/>
+					<parameter name="SEARCH_1" value="Tax"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Rule Code-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Rule Code']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Rule Code"/>
+				</parameters>
+			</executeBlock>	
+			
+			<!--Rule Name-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Rule Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Rule Name"/>
+				</parameters>
+			</executeBlock>	
+			
+			<!--Start Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>	
+			
+			<!--End Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>	
+			<!--Enabled-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enabled']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Enabled"/>
+				</parameters>
+			</executeBlock>
+			<!--Tax Law Reference-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Tax Law Reference']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Tax Law Reference"/>
+				</parameters>
+			</executeBlock>	
+			
+			<!--Description-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Description"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Description']/../..//textarea[not(@readonly)]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//label[text()='Description']/../..//textarea[not(@readonly)]</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Description"/>
+							</sendKeys>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Search Tax Classification-Based Applicable Tax Rates">
+			<executeBlock name="SCROLLBAR_GENERIC_1">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Tax Classification-Based Applicable Tax Rates']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Tax Classification-Based Applicable Tax Rates']//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Tax Classification-Based Applicable Tax Rates']/../..//div[contains(@id,'scroller')]"/>
+					<parameter
+                            name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Tax Classification-Based Applicable Tax Rates']//td[1]//span/span[text()='<valueKB
+                            inventoryName="REPEAT_2_MAIN" columnName="Tax Classification Code"/>']</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Tax Classification-Based Applicable Tax Rates"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Tax Classification-Based Applicable Tax Rates"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Create_Tax Classification-Based Applicable Tax Rates">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Tax Classification-Based Applicable Tax Rates']//td[1]//input[@value='']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Tax Classification-Based Applicable Tax Rates']//td[1]//input[@value='']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_ADD"/>
+				</else>
+			</IfThenElse>
+			<!--Tax Classification Code-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Tax Classification-Based Applicable Tax Rates']//tr[contains(@class,'Select')]//label[text()='Tax Classification Code']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Tax Classification Code"/>
+					<parameter name="SEARCH_1" value="Tax Classification Code"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Tax Status Result-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Tax Classification-Based Applicable Tax Rates']//tr[contains(@class,'Select')]//label[text()='Tax Status Result']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Tax Status Result"/>
+					<parameter name="SEARCH_1" value="Tax Status Code"/>
+				</parameters>
+			</executeBlock>
+			
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Tax Classification-Based Applicable Tax Rates']//tr[contains(@class,'Select')]//td[4]//span"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Tax Rate Result"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Tax Classification-Based Applicable Tax Rates']//tr[contains(@class,'Select')]//td[5]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Enabled"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Update_Tax Classification-Based Applicable Tax Rates">
+			<findElement by="xpath" isDisplayed="true">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Tax Classification-Based Applicable Tax Rates']//tr[contains(@class,'Select')]//td[5]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Enabled"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search"/>
+			<executeBlock name="Tax Classification-Based Direct Tax Rate Rule"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<IfThenElse>
+					<if>
+						<findElement by="xpath" isDisplayed="true">//button[text()='Edit'][@disabled]</findElement>
+					</if>
+					<then/>
+					<else>
+						<executeBlock name="Search Tax Classification-Based Applicable Tax Rates"/>
+					</else>
+				</IfThenElse>
+			</repeat>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true">//button[text()='Edit'][@disabled]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isDisplayed="true">//button[text()='Edit'][@disabled]/../..//span[text()='o']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<executeBlock name="Save And Close"/>
+				</else>
+			</IfThenElse>
+		</repeat>
+	</fusionNavigation>
+</navigation>

@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Legislative Data Groups</name>
+    <svn>
+        <xsd:revision>$Revision: 53667 $:</xsd:revision>
+        <xsd:author>$Author: aratchaporn.kositsirikun $:</xsd:author>
+        <xsd:date>$Date: 2016-03-18 15:49:04 +0700 (Fri, 18 Mar 2016) $:</xsd:date>
+        <xsd:headURL>$HeadURL: http://svn01.rapidesuite.com:999/svn/a/dev/rapidesuite/controldata/FUSION_11.1.9/trunk/core/knowledgebase/navigation/FINANCIALS/Master%20Template/Manage%20General%20Ledger%20Profile%20Options.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage General Ledger Profile Options.xml 53667 2016-03-18 08:49:04Z aratchaporn.kositsirikun $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Legislative Data Groups" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <!--
+            LOGIC: SCROLLBAR
+                1. SELECT THE FIRST ROW OF THE GRID
+                2. FIND THE SCROLLER
+                3. EXECUTE A LOOP:
+                    3.1. IF CONDITION TO FIND THE ROW WITH THE DATA
+                    3.2. IF NOT FOUND THEN
+                        3.2.1 IF CONDITION TO CHECK IF WE ARE AT THE END OF THE SCROLLBAR (ALWAYS FIND THE SCROLLER BEFORE CHECKING THE END)
+                            IF YES: THEN CLICK CREATE AND BREAK.
+                            IF NOT: THEN SCROLL DOWN ONE TIME, PAUSE 1 SEC THEN GO BACK TO 3.1
+        -->
+        <dependencies>
+			<navigation name="Manage Key Flexfields (Deploy Structure Instances)"/>
+			<navigation name="Manage Cost Allocation Key Flexfield (Structures)"/>
+			<navigation name="Manage Cost Allocation Key Flexfield (Structure Instances)"/>
+			<navigation name="Manage Cost Allocation Key Flexfield (Deploy Structures)"/>
+ 			<navigation name="Manage Cost Allocation Key Flexfield (Deploy Structure Instances)"/>
+		</dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Legislative Data Groups - Legislative Data Groups"/>
+        </parameters>
+		<block name="BT_SEARCH">
+			<findElement by="xpath">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="BT_EDIT">
+			<findElement isDisplayed="true" by="xpath">//button[text()='Edit']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="BT_Expand">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[@title='Expand Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="BT_Submit">
+		
+					<findElement by="xpath">//span[text()='m']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					
+			
+		</block>
+		<block name="BT_Confirmation">
+					<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='Confirmation']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Confirmation']/../../.././../../../..//span[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			
+		</block>
+		<block name="BT_Warning">
+		<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='Warning']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Warning']/../../../../../../..//span[text()='Y']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="BT_CREATE">
+		<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//span[text()='Create']</findElement>
+												</if>
+												<then>
+													<findElement isSkipCheckDomError="true" by="xpath">//span[text()='Create']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//span[text()='Create']/../../../../../../../..</findElement>
+														</if>
+														<then>
+															<findElement isSkipCheckDomError="true" by="xpath">//span[text()='Create']/../../../../../../../..</findElement>
+															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+															<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//span[text()='Create']</findElement>
+															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>						
+														</then>
+														<else>						
+														</else>
+													</IfThenElse>							
+												</else>
+											</IfThenElse>
+	</block>											
+		<block name="SEARCH">
+			<executeBlock name="BT_Expand"/>
+			<findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+			</sendKeys>
+			<executeBlock name="BT_Expand"/>
+			<executeBlock name="BT_SEARCH"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="BT_EDIT"/>
+				</then>
+				<else>
+					<executeBlock name="BT_CREATE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Legislative_Data_Groups">
+			<!--Name-->
+			<executeBlock name="INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+			<!--Country-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Country']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Country"/>
+					<parameter name="SEARCH_1" value="Country"/>
+				</parameters>
+			</executeBlock>
+			<!--Currency-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Currency']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Currency"/>
+					<parameter name="SEARCH_1" value="Currency Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Cost Allocation Structure-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Cost Allocation Structure']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Cost Allocation Structure"/>
+					<parameter name="SEARCH_1" value="Key Flexfield Structure Instance Name"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		 <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="SEARCH"/>
+			<executeBlock name="Legislative_Data_Groups"/>
+			<executeBlock name="BT_Submit"/>
+			<pause durationInSecs="1"/>
+			<executeBlock name="BT_Warning"/>
+			<pause durationInSecs="1"/>
+			<executeBlock name="BT_Confirmation"/>
+			<pause durationInSecs="1"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

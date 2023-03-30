@@ -1,0 +1,429 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Payables Calendars</name>
+	<svn>
+		<xsd:revision>$Revision: 80010 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2023-01-25 20:22:04 +0700 (Wed, 25 Jan 2023) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Payables%20Calendars.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Payables Calendars.xml 80010 2023-01-25 13:22:04Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<!--<fusionNavigation hasScope="false" defaultBatchSize="2" taskName="Manage Payables Calendars" isBatchingAllowed="false" applicationKey="APPLICATION_HOME_PAGE">-->
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Payables Calendars" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Data Role and Security Profiles"/>
+			<navigation name="Manage Service Provider Relationships (Customer Payments Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Payables Payment Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Procurement Service Providers)"/>
+		</dependencies>
+		<block name="Go To Task">
+			<findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a[@title='Go to Task']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Save">
+			<findElement by="xpath">//button[text()='Save']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Save and Close">
+			<findElement by="xpath">//span[text()='S']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Expand">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//tr[contains(@class,'Select')]//a[@title='Expand']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//tr[contains(@class,'Select')]//a[@title='Expand']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Collapse">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//tr[contains(@class,'Select')]//a[@title='Collapse']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//tr[contains(@class,'Select')]//a[@title='Collapse']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Generate Periods">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//h1[contains(text(),'Create Payables Calendar')]/../../../../../../../..//button[text()='Generate Periods']</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//h1[contains(text(),'Create Payables Calendar')]/../../../../../../../..//button[text()='Generate Periods']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search Payables Calendar">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Payables Calendars']/../..//a[@title='Clear All']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_QUERY_BY_EXAMPLE"/>
+				</else>
+			</IfThenElse>
+			<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Payables Calendars']/../..//a[@title='Clear All']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="Manage Payables Calendars - Payables Calendar" columnName="Name"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement by="xpath">//table[@summary='Payables Calendars']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Payables Calendars']/../..//div//*[text()='Name']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="Manage Payables Calendars - Payables Calendar" columnName="Name"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="Manage Payables Calendars - Payables Calendar" columnName="Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="Manage Payables Calendars - Payables Calendar" columnName="Calendar Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//td[string(//span[text()='Name']/../..//@_d_index)+1]//a[text()='<valueKB inventoryName="Manage Payables Calendars - Payables Calendar" columnName="Name"/>']/../..//td[string(//span[text()='Calendar Type']/../..//@_d_index)+0]//span[text()='<valueKB inventoryName="Manage Payables Calendars - Payables Calendar" columnName="Calendar Type"/>']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//td[string(//span[text()='Name']/../..//@_d_index)+1]//a[text()='<valueKB inventoryName="Manage Payables Calendars - Payables Calendar" columnName="Name"/>']/../..//td[string(//span[text()='Calendar Type']/../..//@_d_index)+0]//span[text()='<valueKB inventoryName="Manage Payables Calendars - Payables Calendar" columnName="Calendar Type"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="GLOBAL_UPDATE"/>
+						</then>
+						<else>
+							<executeBlock name="GLOBAL_CREATE"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="Manage Payables Calendars - Payables Calendar" columnName="Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="Manage Payables Calendars - Payables Calendar" columnName="Calendar Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//td[string(//span[text()='Name']/../..//@_d_index)+1]//a[text()='<valueKB inventoryName="Manage Payables Calendars - Payables Calendar" columnName="Name"/>'][2]</findElement>
+						</if>
+						<then>
+							<error message="Please input column 'Calendar Type'"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//td[string(//span[text()='Name']/../..//@_d_index)+1]//a[text()='<valueKB inventoryName="Manage Payables Calendars - Payables Calendar" columnName="Name"/>']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//td[string(//span[text()='Name']/../..//@_d_index)+1]//a[text()='<valueKB inventoryName="Manage Payables Calendars - Payables Calendar" columnName="Name"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<executeBlock name="GLOBAL_UPDATE"/>
+								</then>
+								<else>
+									<executeBlock name="GLOBAL_CREATE"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Search Period Information">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Period Information']/../..//a[@title='Clear All']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_QUERY_BY_EXAMPLE"/>
+				</else>
+			</IfThenElse>
+			<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Period Information']/../..//a[@title='Clear All']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//th[(string(//span[text()='Sequence']/../..//preceding-sibling::*/../../../../../@_d_index))+1]//input</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//th[(string(//span[text()='Sequence']/../..//preceding-sibling::*/../../../../../@_d_index))+1]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="Manage Payables Calendars - Period Information" columnName="Sequence"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement by="xpath">//table[@summary='Period Information']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Period Information']/../..//div//*[text()='Sequence']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="Manage Payables Calendars - Period Information" columnName="Sequence"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//td[string(//span[text()='Period Name Prefix']/../..//@_d_index)+1]//span[text()='<valueKB inventoryName="Manage Payables Calendars - Period Information" columnName="Period Name Prefix"/>']/../../..//td[string(//span[text()='Year']/../..//@_d_index)+1]//span[text()='<valueKB inventoryName="Manage Payables Calendars - Period Information" columnName="Year"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//td[string(//span[text()='Period Name Prefix']/../..//@_d_index)+1]//span[text()='<valueKB inventoryName="Manage Payables Calendars - Period Information" columnName="Period Name Prefix"/>']/../../..//td[string(//span[text()='Year']/../..//@_d_index)+1]//span[text()='<valueKB inventoryName="Manage Payables Calendars - Period Information" columnName="Year"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_ADD"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Manual Entry of Periods">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[text()='Manual Entry of Periods']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Manual Entry of Periods']/../../../../../../..//span[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Payables Calendar">
+			<!--Name-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="Manage Payables Calendars - Payables Calendar"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="Manage Payables Calendars - Payables Calendar"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Calendar Type-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Calendar Type']/../.."/>
+					<parameter name="INV_NAME" value="Manage Payables Calendars - Payables Calendar"/>
+					<parameter name="COL_NAME" value="Calendar Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Period Frequency-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Period Frequency']/../.."/>
+					<parameter name="INV_NAME" value="Manage Payables Calendars - Payables Calendar"/>
+					<parameter name="COL_NAME" value="Period Frequency"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Manual Entry of Periods"/>
+			<!--Periods per Year-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Periods per Year']/../.."/>
+					<parameter name="INV_NAME" value="Manage Payables Calendars - Payables Calendar"/>
+					<parameter name="COL_NAME" value="Periods per Year"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//label[text()='Start Date']/../..//input[@disabled='']</findElement>
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()='Start Date']/../..//input[@disabled='']</findElement>
+						</if>
+						<then/>
+						<else>
+							<!--Start Date-->
+							<executeBlock name="INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Start Date']/../.."/>
+									<parameter name="INV_NAME" value="Manage Payables Calendars - Payables Calendar"/>
+									<parameter name="COL_NAME" value="Start Date"/>
+								</parameters>
+							</executeBlock>
+							<!--Period Name Format-->
+							<executeBlock name="SELECT_KB">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Period Name Format']/../.."/>
+									<parameter name="INV_NAME" value="Manage Payables Calendars - Payables Calendar"/>
+									<parameter name="COL_NAME" value="Period Name Format"/>
+								</parameters>
+							</executeBlock>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<!--From Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='From Date']/../.."/>
+					<parameter name="INV_NAME" value="Manage Payables Calendars - Payables Calendar"/>
+					<parameter name="COL_NAME" value="From Date"/>
+				</parameters>
+			</executeBlock>
+			<!--To Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='To Date']/../.."/>
+					<parameter name="INV_NAME" value="Manage Payables Calendars - Payables Calendar"/>
+					<parameter name="COL_NAME" value="To Date"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Period Information">
+			<!--Period Name Prefix-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Period Name Prefix']/../.."/>
+					<parameter name="INV_NAME" value="Manage Payables Calendars - Period Information"/>
+					<parameter name="COL_NAME" value="Period Name Prefix"/>
+				</parameters>
+			</executeBlock>
+			<!--Year-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Year']/../.."/>
+					<parameter name="INV_NAME" value="Manage Payables Calendars - Period Information"/>
+					<parameter name="COL_NAME" value="Year"/>
+				</parameters>
+			</executeBlock>
+			<!--Sequence-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Sequence']/../.."/>
+					<parameter name="INV_NAME" value="Manage Payables Calendars - Period Information"/>
+					<parameter name="COL_NAME" value="Sequence"/>
+				</parameters>
+			</executeBlock>
+			<!--Start Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="Manage Payables Calendars - Period Information"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>
+			<!--End Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="Manage Payables Calendars - Period Information"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Due Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Due Date']/../.."/>
+					<parameter name="INV_NAME" value="Manage Payables Calendars - Period Information"/>
+					<parameter name="COL_NAME" value="Due Date"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="FAKE_DFF">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="Manage Payables Calendars - Payables Calendar - DFF" columnName="Field Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="Manage Payables Calendars - Period Information - DFF" columnName="Field Name"/>']/../..//input</findElement>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="Manage Payables Calendars - Payables Calendar">
+			<executeBlock name="Search Payables Calendar"/>
+			<executeBlock name="Payables Calendar"/>
+			<repeat inventoryName="Manage Payables Calendars - Payables Calendar - DFF">
+				<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+					<parameters>
+						<parameter name="DFF_NAME" value="Manage Payables Calendars - Payables Calendar - DFF"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<executeBlock name="GLOBAL_SAVE"/>
+			<repeat inventoryName="Manage Payables Calendars - Period Information">
+				<executeBlock name="Search Period Information"/>
+				<executeBlock name="Period Information"/>
+				<executeBlock name="GLOBAL_SAVE"/>
+				<repeat inventoryName="Manage Payables Calendars - Period Information - DFF">
+					<executeBlock name="Expand"/>
+					<executeBlock navigationName="TemplateDFF" name="TEMPLATE_ROW_DFF">
+						<parameters>
+							<parameter name="SPECIFY_DFF" value="//table[@summary='Period Information']//tr[contains(@class,'Select')]/following::tr[1]"/>
+							<parameter name="DFF_NAME" value="Manage Payables Calendars - Period Information - DFF"/>
+						</parameters>
+					</executeBlock>
+				</repeat>
+				<executeBlock name="Collapse"/>
+				<executeBlock name="GLOBAL_SAVE"/>
+			</repeat>
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

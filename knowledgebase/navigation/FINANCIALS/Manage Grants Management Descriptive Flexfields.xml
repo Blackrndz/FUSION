@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Grants Management Descriptive Flexfields</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" defaultBatchSize="3"
+        taskName="Manage Grants Management Descriptive Flexfields"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Enterprise HCM Information"/>
+			<navigation name="Manage Value Sets"/>
+        </dependencies>
+        <parameters>
+			<parameter name="MAIN_1_REPEAT" value="Manage Grants Management Descriptive Flexfields - Descriptive Flexfields"/>
+			<parameter name="MAIN_2_REPEAT" value="Manage Grants Management Descriptive Flexfields - Global Segments"/>
+			<parameter name="MAIN_3_REPEAT" value="Manage Grants Management Descriptive Flexfields - Contexts"/>
+			<parameter name="MAIN_4_REPEAT" value="Manage Grants Management Descriptive Flexfields - Context Segments"/>
+			<parameter name="MAIN_5_REPEAT" value="Manage Grants Management Descriptive Flexfields - Segment Labels"/>
+        </parameters>
+        <block name="FAKE_TABLE">  
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Flexfield Name"/>']/../..//input</findElement>
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_2_REPEAT" columnName="Flexfield Name"/>']/../..//input</findElement>
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_3_REPEAT" columnName="Flexfield Name"/>']/../..//input</findElement>
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_4_REPEAT" columnName="Flexfield Name"/>']/../..//input</findElement>
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_5_REPEAT" columnName="Flexfield Name"/>']/../..//input</findElement>
+        </block>		
+        <block name="Save and Close Grant">
+            <findElement by="xpath">//span[text()='S']/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Save Grant">
+            <findElement by="xpath">//button[text()='Save']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Check Error Grant">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//div[text()='Error']</findElement>
+                </if>
+                <then>
+                    <error message="Please find the error in an application."/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Check Grant">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//*[contains(text(),'Descriptive Flexfield')]/../../div</findElement>
+                </if>
+                <then/>
+                <else>
+                    <executeBlock name="Done Grant"/>
+                </else>
+            </IfThenElse>
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//*[text()='###TASK_NAME###']</findElement>
+                </if>
+                <then>
+                    <executeBlock name="Save and Close Grant"/>
+                    <executeBlock name="Check Error Grant"/>
+                </then>
+                <else>
+                    <executeBlock name="Save and Close Grant"/>
+                    <executeBlock name="Check Error Grant"/>
+                </else>
+            </IfThenElse>
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//*[text()='###TASK_NAME###']/../../../../../../../..//label[text()='Name']/../..//input</findElement>
+                </if>
+                <then/>
+                <else>
+                    <executeBlock name="Done Grant"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Done Grant">
+             <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//*[text()='Manage Contexts']</findElement>
+                </if>
+                <then>
+                    <findElement isSkipCheckDomError="true" by="xpath">//*[text()='Manage Contexts']/../../../../../../..//button[@accesskey='S']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <findElement isDisplayed="true" by="xpath">//*[text()='###TASK_NAME###']/../../../../../../../..//span[text()='o']/../..//button</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+
+        <repeat inventoryName="MAIN_1_REPEAT">
+            <executeBlock navigationName="Manage Descriptive Flexfields" name="DESCRIPTIVE_FLEXFIELDS">
+                <parameters>
+                    <parameter name="MAIN_REPEAT_1" value="MAIN_1_REPEAT"/>
+                </parameters>
+            </executeBlock>
+            <repeat inventoryName="MAIN_5_REPEAT">
+                <executeBlock
+                    navigationName="Manage Descriptive Flexfields" name="SEGMENT_LABELS">
+                    <parameters>
+                        <parameter name="MAIN_REPEAT_5" value="MAIN_5_REPEAT"/>
+                    </parameters>
+                </executeBlock>
+            </repeat>
+            <executeBlock navigationName="Manage Descriptive Flexfields" name="Check_BI">
+                <parameters>
+                    <parameter name="MAIN_REPEAT_1" value="MAIN_1_REPEAT"/>
+                </parameters>
+            </executeBlock>
+            <repeat inventoryName="MAIN_2_REPEAT">
+                <executeBlock
+                    navigationName="Manage Descriptive Flexfields" name="GLOBAL_SEGMENTS_CREATE">
+                    <parameters>
+                        <parameter name="MAIN_REPEAT_2" value="MAIN_2_REPEAT"/>
+                    </parameters>
+                </executeBlock>
+            </repeat>
+            <repeat inventoryName="MAIN_2_REPEAT">
+                <executeBlock
+                    navigationName="Manage Descriptive Flexfields" name="Update Sequence Global Segments">
+                    <parameters>
+                        <parameter name="MAIN_REPEAT_2" value="MAIN_2_REPEAT"/>
+                    </parameters>
+                </executeBlock>
+            </repeat>
+            <executeBlock name="Save Grant"/>
+            <executeBlock name="Check Error Grant"/>
+            <repeat inventoryName="MAIN_3_REPEAT">
+                <executeBlock
+                    navigationName="Manage Descriptive Flexfields" name="CONTEXTS">
+                    <parameters>
+                        <parameter name="MAIN_REPEAT_3" value="MAIN_3_REPEAT"/>
+                    </parameters>
+                </executeBlock>
+                <repeat inventoryName="MAIN_4_REPEAT">
+                    <executeBlock
+                        navigationName="Manage Descriptive Flexfields" name="CONTEXT_SEGMENTS">
+                        <parameters>
+                            <parameter name="MAIN_REPEAT_4" value="MAIN_4_REPEAT"/>
+                        </parameters>
+                    </executeBlock>
+                </repeat>
+                <repeat inventoryName="MAIN_4_REPEAT">
+                    <executeBlock
+                        navigationName="Manage Descriptive Flexfields" name="Update Sequence Context Segments">
+                        <parameters>
+                            <parameter name="MAIN_REPEAT_4" value="MAIN_4_REPEAT"/>
+                        </parameters>
+                    </executeBlock>
+                </repeat>
+                <executeBlock name="Save and Close Grant"/>
+                <executeBlock name="Check Error Grant"/>
+            </repeat>
+            <executeBlock name="Check Grant"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

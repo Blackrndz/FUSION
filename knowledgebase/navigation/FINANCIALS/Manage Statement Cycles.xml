@@ -1,0 +1,365 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Statement Cycles</name>
+    <svn>
+        <xsd:revision>$Revision: 80010 $:</xsd:revision>
+        <xsd:author>$Author: kullada.somtragool $:</xsd:author>
+        <xsd:date>$Date: 2023-01-25 20:22:04 +0700 (Wed, 25 Jan 2023) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Statement%20Cycles.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Statement Cycles.xml 80010 2023-01-25 13:22:04Z kullada.somtragool $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Statement Cycles" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Create Receivables System Options"/>
+        </dependencies>
+        <block name="GO_TO_TASK">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//h1[text()='Manage Statement Cycles']</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a[@title='Go to Task']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Save">
+            <executeBlock name="GLOBAL_SAVE"/>
+        </block>
+        <block name="Save and Close">
+            <executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+        </block>
+        <block name="Search">
+            <findElement by="xpath">//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Add Row Header">
+            <executeBlock name="GLOBAL_SPECIFY_ADD">
+                <parameters>
+                    <parameter name="SPECIFY_XPATH" value="//table[@summary='Search Results']/../../../../.."/>
+                </parameters>
+            </executeBlock>
+            <!--<findElement by="xpath">//table[@summary='Search Results']/../../../../../../..//div[@title='Add Row']//a</findElement>
+			<click waitForPageToFinishRendering="true"/> -->
+        </block>
+        <block name="Add Row Cycle Dates">
+            <executeBlock name="GLOBAL_SPECIFY_ADD">
+                <parameters>
+                    <parameter name="SPECIFY_XPATH" value="//*[contains(text(),'Cycle Dates')]/../../../../../../.."/>
+                </parameters>
+            </executeBlock>
+            <!--<findElement by="xpath">//*[contains(text(),'Cycle Dates')]/../../../../../../..//div[@title='Add Row']//a</findElement>
+			<click waitForPageToFinishRendering="true"/> -->
+        </block>
+        <block name="Expand_Search">
+			<IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//*[text()='Search']/../../..//a[@title='Collapse Search']</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement isDisplayed="true" by="xpath">//*[text()='Search']/../../..//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+		</block>
+		<block name="FAKE_INV">
+			 <findElement by="xpath">//Label[text()='Name']/../..//input</findElement>
+            <sendKeys isENTERKey="true" isClear="true">
+                <valueKB
+                    inventoryName="Manage Statement Cycles - Manage Statement Cycles - DFF" columnName="Name"/>
+            </sendKeys>
+		</block>
+	   <block name="Search Name">
+			 <executeBlock name="Expand_Search"/>
+            <findElement by="xpath">//button[text()='Reset']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+           <executeBlock name="Expand_Search"/>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="Manage Statement Cycles - Manage Statement Cycles"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Expand_Search"/>
+            <executeBlock name="Search"/>
+			<executeBlock name="SCROLLBAR">
+                <parameters>
+                    <parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[contains(@summary,'Search Results')]/../..//div[contains(text(),'No results found.')]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[contains(@summary,'Search Results')][@_rowcount])[2]//tr[1]//td[2]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[contains(@summary,'Search Results')]/../..//div[contains(@id,'scroller')]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Search Results']//tr//td[2]//span[text()='<valueKB
+                            inventoryName="Manage Statement Cycles - Manage Statement Cycles" columnName="Name"/>']</parameter>
+                    <parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[@summary='Search Results']//tr//td[2]//input[@value='<valueKB
+                            inventoryName="Manage Statement Cycles - Manage Statement Cycles" columnName="Name"/>']</parameter>
+                    <parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Cycle_Name"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Cycle_Name"/>
+                </parameters>
+            </executeBlock>
+        </block>
+		<block name="Update_Cycle_Name">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<executeBlock name="Cycle Name"/>
+		</block>
+		 <block name="Create_Cycle_Name">
+			<executeBlock name="Add Row Header"/>
+			<findElement by="xpath">//table[@summary='Search Results']/../../../..//label[text()='Name']/../..//input</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<findElement by="xpath">//table[@summary='Search Results']/../../../..//label[text()='Name']/../..//input</findElement>
+                    <sendKeys isClear="true">
+                        <valueKB
+                            inventoryName="Manage Statement Cycles - Manage Statement Cycles" columnName="Name"/>
+                    </sendKeys>
+			<executeBlock name="Cycle Name"/>	
+			
+		 </block>
+        <block name="Cycle Name">
+           <!--Interval-->
+		<executeBlock name="SELECT_KB">
+		<parameters>
+			<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Interval']/../.."/>
+			<parameter name="INV_NAME" value="Manage Statement Cycles - Manage Statement Cycles"/>
+			<parameter name="COL_NAME" value="Interval"/>
+		</parameters>
+		</executeBlock>	
+		<!--Active-->
+		<executeBlock name="CHECKBOX">
+		<parameters>
+			<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//input[@type='checkbox']/../.."/>
+			<parameter name="INV_NAME" value="Manage Statement Cycles - Manage Statement Cycles"/>
+			<parameter name="COL_NAME" value="Active"/>
+		</parameters>
+	</executeBlock>
+	<!--Description-->
+	<executeBlock name="INPUT">
+		<parameters>
+			<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Description']/../.."/>
+			<parameter name="INV_NAME" value="Manage Statement Cycles - Manage Statement Cycles"/>
+			<parameter name="COL_NAME" value="Description"/>
+		</parameters>
+	</executeBlock>	
+        </block>
+        <block name="Search Cycle Dates">
+			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[contains(text(),'Cycle Dates')]/../../../../../../..//th[1]//input</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">(//table[@summary='Cycle Dates']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td//input)[1]</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<executeBlock name="GLOBAL_QUERY_BY_EXAMPLE"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+                    
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//*[contains(text(),'Cycle Dates')]/../../../../../../..//th[1]//input</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//*[contains(text(),'Cycle Dates')]/../../../../../../..//th[1]//input</findElement>
+							<sendKeys isENTERKey="true" isClear="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="Manage Statement Cycles - Cycle Dates" columnName="Business Unit"/>
+							</sendKeys>
+						</then>
+						<else>
+							<findElement by="xpath">(//table[@summary='Cycle Dates']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td//input)[1]</findElement>
+							<sendKeys isENTERKey="true" isClear="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="Manage Statement Cycles - Cycle Dates" columnName="Business Unit"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+	
+                   
+					<IfThenElse>
+						<if>
+							 <findElement by="xpath">//*[contains(text(),'Cycle Dates')]/../../../../../../..//th[2]//input</findElement>
+						</if>
+						<then>
+							 <findElement by="xpath">//*[contains(text(),'Cycle Dates')]/../../../../../../..//th[2]//input</findElement>
+							<sendKeys isENTERKey="true" isClear="true" waitForPageToFinishRendering="true">
+								<valueKB
+									inventoryName="Manage Statement Cycles - Cycle Dates" columnName="Statement Date"/>
+							</sendKeys>
+						</then>
+						<else>
+							<findElement by="xpath">(//table[@summary='Cycle Dates']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td//input)[2]</findElement>
+							<sendKeys isENTERKey="true" isClear="true" waitForPageToFinishRendering="true">
+								<valueKB
+									inventoryName="Manage Statement Cycles - Cycle Dates" columnName="Statement Date"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+               
+            <pause durationInSecs="2"/>
+            <IfThenElse>
+                <if>
+                    <findElement
+                            by="xpath">//*[contains(text(),'Cycle Dates')]/../../../../../../..//span[text()='<valueKB
+                            inventoryName="Manage Statement Cycles - Cycle Dates"
+                            columnName="Business Unit"/>']/../../..//span[text()='<valueKB
+                            inventoryName="Manage Statement Cycles - Cycle Dates" columnName="Statement Date"/>']</findElement>
+                </if>
+                <then>
+                    <findElement
+                            by="xpath">//*[contains(text(),'Cycle Dates')]/../../../../../../..//span[text()='<valueKB
+                            inventoryName="Manage Statement Cycles - Cycle Dates"
+                            columnName="Business Unit"/>']/../../..//span[text()='<valueKB
+                            inventoryName="Manage Statement Cycles - Cycle Dates" columnName="Statement Date"/>']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement
+                                    by="xpath">//*[contains(text(),'Cycle Dates')]/../../../../../../..//span[text()='<valueKB
+                                    inventoryName="Manage Statement Cycles - Cycle Dates"
+                                    columnName="Business Unit"/>']/../../..//input[@value='<valueKB
+                                    inventoryName="Manage Statement Cycles - Cycle Dates" columnName="Statement Date"/>']</findElement>
+                        </if>
+                        <then>
+                            <findElement
+                                    by="xpath">//*[contains(text(),'Cycle Dates')]/../../../../../../..//span[text()='<valueKB
+                                    inventoryName="Manage Statement Cycles - Cycle Dates"
+                                    columnName="Business Unit"/>']/../../..//input[@value='<valueKB
+                                    inventoryName="Manage Statement Cycles - Cycle Dates" columnName="Statement Date"/>']</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </then>
+                        <else>
+                            <executeBlock name="Add Row Cycle Dates"/>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="SEARCH..Business_Unit">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <pause durationInSecs="1"/>
+                    <break/>
+                </then>
+                <else>
+                    <findElement isDisplayed="true" by="xpath">//*[contains(text(),'Cycle Dates')]/../../../../../../..//label[text()='Business Unit']/..//input/..//a[@title="Search"]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Cycle Dates">
+			<!--Business Unit-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Cycle Dates']//label[text()='Business Unit']/../.."/>
+					<parameter name="INV_NAME" value="Manage Statement Cycles - Cycle Dates"/>
+					<parameter name="COL_NAME" value="Business Unit"/>
+					<parameter name="SEARCH_1" value="Business Unit"/>
+				</parameters>
+			</executeBlock>
+            <!-- Statement Date -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Cycle Dates']//label[text()='Statement Date']/../.."/>
+					<parameter name="INV_NAME" value="Manage Statement Cycles - Cycle Dates"/>
+					<parameter name="COL_NAME" value="Statement Date"/>
+				</parameters>
+			</executeBlock>
+            <!-- Skip -->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Cycle Dates']//td[string(//span[text()='Skip']/../..//@_d_index)+1]"/>
+					<parameter name="INV_NAME" value="Manage Statement Cycles - Cycle Dates"/>
+					<parameter name="COL_NAME" value="Skip"/>
+				</parameters>
+			</executeBlock>
+        </block>
+		<block name="Waiting_Expand">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//tr[contains(@class,'Select')]//a[@title='Collapse']</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement by="xpath">//tr[contains(@class,'Select')]//a[@title='Expand']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1" />
+				</else>
+			</IfThenElse>
+</block>
+<block name="Waiting_Collapse">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//tr[contains(@class,'Select')]//a[@title='Expand']</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement by="xpath">//tr[contains(@class,'Select')]//a[@title='Collapse']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1" />
+				</else>
+			</IfThenElse>
+</block>
+        
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="Manage Statement Cycles - Manage Statement Cycles">
+            <executeBlock name="Search Name"/>
+			 <executeBlock name="GLOBAL_SAVE"/>
+			 <repeat inventoryName="Manage Statement Cycles - Manage Statement Cycles - DFF">
+			<executeBlock name="Waiting_Expand" isRepeatUntilBreak="true"/>	
+				<executeBlock name="GLOBAL_ALL_DFF">
+                        <parameters>
+                            <parameter name="INV_NAME" value="Manage Statement Cycles - Manage Statement Cycles - DFF"/>
+                        </parameters>
+                    </executeBlock>
+				<executeBlock name="Waiting_Collapse" isRepeatUntilBreak="true"/>
+				<executeBlock name="GLOBAL_SAVE"/>	
+			 </repeat>
+            <repeat inventoryName="Manage Statement Cycles - Cycle Dates">
+                <executeBlock name="Search Cycle Dates"/>
+                <executeBlock name="Cycle Dates"/>
+                <executeBlock name="GLOBAL_SAVE"/>
+            </repeat>
+            <executeBlock name="GLOBAL_SAVE"/>
+        </repeat>
+        <executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+    </fusionNavigation>
+</navigation>

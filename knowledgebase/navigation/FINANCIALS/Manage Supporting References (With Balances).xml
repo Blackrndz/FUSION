@@ -1,0 +1,279 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Supporting References (With Balances)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Manage Supporting References" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<parameters>
+			<parameter name="INV_1" value="Manage Supporting References - With Balances"/>
+			<parameter name="INV_2" value="Manage Supporting References - With Balance Sources"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Name"/>']/../..//input</findElement>
+		</block>
+		<block name="Search_Supporting_References">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//div[contains(@id,'0:AP1:sdi1::ti')]/..//*[text()='With Balances']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//div[contains(@id,'0:AP1:sdi1::ti')]/..//*[text()='With Balances']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">(//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input/../..)[1]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="(//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input/../..)[1]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//table[@summary='Supporting Reference']//span[text()='<valueKB inventoryName="INV_1" columnName="Name"/>'][1]</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//table[@summary='Supporting Reference']//span[text()='<valueKB inventoryName="INV_1" columnName="Name"/>'][1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<executeBlock name="Update_Supporting_References"/>
+				</then>
+				<else>
+					<executeBlock name="Create_Supporting_References"/>
+				</else>
+			</IfThenElse>			
+		</block>
+			
+		<block name="Create_Supporting_References">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//div[@title='Supporting References']/../../../../../..//div[contains(@class,'p_AFDisabled')]/..//div[@title='Add Row']</findElement>
+				</if>
+				<then>
+					<error message="You can't assign more than 30 supporting references with the Balances option."/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Supporting References']/../../../../../..//div[@title='Add Row']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Supporting Reference']/../..//label[text()='Name']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Supporting Reference']/../..//label[text()='Short Name']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Short Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Supporting Reference']/../..//label[text()='Description']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Supporting Reference']/../..//label[text()='Status']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Status"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Save"/>
+		</block>
+		
+		<block name="Update_Supporting_References">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Supporting Reference']/../..//label[text()='Name']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Supporting Reference']/../..//label[text()='Description']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Supporting Reference']/../..//label[text()='Status']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Status"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Save"/>
+		</block>
+		
+		<block name="Search_Sources">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="(//th[(string(//span[text()='Subledger Application']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input/../..)[1]"/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Subledger Application"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//table[@summary='Sources']/..//*[text()='<valueKB inventoryName="INV_2" columnName="Event Class"/>'][1]</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//table[@summary='Sources']/..//*[text()='<valueKB inventoryName="INV_2" columnName="Source"/>'][1]</findElement>
+						</if>
+						<then>
+						</then>
+						<else>
+							<executeBlock name="Create_Sources"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<executeBlock name="Create_Sources"/>
+				</else>
+			</IfThenElse>
+		</block>
+			
+		<block name="Create_Sources">
+			<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Sources')]/../../../../../..//div[@title='Select and Add']</findElement>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//div[contains(@title,'Sources')]/../../../../../..//div[@title='Select and Add']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//div[contains(@title,'Sources')]/../../../../../..//div[@title='Select and Add']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//div[contains(@title,'Sources')]/../../../../../..//*[contains(@id,'0:AP1:AT2:_ATp:ATtb1::eoi')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[@title='Select and Add']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</else>
+			</IfThenElse>		
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Subledger Application']/../..//label[text()='Subledger Application']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Subledger Application"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Event Class']/../..//label[text()='Event Class']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Event Class"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Source Type']/../..//label[text()='Source Type']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Source Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Source']/../..//label[text()='Source']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Source"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Sources']/../../..//span[text()='<valueKB inventoryName="INV_2" columnName="Source"/>']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Select and Add: Sources']/../../../../../../..//*[@accesskey='l']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//span[contains(text(),'assign more than one source of the same subledger application and event class')]</findElement>
+				</if>
+				<then>
+					<error message="You can't assign more than one source of the same subledger application and event class."/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Save">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Save']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Save']/../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Save_and_Close">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='ave and Close']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='ave and Close']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='S']/../..</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='S']/../..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+			
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+			<repeat inventoryName="INV_1">
+				<executeBlock name="Search_Supporting_References"/>
+				<repeat inventoryName="INV_2">
+					<executeBlock name="Search_Sources"/>
+				</repeat>
+				<executeBlock name="Save"/>
+			</repeat>
+			<executeBlock name="Save_and_Close"/>
+	</fusionNavigation>
+</navigation>

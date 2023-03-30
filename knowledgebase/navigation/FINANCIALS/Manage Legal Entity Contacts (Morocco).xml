@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Legal Entity Contacts (Morocco)</name>
+	<svn>
+		<revision xmlns="http://xsdutility.configurator.erapidsuite.com">$Revision: $:</revision>
+		<author xmlns="http://xsdutility.configurator.erapidsuite.com">$Author: $:</author>
+		<date xmlns="http://xsdutility.configurator.erapidsuite.com">$Date: $:</date>
+		<headURL xmlns="http://xsdutility.configurator.erapidsuite.com">$HeadURL: $:</headURL>
+		<id xmlns="http://xsdutility.configurator.erapidsuite.com">$Id: $:</id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isIgnoreTaskSearchNavigation="true" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Legal Entity" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Administrator Profile Values"/>
+			<navigation name="Manage Legal Entity Contacts"/>
+		</dependencies>
+		<parameters>
+			<parameter name="INV_1" value="Manage Legal Entity Contacts - Morocco"/>
+			<parameter name="INV_2" value="Manage Legal Entity Contacts - Morocco - DFF"/>
+		</parameters>	
+		<block name="FAKE">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Legal Entity Name"/>']</findElement>	
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Legal Entity Name"/>']</findElement>		
+		</block>		
+		<executeBlock navigationName="Manage Legal Entity Contacts (United States)" name="MANUAL_SEARCH_TASK"/>
+		<repeat inventoryName="INV_1">
+            <executeBlock navigationName="Manage Legal Entity Contacts (United States)" name="STEP_FIRST_CONTACT">
+                <parameters>
+                    <parameter name="MAIN_1" value="INV_1"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock navigationName="Manage Legal Entity Contacts (United States)" name="ADDRESS_1_DETAILS">
+                <parameters>
+                    <parameter name="MAIN_1" value="INV_1"/>
+                </parameters>
+            </executeBlock>			
+			<executeBlock navigationName="Establish Enterprise Structures (Australia)" name="AU_FORMAT_ADDRESS_POPUP">
+                <parameters>
+                    <parameter name="AU_STYLE" value="INV_1"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock navigationName="Manage Legal Entity Contacts (United States)" name="ADDRESS_2_DETAILS">
+                <parameters>
+                    <parameter name="MAIN_1" value="INV_1"/>
+                </parameters>
+            </executeBlock>				
+			<repeat inventoryName="INV_2">
+				<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+					<parameters>
+						<parameter name="DFF_NAME" value="INV_2"/>
+					</parameters>
+				</executeBlock>				
+			</repeat>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[text()='Create Address' or text()='Edit Address']/../../../../../../..//span[text()='K']/..</findElement>
+				</if>
+				<then>			
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Create Address' or text()='Edit Address']/../../../../../../..//span[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="false" isSkipCheckDomError="true" isSkipBrowserTitleChange="true" />	
+					<pause durationInSecs="3"/>						
+				</then>
+				<else>	
+				</else>
+			</IfThenElse>				
+            <executeBlock navigationName="Manage Legal Entity Contacts (United States)" name="SET_PRIMARY">
+                <parameters>
+                    <parameter name="MAIN_1" value="INV_1"/>
+                </parameters>
+            </executeBlock>			
+            <executeBlock navigationName="Manage Legal Entity Contacts (United States)" name="STEP_END_CONTACT">
+                <parameters>
+                    <parameter name="MAIN_1" value="INV_1"/>
+                </parameters>
+            </executeBlock>		
+		</repeat>
+	</fusionNavigation>
+</navigation>

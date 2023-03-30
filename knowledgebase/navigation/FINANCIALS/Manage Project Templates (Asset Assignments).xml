@@ -1,0 +1,432 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Project Templates (Asset Assignments)</name>
+	<svn>
+		<xsd:revision>$Revision: 78987 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2022-07-13 12:03:48 +0700 (Wed, 13 Jul 2022) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Project%20Templates%20(Asset%20Assignments).xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Project Templates (Asset Assignments).xml 78987 2022-07-13 05:03:48Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Manage Project Templates" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Project Templates"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_0" value="Manage Project Templates - Template Information"/>
+			<parameter name="MAIN_REPEAT_1" value="Manage Project Templates - Asset Assignments"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//*[text()='<valueKB inventoryName="MAIN_REPEAT_0" columnName="Template Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//*[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Template Name"/>']/../..//input</findElement>
+		</block>
+		<block name="Project_Templates">
+			<findElement by="xpath">//button[text()='Reset']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="1"/>			
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Template Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_0"/>
+					<parameter name="COL_NAME" value="Template Name"/>
+				</parameters>
+			</executeBlock>		
+			<findElement by="xpath">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="1"/>	
+
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Search Results']//*[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Template Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Search Results']//*[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Template Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>										
+				</then>
+				<else>
+					<error message="Please Define data Project Template."/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Define_ASSET_INF">	
+				
+			<executeBlock name="GLOBAL_SPECIFY_ADD">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//*[contains(@summary,'Asset Assignments')]/../../../.."/>
+				</parameters>
+			</executeBlock>	
+
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Asset')]/../../../../../../..//label[text()='Asset Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Asset Name"/>
+					<parameter name="SEARCH_1" value="Asset Name"/>
+				</parameters>
+			</executeBlock>	
+
+			<findElement by="xpath">//div[contains(text(),'Asset')]/../../../../../../..//span[text()='S']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+
+		</block>
+		<block name="Update_ASSET_INF"/>		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_0">
+			<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="Project_Templates"/>
+			
+			<findElement by="xpath">//img[@title='Go to Project Setup Options']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//img[@alt='Go to Project Setup Options']/../../..//td[2]//a</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//img[@alt='Go to Project Setup Options']/../../..//td[2]//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//img[@title='Go to Project Setup Options']/../../..//td[2]//a</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//img[@title='Go to Project Setup Options']/../../..//td[2]//a</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[@class='x1ga']/../../..//a[text()='Financial']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[@class='x1ga']/../../..//a[text()='Financial']</findElement>
+					<click waitForPageToFinishRendering="true"/>	
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//a[text()='Financial']/../../../..//td[2]//a</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//a[text()='Financial']/../../../..//td[2]//a</findElement>
+							<click waitForPageToFinishRendering="true"/>	
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//a[text()='Financial']/../../../..//a/*[contains(@title,'Go to Financial')]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//a[text()='Financial']/../../../..//a/*[contains(@title,'Go to Financial')]</findElement>
+									<click waitForPageToFinishRendering="true"/>	
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			
+
+			<findElement by="xpath">//button[text()='Collapse All']</findElement>
+			<click waitForPageToFinishRendering="true"/>	
+
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//*[text()='Asset Assignments']/../../../..//a[@title='Expand Asset Assignments']</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//*[text()='Asset Assignments']/../../../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>						
+				</then>
+				<else>
+					<break/>
+				</else>
+			</IfThenElse>
+
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Grouping Level Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>					
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="Grouping Level Type"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>None</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>					
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath">//*[contains(text(),'Asset Assignments')]/../../../../../../..//*[text()='None']/..//input[@checked]</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Asset Assignments')]/../../../../../../..//*[text()='None']/..//input</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="1"/>		
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Warning')]/../../../../../../..//*[text()='Y']/..</findElement>
+										</if>
+										<then>
+											<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Warning')]/../../../../../../..//*[text()='Y']/..</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="1"/>	
+										</then>
+										<else/>
+									</IfThenElse>	
+								</else>
+							</IfThenElse>									
+						</then>
+						<else/>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="Grouping Level Type"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Common costs</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>					
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath">//*[contains(text(),'Asset Assignments')]/../../../../../../..//*[text()='Common costs']/..//input[@checked]</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Asset Assignments')]/../../../../../../..//*[text()='Common costs']/..//input</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="1"/>		
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Warning')]/../../../../../../..//*[text()='Y']/..</findElement>
+										</if>
+										<then>
+											<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Warning')]/../../../../../../..//*[text()='Y']/..</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="1"/>	
+										</then>
+										<else/>
+									</IfThenElse>	
+								</else>
+							</IfThenElse>									
+						</then>
+						<else/>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="Grouping Level Type"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Specific assets</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>					
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath">//*[contains(text(),'Asset Assignments')]/../../../../../../..//*[text()='Specific assets']/..//input[@checked]</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Asset Assignments')]/../../../../../../..//*[text()='Specific assets']/..//input</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="1"/>		
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Warning')]/../../../../../../..//*[text()='Y']/..</findElement>
+										</if>
+										<then>
+											<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Warning')]/../../../../../../..//*[text()='Y']/..</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="1"/>	
+										</then>
+										<else/>
+									</IfThenElse>	
+								</else>
+							</IfThenElse>
+							<executeBlock name="SPECIFY_QUERY_BY_EXAMPLE">
+								<parameters>
+									<parameter name="XPATH" value="//*[contains(@summary,'Asset Assignments')]/../../../.."/>
+								</parameters>
+							</executeBlock>	
+
+							<findElement by="xpath">(//th//input)[1]</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Asset Name"/>
+							</sendKeys>				
+
+							<executeBlock name="SCROLLBAR">
+								<parameters>
+									<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//div[contains(text(),'No data to display.')]//table[@summary='Asset Assignments']"/>
+									<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Asset Assignments']//tr)[1]//td[1]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Asset Assignments']/../../../../../../..//div[contains(@id,'scroller')]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Asset Assignments']//tr//*[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Asset Name"/>']</parameter>
+									<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Define_ASSET_INF"/>
+									<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_ASSET_INF"/>
+								</parameters>
+							</executeBlock>							
+						</then>
+						<else/>
+					</IfThenElse>					
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="Asset Name"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText></valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>					
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath">//*[contains(text(),'Asset Assignments')]/../../../../../../..//*[text()='Specific assets']/..//input[@checked]</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Asset Assignments')]/../../../../../../..//*[text()='Specific assets']/..//input</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="1"/>		
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Warning')]/../../../../../../..//*[text()='Y']/..</findElement>
+										</if>
+										<then>
+											<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Warning')]/../../../../../../..//*[text()='Y']/..</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<pause durationInSecs="1"/>	
+										</then>
+										<else/>
+									</IfThenElse>	
+								</else>
+							</IfThenElse>
+							<executeBlock name="SPECIFY_QUERY_BY_EXAMPLE">
+								<parameters>
+									<parameter name="XPATH" value="//*[contains(@summary,'Asset Assignments')]/../../../.."/>
+								</parameters>
+							</executeBlock>	
+
+							<findElement by="xpath">(//th//input)[1]</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Asset Name"/>
+							</sendKeys>				
+
+							<executeBlock name="SCROLLBAR">
+								<parameters>
+									<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//div[contains(text(),'No data to display.')]//table[@summary='Asset Assignments']"/>
+									<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Asset Assignments']//tr)[1]//td[1]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Asset Assignments']/../../../../../../..//div[contains(@id,'scroller')]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Asset Assignments']//tr//*[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Asset Name"/>']</parameter>
+									<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Define_ASSET_INF"/>
+									<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_ASSET_INF"/>
+								</parameters>
+							</executeBlock>									
+						</then>
+						<else/>
+					</IfThenElse>							
+				
+				</else>
+			</IfThenElse>	
+			
+
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Edit Project Template')]/../../../../../../../../../../..//span[text()='o']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[contains(text(),'Edit Project Template')]/../../../../../../../../../../..//span[text()='o']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>				
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse> 				
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//a[@title='Save']</findElement>
+				</if>
+				<then>
+					<executeBlock name="GLOBAL_SAVE"/>	
+					<findElement by="xpath">//a[@title='Save']</findElement>
+					<click waitForPageToFinishRendering="true"/>	
+					<findElement by="xpath">//span[text()='S']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>					
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//span[text()='Save']/../../..//a[not(@onclick)]</findElement>
+						</if>
+						<then>
+							<executeBlock name="GLOBAL_SAVE"/>	
+							<findElement by="xpath">//span[text()='Save']/../../..//a[not(@onclick)]</findElement>
+							<click waitForPageToFinishRendering="true"/>	
+							<findElement by="xpath">//span[text()='S']/..</findElement>
+							<click waitForPageToFinishRendering="true"/>							
+						</then>
+						<else>
+				
+						</else>
+					</IfThenElse> 		
+				</else>
+			</IfThenElse> 				
+		</repeat>
+		</repeat>
+	</fusionNavigation>
+</navigation>

@@ -1,0 +1,374 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Receiving Parameters</name>
+	<svn>
+		<xsd:revision>$Revision: 80010 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2023-01-25 20:22:04 +0700 (Wed, 25 Jan 2023) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Receiving%20Parameters.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Receiving Parameters.xml 80010 2023-01-25 13:22:04Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+			isBatchingBasedOnRootInventoryUniqueRecords="true"
+			taskName="Manage Receiving Parameters" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Inventory Organizations"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Receiving Parameters - Receiving Parameters"/>
+		</parameters>
+		<block name="GO_TO_TASK">
+			<findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a[@title='Go to Task']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Save">
+			<executeBlock name="GLOBAL_SAVE"/>
+		</block>
+		<block name="Search...Organization">
+
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Organization']/../..//span/a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<block name="Change_Organization">
+
+			<executeBlock name="Search...Organization" isRepeatUntilBreak="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//span[text()='d']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//span[text()='d']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Organization']/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Organization']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Equals</valueText>
+							</select>								
+						</then>
+						<else>
+							
+							<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Organization']/../..//input/..//div//li[text()='Equals']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true" />
+						</else>
+					</IfThenElse>
+			<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Organization']/../..//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" isReplaceAnd="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Organization"/>
+			</sendKeys>
+			<findElement by="xpath" isDisplayed="true">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement
+							by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//td[text()='<valueKB
+								inventoryName="MAIN_REPEAT_1" columnName="Organization"/>']</findElement>
+				</if>
+				<then>
+					<findElement
+							by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//td[text()='<valueKB
+								inventoryName="MAIN_REPEAT_1" columnName="Organization"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<error message="This 'Organization' doesn't exist."/>
+				</else>
+			</IfThenElse>
+			<findElement by="xpath">//span[text()='K']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+
+		<block name="LK_Organization">
+			<IfThenElse>
+				<if>
+					<findElement
+							by="xpath">//label[text()='Inventory Organization']/../..//span[text()='<valueKB
+								inventoryName="MAIN_REPEAT_1" columnName="Organization"/>']</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//button[text()='Change Organization']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<IfThenElse>
+						<if>
+							<findElement
+									by="xpath">//div[text()='Warning']/../../../../../../..//button[text()='Yes']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[text()='Warning']/../../../../../../..//button[text()='Yes']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+					<executeBlock name="Change_Organization"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Select_ORG">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='Select Organization']</findElement>
+				</if>
+				<then>
+					<executeBlock name="Change_Organization"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Receiving_Parameters">
+			<!--Ship-to Exception Action-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Ship-to Exception Action']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Ship-to Exception Action"/>
+				</parameters>
+			</executeBlock>
+			<!--ASN Control Action-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='ASN Control Action']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="ASN Control Action"/>
+				</parameters>
+			</executeBlock>
+			<!--Early Receipt Tolerance in Days-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Early Receipt Tolerance in Days']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Early Receipt Tolerance in Days"/>
+				</parameters>
+			</executeBlock>
+			<!--Late Receipt Tolerance in Days-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Late Receipt Tolerance in Days']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Late Receipt Tolerance in Days"/>
+				</parameters>
+			</executeBlock>
+			<!--Receipt Days Exceed Action-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Receipt Days Exceed Action']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Receipt Days Exceed Action"/>
+				</parameters>
+			</executeBlock>
+			<!--Over-Receipt Tolerance-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Over-Receipt Tolerance' or text()='Overreceipt Tolerance']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Over-Receipt Tolerance"/>
+				</parameters>
+			</executeBlock>
+			<!--Over-Receipt Action-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Over-Receipt Action' or text()='Overreceipt Action']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Over-Receipt Action"/>
+				</parameters>
+			</executeBlock>
+			<!--General - Receipt Routing-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tbody/tr[9]/td[2]/../..//label[text()='Receipt Routing']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="General - Receipt Routing"/>
+				</parameters>
+			</executeBlock>
+			<!--Use quality inspection plan-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Use quality inspection plan']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Use quality inspection plan"/>
+				</parameters>
+			</executeBlock>
+			<!--Allow substitute receipts-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allow substitute receipts']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Allow substitute receipts"/>
+				</parameters>
+			</executeBlock>
+			<!--Allow unordered receipts-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allow unordered receipts']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Allow unordered receipts"/>
+				</parameters>
+			</executeBlock>
+			<!--Enforce blind receiving-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enforce blind receiving']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Enforce blind receiving"/>
+				</parameters>
+			</executeBlock>
+			<!--Print receipt traveler-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Print receipt traveler']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Print receipt traveler"/>
+				</parameters>
+			</executeBlock>
+			<!--Include closed purchase orders for receipts-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Include closed purchase orders for receipts']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Include closed purchase orders for receipts"/>
+				</parameters>
+			</executeBlock>
+			<!--Allow routing override-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allow routing override']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Allow routing override"/>
+				</parameters>
+			</executeBlock>
+			<!--Process all lines together-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Process all lines together']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Process all lines together"/>
+				</parameters>
+			</executeBlock>
+			<!--Print shipping documents for returns to suppliers-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Print shipping documents for returns to suppliers']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Print shipping documents for returns to suppliers"/>
+				</parameters>
+			</executeBlock>
+			<!--Print shipping documents for drop ship orders-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Print shipping documents for drop ship orders']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Print shipping documents for drop ship orders"/>
+				</parameters>
+			</executeBlock>
+			<!--Print shipping documents for return material authorizations-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Print shipping documents for return material authorizations']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Print shipping documents for return material authorizations"/>
+				</parameters>
+			</executeBlock>
+			<!--Publish transactional business events-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Publish transactional business events']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Publish transactional business events"/>
+				</parameters>
+			</executeBlock>
+			<!--Allow defaulting of lots and serial numbers from ASN-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allow defaulting of lots and serial numbers from ASN']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Allow defaulting of lots and serial numbers from ASN"/>
+				</parameters>
+			</executeBlock>
+			<!--Generation-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Generation']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Generation"/>
+				</parameters>
+			</executeBlock>
+			<!--Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Next Number-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Next Number']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Next Number"/>
+				</parameters>
+			</executeBlock>
+			<!--RMA - Receipt Routing-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='RMA']/../../../../../../..//label[text()='Receipt Routing']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="RMA - Receipt Routing"/>
+				</parameters>
+			</executeBlock>
+			<!--RMA Validate Lots-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='RMA Validate Lots']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="RMA Validate Lots"/>
+				</parameters>
+			</executeBlock>
+			<!--Validate serial numbers-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Validate serial numbers']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Validate serial numbers"/>
+				</parameters>
+			</executeBlock>
+		</block>
+
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="Select_ORG"/>
+			<executeBlock name="LK_Organization"/>
+			<executeBlock name="Receiving_Parameters"/>
+			<executeBlock name="Save"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

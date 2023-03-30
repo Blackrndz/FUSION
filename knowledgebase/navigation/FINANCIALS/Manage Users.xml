@@ -1,0 +1,615 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Users</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" defaultBatchSize="3"
+        taskName="Manage Users" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage HCM Role Provisioning Rules"/>
+			<navigation name="Manage Departments"/>
+			<navigation name="Manage Job"/>
+			<navigation name="Manage Person Types"/>
+        </dependencies>
+        <block name="Go To Task">
+            <findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Advanced Search">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//*[text()='Advanced Search']/../..//div</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement by="xpath">//a[@title='Advanced Search']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Search...Reporting Manager">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                </if>
+                <then>
+                    <pause durationInSecs="1"/>
+                    <break/>
+                </then>
+                <else>
+                    <findElement by="xpath">//a[@title='Search: Reporting Manager']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Search...Organization">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                </if>
+                <then>
+                    <pause durationInSecs="1"/>
+                    <break/>
+                </then>
+                <else>
+                    <findElement by="xpath">//a[@title='Search: Organization']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Search Name and Primary E-Mail">
+            <defineVariable name="FULL_NAME" type="text"/>
+            <setVariable name="FULL_NAME" append="false">
+                <valueText/>
+            </setVariable>
+            <setVariable name="FULL_NAME" append="true">
+                <valueKB inventoryName="Manage Users - Users" columnName="Last Name"/>
+            </setVariable>
+            <setVariable name="FULL_NAME" append="true">, </setVariable>
+            <setVariable name="FULL_NAME" append="true">
+                <valueKB inventoryName="Manage Users - Users" columnName="First Name"/>
+            </setVariable>
+            <findElement by="xpath">//*[text()='Advanced Search']/../../../../../../..//label[text()='Name']/../..//input</findElement>
+            <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                <valueVariable name="FULL_NAME"/>
+            </sendKeys>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//*[text()='Advanced Search']/../../../../../../..//label[text()='Primary E-Mail' or text()='Primary Email']/../..//input</findElement>
+                </if>
+                <then>
+					<findElement by="xpath">//*[text()='Advanced Search']/../../../../../../..//label[text()='Primary E-Mail' or text()='Primary Email']/../..//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="Manage Users - Users" columnName="E-Mail"/>
+					</sendKeys>
+                </then>
+                <else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//*[text()='Advanced Search']/../../../../../../..//label[text()='Primary Email']/../..//input</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//*[text()='Advanced Search']/../../../../../../..//label[text()='Primary Email']/../..//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="Manage Users - Users" columnName="E-Mail"/>
+							</sendKeys>
+						</then>
+						<else>
+
+						</else>
+					</IfThenElse>	
+                </else>
+            </IfThenElse>			
+
+        </block>		
+        <block name="Search Button">
+            <findElement by="xpath">//span[text()='e']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Done Button">
+            <findElement by="xpath">//span[text()='Done']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Create New">
+            <findElement by="xpath">//a/img[@title='Create']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <pause durationInSecs="2"/>
+        </block>
+        <block name="SAVE_AND_CLOSE">
+            <executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+            <pause durationInSecs="2"/>
+        </block>
+        <block name="Create User">
+            <!--Input Column Last Name-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Personal Details']/../../../../../../..//label[text()='Last Name']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="Last Name"/>
+				</parameters>
+			</executeBlock>
+            <!--Input Column First Name-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Personal Details']/../../../../../../..//label[text()='First Name']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="First Name"/>
+				</parameters>
+			</executeBlock>
+            <!--Input Column Middle Name-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Personal Details']/../../../../../../..//label[text()='Middle Names']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="Middle Names"/>
+				</parameters>
+			</executeBlock>
+            <!--Select Column Title-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Personal Details']/../../../../../../..//label[text()='Title']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="Title"/>
+				</parameters>
+			</executeBlock>
+            <!--Input Column E-Mail-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Personal Details']/../../../../../../..//label[text()='E-Mail' or text()='Email']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="E-Mail"/>
+				</parameters>
+			</executeBlock>
+            <!--Input Column Phone-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Personal Details']/../../../../../../..//label[text()='Phone']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="Phone"/>
+				</parameters>
+			</executeBlock>
+            <!--Input Column Work Fax-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Personal Details']/../../../../../../..//label[text()='Work Fax']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="Work Fax"/>
+				</parameters>
+			</executeBlock>
+            <!--Input Column User Name-->
+			<IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB
+                                    inventoryName="Manage Users - Users" columnName="User Name"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+				<IfThenElse>
+                        <if>
+                            <findElement by="xpath">//label[text()='Enter user name']</findElement>
+                        </if>
+                        <then>
+							 <findElement by="xpath">//*[text()='User Details']/../../../../../../..//label[text()='User Name']/../..//input</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                            <findElement by="xpath">//*[text()='User Details']/../../../../../../..//label[text()='Enter user name']//following::tr[1]//input</findElement>
+                            <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                                <valueKB
+                                    inventoryName="Manage Users - Users" columnName="User Name"/>
+                            </sendKeys>
+						</then>
+                        <else>
+							<IfThenElse>
+								<if>
+									<findElement 
+											by="xpath">//*[text()='User Details']/../../../../../../..//label[text()='User Name']/../..//input[@value='<valueKB
+											inventoryName="Manage Users - Users" columnName="User Name"/>']</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//*[text()='User Details']/../../../../../../..//label[text()='User Name']/../..//input</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//*[text()='User Details']/../../../../../../..//label[text()='User Name']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB
+											inventoryName="Manage Users - Users" columnName="User Name"/>
+									</sendKeys>
+								</else>
+							</IfThenElse>
+                        </else>
+                    </IfThenElse>
+                    
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Checkbox Send user name and password-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='User Notification Preferences']/../../../../../../..//label[text()='Send user name and password']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="Send user name and password"/>
+				</parameters>
+			</executeBlock>
+            <!--Select Column Person Type-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Employment Information']/../../../../../../..//label[text()='Person Type']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="Person Type"/>
+				</parameters>
+			</executeBlock>
+            <!--Lov Column Legal Employer-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Employment Information']/../../../../../../..//label[text()='Legal Employer']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="Legal Employer"/>
+					<parameter name="SEARCH_1" value="Legal Employer"/>
+				</parameters>
+			</executeBlock>
+			<!--Lov Column Business Unit-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Employment Information']/../../../../../../..//label[text()='Business Unit']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="Business Unit"/>
+					<parameter name="SEARCH_1" value="Business Unit"/>
+				</parameters>
+			</executeBlock>
+            <!--Lov Column Job-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Employment Information']/../../../../../../..//label[text()='Job']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="Job"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+            <!--Lov Column Grade-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Employment Information']/../../../../../../..//label[text()='Grade']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="Grade"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+            <!--Lov Column Department-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Employment Information']/../../../../../../..//label[text()='Department']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="Department"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+            <!--Lov Column Location-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Employment Information']/../../../../../../..//label[text()='Location']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="Location"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+            <!--Input Column Mail Stop-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Employment Information']/../../../../../../..//label[text()='Mail Stop']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="Mail Stop"/>
+				</parameters>
+			</executeBlock>
+            <!--Lov Column Manger-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB
+                                    inventoryName="Manage Users - Users" columnName="Manager Name"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB
+                                    inventoryName="Manage Users - Users" columnName="Manager E-Mail"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB
+                                    inventoryName="Manage Users - Users" columnName="Manager Name"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText>""</valueText>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement
+                                    by="xpath">//*[text()='Employment Information']/../../../../../../..//label[text()='Manager']/../..//input[@value='<valueKB
+                                    inventoryName="Manage Users - Users" columnName="Manager Name"/>']</findElement>
+                        </if>
+                        <then/>
+                        <else>
+                            <IfThenElse>
+                                <if>
+                                    <findElement by="xpath">//*[text()='Employment Information']/../../../../../../..//label[text()='Manager']/../..//input</findElement>
+                                </if>
+                                <then>
+                                    <executeBlock
+                                    name="Search...Manager" isRepeatUntilBreak="true"/>
+                                    <findElement by="xpath">//div/div/div/div/table[@style="position: relative;"]/tbody/tr/td/div//a[text()='Search...']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <findElement by="xpath">//div[contains(text(),'Search and Select: Name')]/../../../../../../..//label[text()='Name']/../..//input</findElement>
+                                    <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="Manage Users - Users" columnName="Manager Name"/>
+                                    </sendKeys>
+                                    <findElement by="xpath">//div[contains(text(),'Search and Select: Name')]/../../../../../../..//label[text()='E-Mail' or text()='Email']/../..//input</findElement>
+                                    <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="Manage Users - Users" columnName="Manager E-Mail"/>
+                                    </sendKeys>
+                                    <findElement by="xpath">//div[contains(text(),'Search and Select: Name')]/../../../../../../..//button[text()='Search']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement
+                                    by="xpath">//div[contains(text(),'Search and Select: Name')]/../../../../../../..//tr[td[1]
+													[contains(text(),'<valueKB
+                                    inventoryName="Manage Users - Users"
+                                    columnName="Manager Name"/>')] and td[4][text()='<valueKB
+                                    inventoryName="Manage Users - Users" columnName="Manager E-Mail"/>']]/td[1]
+											</findElement>
+                                    </if>
+                                    <then>
+                                    <findElement
+                                    by="xpath">//div[contains(text(),'Search and Select: Name')]/../../../../../../..//tr[td[1]
+													[contains(text(),'<valueKB
+                                    inventoryName="Manage Users - Users"
+                                    columnName="Manager Name"/>')] and td[4][text()='<valueKB
+                                    inventoryName="Manage Users - Users" columnName="Manager E-Mail"/>']]/td[1]/../../../../../..//td[1]</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    </then>
+                                    <else>
+                                    <error message="The field 'Manager' doesn't exist"/>
+                                    </else>
+                                    </IfThenElse>
+                                    <findElement by="xpath">//div[contains(text(),'Search and Select: Name')]/../../../../../../..//button[text()='OK']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="Manage Users - Users" columnName="Manager Name"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                     <valueText/>
+                                    </rightOperand>
+                                </comparison>
+								 <comparison operator="EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="Manage Users - Users" columnName="Manager E-Mail"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                     <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                             <IfThenElse>
+									<if>
+										<findElement
+												by="xpath">//*[text()='Employment Information']/../../../../../../..//label[text()='Manager']/../..//input[@value='<valueKB
+												inventoryName="Manage Users - Users" columnName="Manager Name"/>']</findElement>
+									</if>
+									<then/>
+									<else>
+										<IfThenElse>
+											<if>
+												<findElement by="xpath">//*[text()='Employment Information']/../../../../../../..//label[text()='Manager']/../..//input</findElement>
+											</if>
+											<then>
+												<executeBlock
+												name="Search...Manager" isRepeatUntilBreak="true"/>
+												<findElement by="xpath">//div/div/div/div/table[@style="position: relative;"]/tbody/tr/td/div//a[text()='Search...']</findElement>
+												<click waitForPageToFinishRendering="true"/>
+												<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select: Name')]/../../../../../../..//label[text()='Name']/../..//input</findElement>
+												<sendKeys isClear="true" waitForPageToFinishRendering="true">
+													<valueKB inventoryName="Manage Users - Users" columnName="Manager Name"/>
+												</sendKeys>
+												<findElement by="xpath">//div[contains(text(),'Search and Select: Name')]/../../../../../../..//button[text()='Search']</findElement>
+												<click waitForPageToFinishRendering="true"/>
+												<IfThenElse>
+												<if>
+												<findElement
+												by="xpath">//div[contains(text(),'Search and Select: Name')]/../../../../../../..//tr[td[1]
+																[contains(text(),'<valueKB
+												inventoryName="Manage Users - Users"
+												columnName="Manager Name"/>')]]/td[1]
+														</findElement>
+												</if>
+												<then>
+												<findElement
+												by="xpath">//div[contains(text(),'Search and Select: Name')]/../../../../../../..//tr[td[1]
+																[contains(text(),'<valueKB
+												inventoryName="Manage Users - Users"
+												columnName="Manager Name"/>')]]/td[1]/../../../../../..//td[1]</findElement>
+												<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else>
+												<error message="The field 'Manager' doesn't exist"/>
+												</else>
+												</IfThenElse>
+												<findElement by="xpath">//div[contains(text(),'Search and Select: Name')]/../../../../../../..//button[text()='OK']</findElement>
+												<click waitForPageToFinishRendering="true"/>
+											</then>
+											<else/>
+										</IfThenElse>
+									</else>
+								</IfThenElse>
+                        </then>
+                        <else>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="EQUAL">
+											<leftOperand>
+											<valueKB
+											inventoryName="Manage Users - Users" columnName="Manager Name"/>
+											</leftOperand>
+											<rightOperand>
+											<valueText>""</valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement by="xpath">//*[text()='Employment Information']/../../../../../../..//label[text()='Manager']/../..//input</findElement>
+									<sendKeys isClear="true">
+										<valueKB
+											inventoryName="Manage Users - Users" columnName="Manager Name"/>
+									</sendKeys>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+            <!--Resource Role-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Resource Role']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="Resource Role"/>
+				</parameters>
+			</executeBlock>
+            <!--Reporting Manager -->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Reporting Manager']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="Reporting Manager"/>
+					<parameter name="SEARCH_1" value="Manager"/>
+				</parameters>
+			</executeBlock>
+            <!--Organization-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Organization']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="Organization"/>
+					<parameter name="SEARCH_1" value="Organization"/>
+				</parameters>
+			</executeBlock>
+            <!--Input Column Hire Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Personal Details']/../../../../../../..//label[text()='Hire Date']/../.."/>
+					<parameter name="INV_NAME" value="Manage Users - Users"/>
+					<parameter name="COL_NAME" value="Hire Date"/>
+				</parameters>
+			</executeBlock>
+        </block>
+        
+        <block name="Search...Manager">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                </if>
+                <then>
+                    <pause durationInSecs="1"/>
+                    <break/>
+                </then>
+                <else>
+                    <findElement by="xpath">//*[text()='Employment Information']/../../../../../../..//label[text()='Manager']/../..//input/..//a</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <executeBlock name="Advanced Search"/>
+        <repeat inventoryName="Manage Users - Users">
+            <executeBlock name="Search Name and Primary E-Mail"/>
+            <!--//a[contains(text(),'RAPID1, Buyer')] and //a[contains(text(),'Buyer@rapidesuite.com')]-->
+            <executeBlock name="Search Button"/>
+
+            <defineVariable name="FULL_NAME" type="text"/>
+            <setVariable name="FULL_NAME" append="false">
+                <valueText/>
+            </setVariable>
+            <setVariable name="FULL_NAME" append="true">
+                <valueKB inventoryName="Manage Users - Users" columnName="Last Name"/>
+            </setVariable>
+            <setVariable name="FULL_NAME" append="true">, </setVariable>
+            <setVariable name="FULL_NAME" append="true">
+                <valueKB inventoryName="Manage Users - Users" columnName="First Name"/>
+            </setVariable>		
+			
+            <defineVariable name="FULL_EMAIL" type="text"/>
+            <setVariable name="FULL_EMAIL" append="false">
+                <valueText/>
+            </setVariable>
+            <setVariable name="FULL_EMAIL" append="true">
+                <valueKB inventoryName="Manage Users - Users" columnName="E-Mail"/>
+            </setVariable>			
+			
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//table[@summary='Search Results']//tr//div[div//a[text()=translate("<valueVariable name="FULL_NAME"/>","'",'')] and div//a[text()=translate("<valueVariable name="FULL_EMAIL"/>","'",'')]]</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//table[@summary='Search Results']//tr//div[div//a[text()=translate("<valueVariable name="FULL_NAME"/>","'",'')] and div//a[text()=translate("<valueVariable name="FULL_EMAIL"/>","'",'')]]//a[text()=translate("<valueVariable name="FULL_NAME"/>","'",'')]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <executeBlock name="Create User"/>
+                </then>
+                <else>
+                    <executeBlock name="Create New"/>
+                    <executeBlock name="Create User"/>
+                </else>
+            </IfThenElse>
+            <executeBlock name="SAVE_AND_CLOSE"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

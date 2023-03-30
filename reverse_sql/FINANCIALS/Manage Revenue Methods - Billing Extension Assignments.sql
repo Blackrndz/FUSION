@@ -1,0 +1,43 @@
+/* ****************************************************************************
+ * $Revision: 79304 $:
+ * $Author: tanawat.wongjan $:
+ * $Date: 2022-09-08 14:52:18 +0700 (Thu, 08 Sep 2022) $:
+ * $HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/reverse_sql/FINANCIALS/Manage%20Revenue%20Methods%20-%20Billing%20Extension%20Assignments.sql $:
+ * $Id: Manage Revenue Methods - Billing Extension Assignments.sql 79304 2022-09-08 07:52:18Z tanawat.wongjan $:
+ * ****************************************************************************
+ * Description:
+ * ************************************************************************** */
+
+--RSC_PREREQUISITE_OBJECTS=PJB_BILLING_METHODS_VL
+--RSC_PREREQUISITE_OBJECTS=PJB_BILLING_ASSIGNMENTS
+ 
+SELECT pjbBMethodE0.BILL_METHOD_NAME RES_REVENUE_METHOD_NAME
+,(SELECT MEANING FROM FND_LOOKUPS
+	WHERE LOOKUP_CODE = pjbBMethodE0.METHOD_CFG_TYPE
+	AND LOOKUP_TYPE = 'ORA_PJB_CFG_BILL_METHOD_TYPE') RES_METHOD_ASSIGNMENT_TYPE
+,(SELECT BILLING_EXTENSION_NAME FROM PJB_BILLING_EXTENSIONS
+		WHERE BILLING_EXTENSION_ID = pjbBAssignE0.BILLING_EXTENSION_ID)  RES_NAME
+,(SELECT MEANING FROM FND_LOOKUPS
+	WHERE LOOKUP_TYPE = 'PJB_STATUS'
+	AND LOOKUP_CODE = pjbBAssignE0.ACTIVE_FLAG) RES_STATUS
+	
+ ,pjbBAssignE0.LAST_UPDATED_BY RSC_LAST_UPDATED_BY
+ ,pjbBAssignE0.LAST_UPDATE_DATE RSC_LAST_UPDATE_DATE
+ ,pjbBAssignE0.CREATED_BY RSC_CREATED_BY
+ ,pjbBAssignE0.CREATION_DATE RSC_CREATION_DATE
+ ,NULL RSC_LEDGER_ID
+ ,NULL RSC_CHART_OF_ACCOUNTS_ID
+ ,NULL RSC_BUSINESS_UNIT_ID
+ ,NULL RSC_LEGAL_ENTITY_ID
+ ,NULL RSC_ORGANIZATION_ID
+ ,NULL RSC_BUSINESS_GROUP_ID
+ ,NULL RSC_ENTERPRISE_ID
+,NULL RSC_COUNTRY_ID
+
+FROM PJB_BILLING_METHODS_VL pjbBMethodE0
+ ,PJB_BILLING_ASSIGNMENTS pjbBAssignE0
+ 
+WHERE pjbBMethodE0.BILL_METHOD_ID = pjbBAssignE0.BILL_METHOD_ID
+AND pjbBMethodE0.BILL_METHOD_FLAG = 'R'
+AND pjbBAssignE0.TRANSACTION_TYPE IS NULL
+ORDER BY pjbBMethodE0.BILL_METHOD_NAME,pjbBAssignE0.PROCESSING_ORDER

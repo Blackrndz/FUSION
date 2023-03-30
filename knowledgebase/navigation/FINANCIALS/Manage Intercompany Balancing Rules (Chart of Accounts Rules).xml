@@ -1,0 +1,414 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Intercompany Balancing Rules (Chart of Accounts Rules)</name>
+	<svn>
+		<xsd:revision>$Revision: 80541 $:</xsd:revision>
+		<xsd:author>$Author: john.martin $:</xsd:author>
+		<xsd:date>$Date: 2023-03-23 15:36:47 +0700 (Thu, 23 Mar 2023) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Intercompany%20Balancing%20Rules%20(Chart%20of%20Accounts%20Rules).xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Intercompany Balancing Rules (Chart of Accounts Rules).xml 80541 2023-03-23 08:36:47Z john.martin $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Intercompany Balancing Rules"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Chart of Accounts Structure Instances (Deploy)"/>
+			<navigation name="Manage Journal Categories"/>
+			<navigation name="Review and Submit Accounting Configuration"/>
+			<navigation name="Manage Journal Sources"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Intercompany Balancing Rules - Chart of Accounts Balancing Rules"/>
+		</parameters>
+		<block name="Search_COA">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Selected')]/div/a[text()='Chart of Accounts Rules']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div/div/a[text()='Chart of Accounts Rules']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Chart of Accounts Rules']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Chart of Accounts Rules']/../../../..//a[@title='Clear All']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+			<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[contains(@summary,'Chart of Accounts Rules')]/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[contains(@summary,'Chart of Accounts Rules')]/../..//div//*[text()='Chart of Accounts']/../../@_d_index)]//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Chart of Accounts"/>
+			</sendKeys>
+			<findElement by="xpath">//table[contains(@summary,'Chart of Accounts Rules')]/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[contains(@summary,'Chart of Accounts Rules')]/../..//div//*[text()='Source']/../../@_d_index)]//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Source"/>
+			</sendKeys>
+			<findElement by="xpath">//table[contains(@summary,'Chart of Accounts Rules')]/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[contains(@summary,'Chart of Accounts Rules')]/../..//div//*[text()='Category']/../../@_d_index)]//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Category"/>
+			</sendKeys>
+			<findElement by="xpath">//table[contains(@summary,'Chart of Accounts Rules')]/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[contains(@summary,'Chart of Accounts Rules')]/../..//div//*[text()='Transaction Type']/../../@_d_index)]//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Type"/>
+			</sendKeys>
+		</block>
+		<block name="COA_Find_Data">
+			<defineVariable name="COA" type="text"/>
+			<setVariable name="COA" append="false">
+				<valueText/>
+			</setVariable>
+			<!--Source-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Source"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="COA" append="true">//table[@summary='Chart of Accounts Rules']//tr//td[number(//table[@summary='Chart of Accounts Rules']/../..//th//span[text()='Source']/../../@_d_index)]//*[text()='</setVariable>
+					<setVariable name="COA" append="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Source"/>
+					</setVariable>
+					<setVariable name="COA" append="true">']</setVariable>
+				</then>
+				<else>
+					<error message="Please prepare data for Source" />
+				</else>
+			</IfThenElse>
+			<!--Category-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Category"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="COA" append="true">/../../..</setVariable>
+					<setVariable name="COA" append="true">//td[number(//table[@summary='Chart of Accounts Rules']/../..//th//span[text()='Category']/../../@_d_index)]//*[text()='</setVariable>
+					<setVariable name="COA" append="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Category"/>
+					</setVariable>
+					<setVariable name="COA" append="true">']</setVariable>
+				</then>
+				<else>
+					<error message="Please prepare data for Category" />
+				</else>
+			</IfThenElse>
+			<!--Transaction Type-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="COA" append="true">/../../..</setVariable>
+					<setVariable name="COA" append="true">//td[number(//table[@summary='Chart of Accounts Rules']/../..//th//span[text()='Transaction Type']/../../@_d_index)]//*[text()='</setVariable>
+					<setVariable name="COA" append="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Transaction Type"/>
+					</setVariable>
+					<setVariable name="COA" append="true">']</setVariable>
+				</then>
+				<else>
+					<error message="Please prepare data for Transaction Type" />
+				</else>
+			</IfThenElse>
+			<!--Chart of Accounts-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Chart of Accounts"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="COA" append="true">/../../..</setVariable>
+					<setVariable name="COA" append="true">//td[number(//table[@summary='Chart of Accounts Rules']/../..//th//span[text()='Chart of Accounts']/../../@_d_index)]//*[text()='</setVariable>
+					<setVariable name="COA" append="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Chart of Accounts"/>
+					</setVariable>
+					<setVariable name="COA" append="true">']</setVariable>
+				</then>
+				<else>
+					<error message="Please prepare data for Chart of Accounts" />
+				</else>
+			</IfThenElse>
+			<!--Start Date-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Start Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="COA" append="true">/../../..</setVariable>
+					<setVariable name="COA" append="true">//td[number(//table[@summary='Chart of Accounts Rules']/../..//th//span[text()='Start Date']/../../@_d_index)]//*[text()='</setVariable>
+					<setVariable name="COA" append="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Start Date"/>
+					</setVariable>
+					<setVariable name="COA" append="true">'</setVariable>
+					<setVariable name="COA" append="true"> or </setVariable>
+					<setVariable name="COA" append="true">@value='</setVariable>
+					<setVariable name="COA" append="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Start Date"/>
+					</setVariable>
+					<setVariable name="COA" append="true">']</setVariable>
+				</then>
+				<else>
+					<error message="Please prepare data for Start Date" />
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Chart of Accounts Rules']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Chart of Accounts Rules'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Chart of Accounts Rules']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW"><valueVariable name="COA"/></parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_COA"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_COA"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="New_COA">
+			<executeBlock name="Create_Button"/>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Source']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Source"/>
+					<parameter name="SEARCH_1" value="Journal Source"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Category']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Category"/>
+					<parameter name="SEARCH_1" value="Journal Category"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Transaction Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Transaction Type"/>
+					<parameter name="SEARCH_1" value="Transaction Type Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Chart of Accounts']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Chart of Accounts"/>
+					<parameter name="SEARCH_1" value="Key Flexfield Structure Instance Name"/>
+				</parameters>
+			</executeBlock>
+			<findElement setFocus="true" by="xpath">//label[text()='Receivables Account']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Receivables Account"/>
+			</sendKeys>
+			<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Receivables Account']/../../..//a</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="3"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']</findElement>
+				</if>
+				<then>
+					<error message="Receivables Account doesn't exist. Please check your data" />
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<findElement setFocus="true" by="xpath">//label[text()='Payables Account']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payables Account"/>
+			</sendKeys>
+			<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Payables Account']/../../..//a</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="3"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']</findElement>
+				</if>
+				<then>
+					<error message="Payables Account doesn't exist. Please check your data" />
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+			 <IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Confirmation']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Update_COA">
+			<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW/../../../../../../../../td[1]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Chart of Accounts Rules']//tr[contains(@class,'Selected')]//label[text()='End Date']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Create_Button">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a[text()='Actions']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//a[text()='Actions']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//tr[not(@style)]/*[text()='Create']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[text()='Chart of Accounts Rules']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>      					
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a[text()='Actions']/../../../../../../../../../../../..</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//a[text()='Actions']/../../../../../../../../../../../..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//a[text()='Actions']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>														
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//tr[not(@style)]/*[text()='Create']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[text()='Chart of Accounts Rules']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>    
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a/img[@title='Create']</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//a/img[@title='Create']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a/img[@title='Create']/../../../../../../../..</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath">//a/img[@title='Create']/../../../../../../../..</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+											<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//a/img[@title='Create']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>						
+										</then>
+										<else>						
+										</else>
+									</IfThenElse>							
+								</else>
+							</IfThenElse>	
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			 <IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[@title='Manage Intercompany Balancing Rules']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//a[text()='Manage Intercompany Balancing Rules']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+			<executeBlock name="Search_COA"/>
+			<executeBlock name="COA_Find_Data"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

@@ -1,0 +1,382 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Order Management Parameters (Pricing)</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Order Management Parameters"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>			
+			<navigation name="Manage Create Business Unit"/>
+			<navigation name="Manage Users"/>
+			<navigation name="Manage Inventory Organizations"/>
+		</dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Order Management Parameters - Pricing"/>
+            <parameter name="MAIN_REPEAT_2" value="Manage Order Management Parameters - Pricing Values"/>
+        </parameters>
+        <block name="Save_And_Close">
+            <findElement by="xpath">//span[text()='S']/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Save">
+            <findElement by="xpath" highlightTurnedOff="true">//span[text()='Save']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Search_List_of_Value">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                </if>
+                <then>
+                    <pause durationInSecs="2"/>
+                    <break/>
+                </then>
+                <else>
+                    <findElement isDisplayed="true" by="xpath">SPECIFY_XPATH</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Pricing_tab">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath" highlightTurnedOff="true">//table[@summary='Pricing']//td[1]//span[text()='Default Price Periodicity UOM Class']</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement by="xpath" highlightTurnedOff="true">//a[text()='Pricing']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Search_Pricing">
+            <executeBlock name="SCROLLBAR">
+                <parameters>
+                    <parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//div[contains(text(),'No results found.')]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="//table[@summary='Pricing']//tr[1]/td[1][@_afrrh]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Pricing']/../..//div[contains(@id,'scroller')]"/>
+                    <parameter
+                            name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Pricing']//td[1]//span[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Parameter Name"/>']</parameter>
+                    <parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Add_Pricing"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Pricing"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="SCROLLBAR_GENERIC_INNER_1">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+                </if>
+                <then>
+                    <executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+                    <break/>
+                </then>
+                <else>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <IfThenElse>
+                        <if>
+                            <isEndOfScroll/>
+                        </if>
+                        <then>
+                            <executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+                            <break/>
+                        </then>
+                        <else>
+                            <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                            <scroll direction="DOWN"/>
+                            <pause durationInSecs="1"/>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="SCROLLBAR_GENERIC_1">
+            <!-- check if there is no data found returned after the search, if so then we create a new record if applicable -->
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+                </if>
+                <then>
+                    <executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+                </then>
+                <else>
+                    <!-- resetting the scrollbar back to the Top because the form remembers where it was even when searching a new record -->
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <scroll direction="TOP"/>
+                    <findElement by="xpath" setFocus="true">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <executeBlock name="SCROLLBAR_GENERIC_INNER_1" isRepeatUntilBreak="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Update_Pricing">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Add_Pricing"/>
+        <block name="Default_Price_Periodicity_UOM_Class">
+            <!--Default Price Periodicity UOM Class-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Parameter Name"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText>Default Price Periodicity UOM Class</valueText>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Value"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <executeBlock name="SCROLLBAR">
+                                <parameters>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[contains(text(),'Values')]/../../../../../../..//div[contains(text(),'No data to display.')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="//*[contains(text(),'Values')]/../../../../../../..//tr[1]/td[1][@_afrrh]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[contains(text(),'Values')]/../../../../../../..//div[contains(@id,'scroller')]"/>
+                                    <parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[contains(text(),'Values')]/../../../../../../..//td[1]//select</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Add_Default_Price_Periodicity_UOM_Class_Value"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Default_Price_Periodicity_UOM_Class_Value"/>
+                                </parameters>
+                            </executeBlock>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Add_Default_Price_Periodicity_UOM_Class_Value">
+		<IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                </if>
+                <then>
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					 <scroll direction="TOP"/>
+					 <pause durationInSecs="1"/>
+					 <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					 <scroll direction="TOP"/>
+				</then>
+                <else/>
+            </IfThenElse>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//div[contains(@class,'Disabled')]//img[@title='Add Row']</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement by="xpath">//img[@title='Add Row']/..</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+			<IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                </if>
+                <then>
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					 <scroll direction="TOP"/>
+					 <pause durationInSecs="1"/>
+					 <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					 <scroll direction="TOP"/>
+				</then>
+                <else/>
+            </IfThenElse>
+			 <pause durationInSecs="1"/>
+            <!-- Value -->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Values')]/../../../../../../..//tr[contains(@class,'Select')]//td[2]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Value"/>
+				</parameters>
+			</executeBlock>
+           
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[text()='Warning']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[text()='Warning']/../../../../../../../..//span[text()='Y']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Update_Default_Price_Periodicity_UOM_Class_Value">
+            <!--Value-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Values')]/../../../../../../..//tr[contains(@class,'Select')]//td[1]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Value"/>
+				</parameters>
+			</executeBlock>	
+            
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[text()='Warning']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[text()='Warning']/../../../../../../../..//span[text()='Y']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Product_Catalogs">
+            <!--Product Catalogs-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Parameter Name"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText>Product Catalogs</valueText>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="NOT_EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Catalog"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText/>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <executeBlock name="SCROLLBAR">
+                                <parameters>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[contains(text(),'Values')]/../../../../../../..//div[contains(text(),'No data to display.')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="//*[contains(text(),'Values')]/../../../../../../..//tr[1]/td[1][@_afrrh]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[contains(text(),'Values')]/../../../../../../..//div[contains(@id,'scroller')]"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[contains(text(),'Values')]/../../../../../../..//td[1]//input[@value='<valueKB
+                                    inventoryName="MAIN_REPEAT_2" columnName="Catalog"/>']</parameter>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Add_Product_Catalogs_Value"/>
+                                    <parameter
+                                    name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Product_Catalogs_Value"/>
+                                </parameters>
+                            </executeBlock>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Add_Product_Catalogs_Value">
+		<IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                </if>
+                <then>
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					 <scroll direction="TOP"/>
+					 <pause durationInSecs="1"/>
+					 <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					 <scroll direction="TOP"/>
+				</then>
+                <else/>
+            </IfThenElse>
+			 <pause durationInSecs="1"/>
+            <findElement by="xpath">//img[@title='Add Row']/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                </if>
+                <then>
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					 <scroll direction="TOP"/>
+					 <pause durationInSecs="1"/>
+					 <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					 <scroll direction="TOP"/>
+				</then>
+                <else/>
+            </IfThenElse>
+			 <pause durationInSecs="1"/>
+            <!--Catalog-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Values')]/../../../../../../..//tr[contains(@class,'Select')]//tr//td[1]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Catalog"/>
+					<parameter name="SEARCH_1" value="Catalog Name"/>
+				</parameters>
+			</executeBlock>
+           
+        </block>
+        <block name="Update_Product_Catalogs_Value"/>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="MAIN_REPEAT_1">
+            <executeBlock name="Pricing_tab"/>
+            <executeBlock name="Search_Pricing"/>
+            <repeat inventoryName="MAIN_REPEAT_2">
+                <executeBlock name="Default_Price_Periodicity_UOM_Class"/>
+                <executeBlock name="Product_Catalogs"/>
+                <executeBlock name="Save"/>
+            </repeat>
+        </repeat>
+        <executeBlock name="Save_And_Close"/>
+    </fusionNavigation>
+</navigation>

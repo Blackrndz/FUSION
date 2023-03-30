@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Payroll Security Profile</name>
+	<svn>
+		<xsd:revision>$Revision: 79480 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2022-10-11 14:55:08 +0700 (Tue, 11 Oct 2022) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Payroll%20Security%20Profile.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Payroll Security Profile.xml 79480 2022-10-11 07:55:08Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" taskName="Payroll Security Profile" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<dependencies>
+			<navigation name="Manage Payroll Definitions"/>
+		</dependencies>
+		
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Payroll Security Profile - Basic Details"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Payroll Security Profile - Payrolls"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']/../..//input</findElement>
+		</block>
+		<block name="Search_Payroll_Security_Profiles">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Search Results']/..//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Search Results']/..//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="BUTTON">
+						<parameters>
+							<parameter name="BUTTON_NAME" value="Edit"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_CREATE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Basic_Details">
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enabled']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Enabled"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="New_Row_Payroll_Name">
+			<executeBlock name="GLOBAL_SPECIFY_ADD">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//table[@summary='Payroll Details']/../../../.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Update_Row_Payroll_Name">
+			<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="Payrolls">
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Payroll Name']/../../../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Payroll Name"/>
+					<parameter name="SEARCH_1" value="Payroll"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search_Payroll_Security_Profiles"/>
+			<executeBlock name="Basic_Details"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="SCROLLBAR">
+					<parameters>
+						<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Payroll Details']/../../../..//div[text()='No data to display.']"/>
+						<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Payroll Details'][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Payroll Details']/../../../..//div[contains(@id,'scroller')]"/>
+						<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Payroll Details']/..//tr[td/span/span//input[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Payroll Name"/>']]/../../../../..</parameter>
+						<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="New_Row_Payroll_Name"/>
+						<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Row_Payroll_Name"/>
+					</parameters>
+				</executeBlock>
+				<executeBlock name="Payrolls"/>
+			</repeat>
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

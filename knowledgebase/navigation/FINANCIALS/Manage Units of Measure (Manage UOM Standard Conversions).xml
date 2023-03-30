@@ -1,0 +1,305 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Units of Measure (Manage UOM Standard Conversions)</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Units of Measure" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Units of Measure"/>
+        </dependencies>
+        <!--Control Block-->
+        <block name="Go To Task">
+            <findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a[@title='Go to Task']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Save And Close">
+            <findElement by="xpath">//span[text()='S']/../..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Save">
+            <findElement by="xpath">//button[text()='Save']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Search Button">
+            <findElement by="xpath">//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Add Row Button">
+            <executeBlock name="GLOBAL_ADD"/>
+        </block>
+        <block name="Manage UOM Classes Button">
+            <findElement by="xpath">//button[text()='Manage UOM Standard Conversions']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Warning-1">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true"
+                        highlightTurnedOff="true" by="xpath">//div[text()='Warning']/../../../../../../..//td[contains(text(),'Changing conversions that were used in transactions may cause data corruption')]</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true"
+                        highlightTurnedOff="true" by="xpath">//div[text()='Warning']/../../../../../../..//td[contains(text(),'Changing conversions that were used in transactions may cause data corruption')]/../../..//button[@accesskey='Y']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Search-UOM">
+            <executeBlock name="GLOBAL_EXPAND">
+                <parameters>
+                    <parameter name="XPATH" value=""/>
+                </parameters>
+            </executeBlock>
+            <findElement highlightTurnedOff="true" by="xpath">//button[text()='Reset']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <executeBlock name="GLOBAL_EXPAND">
+                <parameters>
+                    <parameter name="XPATH" value=""/>
+                </parameters>
+            </executeBlock>
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB
+                                    inventoryName="Manage Units of Measure - Manage UOM Standard Conversions" columnName="UOM Name"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <executeBlock name="INPUT">
+                        <parameters>
+                            <parameter name="XPATH" value="//label[text()='UOM Name']/../.."/>
+                            <parameter name="INV_NAME" value="Manage Units of Measure - Manage UOM Standard Conversions"/>
+                            <parameter name="COL_NAME" value="UOM Name"/>
+                        </parameters>
+                    </executeBlock>
+                    <executeBlock name="BUTTON">
+                        <parameters>
+                            <parameter name="BUTTON_NAME" value="Search"/>
+                        </parameters>
+                    </executeBlock>
+                    <IfThenElse>
+                        <if>
+                            <findElement highlightTurnedOff="true"
+                                    by="xpath">//tr[td[1]/span/span[text()='<valueKB
+                                    inventoryName="Manage Units of Measure - Manage UOM Standard Conversions" columnName="UOM Name"/>']]</findElement>
+                        </if>
+                        <then>
+                            <findElement highlightTurnedOff="true"
+                                    by="xpath">//tr[td[1]/span/span[text()='<valueKB
+                                    inventoryName="Manage Units of Measure - Manage UOM Standard Conversions" columnName="UOM Name"/>']]</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                            <executeBlock name="Update-UOM Standard Conversions"/>
+                        </then>
+                        <else>
+                            <executeBlock name="Add Row Button"/>
+                            <executeBlock name="Define-UOM Standard Conversions"/>
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else>
+                    <error message="Data issue: The field 'UOM Name' is require data."/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Define-UOM Standard Conversions">
+            <!--UOM-->
+            <executeBlock name="LOV">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='UOM Name']/../.."/>
+                    <parameter name="INV_NAME" value="Manage Units of Measure - Manage UOM Standard Conversions"/>
+                    <parameter name="COL_NAME" value="UOM Name"/>
+                    <parameter name="SEARCH_1" value="UOM Name"/>
+                </parameters>
+            </executeBlock>
+            <!--Conversion-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB
+                                    inventoryName="Manage Units of Measure - Manage UOM Standard Conversions" columnName="Conversion"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement highlightTurnedOff="true" by="xpath">
+							//label[text()='Conversion']/..//input</findElement>
+                        </if>
+                        <then>
+                            <findElement highlightTurnedOff="true" by="xpath">
+							//label[text()='Conversion']/..//input</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB
+                                    inventoryName="Manage Units of Measure - Manage UOM Standard Conversions" columnName="Conversion"/>
+                            </sendKeys>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else>
+                    <error message="Data issue: The field 'Conversion' is require data."/>
+                </else>
+            </IfThenElse>
+            <!--End Date-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB
+                                    inventoryName="Manage Units of Measure - Manage UOM Standard Conversions" columnName="End Date"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement highlightTurnedOff="true" by="xpath">
+									//label[text()='End Date']/..//input</findElement>
+                        </if>
+                        <then>
+                            <findElement highlightTurnedOff="true" by="xpath">
+									//label[text()='End Date']/..//input</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB
+                                    inventoryName="Manage Units of Measure - Manage UOM Standard Conversions" columnName="End Date"/>
+                            </sendKeys>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Update-UOM Standard Conversions">
+            <!--End Date-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB
+                                    inventoryName="Manage Units of Measure - Manage UOM Standard Conversions" columnName="End Date"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement highlightTurnedOff="true"
+                                    by="xpath">
+							//label[text()='End Date']/..//input[@value='<valueKB
+                                    inventoryName="Manage Units of Measure - Manage UOM Standard Conversions" columnName="End Date"/>']</findElement>
+                        </if>
+                        <then/>
+                        <else>
+                            <findElement by="xpath">
+							//label[text()='End Date']/..//input</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB
+                                    inventoryName="Manage Units of Measure - Manage UOM Standard Conversions" columnName="End Date"/>
+                            </sendKeys>
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Conversion-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB
+                                    inventoryName="Manage Units of Measure - Manage UOM Standard Conversions" columnName="Conversion"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement highlightTurnedOff="true"
+                                    by="xpath">
+							//label[text()='Conversion']/..//input[@value='<valueKB
+                                    inventoryName="Manage Units of Measure - Manage UOM Standard Conversions" columnName="Conversion"/>']</findElement>
+                        </if>
+                        <then/>
+                        <else>
+                            <findElement by="xpath">
+							//label[text()='Conversion']/..//input</findElement>
+                            <sendKeys isClear="true">
+                                <valueKB
+                                    inventoryName="Manage Units of Measure - Manage UOM Standard Conversions" columnName="Conversion"/>
+                            </sendKeys>
+                            <!--<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+                            <findElement highlightTurnedOff="true" by="xpath">
+							//table[@summary='Search Results']</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                            <pause durationInSecs="2"/>-->
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <!--BEGIN REPEAT-->
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <executeBlock name="Manage UOM Classes Button"/>
+        <repeat inventoryName="Manage Units of Measure - Manage UOM Standard Conversions">
+            <executeBlock name="Search-UOM"/>
+            <executeBlock name="Warning-1"/>
+            <executeBlock name="Save"/>
+        </repeat>
+        <executeBlock name="Save And Close"/>
+        <!--END REPEAT-->
+    </fusionNavigation>
+</navigation>

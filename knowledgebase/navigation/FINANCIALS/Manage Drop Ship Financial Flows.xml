@@ -1,0 +1,494 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Drop Ship Financial Flows</name>
+    <svn>
+        <xsd:revision>$Revision: 79896 $:</xsd:revision>
+        <xsd:author>$Author: john.martin $:</xsd:author>
+        <xsd:date>$Date: 2022-12-28 19:44:14 +0700 (Wed, 28 Dec 2022) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Drop%20Ship%20Financial%20Flows.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Drop Ship Financial Flows.xml 79896 2022-12-28 12:44:14Z john.martin $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Drop Ship Financial Flows"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Data Role and Security Profiles"/>
+			<navigation name="Manage Inventory Organizations"/>
+			<navigation name="Manage Receiving Parameters"/>
+			<navigation name="Configure Requisitioning Business Function"/>
+			<navigation name="Manage Service Provider Relationships (Customer Payments Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Payables Payment Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Procurement Service Providers)"/>
+		</dependencies>
+        <parameters>
+            <parameter name="REPEAT_1_MAIN" value="Manage Drop Ship Financial Flows - Drop Ship Financial Flow"/>
+            <parameter name="REPEAT_2_MAIN" value="Manage Drop Ship Financial Flows - Selling BU to Receiving BU Relationships"/>
+        </parameters>
+        <block name="SEARCH">
+            <executeBlock name="GLOBAL_EXPAND">
+                <parameters>
+                    <parameter name="XPATH" value="//h2[text()='Search']/../../.."/>
+                </parameters>
+            </executeBlock>
+            <findElement highlightTurnedOff="true" by="xpath">//button[text()='Reset']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <executeBlock name="GLOBAL_EXPAND">
+                <parameters>
+                    <parameter name="XPATH" value="//h2[text()='Search']/../../.."/>
+                </parameters>
+            </executeBlock>
+            <findElement highlightTurnedOff="true" by="xpath">//label[text()='Name']/../..//input</findElement>
+            <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+            </sendKeys>
+            <executeBlock name="BUTTON">
+                <parameters>
+                    <parameter name="BUTTON_NAME" value="r"/>
+                </parameters>
+            </executeBlock>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//a[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//a[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <findElement isSkipCheckDomError="true" by="xpath">//a[text()='Actions']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Correct Record']</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <executeBlock name="Warning"/>
+                    <executeBlock name="UPDATE_DROP_SHIP_FINANCIAL_FLOW"/>
+                </then>
+                <else>
+                    <executeBlock name="GLOBAL_CREATE"/>
+                    <executeBlock name="CREATE_DROP_SHIP_FINANCIAL_FLOW"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="CREATE_DROP_SHIP_FINANCIAL_FLOW">
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//span[contains(@title,'Required')]/..//label[text()='Name']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Name"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock name="INPUT_TEXTAREA">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Description']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Description"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Supplier Ownership Change Event']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Supplier Ownership Change Event"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Priority']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Priority"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock name="INPUT_GREATER_THAN_EQUAL">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Effective Start Date']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Effective Start Date"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock name="INPUT_GREATER_THAN_EQUAL">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Effective End Date']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Effective End Date"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Status']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Status"/>
+                </parameters>
+            </executeBlock>
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="REPEAT_1_MAIN" columnName="Financial Orchestration Qualifier - Name"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <executeBlock name="GLOBAL_EXPAND">
+                        <parameters>
+                            <parameter name="XPATH" value="//h2[text()='Financial Orchestration Qualifier']/../../.."/>
+                        </parameters>
+                    </executeBlock>
+                    <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                        <parameters>
+                            <parameter name="XPATH" value="//h2[text()='Financial Orchestration Qualifier']/../../../../../../..//label[text()='Name']/../.."/>
+                            <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                            <parameter name="COL_NAME" value="Financial Orchestration Qualifier - Name"/>
+                        </parameters>
+                    </executeBlock>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="UPDATE_DROP_SHIP_FINANCIAL_FLOW">
+            <executeBlock name="INPUT_TEXTAREA">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Description']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Description"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Supplier Ownership Change Event']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Supplier Ownership Change Event"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Priority']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Priority"/>
+                </parameters>
+            </executeBlock>
+			<!--When "Correct Drop ship" must choose start date to drop (Dropship) thing before start selling(Selling BU)-->
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Effective Start Date']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Effective Start Date"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock name="INPUT_GREATER_THAN_EQUAL">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Effective End Date']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Effective End Date"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Status']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Status"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+                <parameters>
+                    <parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//h1[text()='Financial Orchestration Qualifier']/../../../../../../..//label[text()='Name']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Financial Orchestration Qualifier - Name"/>
+                    <parameter name="SEARCH_1" value="Name"/>
+                </parameters>
+            </executeBlock>
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Correct Drop Ship Financial Flow')]</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//div[contains(@class,'Expansion')]/..//span[text()='S']/..</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+			<!--When "Correct Drop ship" must choose start date to drop (Dropship) thing before start selling(Selling BU)-->
+			<!--Error: You must enter an effective start date for the selling BU to receiving BU relationship that's on or after the effective start date of the drop ship financial flow.-->
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//*[contains(text(),'You must enter an effective start date for the selling BU')]</findElement>
+				</if>
+				<then>
+					<error message="Please check your Effective Start Date and resubmit."/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+        </block>
+      
+		<block name="FINANCIAL_ORCHESTRATION_QUALIFIER">
+            <executeBlock name="SELLING"/>
+            <executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+                <parameters>
+                    <parameter name="XPATH" value="//tr[contains(@class,'Select')]//a[@title='Search: Receiving Trade Organization']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Receiving Trade Organization"/>
+                    <parameter name="SEARCH_1" value="Organization Name"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock name="INPUT_GREATER_THAN_EQUAL">
+                <parameters>
+                    <parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Effective Start Date']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Effective Start Date"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock name="INPUT_GREATER_THAN_EQUAL">
+                <parameters>
+                    <parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Effective End Date']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+                    <parameter name="COL_NAME" value="Effective End Date"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Warning">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//div[text()='Warning']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//div[text()='Warning']/../../../../../../../..//span[text()='Y']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="UPDATE_SELLING">
+			<IfThenElse>
+                <if>
+                   <findElement isDisplayed="true" setFocus="true" by="xpath" isSkipCheckDomError="true">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+                </if>
+                <then>
+					<findElement isDisplayed="true" setFocus="true" by="xpath" isSkipCheckDomError="true">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 
+					<pause durationInSecs="1"/>
+                </then>
+                <else/>
+            </IfThenElse>
+			<IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//table[@summary='Selling BU to Receiving BU Relationships']/../../../..//a[text()='Actions']</findElement>
+                </if>
+                <then>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Selling BU to Receiving BU Relationships']/../../../..//a[text()='Actions']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 
+					<pause durationInSecs="1"/>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Correct Record']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="CREATE_SELLING">
+			<executeBlock name="GLOBAL_SPECIFY_ADD">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//*[text()='Selling BU to Receiving BU Relationships']/../../../../../../.."/>
+				</parameters>   
+			</executeBlock>
+            
+        </block>
+        <block name="SEARCH_SELLING">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                </if>
+                <then>
+                    <pause durationInSecs="2"/>
+                    <break/>
+                </then>
+                <else>
+                    <pause durationInSecs="2"/>
+                    <findElement isDisplayed="true" by="xpath">//tr[contains(@class,'Select')]//a[@title='Business Unit']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+       
+	   <block name="SELLING">
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="REPEAT_2_MAIN" columnName="Selling BU"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="REPEAT_2_MAIN" columnName="Selling BU"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText>""</valueText>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement highlightTurnedOff="true"
+                                    by="xpath">//tr[contains(@class,'Select')]//input[@value='<valueKB
+                                    inventoryName="REPEAT_2_MAIN" columnName="Selling BU"/>']</findElement>
+                        </if>
+                        <then/>
+                        <else>
+                            <IfThenElse>
+                                <if>
+                                    <findElement isDisplayed="true"
+                                    isSkipCheckDomError="true" by="xpath">//tr[contains(@class,'Select')]//a[@title='Business Unit']/../..//input[not(@disabled)]</findElement>
+                                </if>
+                                <then>
+                                    <executeBlock name="SEARCH_SELLING" isRepeatUntilBreak="true"/>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement
+                                    isDisplayed="true"
+                                    isSkipCheckDomError="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr//td[1][text()='<valueKB
+                                    inventoryName="REPEAT_2_MAIN" columnName="Selling BU"/>']</findElement>
+                                    </if>
+                                    <then>
+                                    <findElement
+                                    isDisplayed="true"
+                                    isSkipCheckDomError="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr//td[1][text()='<valueKB
+                                    inventoryName="REPEAT_2_MAIN" columnName="Selling BU"/>']</findElement>
+                                    <click
+                                    waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                                    </then>
+                                    <else>
+                                    <findElement
+                                    isDisplayed="true"
+                                    isSkipCheckDomError="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                                    <click
+                                    waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                                    <findElement
+                                    isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Business Unit']/../..//input</findElement>
+                                    <sendKeys isClear="true"
+                                    isENTERKey="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="REPEAT_2_MAIN" columnName="Selling BU"/>
+                                    </sendKeys>
+                                    <findElement
+                                    isDisplayed="true"
+                                    isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Search']</findElement>
+                                    <click
+                                    waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement
+                                    isDisplayed="true"
+                                    highlightTurnedOff="true"
+                                    isSkipCheckDomError="true"
+                                    by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1][text()='<valueKB
+                                    inventoryName="REPEAT_2_MAIN" columnName="Selling BU"/>']</findElement>
+                                    </if>
+                                    <then>
+                                    <findElement
+                                    isDisplayed="true"
+                                    highlightTurnedOff="true"
+                                    isSkipCheckDomError="true"
+                                    by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1][text()='<valueKB
+                                    inventoryName="REPEAT_2_MAIN" columnName="Selling BU"/>']</findElement>
+                                    <click
+                                    waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                                    </then>
+                                    <else>
+                                    <error message="No results found."/>
+                                    </else>
+                                    </IfThenElse>
+                                    <findElement
+                                    isDisplayed="true"
+                                    isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='OK']</findElement>
+                                    <click
+                                    waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                                    </else>
+                                    </IfThenElse>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="REPEAT_2_MAIN" columnName="Selling BU"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText>""</valueText>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <IfThenElse>
+                                <if>
+                                    <findElement by="xpath">//tr[contains(@class,'Select')]//a[@title='Business Unit']/../..//input[not(@disabled)]</findElement>
+                                </if>
+                                <then>
+                                    <findElement by="xpath">//tr[contains(@class,'Select')]//a[@title='Business Unit']/../..//input[not(@disabled)]</findElement>
+                                    <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="REPEAT_2_MAIN" columnName="Selling BU"/>
+                                    </sendKeys>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="REPEAT_1_MAIN">
+            <executeBlock name="SEARCH"/>
+            <repeat inventoryName="REPEAT_2_MAIN">
+                <executeBlock name="SCROLLBAR">
+                    <parameters>
+                        <parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Selling BU to Receiving BU Relationships']/../../../../../../..//div[contains(text(),'No data to display.')]"/>
+                        <parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Selling BU to Receiving BU Relationships']/../../../../../../..//table[@_rowcount]//tr[1]//td)[1]"/>
+                        <parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Selling BU to Receiving BU Relationships']/../../../../../../..//div[contains(@id,'scroller')]"/>
+                        <parameter
+                                name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Selling BU to Receiving BU Relationships']/../../../../../../..//tr[td[2]/span/span/span[text()='<valueKB
+                                inventoryName="REPEAT_2_MAIN"
+                                columnName="Selling BU"/>'] and //td[4]/span/span/span[text()='<valueKB
+                                inventoryName="REPEAT_2_MAIN" columnName="Receiving Trade Organization"/>']]</parameter>
+                        <parameter
+                            name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_SELLING"/>
+                        <parameter
+                            name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_SELLING"/>
+                    </parameters>
+                </executeBlock>
+                <executeBlock name="Warning"/>
+                <executeBlock name="FINANCIAL_ORCHESTRATION_QUALIFIER"/>
+                <executeBlock name="GLOBAL_SAVE"/>
+            </repeat>
+            <executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

@@ -1,0 +1,430 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Shipping Zones</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" taskName="Manage Shipping Zones"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+         <dependencies>
+			<navigation name="Manage Enterprise HCM Information"/>
+		</dependencies>
+		<parameters>
+            <parameter name="REPEAT_1_MAIN" value="Manage Shipping Zones - Zone Types"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Shipping Zones - Geography"/>
+			<parameter name="REPEAT_3_MAIN" value="Manage Shipping Zones - Zones"/>
+        </parameters>
+        <block name="Search_Manage_Shipping_Zones">
+            <executeBlock name="GLOBAL_EXPAND">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Search']/../../../../../../.."/>
+                </parameters>
+            </executeBlock>
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//*[text()='Search']/../../../../../../..//label[text()='Zone Type']/../..//input[not(@value)]</findElement>
+                </if>
+                <then/>
+                <else>
+                    <executeBlock name="BUTTON">
+                        <parameters>
+                            <parameter name="BUTTON_NAME" value="Reset"/>
+                        </parameters>
+                    </executeBlock>
+                </else>
+            </IfThenElse>
+            <executeBlock name="GLOBAL_EXPAND">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Search']/../../../../../../.."/>
+                </parameters>
+            </executeBlock>
+			<IfThenElse>
+						<if>
+							<findElement by="xpath">//*[text()='Search']/../../../../../../..//label[text()='Zone Type']/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//*[text()='Search']/../../../../../../..//label[text()='Zone Type']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Equals</valueText>
+							</select>								
+						</then>
+						<else>
+							<findElement by="xpath">//*[text()='Search']/../../../../../../..//label[text()='Zone Type']/../..//input/..//div//li[text()='Equals']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true" />
+						</else>
+					</IfThenElse>	
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Search']/../../../../../../..//label[text()=' Zone Type']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Zone Type"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock name="BUTTON">
+                <parameters>
+                    <parameter name="BUTTON_NAME" value="Search"/>
+                </parameters>
+            </executeBlock>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//tr[td/a[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Zone Type"/>']]</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//tr[td/a[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Zone Type"/>']]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <executeBlock name="GLOBAL_UPDATE"/>
+                    <executeBlock name="Manage_Shipping_Zones"/>
+                </then>
+                <else>
+                    <executeBlock name="GLOBAL_CREATE"/>
+                    <executeBlock name="Manage_Shipping_Zones"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Manage_Shipping_Zones">
+            <!--Zone Type-->
+            <executeBlock name="INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Zone Type']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Zone Type"/>
+                </parameters>
+            </executeBlock>
+            <!--Limit by Postal Code Range-->
+            <executeBlock name="CHECKBOX">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Limit by Postal Code Range']/../.."/>
+                    <parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+                    <parameter name="COL_NAME" value="Limit by Postal Code Range"/>
+                </parameters>
+            </executeBlock>
+            <!--Select Boundary-->
+			<executeBlock name="RADIO_INPUT">
+				<parameters>
+					<parameter name="XPATH" value=""/>
+					<parameter name="LEGEND" value="Select Boundary"/>
+					<parameter name="LABEL_RADIO" value=""/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Select Boundary"/>
+				</parameters>
+			</executeBlock>
+           
+        </block>
+        <block name="Geography">
+            <!--Country-->
+            <executeBlock name="Geography_LOV"/>
+            <!--Zone Creation Allowed-->
+            <executeBlock name="Zone_Creation_Allowed"/>
+        </block>
+		<block name="Zones">
+           <executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Zones']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Zones'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Zones']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Zones']//tr[td/a[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Name"/>']]</parameter>
+					
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Zone"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Zone"/>
+				</parameters>
+			</executeBlock>
+        </block>
+		<block name="Geography_Search">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<pause durationInSecs="2"/>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Name"/>']/../..//span/a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Geography_LOV">
+			
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Value"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Value"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>""</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Name"/>']/../..//input[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Value"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Name"/>']/../..//input[not(@disabled)]</findElement>
+								</if>
+								<then>
+									<executeBlock name="Geography_Search" isRepeatUntilBreak="true"/>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='Search...']/..//tr//td[1][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Value"/>']</findElement>
+										</if>
+										<then>
+											<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='Search...']/..//tr//td[1][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Value"/>']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+										</then>
+										<else>
+											<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='Search...']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<IfThenElse>
+												<if>
+													<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+												</if>
+												<then>
+													<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else/>
+											</IfThenElse>
+											<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Name']/../..//input</findElement>
+											<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Value"/>
+											</sendKeys>	
+											<IfThenElse>
+												<if>
+													<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+												</if>
+												<then>
+													<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else/>
+											</IfThenElse>
+											<IfThenElse>
+												<if>
+														<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Name']/../..//input[not(@title)]</findElement>
+												</if>
+												<then>
+														<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Name']/../..//input</findElement>
+														<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+															<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Value"/>
+														</sendKeys>		
+												</then>
+												<else/>
+											</IfThenElse>				
+											<IfThenElse>
+												<if>
+													<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+												</if>
+												<then>
+													<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else/>
+											</IfThenElse>
+											<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Search']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<IfThenElse>
+												<if>
+													<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Value"/>']</findElement>
+												</if>
+												<then>
+													<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Value"/>']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+												</then>
+												<else>
+													<error message="No results found."/>
+												</else>
+											</IfThenElse>
+											<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Value"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>""</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">XPATH//input[not(@disabled)]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">XPATH//input[not(@disabled)]</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true">
+										<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Value"/>
+									</sendKeys>		
+								</then>
+								<else/>
+							</IfThenElse>							
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Zone_Creation_Allowed">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_2_MAIN" columnName="Zone Creation Allowed"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand> 
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Name"/>']/..//input[contains(@id,'ge1')]</findElement>
+						</if>
+						<then>
+							<executeBlock name="CHECKBOX">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Zone Creation Allowed']/../..//input[contains(@id,'bc1')]/.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Zone Creation Allowed"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Name"/>']/..//input[contains(@id,'ge2')]</findElement>
+								</if>
+								<then>
+									<executeBlock name="CHECKBOX">
+										<parameters>
+											<parameter name="XPATH" value="//label[text()='Zone Creation Allowed']/../..//input[contains(@id,'bc2')]/.."/>
+											<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+											<parameter name="COL_NAME" value="Zone Creation Allowed"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Name"/>']/..//input[contains(@id,'ge3')]</findElement>
+										</if>
+										<then>
+											<executeBlock name="CHECKBOX">
+												<parameters>
+													<parameter name="XPATH" value="//label[text()='Zone Creation Allowed']/../..//input[contains(@id,'bc3')]/.."/>
+													<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+													<parameter name="COL_NAME" value="Zone Creation Allowed"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Name"/>']/..//input[contains(@id,'ge4')]</findElement>
+												</if>
+												<then>
+													<executeBlock name="CHECKBOX">
+														<parameters>
+															<parameter name="XPATH" value="//label[text()='Zone Creation Allowed']/../..//input[contains(@id,'bc4')]/.."/>
+															<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+															<parameter name="COL_NAME" value="Zone Creation Allowed"/>
+														</parameters>
+													</executeBlock>
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Geography - Name"/>']/..//input[contains(@id,'ge5')]</findElement>
+														</if>
+														<then>
+															<executeBlock name="CHECKBOX">
+																<parameters>
+																	<parameter name="XPATH" value="//label[text()='Zone Creation Allowed']/../..//input[contains(@id,'bc5')]/.."/>
+																	<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+																	<parameter name="COL_NAME" value="Zone Creation Allowed"/>
+																</parameters>
+															</executeBlock>
+														</then>
+														<else/>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Create_Zone">
+			<executeBlock name="GLOBAL_CREATE"/>
+        </block>
+		<block name="Update_Zone">
+           <findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+		   <click waitForPageToFinishRendering="true"/>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="REPEAT_1_MAIN">
+            <executeBlock name="Search_Manage_Shipping_Zones"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="Geography"/>
+			</repeat>
+			<repeat inventoryName="REPEAT_3_MAIN">
+				<executeBlock name="Zones"/>
+				<executeBlock name="GLOBAL_SAVE"/>
+			</repeat>
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

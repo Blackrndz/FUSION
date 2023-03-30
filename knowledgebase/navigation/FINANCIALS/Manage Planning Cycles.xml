@@ -1,0 +1,496 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Planning Cycles</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Planning Cycles" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+            <navigation name="Manage Enterprise HCM Information"/>
+        </dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Planning Cycles - Planning Cycle"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Planning Cycles - Planning Cycle Plan"/>
+		</parameters>	
+		<block name="MANUAL_GO_TO_TASK">
+			<findElement by="xpath">//a[contains(@id,'UIShome')]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//a[text()='Supply Chain Planning']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement isSkipCheckDomError="true" by="xpath">//a[text()='Sales and Operations Planning']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<findElement isSkipCheckDomError="true" by="xpath">//img[@title='Tasks']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<findElement isSkipCheckDomError="true" setFocus="true" by="xpath">//a[text()='Manage Planning Cycles']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="SAVE">
+			<findElement isSkipCheckDomError="true" by="xpath">//span[text()='S']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="GLOBAL_Search...LOV_NAME">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<pause durationInSecs="2"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Name']/../..//span/a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<block name="LOV_NAME">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Planning Cycle"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()='Name']/../..//input[@value='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Planning Cycle"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Name']/../..//input[not(@disabled)]</findElement>
+								</if>
+								<then>
+									<executeBlock name="GLOBAL_Search...LOV_NAME" isRepeatUntilBreak="true"/>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='Search...']/..//tr//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Planning Cycle"/>']</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='Search...']/..//tr//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Planning Cycle"/>']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<findElement isSkipCheckDomError="true" by="xpath">//span[text()='Actions']/../../..//div</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Popup')]//td[text()='Edit']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+										</then>
+										<else>
+											<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='Search...']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+												</if>
+												<then>
+													<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else/>
+											</IfThenElse>
+											<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Name']/../..//input</findElement>
+											<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Planning Cycle"/>
+											</sendKeys>	
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+												</if>
+												<then>
+													<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else/>
+											</IfThenElse>
+											<IfThenElse>
+												<if>
+														<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Name']/../..//input[not(@title)]</findElement>
+												</if>
+												<then>
+														<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Name']/../..//input</findElement>
+														<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+															<valueKB inventoryName="MAIN_REPEAT_1" columnName="Planning Cycle"/>
+														</sendKeys>		
+												</then>
+												<else/>
+											</IfThenElse>				
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+												</if>
+												<then>
+													<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else/>
+											</IfThenElse>
+											<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Search']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Planning Cycle"/>']</findElement>
+												</if>
+												<then>
+													<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Planning Cycle"/>']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='OK']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<findElement isSkipCheckDomError="true" by="xpath">//span[text()='Actions']/../../..//div</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Popup')]//td[text()='Edit']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+												</then>
+												<else>
+													<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Cancel']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<findElement isSkipCheckDomError="true" by="xpath">//span[text()='Actions']/../../..//div</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Popup')]//td[text()='Create']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+												</else>
+											</IfThenElse>
+											
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+				<block name="GLOBAL_Search...Cycle to Copy">
+			<IfThenElse>
+				<if>
+					<findElement  by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<pause durationInSecs="2"/>
+					<findElement  by="xpath" isSkipCheckDomError="true">//label[text()='Planning Cycle to Copy']/../..//span/a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<block name="LOV_Cycle to Copy">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Planning Cycle to Copy"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Planning Cycle to Copy"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>""</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()='Planning Cycle to Copy']/../..//input[@value='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Planning Cycle to Copy"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement  isSkipCheckDomError="true" by="xpath">//label[text()='Planning Cycle to Copy']/../..//input[not(@disabled)]</findElement>
+								</if>
+								<then>
+									<executeBlock name="GLOBAL_Search...Cycle to Copy" isRepeatUntilBreak="true"/>
+									<IfThenElse>
+										<if>
+											<findElement  isSkipCheckDomError="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']/..//tr//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Planning Cycle to Copy"/>']</findElement>
+										</if>
+										<then>
+											<findElement  isSkipCheckDomError="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']/..//tr//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Planning Cycle to Copy"/>']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<findElement  isSkipCheckDomError="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<IfThenElse>
+												<if>
+													<findElement  highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+												</if>
+												<then>
+													<findElement  by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else/>
+											</IfThenElse>
+											<findElement  by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Name']/../..//input</findElement>
+											<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Planning Cycle to Copy"/>
+											</sendKeys>	
+											<IfThenElse>
+												<if>
+													<findElement  highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+												</if>
+												<then>
+													<findElement  by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else/>
+											</IfThenElse>
+											<IfThenElse>
+												<if>
+														<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Name']/../..//input[not(@title)]</findElement>
+												</if>
+												<then>
+														<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Name']/../..//input</findElement>
+														<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+															<valueKB inventoryName="MAIN_REPEAT_1" columnName="Planning Cycle to Copy"/>
+														</sendKeys>		
+												</then>
+												<else/>
+											</IfThenElse>				
+											<IfThenElse>
+												<if>
+													<findElement  highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+												</if>
+												<then>
+													<findElement  by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else/>
+											</IfThenElse>
+											<findElement  isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Search']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<IfThenElse>
+												<if>
+													<findElement  highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Planning Cycle to Copy"/>']</findElement>
+												</if>
+												<then>
+													<findElement  highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//table[@_rowcount]/tbody//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Planning Cycle to Copy"/>']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+												</then>
+												<else>
+													<error message="No results found."/>
+												</else>
+											</IfThenElse>
+											<findElement  isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+
+		
+		<block name="Planning_Cycle">
+			<!--Planning Cycle to Copy-->
+			<executeBlock name="LOV_Cycle to Copy"/>
+			<!--Planning Cycle-->
+			<executeBlock name="INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Planning Cycle']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Planning Cycle"/>
+				</parameters>
+			</executeBlock>	
+			<!--Description-->
+			<executeBlock name="INPUT_TEXTAREA">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>	
+			<!--Start Date-->
+			<executeBlock name="INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>	
+			<!--End Date-->
+			<executeBlock name="INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>	
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//tr[contains(@class,'Error')]//label[text()='End Date']/../..//input</findElement>
+				</if>
+				<then>
+					<error message="Error: The date is before the valid range." />
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Owner-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Owner']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Owner"/>
+					<parameter name="SEARCH_1" value="User Name"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		 <block name="Plan">
+            <IfThenElse>
+                <if>
+                    <comparisons separator="OR">
+                        <comparison operator="EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Plan"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                        <comparison operator="EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Enable"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <error message="Please prepare data Column'Plan' and Enable"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Plan"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Enable"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+					<IfThenElse>
+						<if>
+							 <findElement by="xpath">//*[contains(text(),'Edit Planning Cycle Properties')]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//label[text()='Plans']/../..//a</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<findElement setFocus="true" by="xpath"
+											isSkipCheckDomError="true">//table[@style='position: relative;']//li/label[text()='<valueKB
+											inventoryName="MAIN_REPEAT_2" columnName="Plan"/>']/..//input[@disabled]</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement setFocus="true" by="xpath"
+											isSkipCheckDomError="true">//table[@style='position: relative;']//li/label[text()='<valueKB
+											inventoryName="MAIN_REPEAT_2" columnName="Plan"/>']/..//input[not(@disabled)]</findElement>
+									<click isCheckbox="true"
+										isSkipCheckDomError="true" waitForPageToFinishRendering="true">
+										<valueKB inventoryName="MAIN_REPEAT_2" columnName="Enable"/>
+									</click>
+								</else>
+							</IfThenElse>
+							<findElement by="xpath">//label[text()='Plans']/../..//a</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							 <findElement by="xpath">//label[text()='Plan']/../..//a</findElement>
+								<click waitForPageToFinishRendering="true"/>
+								<IfThenElse>
+									<if>
+										<findElement setFocus="true" by="xpath"
+												isSkipCheckDomError="true">//table[@style='position: relative;']//li/label[text()='<valueKB
+												inventoryName="MAIN_REPEAT_2" columnName="Plan"/>']/..//input[@disabled]</findElement>
+									</if>
+									<then/>
+									<else>
+										<findElement setFocus="true" by="xpath"
+												isSkipCheckDomError="true">//table[@style='position: relative;']//li/label[text()='<valueKB
+												inventoryName="MAIN_REPEAT_2" columnName="Plan"/>']/..//input[not(@disabled)]</findElement>
+										<click isCheckbox="true"
+											isSkipCheckDomError="true" waitForPageToFinishRendering="true">
+											<valueKB inventoryName="MAIN_REPEAT_2" columnName="Enable"/>
+										</click>
+									</else>
+								</IfThenElse>
+								<findElement by="xpath">//label[text()='Plan']/../..//a</findElement>
+								<click waitForPageToFinishRendering="true"/>
+						</else>
+					</IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+		<block name="SEAREH_Planning_Cycle">
+				<executeBlock name="LOV_NAME"/>
+				<executeBlock name="Planning_Cycle"/>
+		</block>
+		<executeBlock name="MANUAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="SEAREH_Planning_Cycle"/>
+				<repeat inventoryName="MAIN_REPEAT_2">
+					<executeBlock name="Plan"/>
+				</repeat>
+				<executeBlock name="SAVE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

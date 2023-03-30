@@ -1,0 +1,250 @@
+<?xml version="1.0"?>
+<project name="KB" default="zip" basedir=".">
+	<property file="build.properties"/>
+    <property file="build.properties_defaults"/>
+
+    <target name="init">
+        <mkdir dir="${temp.dir}"/>
+    </target>
+
+	<target name="loadVersion" depends="init" >
+        <exec executable="${windows.path.to.svn.binary}" output = "${svn.version.xml}" osfamily="windows">
+            <arg line="--xml info"/>
+        </exec>
+        <exec executable="${unix.path.to.svn.binary}" output = "${svn.version.xml}" osfamily="unix">
+            <arg line="--xml info"/>
+        </exec>
+		<xmlproperty file="${svn.version.xml}" prefix="svn" collapseAttributes="true" />
+		<!--
+		Configurator expected version.txt format:
+
+			http://svn01.rapidesuite.com:999/svn/a/dev/rapidesuite/controldata/12.1.3/trunk/core/knowledgebase@21045;R12.1.3-trunk-rev21045.builtOn-2014.01.03-14.33.41.7z
+
+		Example XML from SVN command:
+
+			<?xml version="1.0" encoding="UTF-8"?>
+			<info>
+			<entry
+			   kind="dir"
+			   path="."
+			   revision="38150">
+			<url>http://svn01.rapidesuite.com:999/svn/a/dev/rapidesuite/controldata/12.1.3/trunk/core</url>
+			<repository>
+			<root>http://svn01.rapidesuite.com:999/svn/a</root>
+			<uuid>92aa354f-1717-1e41-b92c-60270f4fab42</uuid>
+			</repository>
+			<wc-info>
+			<wcroot-abspath>D:/core</wcroot-abspath>
+			<schedule>normal</schedule>
+			<depth>infinity</depth>
+			</wc-info>
+			<commit
+			   revision="38148">
+			<author>thatchavit.vilaskhamphee</author>
+			<date>2014-01-04T11:16:53.490898Z</date>
+			</commit>
+			</entry>
+			</info>
+		-->
+		<tstamp><format property="formatted.timestamp" pattern="yyyy.MM.dd"/></tstamp>
+		<property name="output.filename" value="${kb.version}rev${svn.info.entry.commit.revision}-${ebs.version}-${rapid.configurator.version}-builtOn-${formatted.timestamp}.7z" />
+		<echo file="${version.txt}" append="false">${svn.info.entry.url}@${svn.info.entry.commit.revision};${output.filename}</echo>
+    </target>
+
+
+    <path id="lib.path">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="copy" depends="init">
+        <copy todir="${temp.dir}" includeEmptyDirs="false">
+			<fileset dir="${basedir}" casesensitive="false">
+				<exclude name="**/*.jpg"/>
+				<exclude name="**/*.png"/>
+				<exclude name="**/*.doc"/>
+				<exclude name="**/*.docx"/>
+				<exclude name="**/*.xls"/>
+				<exclude name="**/*.xlsx"/>
+				<exclude name="**/*.odt"/>
+				<exclude name="**/*.ods"/>
+				<exclude name="**/Thumbs.db"/>
+				<exclude name="**/*.zip"/>
+				<exclude name="**/*.7z"/>
+				<exclude name="**/docs/**/*"/>
+				<exclude name="Failure-20*.html"/>
+				<exclude name="Fixed-20*.html"/>
+				<exclude name=".svn"/>
+				<exclude name="lib/**/*"/>
+				<exclude name="build.properties_defaults"/>
+				<exclude name="build.properties"/>
+				<exclude name="build.xml"/>
+				<exclude name="${temp.dir}"/>
+				<exclude name="${output.dir}/**/*"/>
+				<exclude name="${wsdl.dir.name}"/>
+				<exclude name="${wsdl.dir}/**/*.*"/>
+				<exclude name="${testing.src.dir.name}"/>
+				<exclude name="${testing.src.dir.name}/**/*.*"/>
+			</fileset>
+		</copy>
+    </target>
+
+
+	<target name="zip" depends="init,clean,copy,encrypt,loadVersion">
+		<mkdir dir="${output.dir}"/>
+        <exec dir="${temp.dir}" executable="${windows.path.to.7z.binary}" osfamily="windows">
+            <arg value="a" />
+            <arg value="-t7z" />
+            <arg value="-r" />
+            <arg value="-mx9" />
+            <arg value="-ms=on" />
+            <arg value="${output.dir}/${output.filename}" />
+			<arg value="${temp.dir}/*.*" />
+        </exec>
+        <exec dir="${temp.dir}" executable="${unix.path.to.7z.binary}" osfamily="unix">
+            <arg value="a" />
+            <arg value="-t7z" />
+            <arg value="-r" />
+            <arg value="-mx9" />
+            <arg value="-ms=on" />
+            <arg value="${output.dir}/${output.filename}" />
+			<arg value="${temp.dir}/*.*" />
+        </exec>
+			<move file="${output.dir}/${output.filename}" tofile="${output.dir}/${output.filename}.unencypted"/>
+			<java classname="com.rapidesuite.client.common.util.FileEncryptionUtils" failonerror="true" classpathref="lib.path" >
+					<arg value="encrypt" />
+					<arg value="${output.dir}/${output.filename}.unencypted" />
+					<arg value="${output.dir}/${output.filename}" />
+					<arg value="unencypted" />
+			</java>
+			<delete file="${output.dir}/${output.filename}.unencypted"/>
+	</target>
+
+	
+    <target name="clean" depends="init">
+		<delete dir="${temp.dir}"/>
+		<delete dir="${wsdl.dir}"/>
+        <delete>
+			<fileset dir="${basedir}">
+				<include name="Always*.html"/>
+                <include name="Fixed*.html"/>
+                <include name="Failure*.html"/>
+			</fileset>
+		</delete>
+    </target>
+
+
+
+    <target name="encrypt">    
+        <available file="${temp.dir}/reverse_sql" property="reverse_sql.present"/>	
+        <antcall target="encrypt.reverse_sql" />
+
+        <available file="${temp.dir}/data_migration_packages" property="data_migration_packages.present"/>	
+        <antcall target="encrypt.data_migration_packages" />
+
+        <available file="${temp.dir}/sql_scripts" property="sql_scripts.present"/>	
+        <antcall target="encrypt.sql_scripts" />
+    </target>
+
+	<target name="encrypt.reverse_sql" if="reverse_sql.present">
+		<move file="${temp.dir}/reverse_sql" tofile="${temp.dir}/reverse_sql_tmp"/>
+        <java classname="com.rapidesuite.client.common.util.FileEncryptionUtils" failonerror="true" classpathref="lib.path" >
+            <arg value="encrypt" />
+            <arg value="${temp.dir}/reverse_sql_tmp" />
+            <arg value="${temp.dir}/reverse_sql" />
+            <arg value="sql,xml" />
+        </java>
+		<delete dir="${temp.dir}/reverse_sql_tmp"/>
+	</target>
+
+    <target name="encrypt.data_migration_packages" if="data_migration_packages.present">
+		<move file="${temp.dir}/data_migration_packages" tofile="${temp.dir}/data_migration_packages_tmp"/>
+        <java classname="com.rapidesuite.client.common.util.FileEncryptionUtils" failonerror="true" classpathref="lib.path" >
+            <arg value="encrypt" />
+            <arg value="${temp.dir}/data_migration_packages_tmp" />
+            <arg value="${temp.dir}/data_migration_packages" />
+            <arg value="sql,xml" />
+        </java>
+		<delete dir="${temp.dir}/data_migration_packages_tmp"/>
+	</target>
+
+	<target name="encrypt.sql_scripts" if="sql_scripts.present">
+		<move file="${temp.dir}/sql_scripts" tofile="${temp.dir}/sql_scripts_tmp"/>
+        <java classname="com.rapidesuite.client.common.util.FileEncryptionUtils" failonerror="true" classpathref="lib.path" >
+            <arg value="encrypt" />
+            <arg value="${temp.dir}/sql_scripts_tmp" />
+            <arg value="${temp.dir}/sql_scripts" />
+            <arg value="sql,xml" />
+        </java>
+		<delete dir="${temp.dir}/sql_scripts_tmp"/>
+	</target>
+
+
+
+  <target name="cleanOutputDir" >
+	<delete dir="${output.dir}"/>
+    <delete file="${test.result.file}"/>
+	<mkdir dir="${output.dir}"/>
+  </target>
+
+
+  <target name="buildProject" depends="init,clean">
+	<mkdir dir="${wsdl.dir}"/>
+
+    <path id="wsdl.path">
+		<pathelement location="${wsdl.dir}"/>
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+	<taskdef name="clientgen" classname="weblogic.wsee.tools.anttasks.ClientGenTask" classpath="${bea.home}/wlserver_10.3/server/lib/weblogic.jar" />
+    <clientgen type="JAXWS" wsdl="${wsdl.url}" destDir="${wsdl.dir}" packageName="testing"/>
+    <javac srcdir="${wsdl.dir}" destdir="${wsdl.dir}" classpathref="wsdl.path" includes="**/*.java"/>
+	<javac srcdir="${testing.src.dir}" destdir="${wsdl.dir}" classpathref="wsdl.path" includes="**/*.java"/>
+
+    <java fork="true" classname="testing.Test" failonerror="true" >
+		<classpath refid="wsdl.path"/>
+		<arg value="${output.dir}" />
+		<arg value="${output.filename}" />
+        <arg value="${svn.info.entry.commit.revision}" />
+		<arg value="${wsdl.url}" />
+		<arg value="${configurator.user.name}" />
+		<arg value="${configurator.user.password}" />
+		<arg value="${configurator.group}" />
+		<arg value="${temp.dir}" />
+		<arg value="${test.result.file}" />
+        <arg value="${concurrent.validation.jobs}" />
+		<arg value="${jdbcString}" />
+    </java>
+  </target>
+
+  <target name="zipAndBuildProject" depends="cleanOutputDir,zip,buildProject"/>
+
+  <target name="fakeZipAndBuildProject" depends="loadVersion,buildProject"/>
+
+  <target name="TestSingle" depends="init,clean">
+	<mkdir dir="${wsdl.dir}"/>
+
+    <path id="wsdl.path">
+		<pathelement location="${wsdl.dir}"/>
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+	<taskdef name="clientgen" classname="weblogic.wsee.tools.anttasks.ClientGenTask" classpath="${bea.home}/wlserver_10.3/server/lib/weblogic.jar" />
+    <clientgen type="JAXWS" wsdl="${wsdl.url}" destDir="${wsdl.dir}" packageName="testing"/>
+    <javac srcdir="${wsdl.dir}" destdir="${wsdl.dir}" classpathref="wsdl.path" includes="**/*.java"/>
+	<javac srcdir="${testing.src.dir}" destdir="${wsdl.dir}" classpathref="wsdl.path" includes="**/*.java"/>
+
+    <java fork="true" classname="testing.TestSingle" failonerror="true" >
+		<classpath refid="wsdl.path"/>
+		<arg value="${wsdl.url}" />
+		<arg value="${configurator.user.name}" />
+		<arg value="${configurator.user.password}" />
+		<arg value="${jdbcString}" />
+    </java>
+  </target> 
+</project>

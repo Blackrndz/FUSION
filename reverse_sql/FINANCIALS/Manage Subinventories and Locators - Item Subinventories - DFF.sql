@@ -1,0 +1,75 @@
+/* ****************************************************************************
+ * $Revision: 60928 $:
+ * $Author: pisan.jariyasettachok $:
+ * $Date: 2017-02-06 17:14:01 +0700 (Mon, 06 Feb 2017) $:
+ * $HeadURL: http://svn01.rapidesuite.com:999/svn/a/dev/rapidesuite/controldata/FUSION_11.1.9/trunk/core/reverse_sql/FINANCIALS/Complete%20Primary%20to%20Secondary%20Ledger%20Mapping%20-%20Journal%20Conversion%20Rules.sql $:
+ * $Id: Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules.sql 60928 2017-02-06 10:14:01Z pisan.jariyasettachok $:
+ * ****************************************************************************
+ * Description:
+ * ************************************************************************** */
+ 
+-- syntax: APPLICATION_ID##RES##DFF_CODE (Descriptive Flexfield name)
+-- DFF_LOGIC_TO_APPLY=401##RES##INV_ITEM_SUB_INVENTORIES
+-- DFF_ATTRIBUTES=ATTRIBUTE
+
+-- IMPORTANT: 
+-- 	- the alias names for the Foreign keys must be the same as in the inventory.
+--  - the alias name for context code must be RES_CONTEXT_CODE
+--  - NO ALIASES for atributes fields.
+
+SELECT (SELECT ORGANIZATION_CODE
+	FROM INV_ORG_PARAMETERS
+	WHERE ORGANIZATION_ID = ItemSubInvE0.ORGANIZATION_ID
+	) RES_ORGANIZATION
+,ItemSubInvE0.SECONDARY_INVENTORY RES_SUBINVENTORY
+,(SELECT ITEM_NUMBER
+	FROM EGP_SYSTEM_ITEMS_B
+	WHERE INVENTORY_ITEM_ID = ItemSubInvE0.INVENTORY_ITEM_ID 
+	AND ORGANIZATION_ID = ItemSubInvE0.ORGANIZATION_ID 
+	) RES_ITEM
+,ItemSubInvE0.ATTRIBUTE_CATEGORY RES_CONTEXT_CODE
+,ItemSubInvE0.ATTRIBUTE1
+,ItemSubInvE0.ATTRIBUTE2
+,ItemSubInvE0.ATTRIBUTE3
+,ItemSubInvE0.ATTRIBUTE4
+,ItemSubInvE0.ATTRIBUTE5
+,ItemSubInvE0.ATTRIBUTE6
+,ItemSubInvE0.ATTRIBUTE7
+,ItemSubInvE0.ATTRIBUTE8
+,ItemSubInvE0.ATTRIBUTE9
+,ItemSubInvE0.ATTRIBUTE10
+,ItemSubInvE0.ATTRIBUTE11
+,ItemSubInvE0.ATTRIBUTE12
+,ItemSubInvE0.ATTRIBUTE13
+,ItemSubInvE0.ATTRIBUTE14
+,ItemSubInvE0.ATTRIBUTE15
+,ItemSubInvE0.LAST_UPDATED_BY RSC_LAST_UPDATED_BY
+,ItemSubInvE0.LAST_UPDATE_DATE RSC_LAST_UPDATE_DATE
+,ItemSubInvE0.CREATED_BY RSC_CREATED_BY
+,ItemSubInvE0.CREATION_DATE RSC_CREATION_DATE
+,NULL RSC_LEDGER_ID
+,NULL RSC_CHART_OF_ACCOUNTS_ID
+,NULL RSC_BUSINESS_UNIT_ID
+,NULL RSC_LEGAL_ENTITY_ID
+,ItemSubInvE0.ORGANIZATION_ID RSC_ORGANIZATION_ID
+,NULL RSC_BUSINESS_GROUP_ID
+,NULL RSC_ENTERPRISE_ID
+,NULL RSC_COUNTRY_ID
+
+FROM INV_ITEM_SUB_INVENTORIES ItemSubInvE0
+WHERE (ItemSubInvE0.ATTRIBUTE_CATEGORY IS NOT NULL
+OR ItemSubInvE0.ATTRIBUTE1 IS NOT NULL
+OR ItemSubInvE0.ATTRIBUTE2 IS NOT NULL
+OR ItemSubInvE0.ATTRIBUTE3 IS NOT NULL
+OR ItemSubInvE0.ATTRIBUTE4 IS NOT NULL
+OR ItemSubInvE0.ATTRIBUTE5 IS NOT NULL
+OR ItemSubInvE0.ATTRIBUTE6 IS NOT NULL
+OR ItemSubInvE0.ATTRIBUTE7 IS NOT NULL
+OR ItemSubInvE0.ATTRIBUTE8 IS NOT NULL
+OR ItemSubInvE0.ATTRIBUTE9 IS NOT NULL
+OR ItemSubInvE0.ATTRIBUTE10 IS NOT NULL
+OR ItemSubInvE0.ATTRIBUTE11 IS NOT NULL
+OR ItemSubInvE0.ATTRIBUTE12 IS NOT NULL
+OR ItemSubInvE0.ATTRIBUTE13 IS NOT NULL
+OR ItemSubInvE0.ATTRIBUTE14 IS NOT NULL
+OR ItemSubInvE0.ATTRIBUTE15 IS NOT NULL)

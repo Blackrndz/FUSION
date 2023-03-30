@@ -1,0 +1,733 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Shipping Parameters</name>
+	<svn>
+		<xsd:revision>$Revision: 79839 $:</xsd:revision>
+		<xsd:author>$Author: sudarak.unchan $:</xsd:author>
+		<xsd:date>$Date: 2022-12-15 16:03:14 +0700 (Thu, 15 Dec 2022) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Shipping%20Parameters.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Shipping Parameters.xml 79839 2022-12-15 09:03:14Z sudarak.unchan $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Shipping Parameters" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Units of Measure (Manage UOM Classes)"/>
+			<navigation name="Manage Subinventories and Locators"/>
+			<navigation name="Manage Subinventories and Locators (Manage Locators)"/>
+			<navigation name="Manage Pick Slip Grouping Rules"/>
+			<navigation name="Manage Release Sequence Rules"/>
+			<navigation name="Manage Ship Confirm Rules"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Shipping Parameters - Shipping Parameters"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Shipping Parameters - Shipping Parameters - DFF"/>
+		</parameters>
+		<block name="Save_And_Close">
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</block>
+		<block name="Save">
+			<executeBlock name="GLOBAL_SAVE"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Warning']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Warning']/../../../../../../..//button[text()='Yes']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Error">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Error']</findElement>
+				</if>
+				<then>
+					<error message="Please see error on the Application." />
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Search...">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="3"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isDisplayed="true" by="xpath">SPECIFY_SEARCH</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="3"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true"
+                            by="xpath">//label[text()='Inventory Organization']/../..//span[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Organization"/>']</findElement>
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//button[text()='Change Organization']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//button[text()='Change Organization']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()='Organization']/../..//input</findElement>
+						</if>
+						<then>
+							<executeBlock name="Search..." isRepeatUntilBreak="true">
+								<parameters>
+									<parameter name="SPECIFY_SEARCH" value="//label[text()='Organization']/../..//span/a"/>
+								</parameters>
+							</executeBlock>
+							<IfThenElse>
+								<if>
+									<findElement
+                                    highlightTurnedOff="true"
+                                    isDisplayed="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Organization"/>']</findElement>
+								</if>
+								<then>
+									<findElement
+                                    highlightTurnedOff="true"
+                                    isDisplayed="true"
+                                    by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Organization"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<findElement by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//div[text()='Search and Select: Organization']/../../../../../../..//label[text()='Organization']/../..//input</findElement>
+									<sendKeys isClear="true"
+                                    isENTERKey="true" waitForPageToFinishRendering="true">
+										<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Organization"/>
+									</sendKeys>
+									<findElement by="xpath">//div[text()='Search and Select: Organization']/../../../../../../..//button[text()='Search']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<IfThenElse>
+										<if>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Organization']/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Organization"/>']</findElement>
+										</if>
+										<then>
+											<findElement
+                                    by="xpath">//div[text()='Search and Select: Organization']/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="REPEAT_1_MAIN" columnName="Organization"/>']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[text()='Search and Select: Organization']/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<error message="The field 'Organization' doesn't exist."/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+							<findElement by="xpath">//span[text()='K']/..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock name="Shipping_Parameters"/>
+		</block>
+		<block name="Shipping_Parameters">
+			<!--Shipment Creation Criteria-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Shipment Creation Criteria']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Shipment Creation Criteria"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Appending Limit-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Appending Limit']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Appending Limit"/>
+				</parameters>
+			</executeBlock>	
+			
+			<!--Packing Unit Capacity Method-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Packing Unit Capacity Method']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Packing Unit Capacity Method"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Ship Confirm Rule-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Ship Confirm Rule']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Ship Confirm Rule"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+
+			<!--Weight UOM Class-->
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a[@title='Search: Weight UOM Class']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Weight UOM Class']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Weight UOM Class"/>
+							<parameter name="SEARCH_1" value="UOM Class"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Weight UOM Class']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Weight UOM Class"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			<!--Volume UOM Class-->
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a[@title='Search: Volume UOM Class']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Volume UOM Class']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Volume UOM Class"/>
+							<parameter name="SEARCH_1" value="UOM Class"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Volume UOM Class']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Volume UOM Class"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			
+			
+			<!--Currency-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Currency']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Currency"/>
+					<parameter name="SEARCH_1" value="Currency Code"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Inventory Interface Batch Size-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+					<parameters>
+						<parameter name="XPATH" value="//label[text()='Inventory Interface Batch Size']/../.."/>
+						<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+						<parameter name="COL_NAME" value="Inventory Interface Batch Size"/>
+					</parameters>
+				</executeBlock>
+		
+			<!--Shipment Set Behavior-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Shipment Set Behavior']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Shipment Set Behavior"/>
+				</parameters>
+			</executeBlock>	
+			
+			<!--Packing Slip Document Sequence Category-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Packing Slip Document Sequence Category']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Packing Slip Document Sequence Category"/>
+					<parameter name="SEARCH_1" value="Category Code"/>
+				</parameters>
+			</executeBlock>
+			
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Bill of Lading Document Sequence Category']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Bill of Lading Document Sequence Category"/>
+					<parameter name="SEARCH_1" value="Category Code"/>
+				</parameters>
+			</executeBlock>	
+			
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Commercial Invoice Document Sequence Category']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Commercial Invoice Document Sequence Category"/>
+					<parameter name="SEARCH_1" value="Category Code"/>
+				</parameters>
+			</executeBlock>			
+			
+			<!--Automatically pack-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Automatically pack']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Automatically pack"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Consolidate backordered lines-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Consolidate backordered lines']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Consolidate backordered lines"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Enforce packing-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enforce packing']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Enforce packing"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Enforce shipping method-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enforce shipping method']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Enforce shipping method"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Allow future ship date-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allow future ship date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Allow future ship date"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Defer sending inventory updates to integrated applications-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Defer sending inventory updates to integrated applications']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Defer sending inventory updates to integrated applications"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Enable carrier manifesting-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enable carrier manifesting']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Enable carrier manifesting"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Defer online processing of inventory updates-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Defer online processing of inventory updates']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Defer online processing of inventory updates"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Publish transactional events-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Publish transactional events']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Publish transactional events"/>
+				</parameters>
+			</executeBlock>
+			<!--Required on Packing Slip - All-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='All']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Required on Packing Slip - All"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Required on Packing Slip - Packing slip status-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Packing slip status']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Required on Packing Slip - Packing slip status"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Required on Packing Slip - Shipment description-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Shipment description']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Required on Packing Slip - Shipment description"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Required on Packing Slip - Transportation reason-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Transportation reason']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Required on Packing Slip - Transportation reason"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Enable quick ship-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enable quick ship']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Enable quick ship"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Subinventory for Quick Ship-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Subinventory for Quick Ship']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Subinventory for Quick Ship"/>
+					<parameter name="SEARCH_1" value="Subinventory"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Locator for Quick Ship-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Locator for Quick Ship"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Locator for Quick Ship']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Locator for Quick Ship"/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Locator for Quick Ship']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="3"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']</findElement>
+								</if>
+								<then>
+									<error message="Locator for Quick Ship doesn't exist. Please check your data" />
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+			
+			<!--Shipping Tolerance Behavior-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Shipping Tolerance Behavior']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Shipping Tolerance Behavior"/>
+				</parameters>
+			</executeBlock>	
+			
+			<!--Reservation Behavior for Integration to External Systems-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Reservation Behavior for Integration to External Systems']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Reservation Behavior for Integration to External Systems"/>
+				</parameters>
+			</executeBlock>	
+			
+			<!--Release Sequence Rule-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Release Sequence Rule']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Release Sequence Rule"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Pick Slip Grouping Rule-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Pick Slip Grouping Rule']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Pick Slip Grouping Rule"/>
+				</parameters>
+			</executeBlock>	
+			
+			<!--Print Pick Slip-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Print Pick Slip']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Print Pick Slip"/>
+				</parameters>
+			</executeBlock>	
+			
+			<!--Number of Pick Slip Lines-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Number of Pick Slip Lines']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Number of Pick Slip Lines"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Staging Subinventory-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Staging Subinventory']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Staging Subinventory"/>
+					<parameter name="SEARCH_1" value="Subinventory"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Staging Locator-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Staging Locator']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Staging Locator"/>
+				</parameters>
+			</executeBlock>
+			<!--Number of Pick Release Child Processes-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Number of Pick Release Child Processes"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Number of Pick Release Child Processes']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Number of Pick Release Child Processes"/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Number of Pick Release Child Processes']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="3"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']</findElement>
+								</if>
+								<then>
+									<error message="Number of Pick Release Child Processes doesn't exist. Please check your data" />
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+					
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+			
+			<!--Pick Release Batch Size-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Pick Release Batch Size']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Pick Release Batch Size"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Create shipments-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Create shipments']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Create shipments"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Enforce shipment sets-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enforce shipment sets']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Enforce shipment sets"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Express pick-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Express pick']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Express pick"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Trade Compliance Screening Method-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Trade Compliance Screening Method']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Trade Compliance Screening Method"/>
+				</parameters>
+			</executeBlock>
+			<!--Shipping method-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Shipping method']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Shipping method"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--FOB-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='FOB']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="FOB"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Freight terms-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Freight terms']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Freight terms"/>
+				</parameters>
+			</executeBlock>
+			
+			<!--Customer-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Customer']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Customer"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="DFF_FAKE">
+			<findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Value"/>
+			</click>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<IfThenElse>
+					<if>
+						<findElement by="xpath" setFocus="true">//img[@title='Expand Additional Information']</findElement>
+					</if>
+					<then>
+						<findElement by="xpath" setFocus="true">//img[@title='Expand Additional Information']</findElement>
+						<click waitForPageToFinishRendering="true"/>
+					</then>
+					<else/>
+				</IfThenElse>
+				<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+					<parameters>
+						<parameter name="DFF_NAME" value="REPEAT_2_MAIN"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<executeBlock name="Save"/>
+			<executeBlock name="Error"/>
+		</repeat>
+		<executeBlock name="Save_And_Close"/>
+	</fusionNavigation>
+</navigation>

@@ -1,0 +1,575 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Valuation Units</name>
+    <svn>
+        <xsd:revision>$Revision: 79851 $:</xsd:revision>
+        <xsd:author>$Author: tachaporn.t $:</xsd:author>
+        <xsd:date>$Date: 2022-12-20 11:23:22 +0700 (Tue, 20 Dec 2022) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Valuation%20Units.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Valuation Units.xml 79851 2022-12-20 04:23:22Z tachaporn.t $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Valuation Units" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Inventory Organizations"/>
+			<navigation name="Manage Subinventories and Locators"/>
+			<navigation name="Manage Lot Grades"/>
+			<navigation name="Manage Cost Organizations"/>
+			<navigation name="Manage Cost Books"/>
+			<navigation name="Manage Valuation Structures"/>
+			<navigation name="Manage Cost Organization Relationships"/>
+		</dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Valuation Units - Valuation Unit"/>
+            <parameter name="MAIN_REPEAT_2" value="Manage Valuation Units - Valuation Unit - DFF"/>
+            <parameter name="MAIN_REPEAT_3" value="Manage Valuation Units - Segment Values"/>
+            <parameter name="MAIN_REPEAT_4" value="Manage Valuation Units - Segment Values - DFF"/>
+        </parameters>
+        <block name="Search_List_of_Value">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                </if>
+                <then>
+                    <pause durationInSecs="2"/>
+                    <break/>
+                </then>
+                <else>
+                    <findElement isDisplayed="true" by="xpath">SPECIFY_XPATH</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Expand_Segment_Values">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//*[text()='Segment Values']/../../../../../../..//tr[contains(@class,'Select')]//td[2]//a[@title='Expand']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//*[text()='Segment Values']/../../../../../../..//tr[contains(@class,'Select')]//td[2]//a[@title='Expand']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Collapse_Segment_Values">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//*[text()='Segment Values']/../../../../../../..//tr[contains(@class,'Select')]//td[2]//a[@title='Collapse']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//*[text()='Segment Values']/../../../../../../..//tr[contains(@class,'Select')]//td[2]//a[@title='Collapse']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Search_Cost_Element">
+		    <!--<IfThenElse>
+                <if>
+                    <findElement isDisplayed="true"
+                        highlightTurnedOff="true" by="xpath">//a[@title='Collapse Search']</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement by="xpath">//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>-->
+            <executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+                <parameters>
+                    <parameter name="XPATH" value="//a[@title='Collapse Advanced Search']/../../../../../.."/>
+                    <parameter name="BUTTON_NAME" value="Reset"/>
+                </parameters>
+            </executeBlock>
+            <executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+                <parameters>
+                    <parameter name="XPATH" value="//a[@title='Expand Advanced Search']/../../../../.."/>
+                </parameters>
+            </executeBlock>
+            <findElement by="xpath" isDisplayed="true">//span[text()='d']/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+                <parameters>
+                    <parameter name="XPATH" value="//a[@title='Expand Advanced Search']/../../../../.."/>
+                </parameters>
+            </executeBlock>
+            <!--Search Cost Organization-->
+            <executeBlock name="Search_List_of_Value" isRepeatUntilBreak="true">
+                <parameters>
+                    <parameter name="SPECIFY_XPATH" value="//label[text()='Cost Organization']/../..//a"/>
+                </parameters>
+            </executeBlock>
+            <findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select: Cost Organization')]/../../../../../../..//label[text()='Cost Organization']/../..//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Cost Organization"/>
+            </sendKeys>
+            <findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select: Cost Organization')]/../../../../../../..//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select: Cost Organization')]/../../../../../../..//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Cost Organization"/>']</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select: Cost Organization')]/../../../../../../..//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Cost Organization"/>']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select: Cost Organization')]/../../../../../../..//button[text()='OK']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <error message="No results found."/>
+                </else>
+            </IfThenElse>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+                <parameters>
+                    <parameter name="XPATH" value="//a[@title='Expand Advanced Search']/../../../../.."/>
+                </parameters>
+            </executeBlock>
+            <!--Search Cost Book-->
+            <executeBlock name="Search_List_of_Value" isRepeatUntilBreak="true">
+                <parameters>
+                    <parameter name="SPECIFY_XPATH" value="//label[text()='Cost Book']/../..//a"/>
+                </parameters>
+            </executeBlock>
+            <findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select: Cost Book')]/../../../../../../..//label[text()='Cost Book']/../..//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Cost Book"/>
+            </sendKeys>
+            <findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select: Cost Book')]/../../../../../../..//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select: Cost Book')]/../../../../../../..//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Cost Book"/>']</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select: Cost Book')]/../../../../../../..//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Cost Book"/>']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select: Cost Book')]/../../../../../../..//button[text()='OK']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <error message="No results found."/>
+                </else>
+            </IfThenElse>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+                <parameters>
+                    <parameter name="XPATH" value="//a[@title='Expand Advanced Search']/../../../../.."/>
+                </parameters>
+            </executeBlock>
+            <!--Search Valuation Structure Code-->
+            <executeBlock name="Search_List_of_Value" isRepeatUntilBreak="true">
+                <parameters>
+                    <parameter name="SPECIFY_XPATH" value="//label[text()='Valuation Structure Code']/../..//a"/>
+                </parameters>
+            </executeBlock>
+            <findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select: Valuation Structure Code')]/../../../../../../..//label[text()='Valuation Structure Code']/../..//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Valuation Structure Code"/>
+            </sendKeys>
+            <findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select: Valuation Structure Code')]/../../../../../../..//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select: Valuation Structure Code')]/../../../../../../..//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Valuation Structure Code"/>']</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select: Valuation Structure Code')]/../../../../../../..//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Valuation Structure Code"/>']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select: Valuation Structure Code')]/../../../../../../..//button[text()='OK']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <error message="No results found."/>
+                </else>
+            </IfThenElse>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+                <parameters>
+                    <parameter name="XPATH" value="//a[@title='Expand Advanced Search']/../../../../.."/>
+                </parameters>
+            </executeBlock>
+            <!--Search Valuation Unit-->
+			<IfThenElse>
+                <if>
+                    <findElement by="xpath">//label[text()='Valuation Unit']/../..//select</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//label[text()='Valuation Unit']/../..//select</findElement>
+                    <select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+                        <valueText>Equals</valueText>
+                    </select>
+                </then>
+                <else>
+                    <findElement by="xpath">//label[text()='Valuation Unit']/../..//input/..//div//li[text()='Equals']</findElement>
+                    <click waitForPageToFinishRendering="true" isJavaScript="true" />
+                </else>
+            </IfThenElse>
+            <findElement by="xpath" isDisplayed="true">//label[text()='Valuation Unit']/../..//input</findElement>
+            <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Valuation Unit"/>
+            </sendKeys>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+                <parameters>
+                    <parameter name="XPATH" value="//a[@title='Expand Advanced Search']/../../../../.."/>
+                </parameters>
+            </executeBlock>
+            <findElement by="xpath" isDisplayed="true">//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+                <parameters>
+                    <parameter name="TEMPLATE_NO_DATA" value="//*[text()='Search Results']/../../../../../../..//div[contains(text(),'No results found')]"/>
+                    <parameter name="TEMPLATE_FIRST_ROW" value="(//*[text()='Search Results']/../../../../../../..//table[@_rowcount]//tr[1]//td)[1]"/>
+                    <parameter name="TEMPLATE_SCROLLER" value="//*[text()='Search Results']/../../../../../../..//div[contains(@id,'scroller')]"/>
+                    <parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Table displays search results of valuation units']//tr/td[1][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Cost Organization"/>']/..//td[2]//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Cost Book"/>']/../../..//td[3]//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Valuation Structure Code"/>']/../../..//td[5][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Valuation Unit"/>']</parameter>
+                    <parameter name="TEMPLATE_CREATE" value="Select_Valuation_Units"/>
+                    <parameter name="TEMPLATE_UPDATE" value="Select_Valuation_Units"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Select_Valuation_Units">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">//div[@title='Search Results']/../../../../../..//a[text()='Actions']</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath">//div[@title='Search Results']/../../../../../..//a[text()='Actions']</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                            <findElement by="xpath">//*[@style='position: relative;']//td[text()='Edit']</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                        </then>
+                        <else>
+                            <findElement by="xpath">//div[@title='Search Results']/../../../../../..//div[@title='Edit']</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                        </else>
+                    </IfThenElse>
+                    <executeBlock name="Update_Valuation_Units"/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">//div[@title='Search Results']/../../../../../..//a[text()='Actions']</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath">//div[@title='Search Results']/../../../../../..//a[text()='Actions']</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                            <findElement by="xpath">//*[@style='position: relative;']//td[text()='Create']</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                        </then>
+                        <else>
+                            <findElement by="xpath">//div[@title='Search Results']/../../../../../..//div[@title='Create']</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                        </else>
+                    </IfThenElse>
+                    <executeBlock name="Create_Valuation_Units"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Create_Valuation_Units">
+            <!--Cost Organization-->
+            <executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+                <parameters>
+                    <parameter name="XPATH" value="//*[contains(text(),'Valuation Unit')]/../../../../../../..//label[text()='Cost Organization']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Cost Organization"/>
+                    <parameter name="SEARCH_1" value="Cost Organization"/>
+                </parameters>
+            </executeBlock>
+            <!--Cost Book-->
+            <executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+                <parameters>
+                    <parameter name="XPATH" value="//*[contains(text(),'Valuation Unit')]/../../../../../../..//label[text()='Cost Book']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Cost Book"/>
+                    <parameter name="SEARCH_1" value="Cost Book"/>
+                </parameters>
+            </executeBlock>
+            <!--Valuation Unit-->
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[contains(text(),'Valuation Unit')]/../../../../../../..//label[text()='Valuation Unit']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Valuation Unit"/>
+                </parameters>
+            </executeBlock>
+            <!--Valuation Unit - Description-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Valuation Unit - Description"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText></valueText>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <findElement by="xpath">//*[contains(text(),'Valuation Unit')]/../../../../../../..//label[text()='Description']/../..//input</findElement>
+                    <sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+                        <valueKB inventoryName="MAIN_REPEAT_1" columnName="Valuation Unit - Description"/>
+                    </sendKeys>
+                </then>
+                <else>
+                </else>
+            </IfThenElse>
+            <!-- <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[contains(text(),'Valuation Unit')]/../../../../../../..//label[text()='Description']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Valuation Unit - Description"/>
+                </parameters>
+            </executeBlock> -->
+            <!--Valuation Structure Code-->
+            <executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+                <parameters>
+                    <parameter name="XPATH" value="//*[contains(text(),'Valuation Unit')]/../../../../../../..//label[text()='Valuation Structure Code']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Valuation Structure Code"/>
+                    <parameter name="SEARCH_1" value="Valuation Structure Code"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Update_Valuation_Units">
+            <!--Valuation Unit-->
+            <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//*[contains(text(),'Valuation Unit')]/../../../../../../..//label[text()='Valuation Unit']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Valuation Unit"/>
+                </parameters>
+            </executeBlock>
+            <!--Valuation Unit - Description-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Valuation Unit - Description"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText></valueText>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">//*[contains(text(),'Valuation Unit')]/../../../../../../..//label[text()='Description']/../..//input[@value='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Valuation Unit - Description"/>']</findElement>
+                        </if>
+                        <then>
+                        </then>
+                        <else>
+                            <findElement by="xpath">//*[contains(text(),'Valuation Unit')]/../../../../../../..//label[text()='Description']/../..//input</findElement>
+                            <sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+                                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Valuation Unit - Description"/>
+                            </sendKeys>
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Search_Segment_Values">
+            <executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+                <parameters>
+                    <parameter name="TEMPLATE_NO_DATA" value="//div[@title='Segment Values']/../../../../../..//div[contains(text(),'No data to display')]"/>
+                    <parameter name="TEMPLATE_FIRST_ROW" value="(//div[@title='Segment Values']/../../../../../..//table[@_rowcount]//tr[1]//td)[1]"/>
+                    <parameter name="TEMPLATE_SCROLLER" value="//div[@title='Segment Values']/../../../../../..//div[contains(@id,'scroller')]"/>
+                    <parameter name="TEMPLATE_1_FIND_ROW">//div[@title='Segment Values']/../../../../../..//tr[td[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Account Code"/>'] and td//*[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Segment Values"/>']]/td[1]</parameter>
+                    <parameter name="TEMPLATE_CREATE" value="Select_Segment_Values"/>
+                    <parameter name="TEMPLATE_UPDATE" value="Select_Segment_Values"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Select_Segment_Values">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">//div[@title='Segment Values']/../../../../../..//a[text()='Actions']</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath">//div[@title='Segment Values']/../../../../../..//a[text()='Actions']</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                            <findElement by="xpath">//*[@style='position: relative;']//td[text()='Add Row']</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                        </then>
+                        <else>
+                            <findElement by="xpath">//div[@title='Segment Values']/../../../../../..//div[@title='Add Row']</findElement>
+                            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                        </else>
+                    </IfThenElse>
+                    <executeBlock name="Create_Segment_Values"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Create_Segment_Values">
+            <!--Segment Values-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_3" columnName="Segment Values"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@summary='Table displays segment values of selected valuation unit']//tr[contains(@class,'Select')]//td[4]//input</findElement>
+						</if>
+						<then>
+							 <findElement by="xpath">//table[@summary='Table displays segment values of selected valuation unit']//tr[contains(@class,'Select')]//td[4]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="MAIN_REPEAT_3" columnName="Segment Values"/>
+							</sendKeys>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Table displays segment values of selected valuation unit']//tr[contains(@class,'Select')]//td[4]//a</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="3"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="3"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']</findElement>
+								</if>
+								<then>
+									<error message="Segment Values doesn't exist. Please check your data" />
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							 <findElement by="xpath">//table[@summary='Table displays segment values of created valuation unit']//tr[contains(@class,'Select')]//td[4]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="MAIN_REPEAT_3" columnName="Segment Values"/>
+							</sendKeys>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Table displays segment values of created valuation unit']//tr[contains(@class,'Select')]//td[4]//a</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="3"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[text()='O']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="3"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Error']</findElement>
+								</if>
+								<then>
+									<error message="Segment Values doesn't exist. Please check your data" />
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+                </then>
+                <else>
+					<error message="Please prepare data in column 'Segment Values'"/>
+				</else>
+            </IfThenElse>
+        </block>
+        <block name="DFF_FAKE">
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Field Name"/>']/../..//input</findElement>
+            <click isCheckbox="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Field Value"/>
+            </click>
+        </block>
+        <block name="DFF_FAKE1">
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Field Name"/>']/../..//input</findElement>
+            <click isCheckbox="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="MAIN_REPEAT_4" columnName="Field Value"/>
+            </click>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <executeBlock name="GLOBAL_SPECIFY_CREATE">
+            <parameters>
+                <parameter name="SPECIFY_XPATH" value="//*[text()='Search Results']/../../../../../../.."/>
+            </parameters>
+        </executeBlock>
+        <findElement by="xpath">//span[text()='C']</findElement>
+        <click waitForPageToFinishRendering="true"/>
+        <repeat inventoryName="MAIN_REPEAT_1">
+            <executeBlock name="Search_Cost_Element"/>
+		    <repeat inventoryName="MAIN_REPEAT_3">
+                <executeBlock name="Search_Segment_Values"/>
+                <repeat inventoryName="MAIN_REPEAT_4">
+                    <executeBlock name="Expand_Segment_Values"/>
+					<executeBlock name="GLOBAL_ALL_DFF">
+                        <parameters>
+                            <parameter name="INV_NAME" value="Manage Valuation Units - Segment Values - DFF"/>
+                        </parameters>
+                    </executeBlock>
+                </repeat>
+                <executeBlock name="Collapse_Segment_Values"/>
+                <executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+            </repeat>
+			<repeat inventoryName="MAIN_REPEAT_2">
+                <IfThenElse>
+                    <if>
+                        <findElement isDisplayed="true" by="xpath">//div[text()='Additional Information']</findElement>
+                    </if>
+                    <then/>
+                    <else>
+                        <findElement isDisplayed="true"
+                            isSkipCheckDomError="true" by="xpath">//*[contains(text(),'Valuation Unit')]/../../../../../../..//img[@title='Additional Information']</findElement>
+                        <click waitForPageToFinishRendering="true"/>
+                    </else>
+                </IfThenElse>
+				<executeBlock name="GLOBAL_ALL_DFF">
+                    <parameters>
+                        <parameter name="INV_NAME" value="Manage Valuation Units - Valuation Unit - DFF"/>
+                    </parameters>
+                </executeBlock>
+            </repeat>
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//div[text()='Additional Information']</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true" by="xpath">//div[text()='Additional Information']/.././../../../../../..//span[text()='o']/..</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

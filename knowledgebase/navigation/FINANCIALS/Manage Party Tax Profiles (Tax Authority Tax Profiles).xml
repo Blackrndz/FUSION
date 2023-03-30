@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Party Tax Profiles (Tax Authority Tax Profiles)</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Party Tax Profiles" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <parameters>
+            <parameter name="INV_1" value="Manage Party Tax Profiles - Tax Authority Tax Profiles"/>
+		 </parameters>
+		
+		<block name="FAKE_INV">
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Tax Authority Name"/>']</findElement>
+        </block>
+		
+		<block name="Search_For">
+			<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//label[contains(text(),'Search For')]/../..//select</findElement>
+			<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+				<valueText>Tax Authority Tax Profiles</valueText>
+			</select>	
+		</block>
+		
+		<block name="Search">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search: Tax Authority Tax Profiles']/../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[@title='Collapse Search: Tax Authority Tax Profiles']/../../../../../..//button[text()='Reset']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[@title='Collapse Search: Tax Authority Tax Profiles']/../../../../../..//button[text()='Reset']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<executeBlock name="BUTTON">
+						<parameters>
+							<parameter name="BUTTON_NAME" value="Reset"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Tax Authority Name']/../..//tr[not(@id)]/td[2]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Tax Authority Name"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[@title='Collapse Search: Tax Authority Tax Profiles']/../../../../../..//button[text()='Search']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[@title='Collapse Search: Tax Authority Tax Profiles']/../../../../../..//button[text()='Search']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<executeBlock name="BUTTON">
+						<parameters>
+							<parameter name="BUTTON_NAME" value="Reset"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Search Results']//a[text()='<valueKB inventoryName="INV_1" columnName="Tax Authority Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Search Results']//a[text()='<valueKB inventoryName="INV_1" columnName="Tax Authority Name"/>']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results: Tax Authority Tax Profiles']/../../../../../..//div[@title='Edit']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results: Tax Authority Tax Profiles']/../../../../../..//div[@title='Edit']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<executeBlock name="Tax_Authority_Details"/>
+				</then>
+				<else>
+					<error message="No preparing data" />
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Tax_Authority_Details">
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Country']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Country"/>
+					<parameter name="SEARCH_1" value="Country' or text()='Country Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_SAVE"/>
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="Search_For"/>
+			<executeBlock name="Search"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

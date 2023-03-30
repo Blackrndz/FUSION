@@ -1,0 +1,276 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Time Categories</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Time Categories" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<dependencies>
+            <navigation name="Manage Custom Time Attributes"/>
+        </dependencies>
+		
+		<parameters>
+			<parameter name="INV_1" value="Manage Time Categories - Time Category"/>
+			<parameter name="INV_2" value="Manage Time Categories - Category Conditions"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Name"/>']/../..//input</findElement>
+		</block>
+		<block name="Search_Time_Category">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//td/div[@title='Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[@title='Search Results']/../../../../../..//a[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[@title='Search Results']/../../../../../..//a[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				<executeBlock name="Edit_Time_Category"/>	
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[@title='Search Results']/../../../../../..//*[@title='Create Time Category' and @alt='Create Time Category']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[@title='Search Results']/../../../../../..//*[@title='Create Time Category' and @alt='Create Time Category']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Edit_Time_Category">
+			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Confirmation']/../../../../../../..//*[@accesskey='K']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Confirmation']/../../../../../../..//*[@accesskey='K']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock name="Save_and_Close_Button"/>
+		</block>			
+		<block name="Create_Time_Category">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Track Usage']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Track Usage"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Unit of Measure']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Unit of Measure"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Rule Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Rule Name"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Create_Category_Conditions">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Category Conditions']/../../../../../../..//*[@alt='Add']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Category Conditions']/../../../../../../..//*[@alt='Add']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[contains(@id,'pt1:r1:0:rt:1:r2:0:dynamicRegion1:1:AP1:ATT2:_ATp:ATTt2::db')]/table/tbody/tr/td[2]/div/table/tbody/tr/td[3]/../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[contains(@id,'pt1:r1:0:rt:1:r2:0:dynamicRegion1:1:AP1:ATT2:_ATp:ATTt2::db')]/table/tbody/tr/td[2]/div/table/tbody/tr/td[3]/../../../../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			 <executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH">//table[@summary='Category Conditions']/../../..//*[text()='<valueKB inventoryName="INV_2" columnName="Time Attribute"/>']/..//input/..</parameter>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Time Attribute"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Category Conditions']/../../..//*[text()='Time Attribute']/..//input/..//*[@title='Value']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Category Conditions']/../../..//*[text()='Time Attribute']/..//input/..//*[@title='Value']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table/tbody/tr/td/div/a[text()='Search...' or text()='More...']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table/tbody/tr/td/div/a[text()='Search...' or text()='More...']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH">//*[text()='Search and Select : Time Attribute']/../../../../../../..//label[text()='Name']/../..</parameter>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Time Attribute"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Search and Select : Time Attribute']/../../../../../../..//button[text()='Search']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Search and Select : Time Attribute']/../../../../../../..//button[text()='Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//*[text()='Search and Select : Time Attribute']/../../../../../../..//span[text()='<valueKB inventoryName="INV_2" columnName="Time Attribute"/>']/..</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//*[text()='Search and Select : Time Attribute']/../../../../../../..//span[text()='<valueKB inventoryName="INV_2" columnName="Time Attribute"/>']/..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//*[text()='Search and Select : Time Attribute']/../../../../../../..//*[text()='OK']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//*[text()='Search and Select : Time Attribute']/../../../../../../..//*[text()='OK']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>			
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH">//table[@summary='Category Conditions']/../../..//*[text()='<valueKB inventoryName="INV_2" columnName="Value Type"/>']/..//div/..</parameter>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Value Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH">//table[@summary='Category Conditions']/../../..//*[text()='<valueKB inventoryName="INV_2" columnName="Operator"/>']/..//div/..</parameter>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Operator"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Save_and_Close_Button"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Confirmation']/../../../../../../..//*[@accesskey='K']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Confirmation']/../../../../../../..//*[@accesskey='K']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Edit_Category_Conditions">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>		
+		<block name="Save_and_Close_Button">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[@accesskey='S']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[@accesskey='S']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>	
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="Search_Time_Category"/>
+			<executeBlock name="Create_Time_Category"/>
+			<repeat inventoryName="INV_2">
+				<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Category Conditions']/../..//div[text()='No data to display.']/.."/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Category Conditions'][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Category Conditions']/../..//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//*[text()='Category Conditions']/../../../../../../../../..//span[text()='<valueKB inventoryName="INV_2" columnName="Time Attribute"/>']/..</parameter>
+						<parameter name="TEMPLATE_CREATE" value="Create_Category_Conditions"/>
+						<parameter name="TEMPLATE_UPDATE" value="Edit_Category_Conditions"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+		</repeat>
+	</fusionNavigation>
+</navigation>

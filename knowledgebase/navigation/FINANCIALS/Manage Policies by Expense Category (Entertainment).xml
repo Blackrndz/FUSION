@@ -1,0 +1,539 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Policies by Expense Category (Entertainment)</name>
+	<svn>
+		<xsd:revision>$Revision: 78997 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2022-07-13 17:26:21 +0700 (Wed, 13 Jul 2022) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Policies%20by%20Expense%20Category%20(Entertainment).xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Policies by Expense Category (Entertainment).xml 78997 2022-07-13 10:26:21Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" taskName="Manage Policies by Expense Category" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Data Role and Security Profiles"/>
+			<navigation name="Manage Cumulative Mileage Determinants"/>
+			<navigation name="Manage Tax Rates and Tax Recovery Rates (Transaction Tax Rates)"/>
+			<navigation name="Manage Service Provider Relationships (Customer Payments Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Payables Payment Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Procurement Service Providers)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Policies by Expense Category - Entertainment"/>
+		</parameters>
+		<block name="Expand_Search">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Collapse Search']</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[@title='Expand Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SEARCH_POLICIES">
+			<executeBlock name="Expand_Search"/>
+			<findElement by="xpath">//button[text()='Reset']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<executeBlock name="Expand_Search"/>
+			<findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Policy Name"/>
+			</sendKeys>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Expense Category']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Expense Category"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Expand_Search"/>
+			<findElement by="xpath">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="CREATE_POLICY">
+			<findElement by="xpath">//span[text()='Create Policy']/../../..//div</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//div[contains(@class,'Popup')]//td[text()='Entertainment']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="POLICY_ENTERAINMENT">
+			<!--Policy Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Policy Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Policy Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Display employee attendee information-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Display employee attendee information']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Display employee attendee information"/>
+				</parameters>
+			</executeBlock>
+			<!--Rate Currency-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Rate Currency"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Multiple currencies</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Single currency']/..//input[@checked]</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//label[text()='Currency']/../..//select</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//label[text()='Currency']/../..//select</findElement>
+									<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+										<valueText>USD - US Dollar</valueText>
+									</select>
+								</then>
+								<else>
+									<findElement by="xpath">//label[text()='Currency']/../..//input/..//div//li[text()='USD - US Dollar']</findElement>
+									<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Rate Currency']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Rate Currency"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Single currency']/..//input[@checked]</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//label[text()='Rate Currency']/../..//label[text()='Multiple currencies']/..//input</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Rate Currency']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Rate Currency"/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Rate Currency']/../../../../../../../../../..//label[text()='Currency']/../..//select</findElement>
+<!--
+					<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Currency"/>
+					</select>
+-->
+					<sendKeys isClear="false" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Currency"/>
+					</sendKeys>
+					
+				</else>
+			</IfThenElse>
+			<!--Currency-->
+<!--			<pause durationInSecs="3"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//label[text()='Rate Currency']/../../../../../../../../../..//label[text()='Currency']/../..//a</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Rate Currency']/../../../../../../../../../..//label[text()='Currency']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Currency"/>
+							<parameter name="SEARCH_1" value="Currency"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Rate Currency']/../../../../../../../../../..//label[text()='Currency']/../..//select</findElement>
+					<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Currency"/>
+					</select>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Rate Currency']/../../../../../../../../../..//label[text()='Currency']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Currency"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>-->
+			<!--Display employee attendee information - Attendee Amount-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Display employee attendee information']/following::tr[1]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Display employee attendee information - Attendee Amount"/>
+				</parameters>
+			</executeBlock>
+			<!--Require at least one employee as attendee-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Require at least one employee as attendee']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Require at least one employee as attendee"/>
+				</parameters>
+			</executeBlock>
+			<!--Display nonemployee attendee information-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Display nonemployee attendee information']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Display nonemployee attendee information"/>
+				</parameters>
+			</executeBlock>
+			<!--Attendee Type	-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Attendee Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Attendee Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Display nonemployee attendee information - Attendee Amount-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Attendee Type']/following::tr[1]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Display nonemployee attendee information - Attendee Amount"/>
+				</parameters>
+			</executeBlock>
+			<!--Job Title-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Job Title']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Job Title"/>
+				</parameters>
+			</executeBlock>
+			<!--Enable nonemployee creation-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enable nonemployee creation']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Enable nonemployee creation"/>
+				</parameters>
+			</executeBlock>
+			<!--Require at least one nonemployee as attendee-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Require at least one nonemployee as attendee']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Require at least one nonemployee as attendee"/>
+				</parameters>
+			</executeBlock>
+			<!--Enable rate limit-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enable rate limit']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Enable rate limit"/>
+				</parameters>
+			</executeBlock>
+			<!--Single instance limit-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Single instance limit']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Single instance limit"/>
+				</parameters>
+			</executeBlock>
+			<!--Yearly limit-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Yearly limit']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Yearly limit"/>
+				</parameters>
+			</executeBlock>
+			<!--Period Start Month-->
+			<!--<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT_INPUT">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Period Start Month']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Period Start Month"/>
+                </parameters>
+            </executeBlock>-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Period Start Month"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//label[text()='Period Start Month']/../..//select[not(@disabled)]</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//label[text()='Period Start Month']/../..//select</findElement>
+							<!--
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Period Start Month"/>
+							</select>
+							-->
+							<sendKeys isClear="false" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Period Start Month"/>
+							</sendKeys>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+			<!--Period Start Day-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Period Start Day']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Period Start Day"/>
+				</parameters>
+			</executeBlock>
+			<!--Employee-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Employee']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Employee"/>
+				</parameters>
+			</executeBlock>
+			<!--Nonemployee Attendee Types-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Nonemployee Attendee Types']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Nonemployee Attendee Types"/>
+				</parameters>
+			</executeBlock>
+			<!--Policy Enforcement-->
+			<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Policy Enforcement']/../../../../../../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Policy Enforcement"/>
+				</parameters>
+			</executeBlock>
+			<!--Policy violation warning-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Policy violation warning']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Policy violation warning"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="1"/>
+			<!--Warning Tolerance Percentage-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Warning Tolerance Percentage']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Warning Tolerance Percentage"/>
+				</parameters>
+			</executeBlock>
+			<!--Display warning to user-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Display warning to user']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Display warning to user"/>
+				</parameters>
+			</executeBlock>
+			<!--Prevent report submission-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Prevent report submission']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Prevent report submission"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="1"/>
+			<!--Error Tolerance Percentage-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Error Tolerance Percentage']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Error Tolerance Percentage"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="BUTTON_SAVE">
+			<IfThenElse>
+				<if>					
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//button[text()='Save'][@disabled]</findElement>	
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>					
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//button[text()='Save']</findElement>	
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//button[text()='Save']</findElement>	
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="false"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>					
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//span[text()='Save']</findElement>	
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//span[text()='Save']/..</findElement>	
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="false"/>
+								</then>
+								<else>
+
+								</else>
+							</IfThenElse>						
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<pause durationInSecs="2"/>
+		</block>
+		<block name="BUTTON_SAVE_AND_CLOSE">
+			<IfThenElse>
+				<if>					
+					<evaluateXPATHBoolean>count(//span[text()='S'])>1</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>					
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@id,'ctb1')]/..//span[text()='S']/..//*[@disabled]</findElement>	
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>					
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@id,'ctb1')]/..//span[text()='S']/..</findElement>
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@id,'ctb1')]/..//span[text()='S']/..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>					
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//span[text()='Save and Close']/..</findElement>	
+						</if>
+						<then>
+							<IfThenElse>
+								<if>					
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//span[text()='Save and Close']/..</findElement>	
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//span[text()='Save and Close']/..</findElement>	
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>					
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//span[text()='S']/..//*[@disabled]</findElement>	
+								</if>
+								<then/>
+								<else>
+									<IfThenElse>
+										<if>					
+											<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//span[text()='S']/..</findElement>	
+										</if>
+										<then>
+											<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//span[text()='S']/..</findElement>	
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//button[text()='Save and Close']</findElement>
+												</if>
+												<then>
+													<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//button[text()='Save and Close']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+												</then>
+												<else/>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<pause durationInSecs="3"/>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="SEARCH_POLICIES"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Policy Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Policy Name"/>']/../..//td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="GLOBAL_UPDATE"/>
+					<executeBlock name="POLICY_ENTERAINMENT"/>
+				</then>
+				<else>
+					<executeBlock name="CREATE_POLICY"/>
+					<executeBlock name="POLICY_ENTERAINMENT"/>
+				</else>
+			</IfThenElse>
+			<executeBlock name="BUTTON_SAVE"/>
+			<executeBlock name="BUTTON_SAVE_AND_CLOSE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

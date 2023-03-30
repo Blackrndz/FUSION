@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Specify Cash Positioning and Forecasting Options (Time Periods)</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Specify Cash Positioning and Forecasting Options"
+        isBatchingAllowed="false" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Accounting Calendars"/>
+        </dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Specify Cash Positioning and Forecasting Options - Time Periods"/>
+        </parameters>
+        <block name="Time_Periods">
+            <executeBlock name="SCROLLBAR">
+                <parameters>
+                    <parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Time Periods']/../..//div[contains(text(),'No data to display.')]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="((//table[@summary='Time Periods']//tr)[1]//td)[1]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Time Periods']/../../../../../../../..//div[contains(@id,'scroller')]"/>
+                    <parameter
+                            name="SCROLLBAR_GENERIC_1_FIND_ROW">//tr[td/span/select[@title='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Accounting Calendar"/>']]
+					</parameter>
+                    <parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Time_Periods"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Time_Periods"/>
+                </parameters>
+            </executeBlock>
+        </block>
+  
+        <block name="Save">
+           <IfThenElse>
+				<if>					
+					<findElement highlightTurnedOff="true" by="xpath">//button[text()='Save'][@disabled]</findElement>	
+				</if>
+				<then>
+					<error message= "This button cannot be clicked"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>					
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//button[text()='Save']</findElement>	
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//button[text()='Save']</findElement>	
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>					
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//span[text()='Save']</findElement>	
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//span[text()='Save']/..</findElement>	
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+
+								</else>
+							</IfThenElse>						
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>	
+        </block>
+        <block name="Detect Error">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//div[@data-afr-popupid='d1']//div[contains(text(),'Error')]</findElement>
+                </if>
+                <then>
+                    <error message="Please check error message on screen."/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Confirmation">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//div[text()='Confirmation']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//div[text()='Confirmation']/../../../../../../..//button[text()='OK']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Create_Time_Periods">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <scroll direction="TOP"/>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <scroll direction="TOP"/>
+                    <pause durationInSecs="1"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <executeBlock name="GLOBAL_CREATE"/>
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                </if>
+                <then>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <scroll direction="TOP"/>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <scroll direction="TOP"/>
+                    <pause durationInSecs="1"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!-- Accounting Calendar -->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Accounting Calendar']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Accounting Calendar"/>
+				</parameters>
+			</executeBlock>	
+            
+        </block>
+        <block name="Update_Time_Periods">
+            <findElement by="xpath">//tr[td/span/select[@title='<valueKB
+                    inventoryName="MAIN_REPEAT_1" columnName="Accounting Calendar"/>']]</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="MAIN_REPEAT_1">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//*[@summary='Time Periods']/../../../..//div[contains(@class,'Disabled')]//*[@title='Create']</findElement>
+                </if>
+                <then>
+
+                </then>
+                <else>
+					<executeBlock name="Time_Periods"/>
+				</else>
+            </IfThenElse>
+			<executeBlock name="Save"/>
+			<executeBlock name="Detect Error"/>
+			<executeBlock name="Confirmation"/>            
+        </repeat>
+
+    </fusionNavigation>
+</navigation>

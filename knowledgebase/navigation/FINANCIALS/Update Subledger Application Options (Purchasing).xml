@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Update Subledger Application Options (Purchasing)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+			isBatchingBasedOnRootInventoryUniqueRecords="true"
+			taskName="Update Subledger Application Options"
+			isBatchingAllowed="false" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Review and Submit Accounting Configuration"/>
+			<navigation name="Manage Subledger Accounting Options (Accounting Options)"/>
+			<navigation name="Manage Subledger Accounting Options (System Options)"/>
+		</dependencies> 
+		<parameters>
+			<parameter name="Repeat 1" value="Update Subledger Application Options - Subledger Application"/>
+		</parameters>
+		<!--Control Block-->
+		<block name="Submit Button">
+			<findElement by="xpath">//a[@accesskey='m']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Confirmation MSG">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//div[contains(@data-afr-popupid,'confirmationPopup')]//button[text()='OK']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[contains(@data-afr-popupid,'confirmationPopup')]//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<!-- Processing Section -->
+		<block name="Subledger Application">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="Repeat 1" columnName="Subledger Application"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+						<IfThenElse>
+							<if>
+								<comparisons separator="AND">
+									<comparison operator="EQUAL">
+										<leftOperand>
+											<valueKB inventoryName="Repeat 1" columnName="Subledger Application"/>
+										</leftOperand>
+										<rightOperand>
+											<valueText>Purchasing</valueText>
+										</rightOperand>
+									</comparison>
+								</comparisons>
+							</if>
+							<then>
+								<IfThenElse>
+									<if>
+										<findElement by="xpath">//label[text()='Subledger Application']/../..//select</findElement>
+									</if>
+									<then>
+										<findElement by="xpath">//label[text()='Subledger Application']/../..//select</findElement>
+										<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+											<valueText>Purchasing</valueText>
+										</select>								
+									</then>
+									<else>              
+										<findElement by="xpath">//label[text()='Subledger Application']/../..//input/..//div//li[text()='Purchasing']</findElement>
+										<click waitForPageToFinishRendering="true" isJavaScript="true" />
+									</else>
+								</IfThenElse>
+							</then>
+							<else>
+								<error message="'Subledger Application' value is not 'Purchasing'."/>
+							</else>
+						</IfThenElse>
+				</then>
+				<else>
+					<error message="'Subledger Application' is required."/>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<!--BEGIN REPEAT-->
+		<repeat inventoryName="Repeat 1">
+			<executeBlock name="GLOBAL_GO_TO_TASK"/>
+			<executeBlock name="Subledger Application"/>
+		</repeat>
+		<executeBlock name="Submit Button"/>
+		<executeBlock name="Confirmation MSG"/>
+	</fusionNavigation>
+</navigation>

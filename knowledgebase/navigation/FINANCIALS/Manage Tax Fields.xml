@@ -1,0 +1,316 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Tax Fields</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Tax Fields" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Data Role and Security Profiles"/>
+			<navigation name="Manage Service Provider Relationships (Customer Payments Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Payables Payment Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Procurement Service Providers)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Tax Fields - Tax Fields"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Tax Fields - Tax Fields for Specific Countries"/>
+		</parameters>
+		<block name="SEARCH_Business_Unit">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Business Unit ID']/../../../..//input</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement by="xpath">//span[text()='Business Unit ID']/../../../../../../../../../..//div[@title='Query By Example']//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</else>
+			</IfThenElse>
+			<findElement by="xpath">//a[@title='Clear All']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//span[text()='Business Unit ID']/../../../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Business Unit"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Business Unit"/>']/../../../../../../../td[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Business Unit"/>']/../../../../../../../td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+					<executeBlock name="EDIT_TAX_FIELDS"/>
+				</then>
+				<else>
+					<error message="The field 'Business Unit' doesn't exist."/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="EDIT_TAX_FIELDS">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[contains(@id,'ATtb1::eoi')]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[contains(@id,'ATtb1::eoi')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[contains(@id,'ATtb1::eoi')]//div[@title='Edit']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="5"/>
+				</then>
+				<else>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[@title='Edit']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="5"/>
+				</else>
+			</IfThenElse>
+			<!--Display tax fields on expense report-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Display tax fields on expense report']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Display tax fields on expense report"/>
+				</parameters>
+			</executeBlock>
+			<!--Merchant Name-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Merchant Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Merchant Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Taxpayer ID-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Taxpayer ID']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Taxpayer ID"/>
+				</parameters>
+			</executeBlock>
+			<!--Receipt Number-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Receipt Number']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Receipt Number"/>
+				</parameters>
+			</executeBlock>
+			<!--Merchant Reference-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Merchant Reference']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Merchant Reference"/>
+				</parameters>
+			</executeBlock>
+			<!--Tax Registration Number-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Tax Registration Number']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Tax Registration Number"/>
+				</parameters>
+			</executeBlock>
+			<!--Tax Classification Code-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Tax Classification Code']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Tax Classification Code"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="SEARCH_Country">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Tax Fields for Specific Countries']/../../../../../..//td[1]//input</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement by="xpath">//div[@title='Tax Fields for Specific Countries']/../../../../../..//div[@title='Query By Example']//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</else>
+			</IfThenElse>
+			<findElement by="xpath">//div[@title='Tax Fields for Specific Countries']/../../../../../..//a[@title='Clear All']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//div[@title='Tax Fields for Specific Countries']/../../../../../..//td[1]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Country or Territory"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//label[text()='Country or Territory']/..//select[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Country or Territory"/>']/../../../../../../../../td[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//label[text()='Country or Territory']/..//select[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Country or Territory"/>']/../../../../../../../../td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+					<executeBlock name="UPDATE_TAX_FIELDS"/>
+				</then>
+				<else>
+					<executeBlock name="CREATE_TAX_FIELDS"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="UPDATE_TAX_FIELDS">
+			<findElement by="xpath">//label[text()='Country or Territory']/..//select[@title='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Country or Territory"/>']/../../../../../../../../td[1]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<!--Merchant Name-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Merchant Name']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Merchant Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Taxpayer ID-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Taxpayer ID']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Taxpayer ID"/>
+				</parameters>
+			</executeBlock>
+			<!--Receipt Number-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Receipt Number']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Receipt Number"/>
+				</parameters>
+			</executeBlock>
+			<!--Merchant Reference-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Merchant Reference']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Merchant Reference"/>
+				</parameters>
+			</executeBlock>
+			<!--Tax Registration Number-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Tax Registration Number']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Tax Registration Number"/>
+				</parameters>
+			</executeBlock>
+			<!--Tax Classification Code-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Tax Classification Code']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Tax Classification Code"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="CREATE_TAX_FIELDS">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[@title='Tax Fields for Specific Countries']/../../../../../..//div[contains(@id,'ATtb1::eoi')]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[@title='Tax Fields for Specific Countries']/../../../../../..//div[contains(@id,'ATtb1::eoi')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[contains(@id,'ATtb1::eoi')]//div[@title='Add Row']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[@title='Add Row']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>
+			<!--Display tax fields on expense report-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Country or Territory']/../..//select//option[@value='']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Country or Territory"/>
+				</parameters>
+			</executeBlock>
+			<!--Merchant Name-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Merchant Name']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Merchant Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Taxpayer ID-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Taxpayer ID']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Taxpayer ID"/>
+				</parameters>
+			</executeBlock>
+			<!--Receipt Number-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Receipt Number']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Receipt Number"/>
+				</parameters>
+			</executeBlock>
+			<!--Merchant Reference-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Merchant Reference']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Merchant Reference"/>
+				</parameters>
+			</executeBlock>
+			<!--Tax Registration Number-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Tax Registration Number']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Tax Registration Number"/>
+				</parameters>
+			</executeBlock>
+			<!--Tax Classification Code-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Tax Classification Code']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Tax Classification Code"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="SEARCH_Business_Unit"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="SEARCH_Country"/>
+				<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			</repeat>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

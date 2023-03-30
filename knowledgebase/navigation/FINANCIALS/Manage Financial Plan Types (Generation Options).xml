@@ -1,0 +1,475 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Financial Plan Types (Generation Options)</name>
+	<svn>
+		<xsd:revision>$Revision: 80576 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2023-03-27 17:22:06 +0700 (Mon, 27 Mar 2023) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Financial%20Plan%20Types%20(Generation%20Options).xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Financial Plan Types (Generation Options).xml 80576 2023-03-27 10:22:06Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Financial Plan Types" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Financial Plan Types"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Financial Plan Types - Generation Options"/>
+		</parameters>
+		<block name="SREACH_PLAN_TYPE">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SPECIFY_QUERY_BY">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Manage Financial Plan Types']/../../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Financial Plan Types']/../..//th[(string(//span[text()='Name']/../../@_d_index))+0]//input</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Financial Plan Types']/../..//th[(string(//span[text()='Name']/../../@_d_index))+0]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+						<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement by="xpath">//table[@summary='Manage Financial Plan Types']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Manage Financial Plan Types']/../..//tr//span[text()='Name']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+						<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Manage Financial Plan Types']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Manage Financial Plan Types'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Manage Financial Plan Types']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Manage Financial Plan Types']//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="CREATE_PLAN_TYPE"/>
+					<parameter name="TEMPLATE_UPDATE" value="UPDATE_PLAN_TYPE"/>
+				</parameters>
+			</executeBlock>
+        </block>
+		<block name="CREATE_PLAN_TYPE">
+			<error message="Please create plan types." />
+		</block>
+		<block name="UPDATE_PLAN_TYPE">
+			<findElement by="xpath">(TEMPLATE_1_FIND_ROW/../../../../../../..//td)[1]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_UPDATE">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Manage Financial Plan Types']/../../../.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+			</click>
+		</block>
+		<block name="TAB_GENERATION_OPTIONS">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='Generation Options'][contains(@class,'Selected')]</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[text()='Generation Options']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="GENERATION_OPTIONS">
+			<IfThenElse>
+				<if>
+					<!--Cost and revenue in separate plan versions-->
+					<findElement by="xpath">//label[text()='Planning Amounts']/../..//*[@title='Cost and revenue in separate plan versions']</findElement>
+				</if>
+				<then>
+					<!--Budget Creation Method-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Budget Creation Method']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Budget Creation Method"/>
+						</parameters>
+					</executeBlock>	
+					<!--Cost Options-->
+					<!--Forecast ETC Method-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//select[contains(@id,'costEtcMethodCode')]/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Forecast ETC Method"/>
+						</parameters>
+					</executeBlock>	
+					<!--Carry forward unused amounts from past periods-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="(//label[text()='Carry forward unused amounts from past periods']/../..//input[not(@disabled)])[1]/.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Carry forward unused amounts from past periods"/>
+						</parameters>
+					</executeBlock>
+				<!--Actual Amounts Through Period-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//tr[not(@style)]/td/label[text()='Actual Amounts Through Period']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Actual Amounts Through Period"/>
+						</parameters>
+					</executeBlock>	
+					<!--Generation Source-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//tr[not(@style)]/td/label[text()='Generation Source']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Generation Source"/>
+						</parameters>
+					</executeBlock>	
+					<!--ETC Generation Source-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//tr[not(@style)]/td/label[text()='ETC Generation Source']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="ETC Generation Source"/>
+						</parameters>
+					</executeBlock>	
+					<!--Source Plan Type-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//tr[not(@style)]/td//label[text()='Source Plan Type']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Source Plan Type"/>
+						</parameters>
+					</executeBlock>	
+					<!--Source Plan Version-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//tr[not(@style)]/td/label[text()='Source Plan Version']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Source Plan Version"/>
+						</parameters>
+					</executeBlock>	
+					<!--Allow negative ETC calculation-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//tr[not(@style)]/td/label[text()='Allow negative ETC calculation']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Allow negative ETC calculation"/>
+						</parameters>
+					</executeBlock>	
+					<!--Open Commitments-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Open Commitments']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Open Commitments"/>
+						</parameters>
+					</executeBlock>	
+					<!--Retain Manually Added Budget Lines-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Retain Manually Added Budget Lines' or text()='Retain manually added budget lines']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Retain Manually Added Budget Lines"/>
+						</parameters>
+					</executeBlock>
+					<!--Retain Manually Added Forecast Lines-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Retain Manually Added Forecast Lines']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Retain Manually Added Forecast Lines"/>
+						</parameters>
+					</executeBlock>	
+					<!--Retain override rates from source-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Cost Options']/../../../../../..//label[text()='Retain override rates from source']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Retain override rates from source"/>
+						</parameters>
+					</executeBlock>	
+					<!--Revenue Options-->
+					<!--Revenue - Forecast ETC Method-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Forecast ETC Method']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Revenue - Forecast ETC Method"/>
+						</parameters>
+					</executeBlock>
+					<!--Revenue - Carry forward unused amounts from past periods-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Carry forward unused amounts from past periods']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Revenue - Carry forward unused amounts from past periods"/>
+						</parameters>
+					</executeBlock>	
+					<!--Revenue - Actual Amounts Through Period-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Actual Amounts Through Period']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Revenue - Actual Amounts Through Period"/>
+						</parameters>
+					</executeBlock>	
+					<!--Revenue - ETC Generation Source-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='ETC Generation Source']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Revenue - ETC Generation Source"/>
+						</parameters>
+					</executeBlock>	
+					<!--Revenue - Generation Source-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Generation Source']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Revenue - Generation Source"/>
+						</parameters>
+					</executeBlock>	
+					<!--Revenue - Source Plan Type-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//tr[not(@style)]/td/label[text()='Source Plan Type']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Revenue - Source Plan Type"/>
+						</parameters>
+					</executeBlock>	
+					<!--Revenue - Source Plan Version-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//tr[not(@style)]/td/label[text()='Source Plan Version']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Revenue - Source Plan Version"/>
+						</parameters>
+					</executeBlock>	
+					<!--Revenue Generation Method-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Revenue Generation Method']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Revenue Generation Method"/>
+						</parameters>
+					</executeBlock>	
+					<!--Revenue - Allow negative ETC calculation-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Allow negative ETC calculation']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Revenue - Allow negative ETC calculation"/>
+						</parameters>
+					</executeBlock>	
+					<!--Revenue - Retain Manually Added Budget Lines-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Retain manually added budget lines']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Revenue - Retain Manually Added Budget Lines"/>
+						</parameters>
+					</executeBlock>	
+					<!--Revenue - Retain Manually Added Forecast Lines-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Retain manually added budget lines' or text()='Retain Manually Added Forecast Lines']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Revenue - Retain Manually Added Forecast Lines"/>
+						</parameters>
+					</executeBlock>	
+					<!--Revenue - Retain override rates from source-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Revenue Options']/../../../../../..//label[text()='Retain override rates from source']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Revenue - Retain override rates from source"/>
+						</parameters>
+					</executeBlock>	
+				</then>
+				<else>
+					<!--Budget Creation Method-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Budget Creation Method']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Budget Creation Method"/>
+						</parameters>
+					</executeBlock>	
+					<!--Forecast ETC Method-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//select[contains(@id,'costEtcMethodCode')]/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Forecast ETC Method"/>
+						</parameters>
+					</executeBlock>
+					<!--Carry forward unused amounts from past periods-->		
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Carry forward unused amounts from past periods']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Carry forward unused amounts from past periods"/>
+						</parameters>
+					</executeBlock>
+					<!--Actual Amounts Through Period-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Actual Amounts Through Period']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Actual Amounts Through Period"/>
+						</parameters>
+					</executeBlock>	
+					<!--Generation Source-->
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//label[text()='Generation Source']</findElement>	
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Generation Source']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Generation Source"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else/>
+					</IfThenElse>
+					<!--ETC Generation Source-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='ETC Generation Source']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="ETC Generation Source"/>
+						</parameters>
+					</executeBlock>	
+					<!--Source Plan Type-->
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//label[text()='Source Plan Type']</findElement>	
+						</if>
+						<then>
+							<!-- <findElement by="xpath">//label[text()='Source Plan Type']/../..//select[not(@disabled)]</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Source Plan Type"/>
+							</select>	 -->
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Source Plan Type']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Source Plan Type"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else/>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//label[text()='Source Plan Type']/../..//td[text()='Project Plan']</findElement>	
+						</if>
+						<then>
+							<!--Source Plan Version-->
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="(//label[text()='Source Plan Version']/../..//select[not(@disabled)])[2]/.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Source Plan Version"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<!--Source Plan Version-->
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="(//label[text()='Source Plan Version']/../..//select[not(@disabled)])[1]/.."/>
+									<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+									<parameter name="COL_NAME" value="Source Plan Version"/>
+								</parameters>
+							</executeBlock>
+						</else>
+					</IfThenElse>
+					<!--Revenue Generation Method-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Revenue Generation Method']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Revenue Generation Method"/>
+						</parameters>
+					</executeBlock>	
+					<!--Allow negative ETC calculation-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Allow negative ETC calculation']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Allow negative ETC calculation"/>
+						</parameters>
+					</executeBlock>	
+					<!--Open Commitments-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Open Commitments']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Open Commitments"/>
+						</parameters>
+					</executeBlock>	
+					<!--Retain Manually Added Budget Lines-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Retain Manually Added Budget Lines' or text()='Retain manually added budget lines']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Retain Manually Added Budget Lines"/>
+						</parameters>
+					</executeBlock>
+					<!--Retain Manually Added Forecast Lines-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Retain Manually Added Forecast Lines']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Retain Manually Added Forecast Lines"/>
+						</parameters>
+					</executeBlock>	
+					<!--Retain override rates from source-->
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Retain override rates from source']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+							<parameter name="COL_NAME" value="Retain override rates from source"/>
+						</parameters>
+					</executeBlock>	
+				</else>
+			</IfThenElse>
+		</block>
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="SREACH_PLAN_TYPE"/>
+			<executeBlock name="TAB_GENERATION_OPTIONS"/>
+			<executeBlock name="GENERATION_OPTIONS"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+			<pause durationInSecs="2"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Manage Financial Plan Types']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+				</else>
+			</IfThenElse>
+		</repeat>
+	</fusionNavigation>
+</navigation>

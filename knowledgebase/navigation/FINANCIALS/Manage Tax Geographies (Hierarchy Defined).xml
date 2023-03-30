@@ -1,0 +1,459 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Tax Geographies (Hierarchy Defined)</name>
+    <svn>
+        <xsd:revision>$Revision: 78541 $:</xsd:revision>
+        <xsd:author>$Author: kullada.somtragool $:</xsd:author>
+        <xsd:date>$Date: 2022-05-19 18:32:52 +0700 (Thu, 19 May 2022) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Tax%20Geographies%20(Hierarchy%20Defined).xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Tax Geographies (Hierarchy Defined).xml 78541 2022-05-19 11:32:52Z kullada.somtragool $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Tax Geographies" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+         <dependencies>
+			<navigation name="Manage Tax Geographies"/>
+		</dependencies>
+		<parameters>
+			<parameter name="INV_1" value="Manage Tax Geographies - Tax Geographies"/>
+			<parameter name="INV_2" value="Manage Tax Geographies - Geography Hierarchy"/>
+			<parameter name="INV_3" value="Manage Tax Geographies - Geography Primary and Alternative Names"/>
+			<parameter name="INV_4" value="Manage Tax Geographies - Geography Primary and Alternative Codes"/>
+		</parameters>
+		
+		<block name="FAKE_INV">
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Country Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Country Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_3" columnName="Country Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_4" columnName="Country Name"/>']</findElement>
+        </block>
+		
+		<block name="Save_Manage_Geography_Hierachy">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Manage Geography Hierarchy')]/../../../../..//button[text()='Save']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Manage Geography Hierarchy')]/../../../../..//button[text()='Save']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Manage Geography Hierarchy')]/../../../../..//button[text()='ave and Close']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Manage Geography Hierarchy')]/../../../../..//button[text()='ave and Close']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="Save_Primary_and_Alternative">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Primary and Alternative Names']</findElement>
+				</if>
+				<then>
+					<executeBlock name="GLOBAL_SAVE"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Primary and Alternative Names']</findElement>
+				</if>
+				<then>
+					<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="Search">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Country Name Operator']/../../../td[2]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Country Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search Results']/../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Countries']/../..//a[text()='<valueKB inventoryName="INV_1" columnName="Country Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Countries']/../..//a[text()='<valueKB inventoryName="INV_1" columnName="Country Name"/>']/../../../../..//td[6]/a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<error message="Create Data in 'Manage Tax Geographies'." />
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Search_Geography_Hierachy">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../../td[2]//td[2]"/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Geography Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Geography Type Operator']/../../../td[2]"/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Geography Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Code']/../../td[2]//td[2]"/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Geography Code"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Geography Hierarchy']/../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Geography Hierarchy']//a[text()='<valueKB inventoryName="INV_2" columnName="Geography Name"/>']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Geography Hierarchy']//a[text()='<valueKB inventoryName="INV_2" columnName="Geography Name"/>']/../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_UPDATE">
+						<parameters>
+							<parameter name="XPATH" value="//div[@title='Edit']"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="BUTTON">
+						<parameters>
+							<parameter name="BUTTON_NAME" value="Reset"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Geography Type Operator']/../../../td[2]"/>
+							<parameter name="INV_NAME" value="INV_2"/>
+							<parameter name="COL_NAME" value="Parent Geography Type"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Name']/../../td[2]//td[2]"/>
+							<parameter name="INV_NAME" value="INV_2"/>
+							<parameter name="COL_NAME" value="Parent Geography Name"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Code']/../../td[2]//td[2]"/>
+							<parameter name="INV_NAME" value="INV_2"/>
+							<parameter name="COL_NAME" value="Parent Geography Code"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="BUTTON">
+						<parameters>
+							<parameter name="BUTTON_NAME" value="Search"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="GLOBAL_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Geography Hierarchy']/../../../../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Geography Hierarchy']//a[text()='<valueKB inventoryName="INV_2" columnName="Parent Geography Name"/>']/../..</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Geography Hierarchy']//a[text()='<valueKB inventoryName="INV_2" columnName="Parent Geography Name"/>']/../..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="2"/>
+							<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+								<parameters>
+									<parameter name="XPATH" value="//div[@title='Create']"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<error message="No parent data." />
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Hierarchy">
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Time Zone']/../.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Time Zone"/>
+					<parameter name="SEARCH_1" value="Timezone Code' or text()='Timezone Name"/>
+				</parameters>
+			</executeBlock>  
+		</block>
+		
+		<block name="New_Primary_and_Alternative_Name">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Primary and Alternative Names']/..//label[text()='Name']/..//input[@value='']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Primary and Alternative Names']/..//label[text()='Name']/..//input[@value='']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Primary and Alternative Names']/../../../../../..//div[@title='Add']"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Primary and Alternative Names']/../..//tr[contains(@class,'Selected')]//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_3"/>
+					<parameter name="COL_NAME" value="Geography Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Data Provider-->
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Primary and Alternative Names']/..//tr[contains(@class,'Selected')]//label[text()='Data Provider']/../span/input[@value='<valueKB inventoryName="INV_3" columnName="Data Provider"/>']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Primary and Alternative Names']/..//tr[contains(@class,'Selected')]//label[text()='Data Provider']/..//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//li[text()='<valueKB inventoryName="INV_3" columnName="Data Provider"/>']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>
+			
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Primary and Alternative Names']/../..//tr[contains(@class,'Selected')]//label[text()='Language']/.."/>
+					<parameter name="INV_NAME" value="INV_3"/>
+					<parameter name="COL_NAME" value="Language"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="Update_Primary_and_Alternative_Name">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+				
+				</then>	
+				<else>
+					<findElement by="xpath">TEMPLATE_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Primary and Alternative Names']/../..//tr[contains(@class,'Selected')]//label[text()='Name']/../.."/>
+							<parameter name="INV_NAME" value="INV_3"/>
+							<parameter name="COL_NAME" value="Geography Name"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Primary and Alternative Names']/../..//tr[contains(@class,'Selected')]//label[text()='Data Provider']/../.."/>
+							<parameter name="INV_NAME" value="INV_3"/>
+							<parameter name="COL_NAME" value="Data Provider"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Primary and Alternative Names']/../..//tr[contains(@class,'Selected')]//label[text()='Language']/../.."/>
+							<parameter name="INV_NAME" value="INV_3"/>
+							<parameter name="COL_NAME" value="Language"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="New_Primary_and_Alternative_Code">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Primary and Alternative Codes']/../../../../../..//div[@title='Add']"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Primary and Alternative Codes']/../..//label[text()='Code']/../.."/>
+					<parameter name="INV_NAME" value="INV_4"/>
+					<parameter name="COL_NAME" value="Code"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Primary and Alternative Codes']/../..//label[text()='Code Type']/../.."/>
+					<parameter name="INV_NAME" value="INV_4"/>
+					<parameter name="COL_NAME" value="Code Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Primary and Alternative Codes']/../..//label[text()='Data Provider']/../.."/>
+					<parameter name="INV_NAME" value="INV_4"/>
+					<parameter name="COL_NAME" value="Data Provider"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Primary and Alternative Codes']/../..//label[text()='Language']/../.."/>
+					<parameter name="INV_NAME" value="INV_4"/>
+					<parameter name="COL_NAME" value="Language"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="Update_Primary_and_Alternative_Code">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+				
+				</then>	
+				<else>
+					<findElement by="xpath">TEMPLATE_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Primary and Alternative Codes']/../..//label[text()='Code']/../.."/>
+							<parameter name="INV_NAME" value="INV_4"/>
+							<parameter name="COL_NAME" value="Code"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Primary and Alternative Codes']/../..//label[text()='Code Type']/../.."/>
+							<parameter name="INV_NAME" value="INV_4"/>
+							<parameter name="COL_NAME" value="Code Type"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Primary and Alternative Codes']/../..//label[text()='Data Provider']/../.."/>
+							<parameter name="INV_NAME" value="INV_4"/>
+							<parameter name="COL_NAME" value="Data Provider"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Primary and Alternative Codes']/../..//label[text()='Language']/../.."/>
+							<parameter name="INV_NAME" value="INV_4"/>
+							<parameter name="COL_NAME" value="Language"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="Search"/>
+			<repeat inventoryName="INV_2">
+				<executeBlock name="Search_Geography_Hierachy"/>
+				<executeBlock name="Hierarchy"/>
+				<repeat inventoryName="INV_3">
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Primary and Alternative Names']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Primary and Alternative Names'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Primary and Alternative Names']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Primary and Alternative Names']/../..//*[text()='<valueKB inventoryName="INV_3" columnName="Geography Name"/>']</parameter>
+							<parameter name="TEMPLATE_2_FIND_ROW">//table[@summary='Primary and Alternative Names']/../..//input[@value='<valueKB inventoryName="INV_3" columnName="Geography Name"/>']</parameter>
+							<parameter name="TEMPLATE_CREATE" value="New_Primary_and_Alternative_Name"/>
+							<parameter name="TEMPLATE_UPDATE" value="Update_Primary_and_Alternative_Name"/>
+						</parameters>
+					</executeBlock>
+				</repeat>
+				<repeat inventoryName="INV_4">
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Primary and Alternative Codes']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Primary and Alternative Codes'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Primary and Alternative Codes']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Primary and Alternative Codes']/../..//*[text()='<valueKB inventoryName="INV_4" columnName="Code"/>']</parameter>
+							<parameter name="TEMPLATE_2_FIND_ROW">//table[@summary='Primary and Alternative Codes']/../..//input[@value='<valueKB inventoryName="INV_4" columnName="Code"/>']</parameter>
+							<parameter name="TEMPLATE_CREATE" value="New_Primary_and_Alternative_Code"/>
+							<parameter name="TEMPLATE_UPDATE" value="Update_Primary_and_Alternative_Code"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Save_Primary_and_Alternative"/>
+				</repeat>
+				<executeBlock name="Save_Manage_Geography_Hierachy"/>
+			</repeat>
+		</repeat>
+	</fusionNavigation>
+</navigation>

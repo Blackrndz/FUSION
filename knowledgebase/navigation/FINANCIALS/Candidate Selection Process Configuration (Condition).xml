@@ -1,0 +1,240 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Candidate Selection Process Configuration (Condition)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Candidate Selection Process Configuration" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<dependencies>
+			<navigation name="Candidate Selection Process Configuration (Phases)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="INV_1" value="Candidate Selection Process Configuration - Process"/>
+			<parameter name="INV_2" value="Candidate Selection Process Configuration - Phases"/>
+			<parameter name="INV_3" value="Candidate Selection Process Configuration - States"/>
+			<parameter name="INV_4" value="Candidate Selection Process Configuration - Conditions"/>
+		</parameters>
+		
+		 <block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_3" columnName="Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_4" columnName="Name"/>']</findElement>
+		</block>
+		
+		<block name="SEARCH">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH">//td[text()='Search']/..</parameter>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Name']/../div[3]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[text()='Code']/../div[6]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Code"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Search Results']/../../../../../..//a/*[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@title='Search Results']/../../../../../..//a/*[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<error message="No data found. Create parent data in Candidate Selection Process Configuration (Process) " />
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="SEARCH_PHASE">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(@id,'buttonPrev')]/..//span[text()='<valueKB inventoryName="INV_2" columnName="Phase Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(@id,'buttonPrev')]/..//span[text()='<valueKB inventoryName="INV_2" columnName="Phase Name"/>']/../../../../../../../..//*[contains(text(),'States')]/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Phases']/../../../../../..//div[@title='Create'][contains(@class,'Disabled')]</findElement>
+						</if>
+						<then>
+							<error message="Cannot create Phase" />
+						</then>
+						<else>
+							<error message="Create parent data in Candidate Selection Process Configuration (Phases)" />
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Error_Message">
+			<error message="Create parent data in Candidate Selection Process Configuration (Phases)" />
+		</block>
+		
+		<block name="Select_Button_for_Condition">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<executeBlock name="DEFINE_CONDITION"/>
+		</block>
+		
+		<block name="CONDITION">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH">//div[@title='Conditions']/../../../../..</parameter>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//label[text()='Condition']/../..//input[@title='<valueKB inventoryName="INV_4" columnName="Condition"/>']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//a[@title='Add Predefined']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Condition']/../.."/>
+							<parameter name="INV_NAME" value="INV_4"/>
+							<parameter name="COL_NAME" value="Condition"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="DEFINE_CONDITION">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@class='AFDetectExpansion']/..//*[text()='Define Condition']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[@class='AFDetectExpansion']/..//*[text()='Define Condition']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="CONDITION_SAVE_AND_CLOSE">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(@title,'Condition')]/../../../../../../../../../..//*[text()='ave and Close']/../..</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(@title,'Condition')]/../../../../../../../../../..//*[text()='ave and Close']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="Back_Button">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Back')]/../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Back')]/../../../../../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//a[contains(@class,'universalPanel')]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//a[contains(@class,'universalPanel')]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="SEARCH"/>
+			<repeat inventoryName="INV_2">
+				<executeBlock name="SEARCH_PHASE"/>
+				<repeat inventoryName="INV_3">
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//div[@title='States']/../../../../../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="//div[@title='States']/../../../../../../div[2]/div/div[2]/div/div/*/div[1]/div[2]/table/tbody/tr[1]/td[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//div[@title='States']/../../../../../..//div[contains(@id,'scroller')]"/>
+							<parameter name="TEMPLATE_1_FIND_ROW">//div[contains(@title,'States for Phase')]/../../../../../..//td[4][text()='<valueKB inventoryName="INV_3" columnName="State Name"/>']/..//td[9]/button</parameter>		
+							<parameter name="TEMPLATE_CREATE" value="Error_Message"/>
+							<parameter name="TEMPLATE_UPDATE" value="Select_Button_for_Condition"/>
+						</parameters>
+					</executeBlock>
+					<repeat inventoryName="INV_4">
+						<IfThenElse>
+							<if>
+								<comparisons separator="AND">
+									<comparison operator="NOT_EQUAL">
+										<leftOperand>
+											<valueKB inventoryName="INV_4" columnName="Condition"/>
+										</leftOperand>
+										<rightOperand>
+											<valueText/>
+										</rightOperand>
+									</comparison>
+								</comparisons>
+							</if>
+							<then>
+								<executeBlock name="CONDITION"/>
+							</then>
+							<else/>
+						</IfThenElse>
+						<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+					</repeat>
+					<executeBlock name="Back_Button"/>
+				</repeat>
+			</repeat>
+		</repeat>
+	</fusionNavigation>
+</navigation>

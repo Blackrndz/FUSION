@@ -1,0 +1,663 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Item Classes (Import Formats)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Item Classes" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Item Classes"/>
+			<navigation name="Manage Item Classes (Attribute Groups)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_1_REPEAT" value="Manage Item Classes - Import Formats"/>
+			<parameter name="MAIN_2_REPEAT" value="Manage Item Classes - Selected Attributes"/>
+		</parameters>
+		<block name="Expand_Search">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//a[@title='Expand Search']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//a[@title='Expand Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		  <block name="Tab_Import_Formats">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        setFocus="true" by="xpath">//a[text()='Templates and Formats'][contains(@class,'Select')]</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement isDisplayed="true" setFocus="true" by="xpath">//a[text()='Templates and Formats']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        setFocus="true" by="xpath">//a[text()='Import Formats'][contains(@class,'Select')]</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement isDisplayed="true" setFocus="true" by="xpath">//a[text()='Import Formats']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+		
+		<block name="Search">
+			<executeBlock name="Expand_Search"/>
+			<findElement by="xpath">//button[text()='Reset']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<executeBlock name="Expand_Search"/>
+			<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Item Class']/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//label[text()='Item Class']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Equals</valueText>
+							</select>								
+						</then>
+						<else>              
+							<findElement by="xpath">//label[text()='Item Class']/../..//input/..//div//li[text()='Equals']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true" />
+						</else>
+					</IfThenElse>
+			
+			<findElement by="xpath">//label[text()='Item Class']/../..//span/input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_1_REPEAT" columnName="Item Class"/>
+			</sendKeys>
+			<pause durationInSecs="2"/>
+			<executeBlock name="Expand_Search"/>
+			<findElement by="xpath">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="1"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='Search Results']/../../../../../../..//table[@summary='Item Class Hierarchy']//td[1][text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Item Class"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Search Results']/../../../../../../..//table[@summary='Item Class Hierarchy']//td[1][text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Item Class"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//div[text()='Search Results']/../../../../../../..//span[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="GLOBAL_UPDATE"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[text()='Search Results']/../../../../../../..//table[@summary='Item Class Hierarchy']//tr//td[1]//span['<valueKB inventoryName="MAIN_1_REPEAT" columnName="Item Class"/>']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[text()='Search Results']/../../../../../../..//table[@summary='Item Class Hierarchy']//td[1]//span[text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Item Class"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//div[text()='Search Results']/../../../../../../..//span[text()='K']/..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="GLOBAL_UPDATE"/>
+						</then>
+						<else>
+							<error message="Data Doesn't Exists, Please Make Data Create on Navigation 'Manage Item Classes'"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Search_Import_Formats">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Import Formats']/../../../..//th//input</findElement>
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Import Formats']/../../../..//a[text()='View']</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Import Formats']/../../../..//a[text()='View']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  				
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//td[text()='Query By Example']</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//td[text()='Query By Example']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+								</then>
+								<else/>
+							</IfThenElse>							
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Import Formats']/../../../..//a[text()='View']/../../../../../../../../../../../..</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Import Formats']/../../../..//a[text()='View']/../../../../../../../../../../../..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+									<findElement isSkipCheckDomError="true" by="xpath">//a[text()='View']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//td[contains(text(),'Query By Example')]</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//td[text()='Query By Example']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+										</then>
+										<else/>
+									</IfThenElse>										
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Import Formats']/../../../..//a/img[@title='Query By Example']</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Import Formats']/../../../..//a/img[@title='Query By Example']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Import Formats']/../../../..//a/img[@title='Query By Example']/../../../../../../../..</findElement>
+												</if>
+												<then>
+													<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Import Formats']/../../../..//a/img[@title='Query By Example']/../../../../../../../..</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+													<findElement isSkipCheckDomError="true" by="xpath">//a/img[@title='Query By Example']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>						
+												</then>
+												<else/>
+											</IfThenElse>
+										</else>
+									</IfThenElse>						
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+            
+            <findElement by="xpath">//table[@summary='Import Formats']/../..//a[@title='Clear All']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_1_REPEAT" columnName="Name"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath">//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+                            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+                                <valueKB inventoryName="MAIN_1_REPEAT" columnName="Name"/>
+                            </sendKeys>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <IfThenElse>
+                <if>
+                    <findElement
+                            by="xpath">//table[@summary='Import Formats']//td[1][text()='<valueKB
+                            inventoryName="MAIN_1_REPEAT" columnName="Name"/>']</findElement>
+                </if>
+                <then>
+                    <findElement
+                            by="xpath">//table[@summary='Import Formats']//td[1][text()='<valueKB
+                            inventoryName="MAIN_1_REPEAT" columnName="Name"/>']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <executeBlock name="GLOBAL_UPDATE"/>
+                    <executeBlock name="Import_Formats"/>
+                </then>
+                <else>
+                     <IfThenElse>
+						<if>
+							<findElement
+									by="xpath">//table[@summary='Import Formats']//td[1]//span[text()='<valueKB
+									inventoryName="MAIN_1_REPEAT" columnName="Name"/>']</findElement>
+						</if>
+						<then>
+							<findElement
+									by="xpath">//table[@summary='Import Formats']//td[1]//span[text()='<valueKB
+									inventoryName="MAIN_1_REPEAT" columnName="Name"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="GLOBAL_UPDATE"/>
+							<executeBlock name="Import_Formats"/>
+						</then>
+						<else>
+							<executeBlock name="GLOBAL_CREATE"/>
+							<executeBlock name="Import_Formats"/>
+						</else>
+					</IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+		 <block name="Import_Formats">
+			<!--Name-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+          <!-- Description-->
+		   	<executeBlock name="INPUT_TEXTAREA">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Import Format')]/../../../../../../..//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>	
+			<!--Source Format-->
+            <executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Import Format')]/../../../../../../..//label[text()='Source Format']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Source Format"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+            <!--Default-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Import Format')]/../../../../../../..//label[text()='Default']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Default"/>
+				</parameters>
+			</executeBlock>
+            <!--Default-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Import Format')]/../../../../../../..//label[text()='Active']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Active"/>
+				</parameters>
+			</executeBlock>
+            <!--Default-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Import Format')]/../../../../../../..//label[text()='Include Required Attributes']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Include Required Attributes"/>
+				</parameters>
+			</executeBlock>
+        </block>
+		 <block name="Available">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" setFocus="true" by="xpath">//a[@title='Expand Add Attributes']</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true" setFocus="true" by="xpath">//a[@title='Expand Add Attributes']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <pause durationInSecs="1"/>
+                </then>
+                <else/>
+            </IfThenElse>
+			 <IfThenElse>
+                <if>
+                    <findElement by="xpath">//table[@summary='Selected Attributes']/../..//a[@title='Clear All']</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement by="xpath">//table[@summary='Selected Attributes']/../../../..//img[@title='Query By Example']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+            <findElement by="xpath">//table[@summary='Selected Attributes']/../..//a[@title='Clear All']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <findElement by="xpath">//table[@summary='Selected Attributes']/../..//th[(string(//span[text()='Object']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+                <valueKB inventoryName="MAIN_2_REPEAT" columnName="Object"/>
+            </sendKeys>
+            <findElement by="xpath">//table[@summary='Selected Attributes']/../..//th[(string(//span[text()='Attribute Group']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+                <valueKB inventoryName="MAIN_2_REPEAT" columnName="Attribute Group"/>
+            </sendKeys>
+            <findElement by="xpath">//table[@summary='Selected Attributes']/../..//table[@summary='This table contains column headers corresponding to the data body table below']//th[3]//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+                <valueKB inventoryName="MAIN_2_REPEAT" columnName="Attribute"/>
+            </sendKeys>
+		
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_2_REPEAT" columnName="Attribute Group"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>	
+                </if>
+                <then>
+					<IfThenElse>
+						<if>
+							<findElement
+									by="xpath">//table[@summary='Selected Attributes']//td[1][text()='<valueKB
+									inventoryName="MAIN_2_REPEAT"
+									columnName="Object"/>']/..//td[2][text()='<valueKB
+									inventoryName="MAIN_2_REPEAT"
+									columnName="Attribute Group"/>']/..//td[3][text()='<valueKB
+									inventoryName="MAIN_2_REPEAT" columnName="Attribute"/>']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Selected Attributes']/../..//a[@title='Clear All']</findElement>
+							<click waitForPageToFinishRendering="true"/>				
+						</then>
+						<else>
+							<findElement by="xpath">//table[@summary='Selected Attributes']/../..//a[@title='Clear All']</findElement>
+							<click waitForPageToFinishRendering="true"/>				
+							<executeBlock name="Selected"/>
+						</else>
+					</IfThenElse>			
+				</then>
+                <else>
+					<IfThenElse>
+						<if>
+							<findElement
+									by="xpath">//table[@summary='Selected Attributes']//td[1][text()='<valueKB
+									inventoryName="MAIN_2_REPEAT"
+									columnName="Object"/>']/..//td[3][text()='<valueKB
+									inventoryName="MAIN_2_REPEAT" columnName="Attribute"/>']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Selected Attributes']/../..//a[@title='Clear All']</findElement>
+							<click waitForPageToFinishRendering="true"/>				
+						</then>
+						<else>
+							<findElement by="xpath">//table[@summary='Selected Attributes']/../..//a[@title='Clear All']</findElement>
+							<click waitForPageToFinishRendering="true"/>				
+							<executeBlock name="Selected"/>
+						</else>
+					</IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Selected">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" setFocus="true" by="xpath">//a[@title='Expand Add Attributes']</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true" setFocus="true" by="xpath">//a[@title='Expand Add Attributes']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <pause durationInSecs="1"/>
+                </then>
+                <else/>
+            </IfThenElse>
+			 <IfThenElse>
+                <if>
+                    <findElement by="xpath">//table[@summary='Available Attributes']/../..//a[@title='Clear All']</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement by="xpath">//table[@summary='Available Attributes']/../../../..//img[@title='Query By Example']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+            <findElement by="xpath">//table[@summary='Available Attributes']/../..//a[@title='Clear All']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <findElement by="xpath">//table[@summary='Available Attributes']/../..//th[(string(//span[text()='Object']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+                <valueKB inventoryName="MAIN_2_REPEAT" columnName="Object"/>
+            </sendKeys>
+            <findElement by="xpath">//table[@summary='Available Attributes']/../..//th[(string(//span[text()='Attribute Group']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+                <valueKB inventoryName="MAIN_2_REPEAT" columnName="Attribute Group"/>
+            </sendKeys>
+            <findElement by="xpath">//table[@summary='Available Attributes']/../..//table[@summary='This table contains column headers corresponding to the data body table below']//th[3]//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true">
+                <valueKB inventoryName="MAIN_2_REPEAT" columnName="Attribute"/>
+            </sendKeys>
+			
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_2_REPEAT" columnName="Attribute Group"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>	
+                </if>
+                <then>
+					<IfThenElse>
+						<if>
+							<findElement
+									by="xpath">//table[@summary='Available Attributes']//td[1][text()='<valueKB
+									inventoryName="MAIN_2_REPEAT"
+									columnName="Object"/>']/..//td[2][text()='<valueKB
+									inventoryName="MAIN_2_REPEAT"
+									columnName="Attribute Group"/>']/..//td[3][text()='<valueKB
+									inventoryName="MAIN_2_REPEAT" columnName="Attribute"/>']</findElement>
+						</if>
+						<then>
+							<findElement
+									by="xpath">//table[@summary='Available Attributes']//td[1][text()='<valueKB
+									inventoryName="MAIN_2_REPEAT"
+									columnName="Object"/>']/..//td[2][text()='<valueKB
+									inventoryName="MAIN_2_REPEAT"
+									columnName="Attribute Group"/>']/..//td[3][text()='<valueKB
+									inventoryName="MAIN_2_REPEAT" columnName="Attribute"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//button[text()='Add']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+											by="xpath">//table[@summary='Available Attributes']//td[1]//span[text()='<valueKB
+											inventoryName="MAIN_2_REPEAT"
+											columnName="Object"/>']/..//td[2]//span[text()='<valueKB
+											inventoryName="MAIN_2_REPEAT"
+											columnName="Attribute Group"/>']/..//td[3]//span[text()='<valueKB
+											inventoryName="MAIN_2_REPEAT" columnName="Attribute"/>']</findElement>
+								</if>
+								<then>
+									<findElement
+											by="xpath">//table[@summary='Available Attributes']//td[1][text()='<valueKB
+											inventoryName="MAIN_2_REPEAT"
+											columnName="Object"/>']/..//td[2][text()='<valueKB
+											inventoryName="MAIN_2_REPEAT"
+											columnName="Attribute Group"/>']/..//td[3]//span[text()='<valueKB
+											inventoryName="MAIN_2_REPEAT" columnName="Attribute"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//button[text()='Add']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<error message="This 'Attribute' doesn't available."/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+                </then>
+                <else>
+					<IfThenElse>
+						<if>
+							<findElement
+									by="xpath">//table[@summary='Available Attributes']//td[1][text()='<valueKB
+									inventoryName="MAIN_2_REPEAT"
+									columnName="Object"/>']/..//td[3][text()='<valueKB
+									inventoryName="MAIN_2_REPEAT" columnName="Attribute"/>']</findElement>
+						</if>
+						<then>
+							<findElement
+									by="xpath">//table[@summary='Available Attributes']//td[1][text()='<valueKB
+									inventoryName="MAIN_2_REPEAT"
+									columnName="Object"/>']/..//td[3][text()='<valueKB
+									inventoryName="MAIN_2_REPEAT" columnName="Attribute"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//button[text()='Add']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement
+											by="xpath">//table[@summary='Available Attributes']//td[1]//span[text()='<valueKB
+											inventoryName="MAIN_2_REPEAT"
+											columnName="Object"/>']/..//td[3]//span[text()='<valueKB
+											inventoryName="MAIN_2_REPEAT" columnName="Attribute"/>']</findElement>
+								</if>
+								<then>
+									<findElement
+											by="xpath">//table[@summary='Available Attributes']//td[1][text()='<valueKB
+											inventoryName="MAIN_2_REPEAT"
+											columnName="Object"/>']/..//td[3]//span[text()='<valueKB
+											inventoryName="MAIN_2_REPEAT" columnName="Attribute"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//button[text()='Add']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<error message="This 'Attribute' doesn't available."/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		  <repeat inventoryName="MAIN_1_REPEAT">
+				<IfThenElse>
+					<if>
+						<findElement highlightTurnedOff="true" by="xpath">//label[text()='Item Class']/../..//input[@value='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Item Class"/>']</findElement>
+					</if>
+					<then>
+						  <executeBlock name="Tab_Import_Formats"/>
+							<executeBlock name="Search_Import_Formats"/>
+					</then>
+					<else>
+						<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+						<executeBlock name="Search"/>
+						  <executeBlock name="Tab_Import_Formats"/>
+						<executeBlock name="Search_Import_Formats"/>
+					</else>
+				</IfThenElse>
+                <repeat inventoryName="MAIN_2_REPEAT">
+                  <IfThenElse>
+						<if>
+							<findElement by="xpath">//div[contains(text(),'Import Format')]</findElement>
+						</if>
+						<then>
+							<executeBlock name="Available"/>	
+							<findElement by="xpath">//span[text()='K']/..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="GLOBAL_SAVE"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//table[@summary='Import Formats']/../..//a[@title='Clear All']</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//table[@summary='Import Formats']/../../../..//img[@title='Query By Example']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<findElement by="xpath">//table[@summary='Import Formats']/../..//a[@title='Clear All']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_2_REPEAT" columnName="Name"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//table[@summary='Import Formats']/../..//table[@summary='This table contains column headers corresponding to the data body table below']//th[1]//input</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//table[@summary='Import Formats']/../..//table[@summary='This table contains column headers corresponding to the data body table below']//th[1]//input</findElement>
+											<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="MAIN_2_REPEAT" columnName="Name"/>
+											</sendKeys>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+							
+							<IfThenElse>
+								<if>
+									<findElement
+											by="xpath">//table[@summary='Import Formats']//td[1][text()='<valueKB
+											inventoryName="MAIN_2_REPEAT" columnName="Name"/>']</findElement>
+								</if>
+								<then>
+									<findElement
+											by="xpath">//table[@summary='Import Formats']//td[1][text()='<valueKB
+											inventoryName="MAIN_2_REPEAT" columnName="Name"/>']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<executeBlock name="GLOBAL_UPDATE"/>
+									<executeBlock name="Available"/>
+									<findElement by="xpath">//span[text()='K']/..</findElement>
+									<click waitForPageToFinishRendering="true"/>									
+									<executeBlock name="GLOBAL_SAVE"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+                </repeat>
+				<executeBlock name="GLOBAL_SAVE"/>
+            </repeat>
+	</fusionNavigation>
+</navigation>
+		  

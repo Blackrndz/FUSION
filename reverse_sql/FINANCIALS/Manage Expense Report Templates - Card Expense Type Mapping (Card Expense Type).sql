@@ -1,0 +1,55 @@
+/* ****************************************************************************
+ * $Revision: 53782 $:
+ * $Author: nasrullah.dusenmahamad $:
+ * $Date: 2016-03-31 18:00:16 +0700 (Tue, 22 Mar 2016) $:
+ * $HeadURL: $:
+ * $Id: Manage Enterprise HCM Information - Attachments.sql 53782 2016-03-22 11:00:16Z nasrullah.dusenmahamad $:
+ * ****************************************************************************
+ * Description:
+ * ************************************************************************** */
+ 
+
+SELECT QLRST.RES_NAME
+,(SELECT BU_NAME
+	FROM FUN_ALL_BUSINESS_UNITS_V
+	WHERE BU_ID = QLRST.ORG_ID
+	) RES_BUSINESS_UNIT
+,QLRST.RES_CARD_EXPENSE_TYPE
+,ExpenseTypeEO.NAME RES_EXPENSE_TYPE
+,TO_CHAR(ExpenseTypeEO.END_DATE,'DD-Mon-YYYY') RES_EFFECTIVE_END_DATE
+,DECODE(CardExpenseTypeMapEO.AUTOMATIC_ITEMIZATION_FLAG,'Y','Yes','No') RES_AUTOMATIC_ITEMIZATION
+,(SELECT NAME
+	FROM EXM_EXPENSE_TYPES
+	WHERE EXPENSE_TYPE_ID = CardExpenseTypeMapEO.AUTO_ITEMIZE_DFLT_EXP_TYPE
+	) RES_DEFAULT_ITEMIZATION_EXPENS
+,CardExpenseTypeMapEO.LAST_UPDATED_BY RSC_LAST_UPDATED_BY
+,CardExpenseTypeMapEO.LAST_UPDATE_DATE RSC_LAST_UPDATE_DATE
+,CardExpenseTypeMapEO.CREATED_BY RSC_CREATED_BY
+,CardExpenseTypeMapEO.CREATION_DATE RSC_CREATION_DATE
+,NULL RSC_LEDGER_ID
+,NULL RSC_CHART_OF_ACCOUNTS_ID
+,QLRST.ORG_ID RSC_BUSINESS_UNIT_ID
+,NULL RSC_LEGAL_ENTITY_ID
+,NULL RSC_ORGANIZATION_ID
+,NULL RSC_BUSINESS_GROUP_ID
+,NULL RSC_ENTERPRISE_ID
+,NULL RSC_COUNTRY_ID
+
+FROM
+	(SELECT ExpenseTemplateEO.NAME RES_NAME
+	,ExmLookupValuesE0.DISPLAYED_FIELD RES_CARD_EXPENSE_TYPE
+	,ExpenseTemplateEO.EXPENSE_TEMPLATE_ID
+	,ExpenseTemplateEO.ORG_ID
+	,ExmLookupValuesE0.LOOKUP_CODE
+	FROM EXM_EXPENSE_TEMPLATES ExpenseTemplateEO
+	,EXM_LOOKUP_VALUES ExmLookupValuesE0
+	WHERE ExmLookupValuesE0.LOOKUP_TYPE = 'EXM_CARD_EXPENSE_TYPE'
+	) QLRST
+,EXM_CARD_EXP_TYPE_MAPS CardExpenseTypeMapEO
+,EXM_EXPENSE_TYPES ExpenseTypeEO
+WHERE QLRST.EXPENSE_TEMPLATE_ID          = CardExpenseTypeMapEO.EXPENSE_TEMPLATE_ID(+)
+AND CardExpenseTypeMapEO.EXPENSE_TYPE_ID = ExpenseTypeEO.EXPENSE_TYPE_ID(+)
+AND QLRST.LOOKUP_CODE                    = CardExpenseTypeMapEO.CARD_EXPENSE_TYPE_CODE(+)
+ORDER BY QLRST.RES_NAME
+,RES_BUSINESS_UNIT
+,QLRST.LOOKUP_CODE

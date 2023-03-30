@@ -1,0 +1,298 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Policies by Expense Category (Meals)</name>
+    <svn>
+        <xsd:revision>$Revision: 78997 $:</xsd:revision>
+        <xsd:author>$Author: kullada.somtragool $:</xsd:author>
+        <xsd:date>$Date: 2022-07-13 17:26:21 +0700 (Wed, 13 Jul 2022) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Policies%20by%20Expense%20Category%20(Meals).xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Policies by Expense Category (Meals).xml 78997 2022-07-13 10:26:21Z kullada.somtragool $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        taskName="Manage Policies by Expense Category"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+         <dependencies>
+            <navigation name="Manage Data Role and Security Profiles"/>
+			<navigation name="Manage Cumulative Mileage Determinants"/>
+			<navigation name="Manage Tax Rates and Tax Recovery Rates (Transaction Tax Rates)"/>
+			<navigation name="Manage Service Provider Relationships (Customer Payments Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Payables Payment Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Procurement Service Providers)"/>
+        </dependencies>
+		<parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Policies by Expense Category - Meals"/>
+        </parameters>
+                      <block name="Expand_Search">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title='Collapse Search']</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement by="xpath">//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="SEARCH_POLICIES">
+            <executeBlock name="Expand_Search"/>
+            <findElement by="xpath">//button[text()='Reset']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <executeBlock name="Expand_Search"/>
+            <findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Policy Name"/>
+            </sendKeys>
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Expense Category']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Expense Category"/>
+				</parameters>
+			</executeBlock>	
+            <executeBlock name="Expand_Search"/>
+            <findElement by="xpath">//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="BUTTON_SAVE_AND_CLOSER">
+            <findElement by="xpath">//span[text()='S']/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="CREATE_POLICY">
+            <findElement by="xpath">//span[text()='Create Policy']/../../..//div</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <findElement by="xpath">//div[contains(@class,'Popup')]//td[text()='Meals']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="POLICY_MEALS">
+            <!--Policy Name-->
+            <executeBlock name="INPUT_ENTER">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Policy Name']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Policy Name"/>
+                </parameters>
+            </executeBlock>
+            <!--Description-->
+            <executeBlock name="INPUT_ENTER">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Description']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Description"/>
+                </parameters>
+            </executeBlock>
+            <!--Single instance limit-->
+            <executeBlock name="CHECKBOX">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Single instance limit']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Single instance limit"/>
+                </parameters>
+            </executeBlock>
+            <!--Daily sum limit-->
+            <executeBlock name="CHECKBOX">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Daily sum limit']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Daily sum limit"/>
+                </parameters>
+            </executeBlock>
+            <!--Rate Currency-->
+			
+           <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Rate Currency"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText>Multiple currencies</valueText>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">//label[text()='Single currency']/..//input[@checked]</findElement>
+                        </if>
+                        <then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//label[text()='Currency']/../..//select</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//label[text()='Currency']/../..//select</findElement>
+									<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+										<valueText>USD - US Dollar</valueText>
+									</select>								
+								</then>
+								<else>
+									<findElement by="xpath">//label[text()='Currency']/../..//input/..//div//li[text()='USD - US Dollar']</findElement>
+									<click waitForPageToFinishRendering="true" isJavaScript="true" />
+								</else>
+							</IfThenElse>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+						<executeBlock name="RADIO_INPUT">
+							<parameters>
+								<parameter name="LEGEND" value="Rate Currency"/>
+								<parameter name="LABEL_RADIO" value="Rate Currency"/>
+								<parameter name="XPATH" value=""/>
+								<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+								<parameter name="COL_NAME" value="Rate Currency"/>
+							</parameters>
+						</executeBlock>
+                </then>
+                <else>
+                    <executeBlock name="RADIO_INPUT">
+							<parameters>
+								<parameter name="LEGEND" value="Rate Currency"/>
+								<parameter name="LABEL_RADIO" value="Rate Currency"/>
+								<parameter name="XPATH" value=""/>
+								<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+								<parameter name="COL_NAME" value="Rate Currency"/>
+							</parameters>
+						</executeBlock>
+                </else>
+            </IfThenElse>
+            <!--Currency-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Currency']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Currency"/>
+                </parameters>
+            </executeBlock>
+            <!--Role-->
+            <executeBlock name="CHECKBOX">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Role']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Role"/>
+                </parameters>
+            </executeBlock>
+            <!--Role Type-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Role Type']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Role Type"/>
+                </parameters>
+            </executeBlock>
+            <!--Location-->
+            <executeBlock name="CHECKBOX">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Location']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Location"/>
+                </parameters>
+            </executeBlock>
+            <!--Location - Type-->
+			<executeBlock name="RADIO_INPUT">
+				<parameters>
+					<parameter name="LEGEND" value="LocationTypeCode"/>
+					<parameter name="LABEL_RADIO" value="Location - Type"/>
+					<parameter name="XPATH" value=""/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Location - Type"/>
+				</parameters>
+			</executeBlock>
+            <!--Zone Type-->
+            <executeBlock name="SELECT_KB">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Zone Type']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Zone Type"/>
+                </parameters>
+            </executeBlock>
+             <!--Policy Enforcement-->
+			<executeBlock name="RADIO_INPUT">
+				<parameters>
+					<parameter name="LEGEND" value="PolicyEnforcementCode"/>
+					<parameter name="LABEL_RADIO" value="Policy Enforcement"/>
+					<parameter name="XPATH" value=""/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Policy Enforcement"/>
+				</parameters>
+			</executeBlock>
+            <!--Policy violation warning-->
+            <executeBlock name="CHECKBOX">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Policy violation warning']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Policy violation warning"/>
+                </parameters>
+            </executeBlock>
+            <pause durationInSecs="2"/>
+            <!--Warning Tolerance Percentage-->
+            <executeBlock name="INPUT_ENTER">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Warning Tolerance Percentage']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Warning Tolerance Percentage"/>
+                </parameters>
+            </executeBlock>
+            <!--Display warning to user-->
+            <executeBlock name="CHECKBOX">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Display warning to user']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Display warning to user"/>
+                </parameters>
+            </executeBlock>
+            <!--Prevent report submission-->
+            <executeBlock name="CHECKBOX">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Prevent report submission']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Prevent report submission"/>
+                </parameters>
+            </executeBlock>
+            <pause durationInSecs="2"/>
+            <!--Error Tolerance Percentage-->
+            <executeBlock name="INPUT_ENTER">
+                <parameters>
+                    <parameter name="XPATH" value="//label[text()='Error Tolerance Percentage']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Error Tolerance Percentage"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="BUTTON_SAVE">
+            <findElement by="xpath">//span[text()='Save']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+            <executeBlock name="SEARCH_POLICIES"/>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//a[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Policy Name"/>']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//a[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Policy Name"/>']/../..//td[1]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <executeBlock name="GLOBAL_UPDATE"/>
+                    <executeBlock name="POLICY_MEALS"/>
+                </then>
+                <else>
+                    <executeBlock name="CREATE_POLICY"/>
+                    <executeBlock name="POLICY_MEALS"/>
+                </else>
+            </IfThenElse>
+            <executeBlock name="BUTTON_SAVE"/>
+           <executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

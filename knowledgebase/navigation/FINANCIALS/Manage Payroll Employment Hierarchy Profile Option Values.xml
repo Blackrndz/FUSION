@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Payroll Employment Hierarchy Profile Option Values</name>
+    <svn>
+        <xsd:revision>$Revision: 79479 $:</xsd:revision>
+        <xsd:author>$Author: kullada.somtragool $:</xsd:author>
+        <xsd:date>$Date: 2022-10-11 14:46:56 +0700 (Tue, 11 Oct 2022) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Payroll%20Employment%20Hierarchy%20Profile%20Option%20Values.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Payroll Employment Hierarchy Profile Option Values.xml 79479 2022-10-11 07:46:56Z kullada.somtragool $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Payroll Employment Hierarchy Profile Option Values" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+				<navigation name="Manage Users"/>
+				<navigation name="Manage Profile Options"/>
+		</dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Payroll Employment Hierarchy Profile Option Values - Profile Options"/>
+            <parameter name="MAIN_REPEAT_2" value="Manage Payroll Employment Hierarchy Profile Option Values - Profile Values"/>
+        </parameters>
+       
+	   <block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Profile Option Code"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Profile Option Code"/>']</findElement>
+		</block>
+		
+		<block name="Save_and_Close">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//button[text()='ave and Close']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//button[text()='ave and Close']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Save">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//button[text()='Save']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//button[text()='Save']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SAVE"/>
+				</else>
+			</IfThenElse>
+		</block>
+				
+		<block name="New_Profile_Option">
+			<error message="No data found please check your data." />
+		</block>
+		
+		<block name="Update_Profile_Option">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		
+		<block name="New_Profile_Value">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='New']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='New']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="Update_Profile_Value">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="3"/>
+		</block>
+		
+		<block name="Create_Profile_Value">
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@title,'Profile Values')]/../../../../../.. //tr[contains(@class,'Selected')]//label[text()='Profile Level']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Profile Level"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@title,'Profile Values')]/../../../../../.. //tr[contains(@class,'Selected')]//label[text()='User Name']/..[@style]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="User Name"/>
+					<parameter name="SEARCH_1" value="User Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@title,'Profile Values')]/../../../../../.. //tr[contains(@class,'Selected')]//label[text()='Profile Value']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Profile Value"/>
+				</parameters>
+			</executeBlock>
+		</block>
+
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Scope Selection']/..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Scope Selection'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Scope Selection']//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Scope Selection']//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Profile Option Code"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_Profile_Option"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Profile_Option"/>
+				</parameters>
+			</executeBlock>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//div[contains(@title,'Profile Values')]/../../../../../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="//div[contains(@title,'Profile Values')]/../../../../../..//td[1][@class][@style][not(@title)]/../../../../../..[not(@style)]/div/div[2]//td[1]/..[@class]/td[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//div[contains(@title,'Profile Values')]/../../../../../..//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//div[contains(@title,'Profile Values')]/../../../../../..//td[1][@title='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Profile Level"/>']</parameter>
+						<parameter name="TEMPLATE_CREATE" value="New_Profile_Value"/>
+						<parameter name="TEMPLATE_UPDATE" value="Update_Profile_Value"/>
+					</parameters>
+				</executeBlock>
+				<executeBlock name="Create_Profile_Value"/>
+			</repeat>
+			<executeBlock name="Save"/>
+			<executeBlock name="Save_and_Close"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

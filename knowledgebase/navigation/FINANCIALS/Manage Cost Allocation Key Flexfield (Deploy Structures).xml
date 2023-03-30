@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Cost Allocation Key Flexfield (Deploy Structures)</name>
+    <svn>
+        <xsd:revision>$Revision: 77313 $:</xsd:revision>
+        <xsd:author>$Author: kullada.somtragool $:</xsd:author>
+        <xsd:date>$Date: 2021-11-17 16:13:00 +0700 (Wed, 17 Nov 2021) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Cost%20Allocation%20Key%20Flexfield%20(Deploy%20Structures).xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Cost Allocation Key Flexfield (Deploy Structures).xml 77313 2021-11-17 09:13:00Z kullada.somtragool $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Cost Allocation Key Flexfield"
+        isBatchingAllowed="false" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Cost Allocation Key Flexfield (Structures)"/>
+        </dependencies>
+		<parameters>
+			<parameter name="REPEAT_STRUCTURES" value="Manage Cost Allocation Key Flexfield - Key Flexfield Structures"/>
+		</parameters>
+       
+	   <block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_STRUCTURES" columnName="Name"/>']/../..//input</findElement>
+		</block>
+		
+		<block name="Deploy_Flexfield">
+            <findElement by="xpath" isSkipCheckDomError="true">//a/*[text()='Deploy Flexfield']/..</findElement>
+            <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			 <executeBlock name="Waiting_Deploy" isRepeatUntilBreak="true"/>
+			  <executeBlock name="Deploy_Ok"/>
+        </block>
+		
+		<block name="Waiting_Deploy">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Confirmation')]</findElement>
+                </if>
+                <then>
+                    <break/>
+                </then>
+                <else>
+                    <pause durationInSecs="2"/>
+                </else>
+            </IfThenElse>
+        </block>
+		
+		 <block name="Deploy_Ok">
+            <IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//button[contains(@class,'Disabled')][text()='OK']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="10"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+        </block>
+		
+		<block name="Search_Key_Flexfield">
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[contains(@summary,'lists the key flexfields')]/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[contains(@summary,'lists the key flexfields')][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[contains(@summary,'lists the key flexfields')]/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[contains(@summary,'lists the key flexfields')][//*[text()='<valueKB inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Name"/>'] and //*[text()='<valueKB inventoryName="REPEAT_STRUCTURES" columnName="Key Flexfield Code"/>']]</parameter>
+					<parameter name="TEMPLATE_CREATE" value="Error"/>
+					<parameter name="TEMPLATE_UPDATE" value="Select_Key_Flexfield"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="Error">
+			<error message="No Key Flexfields found. Please check your data." />
+		</block>
+		
+		<block name="Select_Key_Flexfield">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			  <IfThenElse>
+                <if>
+                    <findElement by="xpath" isSkipCheckDomError="true">//img[contains(@title,'Deployed')]</findElement>
+                </if>
+                <then/>
+                <else>
+					<executeBlock name="Deploy_Flexfield"/>
+				</else>
+			 </IfThenElse>
+		</block>
+		
+		<block name="DONE">
+            <!--<findElement by="xpath">//span[text()='o']</findElement>
+            <click waitForPageToFinishRendering="true"/>-->
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath" isSkipCheckDomError="true">(//h1[text()='###TASK_NAME###']/../../..//span[text()='o'])[2]</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">(//h1[text()='###TASK_NAME###']/../../..//span[text()='o'])[2]</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+		
+		 <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="REPEAT_STRUCTURES">
+            <executeBlock name="Search_Key_Flexfield"/>
+			<executeBlock name="DONE"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   

@@ -1,0 +1,485 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Cost Allocation Key Flexfield (Structure Instances)</name>
+	<svn>
+		<xsd:revision>$Revision: 77658 $:</xsd:revision>
+		<xsd:author>$Author: phermwit.seethong $:</xsd:author>
+		<xsd:date>$Date: 2022-01-17 11:23:46 +0700 (Mon, 17 Jan 2022) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Cost%20Allocation%20Key%20Flexfield%20(Structure%20Instances).xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Cost Allocation Key Flexfield (Structure Instances).xml 77658 2022-01-17 04:23:46Z phermwit.seethong $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Cost Allocation Key Flexfield"
+        isBatchingAllowed="false" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Cost Allocation Key Flexfield (Structures)"/>
+			<navigation name="Manage Chart of Accounts Value Sets"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_STRUCTURES_INSTANCES" value="Manage Cost Allocation Key Flexfield - Key Flexfield Structure Instances"/>
+			<parameter name="REPEAT_SEGMENT_INSTANCE" value="Manage Cost Allocation Key Flexfield - Key Flexfield Segment Instance"/>
+		</parameters>
+		
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_STRUCTURES_INSTANCES" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_SEGMENT_INSTANCE" columnName="Name"/>']/../..//input</findElement>
+		</block>
+		
+		<block name="Manage_Structure_Instances_button">
+			<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Manage Structure Instances']/../..//a</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="3"/>
+			<executeBlock name="SEARCH_Manage Key Flexfield Structure Instances"/>
+		</block>
+		
+		<block name="Search_Key_Flexfield">
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[contains(@summary,'lists the key flexfields')]/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[contains(@summary,'lists the key flexfields')][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[contains(@summary,'lists the key flexfields')]/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[contains(@summary,'lists the key flexfields')][//*[text()='<valueKB inventoryName="REPEAT_STRUCTURES_INSTANCES" columnName="Key Flexfield Name"/>'] and //*[text()='<valueKB inventoryName="REPEAT_STRUCTURES_INSTANCES" columnName="Key Flexfield Code"/>']]</parameter>
+					<parameter name="TEMPLATE_CREATE" value="Error"/>
+					<parameter name="TEMPLATE_UPDATE" value="Select_Key_Flexfield"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="Error">
+			<error message="No Key Flexfields found. Please check your data." />
+		</block>
+		
+		<block name="Select_Key_Flexfield">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<executeBlock name="Manage_Structure_Instances_button"/>
+		</block>
+		
+		<block name="SEARCH_Manage Key Flexfield Structure Instances">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath">//label[text()='Structure Instance Code']/../..//input</findElement>
+			<sendKeys isClear="true">
+				<valueKB inventoryName="REPEAT_STRUCTURES_INSTANCES" columnName="Structure Instance Code"/>
+			</sendKeys>
+			<findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+			<sendKeys isClear="true">
+				<valueKB inventoryName="REPEAT_STRUCTURES_INSTANCES" columnName="Name"/>
+			</sendKeys>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<!--    <findElement by="xpath">//h2[text()='Search Results']/../../../../../../../..//tr[td[text()='<valueKB inventoryName="REPEAT_STRUCTURES_INSTANCES" columnName="Structure Instance Code"/>'] and td[text()='<valueKB inventoryName="REPEAT_STRUCTURES_INSTANCES" columnName="Name"/>']]</findElement>     -->
+					<findElement by="xpath">//tr[td[text()='<valueKB inventoryName="REPEAT_STRUCTURES_INSTANCES" columnName="Name"/>']]</findElement>
+				</if>
+				<then>
+					<executeBlock name="UPDATE_Structure Instances"/>
+				</then>
+				<else>
+					<executeBlock name="CREATE_Structure Instances"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="CREATE_Structure Instances">
+			<!--<executeBlock name="GLOBAL_CREATE"/>-->
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//table[contains(@summary,'lists the key flexfield structure instances')]/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath">//label[text()='Structure Instance Code']/../..//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_STRUCTURES_INSTANCES" columnName="Structure Instance Code"/>
+			</sendKeys>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_STRUCTURES_INSTANCES"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--<findElement by="xpath">//label[text()='Structure Instance Code']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true">
+				<valueKB
+                    inventoryName="REPEAT_STRUCTURES_INSTANCES" columnName="Structure Instance Code"/>
+			</sendKeys>
+			<findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true">
+				<valueKB
+                    inventoryName="REPEAT_STRUCTURES_INSTANCES" columnName="Name"/>
+			</sendKeys> -->
+			<!--Description -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_STRUCTURES_INSTANCES"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='API name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_STRUCTURES_INSTANCES"/>
+					<parameter name="COL_NAME" value="API name"/>
+				</parameters>
+			</executeBlock>
+			<!--<findElement by="xpath">//label[text()='API name']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true">
+				<valueKB
+                    inventoryName="REPEAT_STRUCTURES_INSTANCES" columnName="API name"/>
+			</sendKeys> -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enabled']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_STRUCTURES_INSTANCES"/>
+					<parameter name="COL_NAME" value="Enabled"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Dynamic combination creation allowed']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_STRUCTURES_INSTANCES"/>
+					<parameter name="COL_NAME" value="Dynamic combination creation allowed"/>
+				</parameters>
+			</executeBlock>
+			<!--Shorthand alias enabled -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Shorthand alias enabled']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_STRUCTURES_INSTANCES"/>
+					<parameter name="COL_NAME" value="Shorthand alias enabled"/>
+				</parameters>
+			</executeBlock>			
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Structure Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_STRUCTURES_INSTANCES"/>
+					<parameter name="COL_NAME" value="Structure Name"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="UPDATE_Structure Instances">
+			<!-- <executeBlock name="GLOBAL_UPDATE"/>
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_UPDATE">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'lists the key flexfield structure instances')]/../../../.."/>
+				</parameters>   
+			</executeBlock>-->
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[contains(@summary,'lists the key flexfield structure instances')]/../../../..//div[@title='Edit']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[contains(@summary,'lists the key flexfield structure instances')]/../../../..//div[@title='Edit']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<error message="The perpare data column 'Parent Selected Exceptions'." />
+				</else>
+			</IfThenElse>
+			<!--Description -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_STRUCTURES_INSTANCES"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Enabled -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enabled']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_STRUCTURES_INSTANCES"/>
+					<parameter name="COL_NAME" value="Enabled"/>
+				</parameters>
+			</executeBlock>
+			<!--Dynamic combination creation allowed -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Dynamic combination creation allowed']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_STRUCTURES_INSTANCES"/>
+					<parameter name="COL_NAME" value="Dynamic combination creation allowed"/>
+				</parameters>
+			</executeBlock>
+			<!--Shorthand alias enabled -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Shorthand alias enabled']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_STRUCTURES_INSTANCES"/>
+					<parameter name="COL_NAME" value="Shorthand alias enabled"/>
+				</parameters>
+			</executeBlock>			
+			<!--Structure Name -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="REPEAT_STRUCTURES_INSTANCES" columnName="Structure Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Structure Name']/../..//span[text()='<valueKB inventoryName="REPEAT_STRUCTURES_INSTANCES" columnName="Structure Name"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<error message="The field 'Structure Name' Cannot be update"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="Segment_Instances">
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[contains(@summary,'lists the segment instances')]/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[contains(@summary,'lists the segment instances')][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[contains(@summary,'lists the segment instances')]/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[contains(@summary,'lists the segment instances')]//tr[td[1][text()='<valueKB inventoryName="REPEAT_SEGMENT_INSTANCE" columnName="Segment Code"/>']]</parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_Segment_Instances"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update Segment Instances"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="New_Segment_Instances">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='This table lists the segment instances of the structure instance.']//tr[td[1][text()='<valueKB inventoryName="REPEAT_SEGMENT_INSTANCE" columnName="Segment Code"/>']]</findElement>
+				</if>
+				<then/>
+				<else>
+					<error message="The field 'Segment Code' doesn't exist."/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Update Segment Instances">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_UPDATE">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'lists the segment instances')]/../../../.."/>
+				</parameters>   
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Edit Key Flexfield Segment Instance')]/../../../../../../..//label[text()='Value Set Code']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_SEGMENT_INSTANCE"/>
+					<parameter name="COL_NAME" value="Value Set Code"/>
+					<parameter name="SEARCH_1" value="Value Set Code"/>
+				</parameters>
+			</executeBlock>
+			<!-- Required -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Edit Key Flexfield Segment Instance')]/../../../../../../..//label[text()='Required']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_SEGMENT_INSTANCE"/>
+					<parameter name="COL_NAME" value="Required"/>
+				</parameters>
+			</executeBlock>
+			<!-- Displayed -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Edit Key Flexfield Segment Instance')]/../../../../../../..//label[text()='Displayed']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_SEGMENT_INSTANCE"/>
+					<parameter name="COL_NAME" value="Displayed"/>
+				</parameters>
+			</executeBlock>
+			<!-- BI enabled -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Edit Key Flexfield Segment Instance')]/../../../../../../..//label[text()='BI enabled']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_SEGMENT_INSTANCE"/>
+					<parameter name="COL_NAME" value="BI enabled"/>
+				</parameters>
+			</executeBlock>
+			<!-- Default Type -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Edit Key Flexfield Segment Instance')]/../../../../../../..//label[text()='Default Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_SEGMENT_INSTANCE"/>
+					<parameter name="COL_NAME" value="Default Type"/>
+				</parameters>
+			</executeBlock>
+			<!-- Default Value -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB
+                                    inventoryName="REPEAT_SEGMENT_INSTANCE" columnName="Default Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Constant</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement by="xpath">//div[contains(text(),'Edit Key Flexfield Segment Instance')]/../../../../../../..//label[text()='Default Value']/../..//input</findElement>
+					<sendKeys isClear="true">
+						<valueKB inventoryName="REPEAT_SEGMENT_INSTANCE" columnName="Default Value"/>
+					</sendKeys>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Edit Key Flexfield Segment Instance')]/../../../../../../..//label[text()='Query Required']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_SEGMENT_INSTANCE"/>
+					<parameter name="COL_NAME" value="Query Required"/>
+				</parameters>
+			</executeBlock>
+			<!-- Tree Name -->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Edit Key Flexfield Segment Instance')]/../../../../../../..//label[text()='Tree Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_SEGMENT_INSTANCE"/>
+					<parameter name="COL_NAME" value="Tree Name"/>
+					<parameter name="SEARCH_1" value="Tree Name"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Edit Key Flexfield Segment Instance')]/../../../../../../..//button[text()='O']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Edit Key Flexfield Segment Instance')]/../../../../../../..//button[text()='O']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Edit Key Flexfield Segment Instance')]/../../../../../../..//*[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="DONE">
+			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Manage Key Flexfield Structure Instances']/../../../../../../..//span[text()='o']/../..//button</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<!--<IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">(//*[text()='###TASK_NAME###']/../../..//span[text()='o'])[2]</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true" by="xpath">(//*[text()='###TASK_NAME###']/../../..//span[text()='o'])[2]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <IfThenElse>
+                        <if>
+                            <findElement highlightTurnedOff="true"
+                                isDisplayed="true" by="xpath">(//*[text()='###TASK_NAME###']/../../..//span[text()='o'])[1]</findElement>
+                        </if>
+                        <then>
+                            <findElement isDisplayed="true" by="xpath">(//*[text()='###TASK_NAME###']/../../..//span[text()='o'])[1]</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </then>
+                        <else>
+                            <IfThenElse>
+                                <if>
+                                    <findElement by="xpath">//*[contains(text(),'Manage Key Flexfield')]/../../..//td/../../../..//span[text()='o']/..</findElement>
+                                </if>
+                                <then>
+                                    <findElement by="xpath">//*[contains(text(),'Manage Key Flexfield')]/../../..//td/../../../..//span[text()='o']/..</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <IfThenElse>
+                                    <if>
+                                    <findElement by="xpath">(//*[text()='###TASK_NAME###']/../../..//span[text()='o'])[2]</findElement>
+                                    </if>
+                                    <then>
+                                    <findElement
+                                    isDisplayed="true" by="xpath">(//*[text()='###TASK_NAME###']/../../..//span[text()='o'])[2]</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    </then>
+                                    <else/>
+                                    </IfThenElse>
+                                </then>
+                                <else>
+                                    <findElement isDisplayed="true" by="xpath">(//*[text()='###TASK_NAME###']/../../..//span[text()='o'])[2]</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <findElement isDisplayed="true" by="xpath">(//*[text()='###TASK_NAME###']/../../..//span[text()='o'])[1]</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                </else>
+                            </IfThenElse>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>-->
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_STRUCTURES_INSTANCES">
+			<executeBlock name="Search_Key_Flexfield"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<repeat inventoryName="REPEAT_SEGMENT_INSTANCE">
+				<IfThenElse>
+					<if>
+						<comparisons separator="AND">
+							<comparison operator="NOT_EQUAL">
+								<leftOperand>
+									<valueKB inventoryName="REPEAT_SEGMENT_INSTANCE" columnName="Segment Code"/>
+								</leftOperand>
+								<rightOperand>
+									<valueText></valueText>
+								</rightOperand>
+							</comparison>
+						</comparisons>
+					</if>
+					<then>
+						<executeBlock name="Segment_Instances"/>
+					</then>
+					<else>
+
+					</else>
+				</IfThenElse>
+			</repeat>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+			<executeBlock name="DONE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>
+		
+		
+		

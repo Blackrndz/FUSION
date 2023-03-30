@@ -1,0 +1,263 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Person Types</name>
+    <svn>
+        <xsd:revision>$Revision: 79751 $:</xsd:revision>
+        <xsd:author>$Author: kullada.somtragool $:</xsd:author>
+        <xsd:date>$Date: 2022-12-02 16:01:13 +0700 (Fri, 02 Dec 2022) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Person%20Types.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Person Types.xml 79751 2022-12-02 09:01:13Z kullada.somtragool $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Person Types" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Enterprise HCM Information"/>
+            <navigation name="Manage Create Business Unit"/>
+			<navigation name="Manage Legislative Data Groups"/>
+        </dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Person Types - System Person Type"/>
+            <parameter name="MAIN_REPEAT_2" value="Manage Person Types - User Person Types"/>
+        </parameters>
+        <block name="DFF_FAKE">
+           <findElement by="xpath">//*[contains(text(),'<valueKB inventoryName="MAIN_REPEAT_1" columnName="System Person Type"/>')]</findElement>
+			<findElement by="xpath">//*[contains(text(),'<valueKB inventoryName="MAIN_REPEAT_2" columnName="System Person Type"/>')]</findElement>
+        </block>
+		<block name="System_Person_Type">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">(//table[@summary='System Person Types'][@_rowcount]//tr[1]//td)[1]</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					 <executeBlock name="Scroll_to_first" isRepeatUntilBreak="true"/>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='System Person Types']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='System Person Types'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//*[text()='System Person Type']/../../../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='System Person Types']/..//td[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="System Person Type"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="No_System_Person_Type"/>
+					<parameter name="TEMPLATE_UPDATE" value="Select_System_Person_Type"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Scroll_to_first">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">(//table[@summary='System Person Types'][@_rowcount]//tr[1]//td)[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">(//table[@summary='System Person Types'][@_rowcount]//tr[1]//td)[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@summary='System Person Types']/../..//div[contains(@id,'scroller')]</findElement>
+                    <scroll direction="TOP"/>
+                    <pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Select_System_Person_Type">
+			<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+		</block>
+		<block name="No_System_Person_Type">
+			<error message="No System Person Type found." />
+		</block>
+		<block name="User_Person_Type">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[contains(@title,'User Person Types')]/../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='User Person Types']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='User Person Types'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='User Person Types']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='User Person Types']//td[1]//*[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Assignment Person Type"/>']</parameter>
+					<parameter name="TEMPLATE_2_FIND_ROW">//table[@summary='User Person Types']//td[1]//input[@value='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Assignment Person Type"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_User_Person_Type"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_User_Person_Type"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="New_User_Person_Type">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='User Person Types'][@_rowcount='1']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='User Person Types'][@_rowcount]//tr[1]//td)[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='User Person Types'][@_rowcount]//tr[2]//td)[1]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='User Person Types'][@_rowcount]//tr[2]//td)[1]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			
+			<findElement by="xpath" isSkipCheckDomError="true">//a[contains(@title,'User Person Types')]/../../../../../..//td[1]/button</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='User Person Types']//tr[td[number(//table[@summary='User Person Types']/../..//th//span[text()='Assignment Person Type']/../../@_d_index)]/*/*[not(text())]]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='User Person Types']//tr[contains(@class,'Selected')]//label[text()='Assignment Person Type']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Assignment Person Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='User Person Types']//tr[contains(@class,'Selected')]//label[text()='Status']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Status"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='User Person Types']//tr[contains(@class,'Selected')]//input[@type='checkbox']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Default"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Update_User_Person_Type">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='User Person Types']//tr[contains(@class,'Selected')]//label[text()='Status']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Status"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='User Person Types']//tr[contains(@class,'Selected')]//input[@type='checkbox']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Default"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Confirmation">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//div[text()='Confirmation']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Warning">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[contains(text(),'You need to select 1 default user person type for a system person type')]</findElement>
+				</if>
+				<then>
+					<error message="You need to select 1 default user person type for a system person type" />
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//div[text()='Error']</findElement>
+						</if>
+						<then>
+							<error message="Please check error on Oracle screen." />
+						</then>
+						<else>
+							
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="System_Person_Type"/>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<IfThenElse>
+					<if>
+						<comparisons separator="AND">
+							<comparison operator="NOT_EQUAL">
+								<leftOperand>
+									<valueKB inventoryName="MAIN_REPEAT_2" columnName="Assignment Person Type"/>
+								</leftOperand>
+								<rightOperand>
+									<valueText></valueText>
+								</rightOperand>
+							</comparison>
+						</comparisons>
+					</if>
+					<then>
+						<executeBlock name="User_Person_Type"/>
+					</then>
+					<else>
+
+					</else>
+				</IfThenElse>
+			</repeat>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<executeBlock name="Warning"/>
+			<executeBlock name="Confirmation"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+			<executeBlock name="Confirmation"/>
+		</repeat>
+	 </fusionNavigation>
+</navigation>
+		
+		
+		
+		
+		
+		

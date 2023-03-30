@@ -1,0 +1,344 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Year Periods and Billing Calendars (Year Periods)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Year Periods and Billing Calendars" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true">
+		<dependencies>
+			<navigation name="Manage Enterprise HCM Information"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Year Periods and Billing Calendars - Year Periods"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Start Date"/>']/../..//input</findElement>
+		</block>
+		<block name="Year_Period">
+			<executeBlock name="TAB">
+				<parameters>
+					<parameter name="TAB_NAME" value="Year Periods"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Year Period Option"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Single</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Year Periods']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Year Periods'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Year Periods']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Year Periods']//td[1]//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Start Date"/>']</parameter>
+							<parameter name="TEMPLATE_CREATE" value="New_Single_Year_Period"/>
+							<parameter name="TEMPLATE_UPDATE" value="Update_Year_Period"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="Year_Period_Details"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Year Period Option"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Multiple</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+								<parameters>
+									<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Year Periods']/../..//div[contains(text(),'No data to display.')]"/>
+									<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Year Periods'][@_rowcount]//tr[1]//td)[1]"/>
+									<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Year Periods']/../..//div[contains(@id,'scroller')]"/>
+									<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Year Periods']//td[1]//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Start Date"/>']</parameter>
+									<parameter name="TEMPLATE_CREATE" value="New_Multiple_Year_Period"/>
+									<parameter name="TEMPLATE_UPDATE" value="Update_Year_Period"/>
+								</parameters>
+							</executeBlock>
+							<executeBlock name="Year_Period_Details"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+		</block>
+		<block name="New_Single_Year_Period">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Year Periods']/../../../..//*[text()='Create']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Year Periods']/../../../..//*[text()='Create']/../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Update_Year_Period">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Year Periods']/../../../..//*[text()='Edit']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Year Periods']/../../../..//*[text()='Edit']/../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Year_Period_Details">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Period Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Period Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Limitation Year Start Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Limitation Year Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Limitation Year End Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Limitation Year End Date"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//a/*[text()='Save']/../../../..//div/a</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//a/*[text()='Save']/../../../..//div/a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[text()='Save']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//a/*[text()='Save']/../../../..//div/a</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//a/*[text()='Save']/../../../..//div/a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[text()='ave and Close']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="New_Multiple_Year_Period">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Generate Multiple Calendar Year Periods']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Generate Multiple Calendar Year Periods']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//label[text()='Start Year']/../..//input</findElement>
+			<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="Start Year"/>
+			</sendKeys>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[@class='AFDetectExpansion']/..//label[text()='Number of Calendar Years']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Number of Calendar Years"/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//button[text()='Generate Year Periods']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Confirmation']/../../../../../../..//button[text()='O']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Confirmation']/../../../../../../..//button[text()='O']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Year Periods']/../..//*[text()='Start Date']/../..//*[@title='Sort Ascending']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Year Periods']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Year Periods'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Year Periods']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Year Periods']//td[1]//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Start Date"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="Do_Nothing"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Year_Period"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Multiple_Year_Period">
+			<executeBlock name="TAB">
+				<parameters>
+					<parameter name="TAB_NAME" value="Year Periods"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Year Periods']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Year Periods'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Year Periods']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Year Periods']//td[1]//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Start Date"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_Multiple_Year_Period"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Year_Period"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Year_Period_Details"/>
+		</block>
+		<block name="Single_Year_Period">
+			<executeBlock name="TAB">
+				<parameters>
+					<parameter name="TAB_NAME" value="Year Periods"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Year Periods']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Year Periods'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Year Periods']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Year Periods']//td[1]//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Start Date"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_Single_Year_Period"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Year_Period"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Year_Period_Details"/>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Year Period Option"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Single</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="Single_Year_Period"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Year Period Option"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Multiple</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<executeBlock name="Multiple_Year_Period"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Year Period')]/../../../../../../../../../..//a/*[text()='Save']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Year Period')]/../../../../../../../../../..//a/*[text()='Save']/../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Year Period')]/../../../../../../../../../..//a/*[text()='Save']/../../..//div</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Year Period')]/../../../../../../../../../..//a/*[text()='Save']/../../..//div</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='ave and Close']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+		</repeat>
+	</fusionNavigation>
+</navigation>
+		

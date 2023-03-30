@@ -1,0 +1,469 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Tax Reporting and Withholding Tax Options</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Tax Reporting and Withholding Tax Options"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Common Options for Payables and Procurement"/>
+			<navigation name="Manage Invoice Options"/>
+			<navigation name="Manage Payment Options"/>
+		</dependencies>
+
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Tax Reporting and Withholding Tax Options - Income Tax Reporting"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Tax Reporting and Withholding Tax Options - Withholding Tax Options"/>
+		</parameters>
+		<block name="FAKE_MAPPER">
+            <findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="REPEAT_1_MAIN" columnName="Business Unit"/>']/../..//input</findElement>
+            <click isCheckbox="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_1_MAIN" columnName="Business Unit"/>
+            </click>
+        </block>
+		<block name="Manage_Tax">
+			<!--Business Unit-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Business Unit']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Business Unit"/>
+					<parameter name="SEARCH_1" value="Business Unit"/>
+				</parameters>
+			</executeBlock>
+
+			<!-- Use combined filing program -->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Use combined filing program']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Use combined filing program"/>
+				</parameters>
+			</executeBlock>
+
+			<!-- Use supplier tax region -->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Use supplier tax region']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Use supplier tax region"/>
+				</parameters>
+			</executeBlock>
+
+			<!--Income Tax Region-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Income Tax Region']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Income Tax Region"/>
+					<parameter name="SEARCH_1" value="Description"/>
+				</parameters>
+			</executeBlock>
+
+			<!-- Include withholding distributions in income tax reports -->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Include withholding distributions in income tax reports']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Include withholding distributions in income tax reports"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Search_BU">
+            <findElement by="xpath">//label[text()='Business Unit']/../..//input</findElement>
+				<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+					<valueKB inventoryName="REPEAT_1_MAIN" columnName="Business Unit"/>
+				</sendKeys>
+				<pause durationInSecs="1"/> 
+				<IfThenElse>
+					<if>
+						 <findElement isDisplayed="true" by="xpath">//td[contains(text(),'Error: Invalid value')]</findElement>
+					</if>
+					<then>
+						<error message="The field 'Business Unit' doesn't exist." />
+					</then>
+					<else>
+						<IfThenElse>
+							<if>
+								 <findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select:')]/../../../../../../../../../../../..//div[text()='No rows to display']</findElement>
+							</if>
+							<then>
+								<error message="The field 'Business Unit' doesn't exist." />
+							</then>
+							<else>
+
+							</else>
+						</IfThenElse>
+					</else>
+				</IfThenElse>
+        </block>
+
+		<block name="Search_Withholding_Tax_Options">
+		
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Withholding Tax Options']//td[1]//input</findElement>
+				</if>
+				<then/>
+				<else>
+					<executeBlock name="GLOBAL_QUERY_BY_EXAMPLE"/>
+					<executeBlock name="INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//th[(string(//span[text()='Event Class']/../..//preceding-sibling::*/../../../../../@_d_index))+0]"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Event Class"/>
+						</parameters>
+					</executeBlock>
+					
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//span[text()='Regime Determination Set']</findElement>
+						</if>
+						<then>
+							<executeBlock name="INPUT">
+								<parameters>
+									<parameter name="XPATH" value="(//a[@title='Clear All']/../../../../..//input)[2]"/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Regime Determination Set"/>
+								</parameters>
+							</executeBlock>
+							<executeBlock name="INPUT_ENTER">
+								<parameters>
+									<parameter name="XPATH" value="//th[(string(//span[text()='Start Date']/../..//preceding-sibling::*/../../../../../@_d_index))+0]"/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Start Date"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<executeBlock name="INPUT_ENTER">
+								<parameters>
+									<parameter name="XPATH" value="//th[(string(//span[text()='Start Date']/../..//preceding-sibling::*/../../../../../@_d_index))+0]"/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Start Date"/>
+								</parameters>
+							</executeBlock>
+						</else>
+					</IfThenElse>
+							
+				</else>
+			</IfThenElse>
+		
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//span[text()='Regime Determination Set']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@summary='Withholding Tax Options']//td[1]//span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Event Class"/>']/../../..//td[5]//span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Regime Determination Set"/>']/../../..//td[10]//span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Withholding Tax Options']//td[1]//span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Event Class"/>']/../../..//td[5]//span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Regime Determination Set"/>']/../../..//td[10]//span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[1]//input</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="GLOBAL_ADD"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@summary='Withholding Tax Options']//tr[td/span/span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Event Class"/>'] and td//span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Withholding Tax Options']//tr[td/span/span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Event Class"/>'] and td//span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[1]//input</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="GLOBAL_ADD"/>
+								</else>
+							</IfThenElse>						
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+
+			<executeBlock name="Withholding_Tax_Options"/>
+
+		</block>
+		<block name="Withholding_Tax_Options">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Withholding Tax Options']//tr[td/span/span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Event Class"/>'] and td//span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Withholding Tax Options']//tr[td/span/span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Event Class"/>'] and td//span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<!--Event Class-->
+					<executeBlock name="LOV">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[1]"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Event Class"/>
+							<parameter name="SEARCH_1" value="Event Class"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			
+			<!--Apply Withholding-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[2]/span"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Apply Withholding"/>
+				</parameters>
+			</executeBlock>
+			<!--Process Transaction Taxes-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[3]/span"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Process Transaction Taxes"/>
+				</parameters>
+			</executeBlock>
+			<!--Allow Manual Withholding-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[4]/span"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Allow Manual Withholding"/>
+				</parameters>
+			</executeBlock>
+
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//span[text()='Regime Determination Set']</findElement>
+				</if>
+				<then>
+					<!--Regime Determination Set-->
+					<executeBlock name="LOV">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[5]"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Regime Determination Set"/>
+							<parameter name="SEARCH_1" value="Name"/>
+						</parameters>
+					</executeBlock>
+
+					<!--Calculation Point-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[6]"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Calculation Point"/>
+						</parameters>
+					</executeBlock>
+
+					<!--Tax Invoice Creation Point-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[7]"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Tax Invoice Creation Point"/>
+						</parameters>
+					</executeBlock>
+
+					<!--Include Discount-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[8]"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Include Discount"/>
+						</parameters>
+					</executeBlock>
+
+					<!--Rounding Level-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[9]"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Rounding Level"/>
+						</parameters>
+					</executeBlock>
+
+					<!--Start Date-->
+					<executeBlock name="INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[10]"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Start Date"/>
+						</parameters>
+					</executeBlock>
+
+					<!--End Date-->
+					<executeBlock name="INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[11]"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="End Date"/>
+						</parameters>
+					</executeBlock>
+
+					<!--Tax Determination Date-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//label[text()='Tax Determination Date']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Tax Determination Date"/>
+						</parameters>
+					</executeBlock>
+
+					<!--Enable-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[13]/span"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Enable"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+
+					<!--Calculation Point-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[5]"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Calculation Point"/>
+						</parameters>
+					</executeBlock>
+
+					<!--Tax Invoice Creation Point-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[6]"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Tax Invoice Creation Point"/>
+						</parameters>
+					</executeBlock>
+
+					<!--Include Discount-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[7]"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Include Discount"/>
+						</parameters>
+					</executeBlock>
+
+					<!--Rounding Level-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[8]"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Rounding Level"/>
+						</parameters>
+					</executeBlock>
+
+					<!--Start Date-->
+					<executeBlock name="INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[9]"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Start Date"/>
+						</parameters>
+					</executeBlock>
+
+					<!--End Date-->
+					<executeBlock name="INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[10]"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="End Date"/>
+						</parameters>
+					</executeBlock>
+
+					<!--Tax Determination Date-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//label[text()='Tax Determination Date']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Tax Determination Date"/>
+						</parameters>
+					</executeBlock>
+
+					<!--Enable-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Withholding Tax Options']//tr[contains(@class,'Select')]//td[12]/span"/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Enable"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+
+		</block>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="GLOBAL_GO_TO_TASK"/>
+			<executeBlock name="Manage_Tax"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<IfThenElse>
+					<if>
+						<comparisons separator="AND">
+							<comparison operator="NOT_EQUAL">
+								<leftOperand>
+									<valueKB inventoryName="REPEAT_2_MAIN" columnName="Event Class"/>
+								</leftOperand>
+								<rightOperand>
+									<valueText></valueText>
+								</rightOperand>
+							</comparison>
+						</comparisons>
+					</if>
+					<then>
+						<executeBlock name="Search_Withholding_Tax_Options"/>
+					</then>
+					<else>
+					</else>
+				</IfThenElse>			
+				
+				<executeBlock name="GLOBAL_SAVE"/>
+				<IfThenElse>
+					<if>
+						<findElement by="xpath" isDisplayed="true">//div[text()='Information']</findElement>
+					</if>
+					<then>
+						<findElement by="xpath">//div[text()='Information']/../../../../../../..//button[text()='OK']</findElement>
+						<click waitForPageToFinishRendering="true"/>
+					</then>
+					<else>
+					</else>
+				</IfThenElse>
+			</repeat>
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

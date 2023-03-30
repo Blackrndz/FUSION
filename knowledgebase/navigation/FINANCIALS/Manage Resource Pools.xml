@@ -1,0 +1,283 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Resource Pools</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Resource Pools" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Resource Pools - Resource Pools"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Resource Pools - Resource Pool Managers"/>
+		</parameters>
+
+		<block name="Search_Resource_Pools">
+			<executeBlock name="Expand_All"/>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Parent - Resource Pools"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand> 
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Resource Pools"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>           
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR">
+						<parameters>
+							<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Manage Resource Pools']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Manage Resource Pools'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Manage Resource Pools']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[@summary='Manage Resource Pools']/../../../..//span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Parent - Resource Pools"/>']</parameter>
+							<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Error_Parent_Resource_Pool_Managers"/>
+							<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Click_Parent_Resource_Pool_Managers"/>
+						</parameters>
+					</executeBlock>     
+					<executeBlock name="SCROLLBAR">
+						<parameters>
+							<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Manage Resource Pools']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW">//*[@summary='Manage Resource Pools']/../../../..//span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Parent - Resource Pools"/>']</parameter>
+							<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Manage Resource Pools']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[@summary='Manage Resource Pools']/../../../..//span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Resource Pools"/>']</parameter>
+							<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Resource_Pools"/>
+							<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Resource_Pools"/>
+						</parameters>
+					</executeBlock>					
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Parent - Resource Pools"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand> 
+								</comparison>
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Resource Pools"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>           
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<error message="The field 'Parent - Resource Pools' doesn't exist."/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="REPEAT_1_MAIN" columnName="Parent - Resource Pools"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand> 
+										</comparison>
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="REPEAT_1_MAIN" columnName="Resource Pools"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>           
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<error message="The field 'Resource Pools' doesn't exist."/>			
+								</then>
+								<else>
+									<error message="The field 'Resource Pools' doesn't exist."/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Click_Parent_Resource_Pool_Managers">
+			<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" />
+		</block>
+		<block name="Error_Parent_Resource_Pool_Managers">
+			<error message="The field 'Parent - Resource Pools' doesn't exist."/>
+		</block>
+		<block name="Expand_All">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+                        isDisplayed="true" isSkipCheckDomError="true" by="xpath">//*[@summary='Manage Resource Pools']/../../../..//a[text()='View']/../..</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//*[@summary='Manage Resource Pools']/../../../..//a[text()='View']/../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Expand All']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true"
+                                isDisplayed="true"
+                                isSkipCheckDomError="true" by="xpath">//*[@summary='Manage Resource Pools']/../../../..//a[text()='View']/../../../../../../../../../../../..</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//*[@summary='Manage Resource Pools']/../../../..//a[text()='View']/../../../../../../../../../../../..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement isSkipCheckDomError="true" by="xpath">//*[@summary='Manage Resource Pools']/../../../..//a[text()='View']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Expand All']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Create_Resource_Pools">
+			<executeBlock name="GLOBAL_SPECIFY_CREATE">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//table[@summary='Manage Resource Pools']/../../../.."/>
+				</parameters>   
+			</executeBlock>
+			<!--Name-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Resource Pools"/>
+				</parameters>
+			</executeBlock>
+			<!--Pool Owner-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Pool Owner']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Pool Owner"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock name="INPUT_TEXTAREA">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Update_Resource_Pools">
+			<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" />
+			<executeBlock name="GLOBAL_SPECIFY_UPDATE">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//table[@summary='Manage Resource Pools']/../../../.."/>
+				</parameters>   
+			</executeBlock>
+			<!--Pool Owner-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Pool Owner']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Pool Owner"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock name="INPUT_TEXTAREA">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Search_Resource_Pool_Managers">
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Resource Pool Managers']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Resource Pool Managers'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Resource Pool Managers']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Resource Pool Managers']//span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Resource Pool Managers"/>']</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Resource_Pool_Managers"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Resource_Pool_Managers"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Create_Resource_Pool_Managers">
+			<executeBlock name="GLOBAL_SPECIFY_ADD">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//table[@summary='Resource Pool Managers']/../../../.."/>
+				</parameters>   
+			</executeBlock>
+			<!--Resource Pool Managers-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Resource Pool Managers']//td[string(//span[text()='Name']/../..//@_d_index)+1]"/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Resource Pool Managers"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_SPECIFY_SAVE">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//div[contains(@class,'Expansion')]/.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Update_Resource_Pool_Managers">
+			<findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" />
+			<executeBlock name="GLOBAL_SPECIFY_SAVE">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//div[contains(@class,'Expansion')]/.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search_Resource_Pools"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="Search_Resource_Pool_Managers"/>
+			</repeat>
+			<executeBlock name="GLOBAL_SPECIFY_SAVE_AND_CLOSE">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//div[contains(@class,'Expansion')]/.."/>
+				</parameters>
+			</executeBlock>
+		</repeat>
+	</fusionNavigation>
+</navigation>

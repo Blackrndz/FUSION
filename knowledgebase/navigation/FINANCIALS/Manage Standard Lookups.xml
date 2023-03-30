@@ -1,0 +1,3016 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Standard Lookups</name>
+	<svn>
+		<xsd:revision>$Revision: 53667 $:</xsd:revision>
+		<xsd:author>$Author: aratchaporn.kositsirikun $:</xsd:author>
+		<xsd:date>$Date: 2016-03-18 15:49:04 +0700 (Fri, 18 Mar 2016) $:</xsd:date>
+		<xsd:headURL>$HeadURL: http://svn01.rapidesuite.com:999/svn/a/dev/rapidesuite/controldata/FUSION_11.1.9/trunk/core/knowledgebase/navigation/FINANCIALS/Master%20Template/Manage%20General%20Ledger%20Profile%20Options.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage General Ledger Profile Options.xml 53667 2016-03-18 08:49:04Z aratchaporn.kositsirikun $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Standard Lookups" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<!--
+            LOGIC: SCROLLBAR
+                1. SELECT THE FIRST ROW OF THE GRID
+                2. FIND THE SCROLLER
+                3. EXECUTE A LOOP:
+                    3.1. IF CONDITION TO FIND THE ROW WITH THE DATA
+                    3.2. IF NOT FOUND THEN
+                        3.2.1 IF CONDITION TO CHECK IF WE ARE AT THE END OF THE SCROLLBAR (ALWAYS FIND THE SCROLLER BEFORE CHECKING THE END)
+                            IF YES: THEN CLICK CREATE AND BREAK.
+                            IF NOT: THEN SCROLL DOWN ONE TIME, PAUSE 1 SEC THEN GO BACK TO 3.1
+        -->
+		<dependencies>
+			<navigation name="Manage Enterprise HCM Information"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Standard Lookups - Standard Lookups"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Standard Lookups - Lookup Codes"/>
+			<parameter name="MAIN_REPEAT_3" value="Manage Standard Lookups - Lookup Codes - DFF"/>
+		</parameters>
+		<block name="GO_TO_TASK">
+			<findElement isSkipCheckDomError="true" by="xpath">//span[text()='###TASK_NAME###']/../../../..//a[@title='Go to Task']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="SAVE_BUTTON">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+		</block>
+		<block name="Reset">
+			<findElement isSkipCheckDomError="true" by="xpath">//button[text()='Reset']</findElement>
+			<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Search">
+			<findElement isSkipCheckDomError="true" by="xpath">//button[text()='Search']</findElement>
+			<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Save and Close">
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</block>
+		<block name="SCROLLBAR_GENERIC_1">
+			<!-- check if there is no data found returned after the search, if so then we create a new record if applicable -->
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+				</then>
+				<else>
+					<!-- resetting the scollbar back to the Top because the form remembers where it was even when searching a new record -->
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					<scroll direction="TOP"/>
+					<findElement isSkipCheckDomError="true" by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<executeBlock name="SCROLLBAR_GENERIC_INNER_1" isRepeatUntilBreak="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SEARCH..Module">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" setFocus="true" by="xpath">//div[contains(@id,'window')]//a[text()='Search...']</findElement>
+					<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" setFocus="true" by="xpath">(//a[@title='Search'])</findElement>
+					<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SELECT_PROFILE_CODE">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<error message="The field 'Lookup Type' doesn't exist."/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="CREATE_BUTTON">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//*[text()='Search Results']</findElement>
+				</if>
+				<then>
+					<executeBlock name="GLOBAL_SPECIFY_ADD">
+						<parameters>
+							<parameter name="SPECIFY_XPATH" value="//*[text()='Search Results']/../../../../../../.."/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//*[text()='Common Lookup Type']</findElement>
+						</if>
+						<then>
+							<executeBlock name="GLOBAL_SPECIFY_ADD">
+								<parameters>
+									<parameter name="SPECIFY_XPATH" value="//*[text()='Common Lookup Type']/../../../../../../.."/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//*[text()='Standard Lookup Type']</findElement>
+								</if>
+								<then>
+									<executeBlock name="GLOBAL_SPECIFY_ADD">
+										<parameters>
+											<parameter name="SPECIFY_XPATH" value="//*[text()='Standard Lookup Type']/../../../../../../.."/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<error message="The field 'Lookup Type' doesn't exist."/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SCROLLBAR_GENERIC_INNER_1">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">SCROLLBAR_FIND_ROW_GENERIC_2</findElement>
+						</if>
+						<then>
+							<executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+							<break/>
+						</then>
+						<else>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<IfThenElse>
+								<if>
+									<isEndOfScroll/>
+								</if>
+								<then>
+									<executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+									<break/>
+								</then>
+								<else>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+									<scroll direction="DOWN"/>
+									<pause durationInSecs="1"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="CHECH_ADD_LKTYPE">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//*[text()='Search Results']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//*[text()='Search Results']/../../../../../../..//div[@title='New'][contains(@class,'Disabled')]</findElement>
+						</if>
+						<then>
+							<error message="Cannot be Create lookup type"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//*[text()='Common Lookup Type']</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//*[text()='Common Lookup Type']/../../../../../../..//div[@title='New'][contains(@class,'Disabled')]</findElement>
+								</if>
+								<then>
+									<error message="Cannot be Create lookup type"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//*[text()='Standard Lookup Type']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//*[text()='Standard Lookup Type']/../../../../../../..//div[@title='New'][contains(@class,'Disabled')]</findElement>
+										</if>
+										<then>
+											<error message="Cannot be Create lookup type"/>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">(//*[@summary='Scope Selection']/../../../..//table[@style]/tbody/tr/td[1][@class])[1]</findElement>
+												</if>
+												<then>
+													<IfThenElse>
+														<if>
+															<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//*[@summary='Scope Selection']/../../../..//div[@title='New' or @title='Add New']</findElement>
+														</if>
+														<then>
+															<error message="Cannot be Create lookup type"/>
+														</then>
+														<else/>
+													</IfThenElse>
+												</then>
+												<else/>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="CREATE_BUTTON_CODE">
+			<!--<findElement by="xpath">//h2[contains(text(),': Lookup Codes')]/../../../../../../..//a[text()='Actions']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//div[contains(@data-afr-popupid,'dynamicRegion1')]//td[text()='New']</findElement>
+			<click waitForPageToFinishRendering="true"/>-->
+			<executeBlock name="GLOBAL_SPECIFY_ADD">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//*[contains(text(),': Lookup Codes')]/../../../../../../.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="CHECH_ADD_LKCODE">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//div[@title='New'][contains(@class,'Disabled')]</findElement>
+				</if>
+				<then>
+					<error message="Cannot be Create lookup Code"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CREATE_LKTYPE_SPAN">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+				</if>
+				<then>
+					<executeBlock name="CHECH_ADD_LKTYPE"/>
+					<executeBlock name="CREATE_BUTTON"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="TOP"/>
+							<findElement isSkipCheckDomError="true" by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<executeBlock name="CHECH_ADD_LKTYPE"/>
+							<executeBlock name="CREATE_BUTTON"/>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="TOP"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else>
+							<findElement isSkipCheckDomError="true" by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<executeBlock name="CHECH_ADD_LKTYPE"/>
+							<executeBlock name="CREATE_BUTTON"/>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="TOP"/>
+							<pause durationInSecs="2"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="UP_LKTYPE_SPAN">
+			<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<executeBlock name="UPDATE_LKTYPE_SPAN"/>
+		</block>
+		<block name="CREATE_LKTYPE_INPUT">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+				</if>
+				<then>
+					<executeBlock name="CHECH_ADD_LKTYPE"/>
+					<executeBlock name="CREATE_BUTTON"/>
+					<executeBlock name="DEFINE_LKTYPE"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="TOP"/>
+							<findElement isSkipCheckDomError="true" by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<executeBlock name="CREATE_BUTTON"/>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="TOP"/>
+							<pause durationInSecs="2"/>
+							<executeBlock name="DEFINE_LKTYPE"/>
+						</then>
+						<else>
+							<findElement isSkipCheckDomError="true" by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<executeBlock name="CREATE_BUTTON"/>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="TOP"/>
+							<pause durationInSecs="2"/>
+							<executeBlock name="DEFINE_LKTYPE"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="DEFINE_LKTYPE">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Search Results']</findElement>
+				</if>
+				<then>
+					<!-- Lookup Type -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search Results']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Lookup Type']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Lookup Type"/>
+						</parameters>
+					</executeBlock>
+					<!-- Meaning -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search Results']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Meaning']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Meaning"/>
+						</parameters>
+					</executeBlock>
+					<!-- Description -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search Results']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Description']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Description"/>
+						</parameters>
+					</executeBlock>
+					<!-- Module -->
+					<executeBlock name="LOV">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Select')]//div[contains(@id,'ModuleName')]/.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Module"/>
+							<parameter name="SEARCH_1" value="User Module Name"/>
+						</parameters>
+					</executeBlock>
+					<!--REST Access Secured-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search Results']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='REST Access Secured']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="REST Access Secured"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Common Lookup Type']/../../../../../../..</findElement>
+						</if>
+						<then>
+							<!-- Lookup Type -->
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Common Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Lookup Type']/../.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+									<parameter name="COL_NAME" value="Lookup Type"/>
+								</parameters>
+							</executeBlock>
+							<!-- Meaning -->
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Common Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Meaning']/../.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+									<parameter name="COL_NAME" value="Meaning"/>
+								</parameters>
+							</executeBlock>
+							<!-- Description -->
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Common Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Description']/../.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+									<parameter name="COL_NAME" value="Description"/>
+								</parameters>
+							</executeBlock>
+							<!-- Module -->
+							<executeBlock name="LOV">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Common Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//div[contains(@id,'ModuleName')]/.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+									<parameter name="COL_NAME" value="Module"/>
+									<parameter name="SEARCH_1" value="User Module Name"/>
+								</parameters>
+							</executeBlock>
+							<!--REST Access Secured-->
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Common Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='REST Access Secured']/../.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+									<parameter name="COL_NAME" value="REST Access Secured"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Standard Lookup Type']/../../../../../../..</findElement>
+								</if>
+								<then>
+									<!-- Lookup Type -->
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" value="//*[text()='Standard Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Lookup Type']/../.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="Lookup Type"/>
+										</parameters>
+									</executeBlock>
+									<!-- Meaning -->
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" value="//*[text()='Standard Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Meaning']/../.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="Meaning"/>
+										</parameters>
+									</executeBlock>
+									<!-- Description -->
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" value="//*[text()='Standard Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Description']/../.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="Description"/>
+										</parameters>
+									</executeBlock>
+									<!-- Module -->
+									<executeBlock name="LOV">
+										<parameters>
+											<parameter name="XPATH" value="//*[text()='Standard Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//div[contains(@id,'ModuleName')]/.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="Module"/>
+											<parameter name="SEARCH_1" value="User Module Name"/>
+										</parameters>
+									</executeBlock>
+									<!--REST Access Secured-->
+									<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+										<parameters>
+											<parameter name="XPATH" value="//*[text()='Standard Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='REST Access Secured']/../.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="REST Access Secured"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="UPDATE_LKTYPE">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Search Results']</findElement>
+				</if>
+				<then>
+					<!-- Meaning -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search Results']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Meaning']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Meaning"/>
+						</parameters>
+					</executeBlock>
+					<!-- Description -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search Results']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Description']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Description"/>
+						</parameters>
+					</executeBlock>
+					<!-- Module -->
+					<executeBlock name="LOV">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Select')]//div[contains(@id,'ModuleName')]/.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Module"/>
+							<parameter name="SEARCH_1" value="User Module Name"/>
+						</parameters>
+					</executeBlock>
+					<!--REST Access Secured-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search Results']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='REST Access Secured']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="REST Access Secured"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Common Lookup Type']/../../../../../../..</findElement>
+						</if>
+						<then>
+							<!-- Meaning -->
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Common Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Meaning']/../.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+									<parameter name="COL_NAME" value="Meaning"/>
+								</parameters>
+							</executeBlock>
+							<!-- Description -->
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Common Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Description']/../.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+									<parameter name="COL_NAME" value="Description"/>
+								</parameters>
+							</executeBlock>
+							<!-- Module -->
+							<executeBlock name="LOV">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Common Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//div[contains(@id,'ModuleName')]/.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+									<parameter name="COL_NAME" value="Module"/>
+									<parameter name="SEARCH_1" value="User Module Name"/>
+								</parameters>
+							</executeBlock>
+							<!--REST Access Secured-->
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Common Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='REST Access Secured']/../.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+									<parameter name="COL_NAME" value="REST Access Secured"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Standard Lookup Type']/../../../../../../..</findElement>
+								</if>
+								<then>
+									<!-- Meaning -->
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" value="//*[text()='Standard Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Meaning']/../.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="Meaning"/>
+										</parameters>
+									</executeBlock>
+									<!-- Description -->
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" value="//*[text()='Standard Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Description']/../.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="Description"/>
+										</parameters>
+									</executeBlock>
+									<!-- Module -->
+									<executeBlock name="LOV">
+										<parameters>
+											<parameter name="XPATH" value="//tr[contains(@class,'Select')]//div[contains(@id,'ModuleName')]/.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="Module"/>
+											<parameter name="SEARCH_1" value="User Module Name"/>
+										</parameters>
+									</executeBlock>
+									<!--REST Access Secured-->
+									<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+										<parameters>
+											<parameter name="XPATH" value="//*[text()='Standard Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='REST Access Secured']/../.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="REST Access Secured"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="UPDATE_LKTYPE_SPAN">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Search Results']</findElement>
+				</if>
+				<then>
+					<!-- Meaning -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search Results']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Meaning']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Meaning"/>
+						</parameters>
+					</executeBlock>
+					<!-- Description -->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search Results']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Description']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Description"/>
+						</parameters>
+					</executeBlock>
+					<!-- Module -->
+					<executeBlock name="LOV">
+						<parameters>
+							<parameter name="XPATH" value="//tr[contains(@class,'Select')]//div[contains(@id,'ModuleName')]/.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Module"/>
+							<parameter name="SEARCH_1" value="User Module Name"/>
+						</parameters>
+					</executeBlock>
+					<!--REST Access Secured-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Search Results']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='REST Access Secured']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="REST Access Secured"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Common Lookup Type']/../../../../../../..</findElement>
+						</if>
+						<then>
+							<!-- Meaning -->
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Common Lookup Type']/../../../../../../../tr[contains(@class,'Select')]//label[text()='Meaning']/../.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+									<parameter name="COL_NAME" value="Meaning"/>
+								</parameters>
+							</executeBlock>
+							<!-- Description -->
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Common Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Description']/../.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+									<parameter name="COL_NAME" value="Description"/>
+								</parameters>
+							</executeBlock>
+							<!-- Module -->
+							<executeBlock name="LOV">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Common Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//div[contains(@id,'ModuleName')]/.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+									<parameter name="COL_NAME" value="Module"/>
+									<parameter name="SEARCH_1" value="User Module Name"/>
+								</parameters>
+							</executeBlock>
+							<!--REST Access Secured-->
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="//*[text()='Common Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='REST Access Secured']/../.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+									<parameter name="COL_NAME" value="REST Access Secured"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Standard Lookup Type']/../../../../../../..</findElement>
+								</if>
+								<then>
+									<!-- Meaning -->
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" value="//*[text()='Standard Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Meaning']/../.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="Meaning"/>
+										</parameters>
+									</executeBlock>
+									<!-- Description -->
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH" value="//*[text()='Standard Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Description']/../.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="Description"/>
+										</parameters>
+									</executeBlock>
+									<!-- Module -->
+									<executeBlock name="LOV">
+										<parameters>
+											<parameter name="XPATH" value="//tr[contains(@class,'Select')]//div[contains(@id,'ModuleName')]/.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="Module"/>
+											<parameter name="SEARCH_1" value="User Module Name"/>
+										</parameters>
+									</executeBlock>
+									<!--REST Access Secured-->
+									<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+										<parameters>
+											<parameter name="XPATH" value="//*[text()='Standard Lookup Type']/../../../../../../..//tr[contains(@class,'Select')]//label[text()='REST Access Secured']/../.."/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+											<parameter name="COL_NAME" value="REST Access Secured"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search : Lookup Type">
+			<!-- input -->
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" isDisplayed="true">//label[text()='Lookup Type']/../..//input</findElement>
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" isDisplayed="true">//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Lookup Type"/>']</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" isDisplayed="true">//td[2]/div[@title='###TASK_NAME###']</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<!-- Lookup span -->
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" isDisplayed="true">//td[2]/div[@title='###TASK_NAME###']</findElement>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR_GENERIC_1">
+						<parameters>
+							<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//div[contains(text(),'No data to display.')]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="//table[@summary='Scope Selection']//tr[1]//td[1]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//div[contains(@id,'scroller')]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Lookup Type"/>']</parameter>
+							<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="SELECT_PROFILE_CODE"/>
+							<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="SELECT_PROFILE_CODE"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//label[text()='Lookup Type']/../..//input</findElement>
+				</if>
+				<then>
+					<executeBlock name="Reset"/>
+					<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Lookup Type']/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Lookup Type"/>
+					</sendKeys>
+					<executeBlock name="Search"/>
+					<executeBlock name="SCROLLBAR_GENERIC_1">
+						<parameters>
+							<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//div[contains(text(),'No results found.')]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Search Results']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Search Results']/../../../../../../..//div[contains(@id,'scroller')]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Search Results']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Lookup Type"/>']</parameter>
+							<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_LKTYPE_INPUT"/>
+							<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//h2[text()='Standard Lookup Type']</findElement>
+						</if>
+						<then>
+							<executeBlock name="SCROLLBAR_GENERIC_1">
+								<parameters>
+									<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//div[contains(text(),'No results found.')]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//h2[text()='Standard Lookup Type']/../../../../../../..//table[@style]/tbody/tr/td[1][@class])[1]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//h2[text()='Standard Lookup Type']/../../../../../../..//div[contains(@id,'scroller')]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW"> //*[text()='Standard Lookup Type']/../../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Lookup Type"/>']</parameter>
+									<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_LKTYPE_SPAN"/>
+									<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UP_LKTYPE_SPAN"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search_Lookup_Type">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//label[text()='Lookup Type']/../..//input</findElement>
+				</if>
+				<then>
+					<executeBlock name="Reset"/>
+					<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Lookup Type']/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Lookup Type"/>
+					</sendKeys>
+					<executeBlock name="Search"/>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Search Results']</findElement>
+						</if>
+						<then>
+							<executeBlock name="SCROLLBAR_GENERIC_1">
+								<parameters>
+									<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Search Results']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Search Results']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Search Results']/../../../../../../..//div[contains(@id,'scroller')]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Search Results']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Lookup Type"/>']</parameter>
+									<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_LKTYPE_INPUT"/>
+									<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Common Lookup Type']/../../../../../../..</findElement>
+								</if>
+								<then>
+									<executeBlock name="SCROLLBAR_GENERIC_1">
+										<parameters>
+											<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Common Lookup Type']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Common Lookup Type']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Common Lookup Type']/../../../../../../..//div[contains(@id,'scroller')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Common Lookup Type']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Lookup Type"/>']</parameter>
+											<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_LKTYPE_INPUT"/>
+											<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Standard Lookup Type']/../../../../../../..</findElement>
+										</if>
+										<then>
+											<executeBlock name="SCROLLBAR_GENERIC_1">
+												<parameters>
+													<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Standard Lookup Type']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+													<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Standard Lookup Type']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+													<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Standard Lookup Type']/../../../../../../..//div[contains(@id,'scroller')]"/>
+													<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Standard Lookup Type']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Lookup Type"/>']</parameter>
+													<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_LKTYPE_INPUT"/>
+													<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">(//*[@summary='Scope Selection']/../../../..//table[@style]/tbody/tr/td[1][@class])[1]</findElement>
+						</if>
+						<then>
+							<executeBlock name="SCROLLBAR_GENERIC_1">
+								<parameters>
+									<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@summary='Scope Selection']/../../../..//div[contains(text(),'No results found.')]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[@summary='Scope Selection']/../../../..//table[@style]/tbody/tr/td[1][@class])[1]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[@summary='Scope Selection']/../../../..//div[contains(@id,'scroller')]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[@summary='Scope Selection']//*[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Lookup Type"/>']</parameter>
+									<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_LKTYPE_SPAN"/>
+									<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UP_LKTYPE_SPAN"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Search Results']</findElement>
+								</if>
+								<then>
+									<executeBlock name="SCROLLBAR_GENERIC_1">
+										<parameters>
+											<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Search Results']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Search Results']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Search Results']/../../../../../../..//div[contains(@id,'scroller')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Search Results']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Lookup Type"/>']</parameter>
+											<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_LKTYPE_INPUT"/>
+											<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Common Lookup Type']/../../../../../../..</findElement>
+										</if>
+										<then>
+											<executeBlock name="SCROLLBAR_GENERIC_1">
+												<parameters>
+													<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Common Lookup Type']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+													<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Common Lookup Type']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+													<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Common Lookup Type']/../../../../../../..//div[contains(@id,'scroller')]"/>
+													<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Common Lookup Type']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Lookup Type"/>']</parameter>
+													<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_LKTYPE_INPUT"/>
+													<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Standard Lookup Type']/../../../../../../..</findElement>
+												</if>
+												<then>
+													<executeBlock name="SCROLLBAR_GENERIC_1">
+														<parameters>
+															<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Standard Lookup Type']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+															<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Standard Lookup Type']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+															<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Standard Lookup Type']/../../../../../../..//div[contains(@id,'scroller')]"/>
+															<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Standard Lookup Type']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Lookup Type"/>']</parameter>
+															<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_LKTYPE_INPUT"/>
+															<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+														</parameters>
+													</executeBlock>
+												</then>
+												<else>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Research_Type_For_Code">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//*[text()='Search Results' or text()='Common Lookup Type' or text()='Standard Lookup Type']/../../../../../../..//div[contains(text(),'No search conducted.')]</findElement>
+				</if>
+				<then>
+					<executeBlock name="Reset"/>
+					<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Lookup Type']/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Type"/>
+					</sendKeys>
+					<executeBlock name="Search"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//*[text()='Search Results' or text()='Common Lookup Type' or text()='Standard Lookup Type']/../../../../../../..//div[contains(text(),'No results found.')]</findElement>
+						</if>
+						<then>
+							<executeBlock name="Reset"/>
+							<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Lookup Type']/../..//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Type"/>
+							</sendKeys>
+							<executeBlock name="Search"/>
+						</then>
+						<else>
+							<break/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search_Lookup_Type_Details">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//label[text()='Lookup Type']/../..//input</findElement>
+				</if>
+				<then>
+					<executeBlock name="Reset"/>
+					<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Lookup Type']/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Type"/>
+					</sendKeys>
+					<executeBlock name="Search"/>
+					<executeBlock name="Research_Type_For_Code" isRepeatUntilBreak="true"/>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Search Results']</findElement>
+						</if>
+						<then>
+							<executeBlock name="SCROLLBAR_GENERIC_1">
+								<parameters>
+									<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Search Results']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Search Results']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Search Results']/../../../../../../..//div[contains(@id,'scroller')]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Search Results']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Type"/>']</parameter>
+									<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+									<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Common Lookup Type']/../../../../../../..</findElement>
+								</if>
+								<then>
+									<executeBlock name="SCROLLBAR_GENERIC_1">
+										<parameters>
+											<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Common Lookup Type']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Common Lookup Type']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Common Lookup Type']/../../../../../../..//div[contains(@id,'scroller')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Common Lookup Type']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Type"/>']</parameter>
+											<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+											<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Standard Lookup Type']/../../../../../../..</findElement>
+										</if>
+										<then>
+											<executeBlock name="SCROLLBAR_GENERIC_1">
+												<parameters>
+													<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Standard Lookup Type']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+													<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Standard Lookup Type']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+													<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Standard Lookup Type']/../../../../../../..//div[contains(@id,'scroller')]"/>
+													<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Standard Lookup Type']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Type"/>']</parameter>
+													<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+													<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">(//*[@summary='Scope Selection']/../../../..//table[@style]/tbody/tr/td[1][@class])[1]</findElement>
+						</if>
+						<then>
+							<executeBlock name="SCROLLBAR_GENERIC_1">
+								<parameters>
+									<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@summary='Scope Selection']/../../../..//div[contains(text(),'No results found.')]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[@summary='Scope Selection']/../../../..//table[@style]/tbody/tr/td[1][@class])[1]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[@summary='Scope Selection']/../../../..//div[contains(@id,'scroller')]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[@summary='Scope Selection']//*[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Type"/>']</parameter>
+									<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+									<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UP_LKTYPE_SPAN"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Search Results']</findElement>
+								</if>
+								<then>
+									<executeBlock name="SCROLLBAR_GENERIC_1">
+										<parameters>
+											<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Search Results']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Search Results']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Search Results']/../../../../../../..//div[contains(@id,'scroller')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Search Results']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Type"/>']</parameter>
+											<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+											<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Common Lookup Type']/../../../../../../..</findElement>
+										</if>
+										<then>
+											<executeBlock name="SCROLLBAR_GENERIC_1">
+												<parameters>
+													<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Common Lookup Type']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+													<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Common Lookup Type']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+													<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Common Lookup Type']/../../../../../../..//div[contains(@id,'scroller')]"/>
+													<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Common Lookup Type']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Type"/>']</parameter>
+													<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+													<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Standard Lookup Type']/../../../../../../..</findElement>
+												</if>
+												<then>
+													<executeBlock name="SCROLLBAR_GENERIC_1">
+														<parameters>
+															<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Standard Lookup Type']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+															<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Standard Lookup Type']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+															<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Standard Lookup Type']/../../../../../../..//div[contains(@id,'scroller')]"/>
+															<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Standard Lookup Type']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Type"/>']</parameter>
+															<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+															<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+														</parameters>
+													</executeBlock>
+												</then>
+												<else>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Click_LKTYPE">
+			<findElement by="xpath" isSkipCheckDomError="true">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+		</block>
+		<block name="Select_LKTPE">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//label[text()='Lookup Type']/../..//input</findElement>
+				</if>
+				<then>
+					<executeBlock name="Reset"/>
+					<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Lookup Type']/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Type"/>
+					</sendKeys>
+					<executeBlock name="Search"/>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Search Results']</findElement>
+						</if>
+						<then>
+							<executeBlock name="SCROLLBAR_GENERIC_1">
+								<parameters>
+									<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Search Results']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Search Results']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Search Results']/../../../../../../..//div[contains(@id,'scroller')]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Search Results']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Type"/>']</parameter>
+									<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Click_LKTYPE"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Common Lookup Type']/../../../../../../..</findElement>
+								</if>
+								<then>
+									<executeBlock name="SCROLLBAR_GENERIC_1">
+										<parameters>
+											<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Common Lookup Type']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Common Lookup Type']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Common Lookup Type']/../../../../../../..//div[contains(@id,'scroller')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Common Lookup Type']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Type"/>']</parameter>
+											<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Click_LKTYPE"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Standard Lookup Type']/../../../../../../..</findElement>
+										</if>
+										<then>
+											<executeBlock name="SCROLLBAR_GENERIC_1">
+												<parameters>
+													<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Standard Lookup Type']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+													<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Standard Lookup Type']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+													<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Standard Lookup Type']/../../../../../../..//div[contains(@id,'scroller')]"/>
+													<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Standard Lookup Type']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Type"/>']</parameter>
+													<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Click_LKTYPE"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">(//*[@summary='Scope Selection']/../../../..//table[@style]/tbody/tr/td[1][@class])[1]</findElement>
+						</if>
+						<then>
+							<executeBlock name="SCROLLBAR_GENERIC_1">
+								<parameters>
+									<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@summary='Scope Selection']/../../../..//div[contains(text(),'No results found.')]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[@summary='Scope Selection']/../../../..//table[@style]/tbody/tr/td[1][@class])[1]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[@summary='Scope Selection']/../../../..//div[contains(@id,'scroller')]"/>
+									<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[@summary='Scope Selection']//*[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Type"/>']</parameter>
+									<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Click_LKTYPE"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Search Results']</findElement>
+								</if>
+								<then>
+									<executeBlock name="SCROLLBAR_GENERIC_1">
+										<parameters>
+											<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Search Results']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Search Results']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Search Results']/../../../../../../..//div[contains(@id,'scroller')]"/>
+											<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Search Results']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Type"/>']</parameter>
+											<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Click_LKTYPE"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Common Lookup Type']/../../../../../../..</findElement>
+										</if>
+										<then>
+											<executeBlock name="SCROLLBAR_GENERIC_1">
+												<parameters>
+													<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Common Lookup Type']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+													<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Common Lookup Type']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+													<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Common Lookup Type']/../../../../../../..//div[contains(@id,'scroller')]"/>
+													<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Common Lookup Type']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Type"/>']</parameter>
+													<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_LKTYPE_INPUT"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Standard Lookup Type']/../../../../../../..</findElement>
+												</if>
+												<then>
+													<executeBlock name="SCROLLBAR_GENERIC_1">
+														<parameters>
+															<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[text()='Standard Lookup Type']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+															<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[text()='Standard Lookup Type']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+															<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[text()='Standard Lookup Type']/../../../../../../..//div[contains(@id,'scroller')]"/>
+															<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//*[text()='Standard Lookup Type']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Type"/>']</parameter>
+															<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Click_LKTYPE"/>
+														</parameters>
+													</executeBlock>
+												</then>
+												<else>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="DEFINE_CODE">
+			<!-- Lookup Code -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Code"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Lookup Code']/..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Code"/>
+					</sendKeys>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- Meaning -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Meaning"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Meaning']/..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Meaning"/>
+					</sendKeys>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Meaning']/../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Meaning']/..//input[@value='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Meaning"/>']</findElement>
+						</if>
+						<then>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Meaning']/..//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Meaning"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- Description -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Description"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Description']/..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Description"/>
+					</sendKeys>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- Tag -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tag"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Tag']/..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tag"/>
+					</sendKeys>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Tag']/../..</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Tag']/../..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="3"/>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Tag']/..//input[@value='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Meaning"/>']</findElement>
+						</if>
+						<then>
+						</then>
+						<else>
+							<findElement isSkipCheckDomError="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Tag']/..//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tag"/>
+							</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- Display Sequence -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Display Sequence"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Display Sequence']/.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+							<parameter name="COL_NAME" value="Display Sequence"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- Enabled -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Enabled"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//input[@type='checkbox']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+							<parameter name="COL_NAME" value="Enabled"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- Start Date -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Start Date']/..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>
+					</sendKeys>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- End Date -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="End Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='End Date']/..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="End Date"/>
+					</sendKeys>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CREATE_CODE">
+			<executeBlock name="CREATE_BUTTON_CODE"/>
+			<executeBlock name="DEFINE_CODE"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//button[text()='Save']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//button[text()='Save']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Lookup Code' or text()='Meaning']/..//input/../../../../..//*[contains(@class,'Error')]//input</findElement>
+				</if>
+				<then>
+					<executeBlock name="Reserch_LK_Code"/>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Lookups')]</findElement>
+				</if>
+				<then>
+					<executeBlock name="Select_LKTPE"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_GO_TO_TASK"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="UPDATE_LKTYPE_INPUT">
+			<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<executeBlock name="UPDATE_LKTYPE"/>
+		</block>
+		<block name="SEARCH_SECTION_LOOKUP CODES">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title="Clear All"]/../../../../..//input</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath">//img[@title="Query By Example"]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<findElements isSkipCheckDomError="true" by="xpath" returnElementAtPosition="1">//a[@title='Clear All']/../../../../..//input</findElements>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true" isSkipCheckDomError="true">
+				<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Code"/>
+			</sendKeys>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='View']/../..//div</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='View']/../..//div</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='Columns']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='Show All']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="5"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//span[text()=translate('<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Code"/>','abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//span[text()=translate('<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Code"/>','abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="UPDATE_CODE_TYPE"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Code"/>']</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Code"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="UPDATE_CODE_TYPE"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//span[normalize-space(text())=normalize-space('<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Code"/>')]</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//span[normalize-space(text())=normalize-space('<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Code"/>')]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<executeBlock name="UPDATE_CODE_TYPE"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//img[@title='New']/../../..//div[contains(@class,'Disabled')]</findElement>
+										</if>
+										<then>
+											<error message="Cannot be Create"/>
+										</then>
+										<else>
+											<executeBlock name="CREATE_CODE"/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Reserch_LK_Code">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title="Clear All"]/../../../../..//input</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath">//img[@title="Query By Example"]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<findElements isSkipCheckDomError="true" by="xpath" returnElementAtPosition="1">//a[@title='Clear All']/../../../../..//input</findElements>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true" isSkipCheckDomError="true">
+				<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Code"/>
+			</sendKeys>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='View']/../..//div</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='View']/../..//div</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='Columns']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='Show All']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="5"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//span[text()=translate('<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Code"/>','abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//span[text()=translate('<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Code"/>','abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="UPDATE_CODE_TYPE"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Code"/>']</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Code"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<executeBlock name="UPDATE_CODE_TYPE"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//span[normalize-space(text())=normalize-space('<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Code"/>')]</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//span[normalize-space(text())=normalize-space('<valueKB inventoryName="MAIN_REPEAT_2" columnName="Lookup Code"/>')]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<executeBlock name="UPDATE_CODE_TYPE"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//img[@title='New']/../../..//div[contains(@class,'Disabled')]</findElement>
+										</if>
+										<then>
+											<error message="Cannot be Create"/>
+										</then>
+										<else>
+											<executeBlock name="CREATE_CODE"/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="UPDATE_CODE_TYPE">
+			<!-- Display Sequence -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Display Sequence']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Display Sequence"/>
+				</parameters>
+			</executeBlock>
+			<!-- Enabled -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Enabled"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//input[@type='checkbox']</findElement>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+								<parameters>
+									<parameter name="XPATH" value="//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//input[@type='checkbox']/../.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+									<parameter name="COL_NAME" value="Enabled"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- Start Date -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>
+			<!-- End Date -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>
+			<!-- Meaning -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Meaning']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Meaning"/>
+				</parameters>
+			</executeBlock>
+			<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Meaning']/../..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="3"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Meaning']/..//input[@value='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Meaning"/>']</findElement>
+				</if>
+				<then>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Meaning']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+							<parameter name="COL_NAME" value="Meaning"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			<!-- Description -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!-- Tag -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Tag']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Tag"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Tag']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Tag']/../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Tag']/..//input[@value='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Tag"/>']</findElement>
+						</if>
+						<then>
+						</then>
+						<else>
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//label[text()='Tag']/../.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+									<parameter name="COL_NAME" value="Tag"/>
+								</parameters>
+							</executeBlock>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Click_LKT">
+			<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="Search_Lookup_Type_For_DFF">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//label[text()='Lookup Type']/../..//input</findElement>
+				</if>
+				<then>
+					<executeBlock name="Reset"/>
+					<findElement isSkipCheckDomError="true" by="xpath">//label[text()='Lookup Type']/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Type"/>
+					</sendKeys>
+					<executeBlock name="Search"/>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Search Results']</findElement>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+								<parameters>
+									<parameter name="TEMPLATE_NO_DATA" value="//*[text()='Search Results']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+									<parameter name="TEMPLATE_FIRST_ROW" value="(//*[text()='Search Results']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+									<parameter name="TEMPLATE_SCROLLER" value="//*[text()='Search Results']/../../../../../../..//div[contains(@id,'scroller')]"/>
+									<parameter name="TEMPLATE_1_FIND_ROW">//*[text()='Search Results']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Type"/>']</parameter>
+									<parameter name="TEMPLATE_UPDATE" value="Click_LKT"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Common Lookup Type']/../../../../../../..</findElement>
+								</if>
+								<then>
+									<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+										<parameters>
+											<parameter name="TEMPLATE_NO_DATA" value="//*[text()='Common Lookup Type']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+											<parameter name="TEMPLATE_FIRST_ROW" value="(//*[text()='Common Lookup Type']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+											<parameter name="TEMPLATE_SCROLLER" value="//*[text()='Common Lookup Type']/../../../../../../..//div[contains(@id,'scroller')]"/>
+											<parameter name="TEMPLATE_1_FIND_ROW">//*[text()='Common Lookup Type']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Type"/>']</parameter>
+											<parameter name="TEMPLATE_UPDATE" value="Click_LKT"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Standard Lookup Type']/../../../../../../..</findElement>
+										</if>
+										<then>
+											<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+												<parameters>
+													<parameter name="TEMPLATE_NO_DATA" value="//*[text()='Standard Lookup Type']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+													<parameter name="TEMPLATE_FIRST_ROW" value="(//*[text()='Standard Lookup Type']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+													<parameter name="TEMPLATE_SCROLLER" value="//*[text()='Standard Lookup Type']/../../../../../../..//div[contains(@id,'scroller')]"/>
+													<parameter name="TEMPLATE_1_FIND_ROW">//*[text()='Standard Lookup Type']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Type"/>']</parameter>
+													<parameter name="TEMPLATE_UPDATE" value="Click_LKT"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">(//*[@summary='Scope Selection']/../../../..//table[@style]/tbody/tr/td[1][@class])[1]</findElement>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+								<parameters>
+									<parameter name="TEMPLATE_NO_DATA" value="//*[@summary='Scope Selection']/../../../..//div[contains(text(),'No results found.')]"/>
+									<parameter name="TEMPLATE_FIRST_ROW" value="(//*[@summary='Scope Selection']/../../../..//table[@style]/tbody/tr/td[1][@class])[1]"/>
+									<parameter name="TEMPLATE_SCROLLER" value="//*[@summary='Scope Selection']/../../../..//div[contains(@id,'scroller')]"/>
+									<parameter name="TEMPLATE_1_FIND_ROW">//*[@summary='Scope Selection']//*[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Lookup Type"/>']</parameter>
+									<parameter name="TEMPLATE_UPDATE" value="Click_LKT"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Search Results']</findElement>
+								</if>
+								<then>
+									<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+										<parameters>
+											<parameter name="TEMPLATE_NO_DATA" value="//*[text()='Search Results']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+											<parameter name="TEMPLATE_FIRST_ROW" value="(//*[text()='Search Results']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+											<parameter name="TEMPLATE_SCROLLER" value="//*[text()='Search Results']/../../../../../../..//div[contains(@id,'scroller')]"/>
+											<parameter name="TEMPLATE_1_FIND_ROW">//*[text()='Search Results']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Lookup Type"/>']</parameter>
+											<parameter name="TEMPLATE_UPDATE" value="Click_LKT"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Common Lookup Type']/../../../../../../..</findElement>
+										</if>
+										<then>
+											<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+												<parameters>
+													<parameter name="TEMPLATE_NO_DATA" value="//*[text()='Common Lookup Type']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+													<parameter name="TEMPLATE_FIRST_ROW" value="(//*[text()='Common Lookup Type']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+													<parameter name="TEMPLATE_SCROLLER" value="//*[text()='Common Lookup Type']/../../../../../../..//div[contains(@id,'scroller')]"/>
+													<parameter name="TEMPLATE_1_FIND_ROW">//*[text()='Common Lookup Type']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Lookup Type"/>']</parameter>
+													<parameter name="TEMPLATE_UPDATE" value="Click_LKT"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[text()='Standard Lookup Type']/../../../../../../..</findElement>
+												</if>
+												<then>
+													<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+														<parameters>
+															<parameter name="TEMPLATE_NO_DATA" value="//*[text()='Standard Lookup Type']/../../../../../../..//div[contains(text(),'No results found.')]"/>
+															<parameter name="TEMPLATE_FIRST_ROW" value="(//*[text()='Standard Lookup Type']/../../../../../../../..//table[@_rowcount]//tr//td[1])[1]"/>
+															<parameter name="TEMPLATE_SCROLLER" value="//*[text()='Standard Lookup Type']/../../../../../../..//div[contains(@id,'scroller')]"/>
+															<parameter name="TEMPLATE_1_FIND_ROW">//*[text()='Standard Lookup Type']/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Lookup Type"/>']</parameter>
+															<parameter name="TEMPLATE_UPDATE" value="Click_LKT"/>
+														</parameters>
+													</executeBlock>
+												</then>
+												<else>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search_Lookup_Code_For_DFF">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//a[@title="Clear All"]/../../../../..//input</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath">//img[@title="Query By Example"]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<findElements isSkipCheckDomError="true" by="xpath" returnElementAtPosition="1">//a[@title='Clear All']/../../../../..//input</findElements>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true" isSkipCheckDomError="true">
+				<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>
+			</sendKeys>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[contains(@summary,'lookup code')]/..//tr/td[12]</findElement>
+				</if>
+				<then>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='View']/../..//div</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='Columns']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='Show All']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="5"/>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//span[text()=translate('<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>','abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//span[text()=translate('<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>','abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</findElement>
+					<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>']</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath">//*[contains(text(),'Lookup Codes')]/../../../../../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>']</findElement>
+							<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Select_Row">
+			<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">TEMPLATE_FIRST_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+		</block>
+		<block name="Hide_Column">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='View']/../..//div</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='View']/../..//div</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='Columns']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='Tag']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="5"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='View']/../..//div</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='Columns']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='End Date']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="5"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='View']/../..//div</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='Columns']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='Description']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="5"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='View']/../..//div</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='Columns']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='Meaning']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="5"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Show_Column">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='View']/../..//div</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='View']/../..//div</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//td[text()='Show All']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Expand">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//*[@title='Expand']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//tr[contains(@class,'Select')]//*[@title='Expand']</findElement>
+					<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+					<!--
+					<IfThenElse>
+                        <if>
+                            <findElement by="xpath">//div[contains(@data-afr-popupid,'dynamicRegion1')]/../..//tr[contains(@class,'Disabled')]/../..//td[text()='New']</findElement>
+                        </if>
+                        <then>
+                            <click waitForPageToFinishRendering="true"/>
+                        </then>
+                        <else>
+                            <findElement by="xpath">//div[contains(@data-afr-popupid,'dynamicRegion1')]//td[text()='New']</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                            <findElement by="xpath">//*[contains(text(),': Lookup Codes')]/../../../../../../..//a[text()='Actions']</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                            <findElement by="xpath">//div[contains(@data-afr-popupid,'dynamicRegion1')]//td[text()='Delete']</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                            <IfThenElse>
+                                <if>
+                                    <findElement isDisplayed="true" by="xpath">//div[text()='Warning']</findElement>
+                                </if>
+                                <then>
+                                    <findElement isDisplayed="true" by="xpath">//button//span[text()='Y']/..</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                            <findElement by="xpath">//tr[contains(@class,'Select')]//a[@title='Expand']</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                        </else>
+                    </IfThenElse>
+					-->
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Collapse">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//tr[contains(@class,'Select')]//a[@title='Collapse']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//tr[contains(@class,'Select')]//a[@title='Collapse']</findElement>
+					<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="DETAILS_DFF">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>']/../../../following::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//*[@type='checkbox']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>']/../../../following::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..</parameter>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Field Value"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>']/../../../following::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//*[@type='radio']</findElement>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+								<parameters>
+									<parameter name="XPATH">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>']/../../../following::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..</parameter>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+									<parameter name="COL_NAME" value="Field Value"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>']/../../../following::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//*[contains(@title,'Date')]</findElement>
+								</if>
+								<then>
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+										<parameters>
+											<parameter name="XPATH">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>']/../../../following::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..</parameter>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+											<parameter name="COL_NAME" value="Field Value"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>']/../../../following::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//select</findElement>
+										</if>
+										<then>
+											<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+												<parameters>
+													<parameter name="XPATH">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>']/../../../following::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..</parameter>
+													<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+													<parameter name="COL_NAME" value="Field Value"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>']/../../../following::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//li</findElement>
+												</if>
+												<then>
+													<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+														<parameters>
+															<parameter name="XPATH">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>']/../../../following::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..</parameter>
+															<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+															<parameter name="COL_NAME" value="Field Value"/>
+														</parameters>
+													</executeBlock>
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>']/../../../following::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//a[contains(@id,'lovIconId')]</findElement>
+														</if>
+														<then>
+															<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+																<parameters>
+																	<parameter name="XPATH">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>']/../../../following::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..</parameter>
+																	<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+																	<parameter name="COL_NAME" value="Field Value"/>
+																	<parameter name="SEARCH_1" value="Value"/>
+																</parameters>
+															</executeBlock>
+														</then>
+														<else>
+															<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+																<parameters>
+																	<parameter name="XPATH">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>']/../../../following::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..</parameter>
+																	<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+																	<parameter name="COL_NAME" value="Field Value"/>
+																</parameters>
+															</executeBlock>
+														</else>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="LINE_ROW_SEARCH">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" highlightTurnedOff="true" setFocus="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<pause durationInSecs="1"/>
+					<findElement isSkipCheckDomError="true" setFocus="true" by="xpath">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//a[contains(@title,'Search:') or contains(@title,'<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>')]</findElement>
+					<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="LINE_INPUT_ZOOM_LOV">
+			<!-- CASE ROW CONTAINS SELECT -->
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//input[@type='text']</findElement>
+				</if>
+				<then>
+					<!-- CASE ROW CONTAINS SELECT POPUP -->
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath" setFocus="true">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../../../span[input|img|a]//a</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>""</valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../../../span[input|img|a]//input[@value='']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement isSkipCheckDomError="true" by="xpath">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../../../span[input|img|a]//input</findElement>
+											<sendKeys isClear="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+											</sendKeys>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../../../span[input|img|a]//input[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>']</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement isSkipCheckDomError="true" by="xpath">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../../../span[input|img|a]//a</findElement>
+											<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//h2[text()='Search']/../../../../../../../../../../../../../../..//label[text()='Value']/../..//input</findElement>
+											<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+											</sendKeys>
+											<findElement isSkipCheckDomError="true" by="xpath">//h2[text()='Search']/../../../../../../../../../../../../../../..//button[text()='Search']</findElement>
+											<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+											<IfThenElse>
+												<if>
+													<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath">//h2[text()='Search']/../../../../../../../../../../../../../../..//td[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>']</findElement>
+												</if>
+												<then>
+													<findElement isSkipCheckDomError="true" by="xpath">//h2[text()='Search']/../../../../../../../../../../../../../../..//td[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>']</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else>
+													<error message="No data to display."/>
+												</else>
+											</IfThenElse>
+											<findElement isSkipCheckDomError="true" by="xpath">//h2[text()='Search']/../../../../../../../../../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<!-- CASE ROW CONTAINS SELECT LOV -->
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath" setFocus="true">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../../../span[span|div]//a</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<comparisons separator="AND">
+												<comparison operator="EQUAL">
+													<leftOperand>
+														<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+													</leftOperand>
+													<rightOperand>
+														<valueText>""</valueText>
+													</rightOperand>
+												</comparison>
+											</comparisons>
+										</if>
+										<then>
+											<IfThenElse>
+												<if>
+													<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../../../span[span|div]//input[@value='']</findElement>
+												</if>
+												<then/>
+												<else>
+													<findElement isSkipCheckDomError="true" by="xpath">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../../../span[span|div]//a[contains(@title,'Search:')][contains(@title, '<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>')]</findElement>
+													<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+													<executeBlock name="LINE_ROW_SEARCH" isRepeatUntilBreak="true"/>
+													<IfThenElse>
+														<if>
+															<findElement isSkipCheckDomError="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[td[@_afrseparator]]</findElement>
+														</if>
+														<then>
+															<findElement isSkipCheckDomError="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[td[@_afrseparator]]//following-sibling::tr[1]//td[1]</findElement>
+															<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+														</then>
+														<else>
+															<findElement isSkipCheckDomError="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr//td[1]</findElement>
+															<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+														</else>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../../../span[span|div]//input[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>']</findElement>
+												</if>
+												<then/>
+												<else>
+													<executeBlock name="LINE_ROW_SEARCH" isRepeatUntilBreak="true"/>
+													<IfThenElse>
+														<if>
+															<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>']</findElement>
+														</if>
+														<then>
+															<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>']</findElement>
+															<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+														</then>
+														<else>
+															<findElement isSkipCheckDomError="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']</findElement>
+															<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+															<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//label[text()='Value']/../..//input</findElement>
+															<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+																<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+															</sendKeys>
+															<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//button[text()='Search']</findElement>
+															<click waitForPageToFinishRendering="true"/>
+															<IfThenElse>
+																<if>
+																	<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//td[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>']</findElement>
+																</if>
+																<then>
+																	<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//td[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>']</findElement>
+																	<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+																</then>
+																<else>
+																	<error message="No data to display."/>
+																</else>
+															</IfThenElse>
+															<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//button[text()='OK']</findElement>
+															<click waitForPageToFinishRendering="true"/>
+														</else>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+									<!-- CASE ROW CONTAINS SELECT INPUT -->
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath" setFocus="true">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/..//input</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath" setFocus="true">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/..//input</findElement>
+											<sendKeys isClear="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+											</sendKeys>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath" setFocus="true">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//input</findElement>
+												</if>
+												<then>
+													<findElement isSkipCheckDomError="true" by="xpath" setFocus="true">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//input</findElement>
+													<sendKeys isClear="true" waitForPageToFinishRendering="true">
+														<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+													</sendKeys>
+												</then>
+												<else/>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//input[@type='text']</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath" setFocus="true">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../../../span[input|img|a]//a</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<comparisons separator="AND">
+												<comparison operator="EQUAL">
+													<leftOperand>
+														<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+													</leftOperand>
+													<rightOperand>
+														<valueText>""</valueText>
+													</rightOperand>
+												</comparison>
+											</comparisons>
+										</if>
+										<then>
+											<IfThenElse>
+												<if>
+													<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../../../span[input|img|a]//input[@value='']</findElement>
+												</if>
+												<then/>
+												<else>
+													<findElement isSkipCheckDomError="true" by="xpath">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../../../span[input|img|a]//input</findElement>
+													<sendKeys isClear="true" waitForPageToFinishRendering="true">
+														<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+													</sendKeys>
+												</else>
+											</IfThenElse>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../../../span[input|img|a]//input[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>']</findElement>
+												</if>
+												<then/>
+												<else>
+													<findElement isSkipCheckDomError="true" by="xpath">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../../../span[input|img|a]//a</findElement>
+													<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+													<findElement isSkipCheckDomError="true" by="xpath">//h2[text()='Search']/../../../../../../../../../../../../../../..//label[text()='Value']/../..//input</findElement>
+													<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+														<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+													</sendKeys>
+													<findElement isSkipCheckDomError="true" by="xpath">//h2[text()='Search']/../../../../../../../../../../../../../../..//button[text()='Search']</findElement>
+													<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+													<IfThenElse>
+														<if>
+															<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath">//h2[text()='Search']/../../../../../../../../../../../../../../..//td[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>']</findElement>
+														</if>
+														<then>
+															<findElement isSkipCheckDomError="true" by="xpath">//h2[text()='Search']/../../../../../../../../../../../../../../..//td[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>']</findElement>
+															<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+														</then>
+														<else>
+															<error message="No data to display."/>
+														</else>
+													</IfThenElse>
+													<findElement isSkipCheckDomError="true" by="xpath">//h2[text()='Search']/../../../../../../../../../../../../../../..//button[text()='OK']</findElement>
+													<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+									<!-- CASE ROW CONTAINS SELECT LOV -->
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath" setFocus="true">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../../../span[span|div]//a</findElement>
+										</if>
+										<then>
+											<IfThenElse>
+												<if>
+													<comparisons separator="AND">
+														<comparison operator="EQUAL">
+															<leftOperand>
+																<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+															</leftOperand>
+															<rightOperand>
+																<valueText>""</valueText>
+															</rightOperand>
+														</comparison>
+													</comparisons>
+												</if>
+												<then>
+													<IfThenElse>
+														<if>
+															<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../../../span[span|div]//input[@value='']</findElement>
+														</if>
+														<then/>
+														<else>
+															<findElement isSkipCheckDomError="true" by="xpath">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../../../span[span|div]//a[contains(@title,'Search:')][contains(@title, '<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>')]</findElement>
+															<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+															<executeBlock name="LINE_ROW_SEARCH" isRepeatUntilBreak="true"/>
+															<IfThenElse>
+																<if>
+																	<findElement isSkipCheckDomError="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[td[@_afrseparator]]</findElement>
+																</if>
+																<then>
+																	<findElement isSkipCheckDomError="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[td[@_afrseparator]]//following-sibling::tr[1]//td[1]</findElement>
+																	<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+																</then>
+																<else>
+																	<findElement isSkipCheckDomError="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr//td[1]</findElement>
+																	<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+																</else>
+															</IfThenElse>
+														</else>
+													</IfThenElse>
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../../../span[span|div]//input[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>']</findElement>
+														</if>
+														<then/>
+														<else>
+															<executeBlock name="LINE_ROW_SEARCH" isRepeatUntilBreak="true"/>
+															<IfThenElse>
+																<if>
+																	<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>']</findElement>
+																</if>
+																<then>
+																	<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>']</findElement>
+																	<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+																</then>
+																<else>
+																	<findElement isSkipCheckDomError="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']</findElement>
+																	<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+																	<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//label[text()='Value']/../..//input</findElement>
+																	<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+																		<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+																	</sendKeys>
+																	<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//button[text()='Search']</findElement>
+																	<click waitForPageToFinishRendering="true"/>
+																	<IfThenElse>
+																		<if>
+																			<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//td[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>']</findElement>
+																		</if>
+																		<then>
+																			<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//td[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>']</findElement>
+																			<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+																		</then>
+																		<else>
+																			<error message="No data to display."/>
+																		</else>
+																	</IfThenElse>
+																	<findElement isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//button[text()='OK']</findElement>
+																	<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+																</else>
+															</IfThenElse>
+														</else>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</then>
+										<else>
+											<!-- CASE ROW CONTAINS SELECT INPUT -->
+											<IfThenElse>
+												<if>
+													<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath" setFocus="true">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/..//input</findElement>
+												</if>
+												<then>
+													<findElement isSkipCheckDomError="true" by="xpath" setFocus="true">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/..//input</findElement>
+													<sendKeys isClear="true" waitForPageToFinishRendering="true">
+														<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+													</sendKeys>
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement isSkipCheckDomError="true" highlightTurnedOff="true" isDisplayed="true" by="xpath" setFocus="true">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//input</findElement>
+														</if>
+														<then>
+															<findElement isSkipCheckDomError="true" by="xpath" setFocus="true">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//input</findElement>
+															<sendKeys isClear="true" waitForPageToFinishRendering="true">
+																<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+															</sendKeys>
+														</then>
+														<else/>
+													</IfThenElse>
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="LINE_INPUT_RADIO">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//input[@type='radio']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" setFocus="true" by="xpath">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>']/preceding-sibling::*[1]/input</findElement>
+							<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//input[@type='radio']</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" setFocus="true" by="xpath">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>']/preceding-sibling::*[1]/input</findElement>
+									<click isSkipCheckDomError="true" waitForPageToFinishRendering="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="LINE_INPUT_SELCET">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//select</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" setFocus="true" by="xpath">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//select</findElement>
+					<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+						<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+					</select>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//select</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" setFocus="true" by="xpath">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+							</select>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="LINE_INPUT_CHECKBOK">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//input[@type='checkbox']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" setFocus="true" by="xpath">XPATH//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//input</findElement>
+					<click isCheckbox="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+					</click>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//input[@type='checkbox']</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" setFocus="true" by="xpath">XPATH/following-sibling::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..//input</findElement>
+							<click isCheckbox="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+							</click>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="LINE_ALL_SESSION_DFF">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//table[@_startrow]//tr[contains(@class,'Select')]/../../../..//th//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']</findElement>
+						</if>
+						<then>
+							<executeBlock name="LINE_INPUT_ZOOM_LOV"/>
+							<executeBlock name="LINE_INPUT_RADIO"/>
+							<executeBlock name="LINE_INPUT_SELCET"/>
+							<executeBlock name="LINE_INPUT_CHECKBOK"/>
+							<executeBlock name="DETECT_ERROR_VALUE"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="DETECT_ERROR_VALUE">
+			<findElement isSkipCheckDomError="true" setFocus="true" by="xpath">//th//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="3"/>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" isDisplayed="true" by="xpath">//img[text()='Error' or @title='Error' ]</findElement>
+				</if>
+				<then>
+					<error message="Please find an error on the Application."/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Check_Enter_Task">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Search Results']//a[text()='###TASK_NAME###']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Search Results']//a[text()='###TASK_NAME###']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="Search_Lookup_Type"/>
+			<!--	<executeBlock name="====================STOP======================"/>-->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<IfThenElse>
+					<if>
+						<findElement by="xpath" isSkipCheckDomError="true">(//table[contains(@summary,'lookup types')][@_rowcount]//tr[1]//td)[1]</findElement>
+					</if>
+					<then>
+					</then>
+					<else>
+						<executeBlock name="Search_Lookup_Type_Details"/>
+					</else>
+				</IfThenElse>
+				<executeBlock name="SEARCH_SECTION_LOOKUP CODES"/>
+				<repeat inventoryName="MAIN_REPEAT_3">
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Value"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<!--Search: LOOKUP CODE-->
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//table[contains(@summary,'lookup code')]/..//tr[contains(@class,'Selected')]/td[3]//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>']</findElement>
+								</if>
+								<then>
+								</then>
+								<else>
+									<executeBlock name="Search_Lookup_Type_For_DFF"/>
+									<executeBlock name="Search_Lookup_Code_For_DFF"/>
+								</else>
+							</IfThenElse>
+							<!--Search: DFF within Lookup Code row-->
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//table[@_startrow]//tr[contains(@class,'Select')]/../../../..//th//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']</findElement>
+								</if>
+								<then>
+									<executeBlock name="LINE_ALL_SESSION_DFF">
+										<parameters>
+											<parameter name="XPATH" value="//table[@_startrow]//tr[contains(@class,'Select')]"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else/>
+							</IfThenElse>
+							<!--Search: DFFs after expand Lookup Code-->
+							<executeBlock name="Expand"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Lookup Codes')]/../../../../../../..//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>']/../../../following::tr[1]//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']/../..</findElement>
+								</if>
+								<then>
+									<executeBlock name="DETAILS_DFF"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isSkipCheckDomError="true">//table[contains(@summary,'lookup code')]/..//tr[contains(@class,'Selected')]/td[3]//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Lookup Code"/>']/../../..//*[@title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>']</findElement>
+										</if>
+										<then>
+											<executeBlock name="Collapse"/>
+										</then>
+										<else>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+				</repeat>
+				<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			</repeat>
+		</repeat>
+	</fusionNavigation>
+</navigation>

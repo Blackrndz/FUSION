@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Organization Hierarchies and Classifications</name>
+	<svn>
+		<xsd:revision>$Revision: 79441 $:</xsd:revision>
+		<xsd:author>$Author: phermwit.seethong $:</xsd:author>
+		<xsd:date>$Date: 2022-09-30 14:34:59 +0700 (Fri, 30 Sep 2022) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Organization%20Hierarchies%20and%20Classifications.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Organization Hierarchies and Classifications.xml 79441 2022-09-30 07:34:59Z phermwit.seethong $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Organization Hierarchies and Classifications" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>			
+			<navigation name="OrganizationTreeNode"/>
+			<navigation name="Manage Organization Trees (Tree Version)"/>
+			<navigation name="Manage Department Trees (Tree Version)"/>
+			<navigation name="DepartmentTreeNode"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_1_REPEAT" value="Manage Organization Hierarchies and Classifications - Organization Hierarchy Types"/>
+			<parameter name="MAIN_2_REPEAT" value="Manage Organization Hierarchies and Classifications - Organization Classifications"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Project Expenditure Organization')]/../../../../../../..//legend[text()='Organization Classifications Selected']/..//label[text()='<valueKB inventoryName="MAIN_1_REPEAT" columnName="Type"/>']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		
+		<block name="WARNING">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[text()='Warning']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[contains(@class,'Expansion')]/..//div[text()='Warning']/../../../../../../..//span[text()='Yes']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="INFORMATION">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[text()='Information']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Information']/../../../../../../..//span[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Default_Hierarchy">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//*[text()='Default Hierarchy']</findElement>
+				</if>
+				<then>
+					<!--Tree Name-->
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Default Hierarchy']/../../../../../../..//label[text()='Tree Name']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="Tree Name"/>
+							<parameter name="SEARCH_1" value="Tree Name"/>
+						</parameters>
+					</executeBlock>
+					<!--Tree Name-->
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Default Hierarchy']/../../../../../../..//label[text()='Tree Version Name']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="Tree Version Name"/>
+							<parameter name="SEARCH_1" value="Version"/>
+						</parameters>
+					</executeBlock>
+					<!--Organization-->
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//div[text()='Default Hierarchy']/../../../../../../..//label[text()='Organization']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+							<parameter name="COL_NAME" value="Organization"/>
+							<parameter name="SEARCH_1" value="Name"/>
+						</parameters>
+					</executeBlock>
+					<findElement isDisplayed="true" by="xpath">//*[text()='Default Hierarchy']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Selected">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Project Expenditure Organization')]/../../../../../../..//*[text()='Selected']/../../../../..//label[text()='<valueKB inventoryName="MAIN_2_REPEAT" columnName="Selected"/>']</findElement>
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//div[contains(text(),'Project Expenditure Organization')]/../../../../../../..//legend[text()='Organization Classifications Available']/..//label[contains(@class,'Disabled')]/label[text()='<valueKB inventoryName="MAIN_2_REPEAT" columnName="Selected"/>']</findElement>
+						</if>
+						<then>
+							<error message="Cannot Move to Selected"/>
+						</then>
+						<else>
+							<findElement isDisplayed="true" setFocus="true" by="xpath">//div[contains(text(),'Project Expenditure Organization')]/../../../../../../..//*[text()='Available']/../../../../..//label[text()='<valueKB inventoryName="MAIN_2_REPEAT" columnName="Selected"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="2"/>
+							<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Project Expenditure Organization')]/../../../../../../..//*[@title='Move selected items to: Selected' or contains(@src,'shuttleright_ena')]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="2"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_1_REPEAT">
+			<!--Type-->
+			<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Type"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="5"/>
+			<executeBlock name="WARNING"/>
+			<executeBlock name="Default_Hierarchy"/>
+			<executeBlock name="WARNING"/>
+			<executeBlock name="INFORMATION"/>
+			<repeat inventoryName="MAIN_2_REPEAT">
+				<executeBlock name="Selected"/>
+				<executeBlock name="WARNING"/>
+				<executeBlock name="INFORMATION"/>
+			</repeat>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<pause durationInSecs="5"/>
+			<executeBlock name="WARNING"/>
+			<executeBlock name="INFORMATION"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

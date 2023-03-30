@@ -1,0 +1,839 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Corporate Card Programs</name>
+	<svn>
+		<xsd:revision>$Revision: 80364 $:</xsd:revision>
+		<xsd:author>$Author: john.martin $:</xsd:author>
+		<xsd:date>$Date: 2023-03-01 17:25:08 +0700 (Wed, 01 Mar 2023) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Corporate%20Card%20Programs.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Corporate Card Programs.xml 80364 2023-03-01 10:25:08Z john.martin $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Corporate Card Programs"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Data Role and Security Profiles"/>
+			<navigation name="Manage Users"/>
+			<navigation name="Manage Payables Lookups"/>
+			<navigation name="Manage Payment Terms"/>
+			<navigation name="Manage Employee Matching Rules"/>
+			<navigation name="Manage Corporate Card Issuers"/>
+			<navigation name="Manage Service Provider Relationships (Customer Payments Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Payables Payment Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Procurement Service Providers)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Corporate Card Programs - Corporate Card Program"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Corporate Card Programs - Company Accounts"/>
+			<parameter name="REPEAT_3_MAIN" value="Manage Corporate Card Programs - Transfer Parameter"/>
+		</parameters>
+		<block name="FAKE_KB">
+			<findElement highlightTurnedOff="true"
+                    by="xpath">//a[text()='<valueKB
+                    inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement highlightTurnedOff="true"
+                    by="xpath">//a[text()='<valueKB
+                    inventoryName="REPEAT_2_MAIN" columnName="Name"/>']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement highlightTurnedOff="true"
+                    by="xpath">//a[text()='<valueKB
+                    inventoryName="REPEAT_3_MAIN" columnName="Name"/>']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<!--Warning or Confirmation-->
+		<block name="Warning_or_Confirmation">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Warning' or text()='Confirmation']/../../../../../../../..</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Warning' or text()='Confirmation']/../../../../../../../..//*[text()='OK' or text()='Y']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Warning' or text()='Confirmation']/../../../../../../../..//*[text()='OK' or text()='Y']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Warning' or text()='Confirmation']/../../../../../../../..//*[text()='K' or text()='es']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Warning' or text()='Confirmation']/../../../../../../../..//*[text()='K' or text()='es']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="2"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Search">
+			<executeBlock name="GLOBAL_QUERY_BY_EXAMPLE"/>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]"/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement
+                            by="xpath">//table[@summary='Manage Corporate Card ProgramsManage Corporate Card Programs']//a[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement
+                            by="xpath">//table[@summary='Manage Corporate Card ProgramsManage Corporate Card Programs']//a[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+					<executeBlock name="Corporate_Card_Program"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_CREATE"/>
+					<pause durationInSecs="2"/>
+					<executeBlock name="Corporate_Card_Program"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Corporate_Card_Program">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Card Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Card Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Card Brand']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Card Brand"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_GREATER_THAN_EQUAL">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Inactive Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Inactive Date"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>					
+					<findElement highlightTurnedOff="true" by="xpath">//div/div/a[text()='Upload Rules'][contains(@class,'Select')]</findElement>	
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>					
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div/div/a[text()='Upload Rules']</findElement>	
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div/div/a[text()='Upload Rules']</findElement>	
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_TAB">
+								<parameters>
+									<parameter name="XPATH" value="//div/div/a[text()='Upload Rules']/../.."/>
+									<parameter name="TAB_NAME" value="Upload Rules"/>
+								</parameters>
+							</executeBlock>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='File Format']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="File Format"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='File contains tokenized card numbers']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="File contains tokenized card numbers"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Card Number Format']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Card Number Format"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Transaction Detail Wait Days']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Transaction Detail Wait Days"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Employee Matching Rule for New Cards']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Employee Matching Rule for New Cards"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Perform employee matching across all business units']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Perform employee matching across all business units"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Transaction Summary Mapping Rule']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Transaction Summary Mapping Rule"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Transaction Summary Source Column']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Transaction Summary Source Column"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Transaction Details Mapping Rule']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Transaction Details Mapping Rule"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Search_Company_Accounts">
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Company Accounts']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Company Accounts'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Company Accounts']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Company Accounts']//td[1]//a[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Company Account Name"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="Create_Company_Accounts"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Company_Accounts"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Create_Company_Accounts">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Company Accounts']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Company_Accounts"/>
+		</block>
+		<block name="Update_Company_Accounts">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="2"/>
+			<executeBlock name="Company_Accounts"/>
+		</block>
+		<block name="Company_Accounts">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Company Account Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Company Account Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Company Account Number']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Company Account Number"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Market Code']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Market Code"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Requesting Control Account Number']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Requesting Control Account Number"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Billing Control Account Number']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Billing Control Account Number"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Card Issuer Number']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Card Issuer Number"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Processor Assigned Number']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Processor Assigned Number"/>
+				</parameters>
+			</executeBlock>
+			<!-- <executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Card Issuer']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Card Issuer"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock> -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Card Issuer']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Card Issuer"/>
+				</parameters>
+			</executeBlock>
+			<!-- <executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Card Issuer Site']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Card Issuer Site"/>
+					<parameter name="SEARCH_1" value="Card Issuer Site"/>
+				</parameters>
+			</executeBlock> -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Card Issuer Site']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Card Issuer Site"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_GREATER_THAN_EQUAL">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Inactive Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Inactive Date"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_2_MAIN" columnName="Corporate Card Administrator"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_2_MAIN" columnName="Corporate Card Administrator"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>""</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Corporate Card Administrator']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Corporate Card Administrator"/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[contains(@class,'Expansion')]/..//div[contains(text(),'Corporate Card Administrator')]</findElement>
+						</if>
+						<then>
+							<error message="This 'Corporate Card Administrator' doest not exist."/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB
+                                    inventoryName="REPEAT_2_MAIN" columnName="Corporate Card Administrator"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>""</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Corporate Card Administrator']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Corporate Card Administrator"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Payables Business Unit']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Payables Business Unit"/>
+					<parameter name="SEARCH_1" value="Payables Business Unit"/>
+				</parameters>
+			</executeBlock>
+			<!-- <executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Payables Business Unit']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Payables Business Unit"/>
+				</parameters>
+			</executeBlock> -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Payment Currency']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Payment Currency"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allow multiple billed currencies']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Allow multiple billed currencies"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Payment Terms']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Payment Terms"/>
+					<parameter name="SEARCH_1" value="Payment Terms"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Pay Group']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//label[text()='Pay Group']/../..//a[contains(@id,'lovIconId')]</findElement>
+						</if>
+						<then>
+							<!--Lov Pay Group-->
+							<!-- <executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Pay Group']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Pay Group"/>
+									<parameter name="SEARCH_1" value="Meaning"/>
+								</parameters>
+							</executeBlock> -->
+							<!-- Manual LOV Pay Group -->
+							<findElement isDisplayed="true" by="xpath">//label[text()='Pay Group']/../..//a[contains(@id,'lovIconId')]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement isDisplayed="true" by="xpath">//table[@style='position: relative;']//a[text()='Search...']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Reset']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<!-- Advance -->
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//div[contains(text(),'Pay Group')]/../../../../../../..//*[text()='d']/..</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">//div[contains(text(),'Pay Group')]/../../../../../../..//*[text()='d']/..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="2"/>
+									<findElement by="xpath">//div[contains(text(),'Pay Group')]/../../../../../../..//*[text()='Add Fields']/..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement by="xpath">//tr[contains(@id,'adFldMenuItem')]//*[text()='LookupCode']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="2"/>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='LookupCode']/../..//select</findElement>
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='LookupCode']/../..//select</findElement>
+									<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+										<valueText>Equals</valueText>
+									</select>
+									<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='LookupCode']/../..//input</findElement>
+									<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+										<valueKB inventoryName="REPEAT_2_MAIN" columnName="Pay Group"/>
+									</sendKeys>
+									<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Search']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//td[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Pay Group"/>']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//td[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Pay Group"/>']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+										</else>
+									</IfThenElse>
+
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Pay Group']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Pay Group"/>
+								</parameters>
+							</executeBlock>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Payment Option']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Payment Option"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Expense Clearing Account']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Expense Clearing Account"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+					<if>
+						<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//div[text()='Expense Clearing Account']/../../../../../../..//button[text()='O']</findElement>
+					</if>
+					<then>
+						<error message="Expense Clearing Account doesn't exist. Please check your data" />
+					</then>
+					<else>
+						<pause durationInSecs="1"/>
+					</else>
+				</IfThenElse>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Overlay balancing segment']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Overlay balancing segment"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Require personal expenses in expense report']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Require personal expenses in expense report"/>
+				</parameters>
+			</executeBlock>
+			<!--Book Number-->
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Book Number']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Book Number']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Book Number"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Load Number-->
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Load Number']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Load Number']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Load Number"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Card Issuer Country Code-->
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Card Issuer Country Code']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Card Issuer Country Code']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Card Issuer Country Code"/>
+							<parameter name="SEARCH_1" value="Code"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Card Disguising Control Account Number-->
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//label[text()='Card Disguising Control Account Number']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Card Disguising Control Account Number']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Card Disguising Control Account Number"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+
+
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[contains(text(),'Create')]</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[contains(@id,'saveCloseCompanyAccount')]//span[text()='S']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[contains(text(),'Edit')]</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[contains(@id,'Edit')]//span[text()='S']/../..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search_Transfer_Parameters">
+			<IfThenElse>
+				<if>					
+					<findElement highlightTurnedOff="true" by="xpath">//div/div/a[text()='Transfer Parameters'][contains(@class,'Select')]</findElement>	
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>					
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div/div/a[text()='Transfer Parameters']</findElement>	
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div/div/a[text()='Transfer Parameters']</findElement>	
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_TAB">
+								<parameters>
+									<parameter name="XPATH" value="//div/div/a[text()='Transfer Parameters']/../.."/>
+									<parameter name="TAB_NAME" value="Transfer Parameters"/>
+								</parameters>
+							</executeBlock>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Transfer Parameters']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Transfer Parameters'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Transfer Parameters']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Transfer Parameters']//td[1]//a[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Download Profile Name"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="Create_Transfer_Parameters"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Transfer_Parameters"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Create_Transfer_Parameters">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Transfer Parameters']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Transfer_Parameters"/>
+		</block>
+		<block name="Update_Transfer_Parameters">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="2"/>
+			<executeBlock name="Transfer_Parameters"/>
+		</block>
+		<block name="Transfer_Parameters">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Download Profile Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Download Profile Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Account Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Account Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Account Password']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Account Password"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='File Name Prefix']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="File Name Prefix"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Server']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Server"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Encryption Key Alias']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Encryption Key Alias"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[contains(text(),'Create')]</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[contains(@id,'saveCloseFileParam')]//span[text()='S']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[contains(text(),'Edit')]</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[contains(@id,'Edit')]//span[text()='S']/../..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<pause durationInSecs="1"/>
+			<executeBlock name="Warning_or_Confirmation"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="Search_Company_Accounts"/>
+				<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+				<pause durationInSecs="1"/>
+				<executeBlock name="Warning_or_Confirmation"/>
+			</repeat>
+			<repeat inventoryName="REPEAT_3_MAIN">
+				<executeBlock name="Search_Transfer_Parameters"/>
+				<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+				<pause durationInSecs="1"/>
+				<executeBlock name="Warning_or_Confirmation"/>
+			</repeat>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//*[contains(text(),'Edit Corporate Card Program')]</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//div[contains(@id,'Toolbar')]/a/span/span[text()='S']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<findElement by="xpath">//div[contains(@id,'SaveClose')]//a/span/span[text()='S']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>					
+		</repeat>
+	</fusionNavigation>
+</navigation>

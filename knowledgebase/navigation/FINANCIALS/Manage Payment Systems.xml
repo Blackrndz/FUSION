@@ -1,0 +1,809 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Payment Systems</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Payment Systems" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+            <navigation name="Manage Bank Accounts"/>
+			<navigation name="Manage Formats"/>
+        </dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Payment Systems - Payment System"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Payment Systems - Formats"/>
+			<parameter name="MAIN_REPEAT_3" value="Manage Payment Systems - Transmission Protocols"/>
+			<parameter name="MAIN_REPEAT_4" value="Manage Payment Systems - Tokenization Payment System Settings"/>
+			<parameter name="MAIN_REPEAT_5" value="Manage Payment Systems - Settings Required by Payment System"/>
+			<parameter name="MAIN_REPEAT_6" value="Manage Payment Systems - Payment System Accounts"/>
+			<parameter name="MAIN_REPEAT_7" value="Manage Payment Systems - Setting Payment System Accounts"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payment System Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Payment System Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Payment System Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Payment System Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_5" columnName="Payment System Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_6" columnName="Payment System Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_7" columnName="Payment System Name"/>']/../..//input</findElement>
+		</block>
+		<block name="SAVE">
+			<executeBlock name="GLOBAL_SAVE"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[text()='Warning']/../../../../../../..//*[text()='OK']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Warning']/../../../../../../..//*[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>			
+				</else>
+			</IfThenElse>			
+		</block>
+		<block name="SAVE_AND_CLOSE">
+			<findElement by="xpath">//span[text()='S']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="SAVE_AND_ADD_ACC">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//button[text()='Save and Add Accounts']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//button[text()='Save and Add Accounts']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CONFIRMATION">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//button[text()='Save and Add Accounts']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Confirmation']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Expand_Search">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[@title='Expand Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CHECK_CASE_ADD_UPDATE">
+			<executeBlock name="Expand_Search"/>
+			<findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payment System Name"/>
+			</sendKeys>
+			<executeBlock name="Expand_Search"/>
+			<findElement by="xpath">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="1"/>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payment System Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath">//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Payment System Name"/>']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="Payment_System"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_CREATE"/>
+					<executeBlock name="Payment_System"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Payment_System">
+			<!--Payment System Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Code']/../../..//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Payment System Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Payment System Code-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Payment System Code"/>
+				</parameters>
+			</executeBlock>
+			<!--Processing Model-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Processing Model']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Processing Model"/>
+				</parameters>
+			</executeBlock>
+			<!--Bank Name (Y) Bank Number (Y) Bank Country (Y)-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="OR">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Bank Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Bank Number"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Bank Country"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement by="xpath">//label[text()='Bank']/../..//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Bank Name"/>
+					</sendKeys>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Network Communication Character Set-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Network Communication Character Set']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Network Communication Character Set"/>
+				</parameters>
+			</executeBlock>
+			<!--Transmission Servlet Base URL-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Transmission Servlet Base URL']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Transmission Servlet Base URL"/>
+				</parameters>
+			</executeBlock>
+			<!--Administrative URL-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Administrative URL']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Administrative URL"/>
+				</parameters>
+			</executeBlock>
+			<!--From Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='From Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="From Date"/>
+				</parameters>
+			</executeBlock>
+			<!--To Date-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='To Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="To Date"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Supported Capabilities']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[@title='Expand Supported Capabilities']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Supported Capabilities-->
+			<!--Credit card-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Credit card']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Credit card"/>
+				</parameters>
+			</executeBlock>
+
+			<!--Electronic funds transfer-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Electronic funds transfer']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Electronic funds transfer"/>
+				</parameters>
+			</executeBlock>
+			<!--Debit card-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Debit card']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Debit card"/>
+				</parameters>
+			</executeBlock>
+			<!--Electronic funds transfer and positive pay-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Electronic funds transfer and positive pay']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Electronic funds transfer and positive pay"/>
+				</parameters>
+			</executeBlock>
+			<!--Credit card tokenization-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Credit card tokenization']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Credit card tokenization"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Funds Capture Processing']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[@title='Expand Funds Capture Processing']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Bank Account Lead Days-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Bank Account Lead Days']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Bank Account Lead Days"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Find_Input_Blank">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//table[@summary='Formats']/../../../..//label[text()='Name']/../..//input</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Formats']/../..//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="TOP"/>
+					<pause durationInSecs="2"/>		
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Formats']/../../../..//a[text()='View']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//td[text()='Columns']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+					<pause durationInSecs="2"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//td[text()='Show All']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+					<pause durationInSecs="2"/>
+					<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Formats'][@_rowcount]//tr[1]//td)[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+					<pause durationInSecs="2"/>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Formats']/../..//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="TOP"/>
+				</else>
+			</IfThenElse>
+		</block>			
+		<!-- MAIN_REPEAT_2 --> 
+		<block name="Create_Formats">
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Formats']/../../../..//a[text()='View']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+			<pause durationInSecs="2"/>
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//td[text()='Columns']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+			<pause durationInSecs="2"/>
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//td[text()='Show All']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+			<pause durationInSecs="2"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">(//table[@summary='Formats'][@_rowcount]//tr[2]//td)[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Formats'][@_rowcount]//tr[2]//td)[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+					<pause durationInSecs="2"/>		
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//table[@summary='Formats']/../..//div[contains(text(),'No data to display.')]</findElement>
+						</if>
+						<then>	
+							<pause durationInSecs="2"/>		
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Formats'][@_rowcount]//tr[1]//td)[1]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+							<pause durationInSecs="2"/>		
+						</else>
+					</IfThenElse>	
+				</else>
+			</IfThenElse>			
+	
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Formats']/../../../.."/>
+				</parameters>   
+			</executeBlock>
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Formats'][@_rowcount]//tr[contains(@class,'Select')]/td[1]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+			<pause durationInSecs="2"/>			
+
+			<executeBlock name="Find_Input_Blank" isRepeatUntilBreak="true"/>	
+			
+			<!--Name-->
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Formats']/../../../..//label[text()='Name']/../..//a</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Formats']/../../../..//label[text()='Name']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+							<parameter name="COL_NAME" value="Name"/>
+							<parameter name="SEARCH_1" value="Format"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Formats']/../../../..//label[text()='Name']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+							<parameter name="COL_NAME" value="Name"/>
+						</parameters>
+					</executeBlock>				
+				</else>
+			</IfThenElse>
+	
+		</block>
+		<block name="Update_Formats">
+			<findElement highlightTurnedOff="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<!-- MAIN_REPEAT_3 --> 
+		<block name="Create_Transmission_Protocols">
+			<executeBlock name="GLOBAL_SPECIFY_ADD">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//table[@summary='Transmission Protocols']/../../../.."/>
+				</parameters>   
+			</executeBlock>
+			<pause durationInSecs="1"/>
+			<!--Name-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Transmission Protocols']/../../../..//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+		</block>
+		<block name="Update_Transmission_Protocols">
+			<findElement highlightTurnedOff="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<!-- MAIN_REPEAT_4 --> 
+		<block name="Create_Tokenization_Payment_System_Settings">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+                                    isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Tokenization Payment System Settings']/../../../..//img[@title='Add Row'][@disabled]</findElement>
+				</if>
+				<then>
+					<error message="Cannot create record Tokenization Payment System Settings."/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SPECIFY_ADD">
+						<parameters>
+							<parameter name="SPECIFY_XPATH" value="//table[@summary='Tokenization Payment System Settings']/../../../.."/>
+						</parameters>   
+					</executeBlock>
+					<pause durationInSecs="1"/>
+					<!--Name-->
+					<executeBlock name="INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Tokenization Payment System Settings']/../..//tr[contains(@class,'Selected')]//label[text()='Name']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_4"/>
+							<parameter name="COL_NAME" value="Name"/>
+						</parameters>
+					</executeBlock>	
+					<!--Code-->
+					<executeBlock name="INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Tokenization Payment System Settings']/../..//tr[contains(@class,'Selected')]//label[text()='Code']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_4"/>
+							<parameter name="COL_NAME" value="Code"/>
+						</parameters>
+					</executeBlock>	
+					<!--Data Type-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Tokenization Payment System Settings']/../..//tr[contains(@class,'Selected')]//label[text()='Data Type']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_4"/>
+							<parameter name="COL_NAME" value="Data Type"/>
+						</parameters>
+					</executeBlock>
+					<!--Secured-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Tokenization Payment System Settings']/../..//tr[contains(@class,'Selected')]//label[text()='Secured']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_4"/>
+							<parameter name="COL_NAME" value="Secured"/>
+						</parameters>
+					</executeBlock>			
+					<!--Value-->
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true"
+                                    isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Tokenization Payment System Settings']/../..//tr[contains(@class,'Selected')]//label[text()='Value']/../..//select</findElement>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="//table[@summary='Tokenization Payment System Settings']/../..//tr[contains(@class,'Selected')]//label[text()='Value']/../.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_4"/>
+									<parameter name="COL_NAME" value="Value"/>
+								</parameters>
+							</executeBlock>		
+						</then>
+						<else>
+							<executeBlock name="INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//table[@summary='Tokenization Payment System Settings']/../..//tr[contains(@class,'Selected')]//label[text()='Value']/../.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_4"/>
+									<parameter name="COL_NAME" value="Code"/>
+								</parameters>
+							</executeBlock>	
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>		
+		</block>
+		<block name="Update_Tokenization_Payment_System_Settings">
+			<findElement highlightTurnedOff="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<!--Value-->
+			<IfThenElse>
+				<if>
+					<findElement
+                                    highlightTurnedOff="true"
+                                    isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Tokenization Payment System Settings']/../..//tr[contains(@class,'Selected')]//label[text()='Value']/../..//select</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Tokenization Payment System Settings']/../..//tr[contains(@class,'Selected')]//label[text()='Value']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_4"/>
+							<parameter name="COL_NAME" value="Value"/>
+						</parameters>
+					</executeBlock>		
+				</then>
+				<else>
+					<executeBlock name="INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Tokenization Payment System Settings']/../..//tr[contains(@class,'Selected')]//label[text()='Value']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_4"/>
+							<parameter name="COL_NAME" value="Code"/>
+						</parameters>
+					</executeBlock>	
+				</else>
+			</IfThenElse>
+		</block>
+		<!-- MAIN_REPEAT_5 --> 
+		<block name="Create_Settings_Required">
+			<executeBlock name="GLOBAL_SPECIFY_ADD">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//table[@summary='Settings Required by Payment System']/../../../.."/>
+				</parameters>   
+			</executeBlock>
+			<pause durationInSecs="1"/>
+			<!--Name-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_5" columnName="Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Settings Required by Payment System']/../../../..//label[text()='Name']/../..//input[not(@Value)]</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_5" columnName="Name"/>
+					</sendKeys>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Code-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_5" columnName="Code"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Settings Required by Payment System']/../../../..//label[text()='Code']/../..//input[not(@Value)]</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_5" columnName="Code"/>
+					</sendKeys>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Data Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Settings Required by Payment System']//tr[contains(@class,'Selected')]//label[text()='Data Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_5"/>
+					<parameter name="COL_NAME" value="Data Type"/>
+				</parameters>
+			</executeBlock>	
+			<!--Secured-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Settings Required by Payment System']//tr[contains(@class,'Selected')]//label[text()='Secured']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_5"/>
+					<parameter name="COL_NAME" value="Secured"/>
+				</parameters>
+			</executeBlock>	
+		</block>
+		<block name="Update_Settings_Required">
+			<findElement highlightTurnedOff="true" by="xpath">(//table[@summary='Settings Required by Payment System']/../..//tr[td[1]//input[@value='<valueKB inventoryName="MAIN_REPEAT_5" columnName="Name"/>'] and td[2]//span[text()='<valueKB inventoryName="MAIN_REPEAT_5" columnName="Code"/>']]/../../../../..//td)[1]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<!--Secured-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Settings Required by Payment System']//tr[contains(@class,'Selected')]//label[text()='Secured']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_5"/>
+					<parameter name="COL_NAME" value="Secured"/>
+				</parameters>
+			</executeBlock>	
+		</block>
+		<!-- MAIN_REPEAT_6 --> 
+		<block name="Find_Input_System_Accounts">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Payment System Accounts']/../../..//label[text()='Name']/../..//input</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Payment System Accounts']/../..//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="TOP"/>
+					<pause durationInSecs="2"/>		
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Payment System Accounts']/../..//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="TOP"/>
+					<pause durationInSecs="2"/>	
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Create_Payment_System_Accounts">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@summary="Payment System Accounts"]//tr[5]/td[1]</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary="Payment System Accounts"]//tr[5]/td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<break/>
+				</else>
+			</IfThenElse>		
+			<executeBlock name="GLOBAL_SPECIFY_ADD">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//table[@summary='Payment System Accounts']/../../../.."/>
+				</parameters>   
+			</executeBlock>
+			
+			<executeBlock name="Find_Input_System_Accounts" isRepeatUntilBreak="true"/>			
+			
+			<!--Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Payment System Accounts']/../../..//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_6"/>
+					<parameter name="COL_NAME" value="Account Name"/>
+				</parameters>
+			</executeBlock>	
+			<pause durationInSecs="2"/> 
+		</block>
+		<block name="Update_Payment_System_Accounts">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<!-- MAIN_REPEAT_7 --> 
+		<block name="Update_Settings">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Settings']/../..//tr[//td[1][text()="<valueKB inventoryName="MAIN_REPEAT_7" columnName="Name"/>"] and td[2][text()="<valueKB inventoryName="MAIN_REPEAT_7" columnName="Code"/>"]]//td[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Settings']/../..//tr[//td[1][text()="<valueKB inventoryName="MAIN_REPEAT_7" columnName="Name"/>"] and td[2][text()="<valueKB inventoryName="MAIN_REPEAT_7" columnName="Code"/>"]]//td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">//table[@summary='Settings']/../..//tr[//td[1]//span[text()="<valueKB inventoryName="MAIN_REPEAT_7" columnName="Name"/>"] and td[2]//span[text()="<valueKB inventoryName="MAIN_REPEAT_7" columnName="Code"/>"]]//td[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_7" columnName="Value"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@summary='Settings']/../..//tr[//td[1][text()="<valueKB inventoryName="MAIN_REPEAT_7" columnName="Name"/>"] and td[2][text()="<valueKB inventoryName="MAIN_REPEAT_7" columnName="Code"/>"]]//label[text()='Value']/..//input</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Settings']/../..//tr[//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_7" columnName="Name"/>'] and td[2][text()='<valueKB inventoryName="MAIN_REPEAT_7" columnName="Code"/>']]//label[text()='Value']/..//input</findElement>
+								<sendKeys isClear="true" waitForPageToFinishRendering="true">
+									<valueKB inventoryName="MAIN_REPEAT_7" columnName="Value"/>
+								</sendKeys>
+						</then>
+						<else>
+							<findElement by="xpath">//table[@summary='Settings']/../..//tr[//td[1]//span[text()='<valueKB inventoryName="MAIN_REPEAT_7" columnName="Name"/>'] and td[2]//span[text()='<valueKB inventoryName="MAIN_REPEAT_7" columnName="Code"/>']]//label[text()='Value']/..//input</findElement>
+								<sendKeys isClear="true" waitForPageToFinishRendering="true">
+									<valueKB inventoryName="MAIN_REPEAT_7" columnName="Value"/>
+								</sendKeys>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="CHECK_CASE_ADD_UPDATE"/>
+			<executeBlock name="SAVE"/>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Formats']/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Formats'][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Formats']/../..//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Formats']/../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Name"/>']</parameter>
+						<parameter name="TEMPLATE_CREATE" value="Create_Formats"/>
+						<parameter name="TEMPLATE_UPDATE" value="Update_Formats"/>
+					</parameters>
+				</executeBlock>
+				<executeBlock name="SAVE"/>
+			</repeat>
+			<repeat inventoryName="MAIN_REPEAT_3">
+				<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Transmission Protocols']/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Transmission Protocols'][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Transmission Protocols']/../..//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Transmission Protocols']/../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Name"/>']</parameter>
+						<parameter name="TEMPLATE_CREATE" value="Create_Transmission_Protocols"/>
+						<parameter name="TEMPLATE_UPDATE" value="Update_Transmission_Protocols"/>
+					</parameters>
+				</executeBlock>
+				<executeBlock name="SAVE"/>
+			</repeat>
+			<repeat inventoryName="MAIN_REPEAT_4">
+				<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Tokenization Payment System Settings']/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Tokenization Payment System Settings'][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Tokenization Payment System Settings']/../..//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Tokenization Payment System Settings']/../..//tr[td[1]//span[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Name"/>'] and td[2]//span[text()='<valueKB inventoryName="MAIN_REPEAT_4" columnName="Code"/>']]</parameter>
+						<parameter name="TEMPLATE_CREATE" value="Create_Tokenization_Payment_System_Settings"/>
+						<parameter name="TEMPLATE_UPDATE" value="Update_Tokenization_Payment_System_Settings"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<repeat inventoryName="MAIN_REPEAT_5">
+				<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Settings Required by Payment System']/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Settings Required by Payment System'][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Settings Required by Payment System']/../..//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Settings Required by Payment System']/../..//tr[td[1]//input[@value='<valueKB inventoryName="MAIN_REPEAT_5" columnName="Name"/>'] and td[2]//span[text()='<valueKB inventoryName="MAIN_REPEAT_5" columnName="Code"/>']]</parameter>
+						<parameter name="TEMPLATE_CREATE" value="Create_Settings_Required"/>
+						<parameter name="TEMPLATE_UPDATE" value="Update_Settings_Required"/>
+					</parameters>
+				</executeBlock>
+				<executeBlock name="SAVE"/>
+			</repeat>
+			<executeBlock name="SAVE_AND_ADD_ACC"/>
+			<pause durationInSecs="1"/>
+			<executeBlock name="CONFIRMATION"/>
+			<repeat inventoryName="MAIN_REPEAT_6">
+				<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Payment System Accounts']/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Payment System Accounts'][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Payment System Accounts']/../..//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Payment System Accounts']/../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_6" columnName="Account Name"/>']</parameter>
+						<parameter name="TEMPLATE_CREATE" value="Create_Payment_System_Accounts"/>
+						<parameter name="TEMPLATE_UPDATE" value="Update_Payment_System_Accounts"/>
+					</parameters>
+				</executeBlock>
+				<repeat inventoryName="MAIN_REPEAT_7">
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Settings']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Settings'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Settings']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Settings']/../..//tr[//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_7" columnName="Name"/>'] and td[2][text()='<valueKB inventoryName="MAIN_REPEAT_7" columnName="Code"/>']]</parameter>
+							<parameter name="TEMPLATE_CREATE" value="Update_Settings"/>
+							<parameter name="TEMPLATE_UPDATE" value="Update_Settings"/>
+						</parameters>
+					</executeBlock>
+				</repeat>
+				<executeBlock name="SAVE"/>
+			</repeat>
+			<executeBlock name="SAVE_AND_CLOSE"/>
+			<executeBlock name="CONFIRMATION"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

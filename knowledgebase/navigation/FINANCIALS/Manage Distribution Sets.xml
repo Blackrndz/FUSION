@@ -1,0 +1,661 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Distribution Sets</name>
+	<svn>
+		<xsd:revision>$Revision: 80156 $:</xsd:revision>
+		<xsd:author>$Author: chanawee.punsumniang $:</xsd:author>
+		<xsd:date>$Date: 2023-02-14 12:47:21 +0700 (Tue, 14 Feb 2023) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Distribution%20Sets.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Distribution Sets.xml 80156 2023-02-14 05:47:21Z chanawee.punsumniang $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Distribution Sets" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Data Role and Security Profiles"/>
+			<navigation name="Manage Invoice Options"/>
+			<navigation name="Manage Service Provider Relationships (Customer Payments Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Payables Payment Service Providers)"/>
+			<navigation name="Manage Service Provider Relationships (Procurement Service Providers)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Distribution Sets - Distribution Set"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Distribution Sets - Distribution Set - DFF"/>
+			<parameter name="MAIN_REPEAT_3" value="Manage Distribution Sets - Distribution Set Details"/>
+		</parameters>
+		<block name="FAKE_MAPPER">
+			<findElement by="xpath" isSkipCheckDomError="true">//label[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+			<findElement by="xpath" isSkipCheckDomError="true">//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Name"/>']</findElement>
+			<findElement by="xpath" isSkipCheckDomError="true">//label[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Name"/>']</findElement>
+		</block>		
+		<block name="SEARCH">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[@title='Clear All']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[text()='View']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//td[text()='Query By Example']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Distribution Sets']/../..//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Distribution Sets']/../..//th[(string(//span[text()='Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+					</sendKeys>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Distribution Sets']/../../..//tbody/tr/preceding-sibling::tr[td[@_d_index]]/td[position()=string(//table[@summary='Distribution Sets']/../..//div//*[text()='Name']/../../@_d_index)]//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isReplaceAnd="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			
+		</block>
+		<block name="SAVE_BUTTON">
+			<executeBlock name="GLOBAL_SAVE"/>
+		</block>
+		<block name="CREATE_BUTTON">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//img[contains(@src,'new_ena.png')]/../../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//img[contains(@src,'new_ena.png')]/../../../../../../../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//img[contains(@src,'new_ena.png')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//img[contains(@title,'Create')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="ADD_BUTTON">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Distribution Set Details']//tr//label[text()='Distribution']/../..//input[not(@value)]</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="3"/>
+					<break/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Distribution Set Details']/../../../.."/>
+						</parameters>
+					</executeBlock>
+					<pause durationInSecs="3"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SAVE_AND_CLOSE_BUTTON">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//*[contains(text(),'Edit Distribution Set')]</findElement>
+				</if>
+				<then>
+					<executeBlock name="GLOBAL_SPECIFY_SAVE_AND_CLOSE">
+						<parameters>
+							<parameter name="SPECIFY_XPATH" value="//*[contains(text(),'Edit Distribution Set')]/../../../../../../../../../../..//td[3]"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_SPECIFY_SAVE_AND_CLOSE">
+						<parameters>
+							<parameter name="SPECIFY_XPATH" value="//*[contains(text(),'Create Distribution Set')]/../../../../../../../../../../..//td[3]"/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="EDIT_BUTTON">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//img[contains(@src,'update_ena.png')]/../../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//img[contains(@src,'update_ena.png')]/../../../../../../../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//img[contains(@src,'update_ena.png')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//img[contains(@title,'Edit')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search...Business Unit">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement by="xpath">//label[text()='Business Unit']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Clear All">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[@title='Clear All']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[text()='View']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//td[text()='Query By Example']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<block name="Create_Distribution_Set">
+
+			<!-- Business Unit -->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Business Unit']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Business Unit"/>
+					<parameter name="SEARCH_1" value="Business Unit"/>
+				</parameters>
+			</executeBlock>
+
+			<!-- Name -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+
+			<!-- Description -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>			
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>	
+
+			<!-- Distribution Percentage -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Distribution Percentage']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Distribution Percentage"/>
+				</parameters>
+			</executeBlock>	
+
+			<!-- Inactive Date -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Inactive Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Inactive Date"/>
+				</parameters>
+			</executeBlock>	
+
+		</block>
+		<block name="Update_Distribution_Set">
+
+			<!-- Description -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>			
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>	
+
+			<!-- Distribution Percentage -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Distribution Percentage']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Distribution Percentage"/>
+				</parameters>
+			</executeBlock>	
+
+			<!-- Inactive Date -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Inactive Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Inactive Date"/>
+				</parameters>
+			</executeBlock>	
+
+		</block>
+		<block name="TOP_ROW_INPUT">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Distribution Set Details']//tr//label[text()='Distribution']/../..//input[not(@value)]</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="3"/>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Distribution Set Details']/../..//div[contains(@id,'scroller')]</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Distribution Set Details']/../..//div[contains(@id,'scroller')]</findElement>
+							<scroll direction="TOP"/>
+							<pause durationInSecs="3"/>	
+						</then>
+						<else/>
+					</IfThenElse>	
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Update_Distribution_Set_Details">
+
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+						</then>
+						<else/>
+					</IfThenElse>					
+				</else>
+			</IfThenElse>			
+		</block>
+		<block name="Create_Distribution_Set_Details">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Distribution Set Details']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="3"/>
+		
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]//label[text()='Distribution Combination']/../..//input[@value='']</findElement>
+				</if>
+				<then/>
+				<else>
+					<executeBlock name="ADD_BUTTON" isRepeatUntilBreak="true"/>
+					<pause durationInSecs="3"/>	
+					<executeBlock name="TOP_ROW_INPUT" isRepeatUntilBreak="true"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Distribution Set Details']//tr//label[text()='Distribution']/../..//input[not(@value)]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+					<pause durationInSecs="3"/>					
+				</else>
+			</IfThenElse>				
+		</block>
+		<block name="Skip_Eror">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//*[text()='Error']/../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true" highlightTurnedOff="true">//*[text()='Error']/../../../../../../..//*[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+					</then>
+				<else/>
+			</IfThenElse>		
+		</block>
+		<block name="Distribution_Set_Details">
+			<executeBlock name="Skip_Eror"/>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]//label[text()='Line']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Line"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock name="Skip_Eror"/>
+			<!--Distribution (%)-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]//label[text()='Distribution']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Distribution (%)"/>
+				</parameters>
+			</executeBlock>					
+			<findElement by="xpath" isSkipCheckDomError="true" highlightTurnedOff="true">//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]/td[1]</findElement>
+			<click waitForPageToFinishRendering="false" isSkipCheckDomError="true"/>				
+			<pause durationInSecs="2"/>
+			<executeBlock name="Skip_Eror"/>			
+			<!-- Distribution Combination -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_3" columnName="Distribution Combination"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>	
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]//label[text()='Distribution Combination']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Distribution Combination"/>
+						</parameters>
+					</executeBlock>		
+					<pause durationInSecs="2"/>
+					<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]//td[string(//span[text()='Distribution Combination']/../..//@_d_index)+0])[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="3"/>
+					<executeBlock name="SAVE_BUTTON"/>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//tr/td/div[text()='Distribution Combination']</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//button[span[text()='K']]</findElement>
+						</then>
+						<else>
+							
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>	
+			<findElement by="xpath" isSkipCheckDomError="true" highlightTurnedOff="true">//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]/td[1]</findElement>
+			<click waitForPageToFinishRendering="false" isSkipCheckDomError="true"/>				
+			<pause durationInSecs="2"/>	
+			<executeBlock name="Skip_Eror"/>
+			<pause durationInSecs="2"/>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]//label[text()='Line']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Line"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock name="Skip_Eror"/>
+			<!--Distribution (%)-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]//label[text()='Distribution']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Distribution (%)"/>
+				</parameters>
+			</executeBlock>	
+			<findElement by="xpath" isSkipCheckDomError="true" highlightTurnedOff="true">//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]/td[1]</findElement>
+			<click waitForPageToFinishRendering="false" isSkipCheckDomError="true"/>				
+			<pause durationInSecs="2"/>
+			<executeBlock name="Skip_Eror"/>	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>				
+			<pause durationInSecs="2"/>
+			<executeBlock name="Skip_Eror"/>				
+			<!-- Income Tax Type -->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]//label[text()='Income Tax Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Income Tax Type"/>
+				</parameters>
+			</executeBlock>	
+			<findElement by="xpath" isSkipCheckDomError="true" highlightTurnedOff="true">//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]/td[1]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>				
+			<pause durationInSecs="2"/>				
+			<executeBlock name="Skip_Eror"/>			
+			<pause durationInSecs="2"/>	
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[text()='Distribution Combination']/../../../../../../..//*[text()='K']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true" highlightTurnedOff="true">//div[text()='Distribution Combination']/../../../../../../..//*[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[text()='Error']/../../../../../../..//*[text()='OK']</findElement>
+						</if>
+						<then>
+							<error message="Data Issue : Please check your data combination invalid"/>
+						</then>
+						<else/>
+					</IfThenElse>	
+				</then>
+				<else/>
+			</IfThenElse>	
+			<pause durationInSecs="2"/>
+			<IfThenElse>
+				<if>					
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//button[text()='Save']</findElement>	
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//button[text()='Save']</findElement>	
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>					
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//span[text()='Save']</findElement>	
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//span[text()='Save']/..</findElement>	
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//*[text()='Save']/..</findElement>	
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+						</else>
+					</IfThenElse>						
+				</else>
+			</IfThenElse>	
+			<pause durationInSecs="3"/>			
+			<executeBlock name="Skip_Eror"/>	
+		</block>
+
+		<block name="CANCEL_BUTTON">
+			<findElement by="xpath" isSkipCheckDomError="true">//span[text()='C']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+		<block name="Check_Value_Percent">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//*[text()='Error']/../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true" highlightTurnedOff="true">//*[text()='Error']/../../../../../../..//*[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+				</then>
+				<else>
+				
+				</else>
+			</IfThenElse>				
+			<executeBlock name="ADD_BUTTON"/>
+			<pause durationInSecs="3"/>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//*[text()='Error']/../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true" highlightTurnedOff="true">//*[text()='Error']/../../../../../../..//*[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+				</then>
+				<else/>
+			</IfThenElse>	
+			<pause durationInSecs="3"/>				
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]/following::tr[1]//label[text()='Distribution']/../..//*[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Distribution (%)"/>']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="3"/>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//table[@summary='Distribution Set Details']//tr//*[contains(@src,'func_arrow')])=1</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<pause durationInSecs="3"/>
+							<break/>
+						</then>
+						<else>
+							<findElement by="xpath" highlightTurnedOff="true" isSkipCheckDomError="true">//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]//label[text()='Distribution']/../..//input</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+							<pause durationInSecs="3"/>
+							<findElement by="xpath" highlightTurnedOff="true" isSkipCheckDomError="true">//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]//label[text()='Distribution']/../..//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="false" isSkipCheckDomError="true">
+								<valueKB inventoryName="MAIN_REPEAT_3" columnName="Distribution (%)"/>
+							</sendKeys>							
+							<pause durationInSecs="2"/>
+							<findElement by="xpath" highlightTurnedOff="true" isSkipCheckDomError="true">//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]//label[text()='Description']/../..//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="false" isSkipCheckDomError="true">
+								<valueKB inventoryName="MAIN_REPEAT_3" columnName="Description"/>
+							</sendKeys>		
+							<pause durationInSecs="3"/>			
+							<!-- Income Tax Type -->
+							<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+								<parameters>
+									<parameter name="XPATH" value="//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]//label[text()='Income Tax Type']/../.."/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+									<parameter name="COL_NAME" value="Income Tax Type"/>
+								</parameters>
+							</executeBlock>			
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//*[text()='Error']/../../../../../../..//*[text()='OK']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true" highlightTurnedOff="true">//*[text()='Error']/../../../../../../..//*[text()='OK']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+								</then>
+								<else/>
+							</IfThenElse>	
+							<pause durationInSecs="2"/>
+							<findElement by="xpath" highlightTurnedOff="true" isSkipCheckDomError="true">//table[@summary='Distribution Set Details']//tr[contains(@class,'Select')]//label[text()='Distribution']/../..//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="false" isSkipCheckDomError="true">
+								<valueKB inventoryName="MAIN_REPEAT_3" columnName="Distribution (%)"/>
+							</sendKeys>		
+						</else>
+					</IfThenElse>						
+				</else>
+			</IfThenElse>			
+		</block>		
+
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="SEARCH"/>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']/../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Business Unit"/>']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']/../../..//span[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Business Unit"/>']/../../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<executeBlock name="Update_Distribution_Set"/>
+				</then>
+				<else>
+					<executeBlock name="CREATE_BUTTON"/>
+					<executeBlock name="Create_Distribution_Set"/>
+				</else>
+			</IfThenElse>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+					<parameters>
+						<parameter name="DFF_NAME" value="MAIN_REPEAT_2"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<repeat inventoryName="MAIN_REPEAT_3">
+				<IfThenElse>
+					<if>
+						<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//*[text()='Create Distribution Set' or text()='Create Distribution Set ' or contains(text(),'Create Distribution Set')]/..</findElement>
+					</if>
+					<then>
+						<executeBlock name="Create_Distribution_Set_Details"/>
+					</then>
+					<else>
+						<executeBlock name="SCROLLBAR">
+							<parameters>
+								<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Distribution Set Details']/../..//div[contains(text(),'No data to display.')]"/>
+								<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Distribution Set Details']//tr[1]//td)[1]"/>
+								<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Distribution Set Details']/../..//div[contains(@id,'scroller')]"/>
+								<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Distribution Set Details']//td[1]//span[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Line"/>']</parameter>
+								<parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[@summary='Distribution Set Details']//td[1]//input[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Line"/>']</parameter>
+								<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Distribution_Set_Details"/>
+								<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Distribution_Set_Details"/>
+							</parameters>
+						</executeBlock>	
+					</else>
+				</IfThenElse>
+				<executeBlock name="Distribution_Set_Details"/>
+			</repeat>
+			<executeBlock name="SAVE_BUTTON"/>
+			<executeBlock name="SAVE_AND_CLOSE_BUTTON"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

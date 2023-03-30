@@ -1,0 +1,515 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Scheduled Processes (Refresh and Start the Order Promising Server)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Scheduled Processes" isBatchingAllowed="false" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Administrator Profile Values"/>
+		</dependencies> 
+		<parameters>
+			<parameter name="Repeat 1" value="Scheduled Processes - Refresh and Start the Order Promising Server"/>
+		</parameters>
+		<!--Control Block-->
+		<block name="Go To Task-Special">
+			<findElement by="xpath">//a[contains(@id,'UIShome')]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement setFocus="true" by="xpath">//a[text()='Tools']</findElement>
+				</if>
+				<then>
+					<findElement setFocus="true" by="xpath">//a[text()='Tools']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//a[text()='###TASK_NAME###']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<error message="'Navigator-Tools' not found."/>
+				</else>
+			</IfThenElse>
+		</block>		
+		<block name="Submit">
+			<findElement by="xpath">//span[text()='m']/../..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="2"/>
+		</block>
+		<block name="Warning">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table[contains(@id,'confirmationPopup')]</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//table[contains(@id,'confirmationPopup')]//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Schedule New Process Button">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='Actions']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='Actions']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//table[@style='position: relative;']//td[text()='Schedule New Process']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- <IfThenElse>
+				<if>
+					<findElement by="xpath">//span[text()='Schedule New Process']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//span[text()='Schedule New Process']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse> -->
+		</block>
+		<block name="OK">
+			<findElement by="xpath">//div[contains(@data-afr-popupid,'scheduleRequest')]//button[text()='OK']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+
+
+
+
+		<!-- Processing Section -->
+		<block name="Schedule New Process">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="Repeat 1" columnName="Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<!-- Processing Section -->
+					<executeBlock name="RADIO_INPUT">
+						<parameters>
+							<parameter name="LEGEND" value="Type"/>
+							<parameter name="LABEL_RADIO" value="Type"/>
+							<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Type"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock name="LOV-Name"/>
+					<findElement by="xpath">//div[contains(@data-afr-popupid,'scheduleRequest')]//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<!--Internal Transfer Orders-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Internal Transfer Orders']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Internal Transfer Orders"/>
+						</parameters>
+					</executeBlock>
+					<!--Purchase Orders and Requisitions-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Purchase Orders and Requisitions']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Purchase Orders and Requisitions"/>
+						</parameters>
+					</executeBlock>
+					<!--On Hand-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='On Hand']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="On Hand"/>
+						</parameters>
+					</executeBlock>
+					<!--User-Specified Supply-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='User-Specified Supply']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="User-Specified Supply"/>
+						</parameters>
+					</executeBlock>
+					<!--Work Orders-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Work Orders']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Work Orders"/>
+						</parameters>
+					</executeBlock>
+					<!--Fulfillment Lines-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Fulfillment Lines']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Fulfillment Lines"/>
+						</parameters>
+					</executeBlock>
+					<!--User-Specified Demand-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='User-Specified Demand']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="User-Specified Demand"/>
+						</parameters>
+					</executeBlock>
+					<!--Allocation Rules-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Allocation Rules']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Allocation Rules"/>
+						</parameters>
+					</executeBlock>
+					<!--ATP Rules-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='ATP Rules']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="ATP Rules"/>
+						</parameters>
+					</executeBlock>
+					<!--Item Substitutions-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Item Substitutions']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Item Substitutions"/>
+						</parameters>
+					</executeBlock>
+					<!--Sourcing-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Sourcing']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Sourcing"/>
+						</parameters>
+					</executeBlock>
+					<!--Calendars and Calendar Associations-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Calendars and Calendar Associations']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Calendars and Calendar Associations"/>
+						</parameters>
+					</executeBlock>
+					<!--Customers-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Customers']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Customers"/>
+						</parameters>
+					</executeBlock>
+					<!--Interlocation Shipping Networks-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Interlocation Shipping Networks']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Interlocation Shipping Networks"/>
+						</parameters>
+					</executeBlock>
+					<!--Items-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Items']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Items"/>
+						</parameters>
+					</executeBlock>
+					<!--Organizations-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Organizations']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Organizations"/>
+						</parameters>
+					</executeBlock>
+					<!--Regions and Zones-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Regions and Zones']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Regions and Zones"/>
+						</parameters>
+					</executeBlock>
+					<!--Resources-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Resources']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Resources"/>
+						</parameters>
+					</executeBlock>
+					<!--Routings-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Routings']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Routings"/>
+						</parameters>
+					</executeBlock>
+					<!--Suppliers-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Suppliers']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Suppliers"/>
+						</parameters>
+					</executeBlock>
+					<!--UOM-->
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='UOM']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="UOM"/>
+						</parameters>
+					</executeBlock>
+					
+					<executeBlock name="LOV-Plan Names"/>
+				</then>
+				<else>
+					<error message="'Name' is required."/>
+				</else>
+			</IfThenElse>		
+		</block>
+
+		<!-- LOV Section -->
+		<!--Waiting Block-->
+		<block name="Waiting Time LOV">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<findElement by="xpath">LOV-1</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<!--LOV Block-->
+		<block name="LOV-Name">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[contains(@data-afr-popupid,'scheduleRequest')]//label[text()='Name']/../..//input</findElement>
+				</if>
+				<then>
+					<executeBlock name="Waiting Time LOV" isRepeatUntilBreak="true">
+						<parameters>
+							<parameter name="LOV-1" value="//label[text()='Name']/../..//span/a"/>
+						</parameters>
+					</executeBlock>
+					<findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+					<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Name']/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="Repeat 1" columnName="Name"/>
+					</sendKeys>
+					<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='Search']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//td[text()='<valueKB inventoryName="Repeat 1" columnName="Name"/>']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//td[text()='<valueKB inventoryName="Repeat 1" columnName="Name"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+							<error message="No results found."/>
+						</else>
+					</IfThenElse>
+					<findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="LOV-Plan Names">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="Repeat 1" columnName="Plan Names - All"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="Repeat 1" columnName="Plan Names - All"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//table[@style='position: relative;']//li/label/../..</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Plan Names']/../..//td/span/input</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='All']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='All']//input[@checked]</findElement>
+										</if>
+										<then/>
+										<else>
+											<findElement highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='All']//input</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//table[@style='position: relative;']//li/label/../..</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//label[text()='Plan Names']/../..//td/span/input</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='All']</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='All']//input[@checked]</findElement>
+										</if>
+										<then>
+											<findElement highlightTurnedOff="true" by="xpath">//table[@style='position: relative;']//li/label[text()='All']//input</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Serach_Page">
+			<findElement by="xpath">//a[contains(@id,'UIShome')]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[@data-afr-dsp-child='grid']//div[@data-afr-dsp-child='layerWrapper']</findElement>
+				</if>
+				<then>
+					<executeBlock name="Serach_Task_Layer"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//div[@data-afr-dsp-child='grid']</findElement>
+						</if>
+						<then>
+							<executeBlock name="Serach_Task_Grid"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Serach_Task_Layer">
+			<findElement by="xpath">//a[@title='Navigator']</findElement>
+			<click waitForPageToFinishRendering="true" />
+			<findElement setFocus="true" by="xpath">//span[text()='Tools']</findElement>
+			<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+			<findElement by="xpath">//span[text()='Scheduled Processes']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Serach_Task_Grid">
+			<findElement setFocus="true" by="xpath">//div[@title='Tools']</findElement>
+			<click waitForPageToFinishRendering="true" />
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[@title='Scheduled Processes']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[@title='Scheduled Processes']</findElement>
+					<click waitForPageToFinishRendering="true" />
+				</then>
+				<else>
+					<executeBlock name="Personalize_Springboard"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Personalize_Springboard">
+			<findElement setFocus="true" by="xpath">//img[@title='Personalize Springboard']</findElement>
+			<click waitForPageToFinishRendering="true" />
+			<findElement by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='Scheduled Processes']/../..//div</findElement>
+			<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+			<findElement by="xpath">//span[text()='OK']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement setFocus="true" by="xpath">//div[@title='Tools']</findElement>
+			<click waitForPageToFinishRendering="true" />
+			<findElement by="xpath">//div[@title='Scheduled Processes']</findElement>
+			<click waitForPageToFinishRendering="true" />
+		</block>
+		<!--BEGIN REPEAT-->
+		<executeBlock name="Serach_Page"/>
+		<repeat inventoryName="Repeat 1">
+			<executeBlock name="Schedule New Process Button"/>
+			<executeBlock name="Schedule New Process"/>
+			<executeBlock name="Submit"/>
+			<executeBlock name="Warning"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

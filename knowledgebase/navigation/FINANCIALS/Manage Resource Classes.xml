@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Resource Classes</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" isFailedParentLevelRecordRetry="true" taskName="Manage Resource Classes" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Expenditure Types"/>
+			<navigation name="Manage Project Unit Organizations"/>
+		</dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Resource Classes - Resource Classes"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Resource Classes - Expenditure Types"/>
+        </parameters>
+		<block name="FAKE_DFF">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+			</click>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_2" columnName="Name"/>
+			</click>
+		</block>
+		
+        <block name="Resource_Classes">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Manage Resource Classes']//*[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Manage Resource Classes']//*[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>	
+					<!--Spread Curve-->
+					<executeBlock name="SELECT_KB">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Manage Resource Classes']//tr[contains(@class,'Select')]"/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Spread Curve"/>
+						</parameters>
+					</executeBlock>	
+					<executeBlock name="LOV">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Manage Resource Classes']//tr[contains(@class,'Select')]//td[3]"/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Item Master"/>
+							<parameter name="SEARCH_1" value="Name"/>
+						</parameters>
+					</executeBlock>	
+					<executeBlock name="LOV">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Manage Resource Classes']//tr[contains(@class,'Select')]//td[4]"/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Item Category Set"/>
+							<parameter name="SEARCH_1" value="Catalog Name"/>
+						</parameters>
+					</executeBlock>				
+<!--					
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Manage Resource Classes']//tr[contains(@class,'Select')]//span[text()='Material Items']</findElement>
+								</if>
+								<then>
+
+								</then>
+								<else/>
+							</IfThenElse>					
+						</then>
+						<else/>
+					</IfThenElse>	-->				
+				</then>
+				<else/>
+			</IfThenElse>
+        </block>
+        <block name="TOP_Expenditure">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Expenditure Types']//tr[td[1]//input[@value=''] and td[2]//input[@value='']]</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Expenditure Types']/../../../../../../..//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="TOP"/>
+					<pause durationInSecs="1"/>				
+				</else>
+			</IfThenElse>
+        </block>		
+        <block name="Define_Expenditure">
+			<executeBlock name="GLOBAL_ADD"/>
+			<executeBlock name="TOP_Expenditure" isRepeatUntilBreak="true"/>
+			<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Expenditure Types']//tr[td[1]//input[@value=''] and td[2]//input[@value=''] ]//td[3]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="1"/>					
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Expenditure Types']//tr[contains(@class,'Select')]//td[1]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Project Unit"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>				
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Expenditure Types']//tr[contains(@class,'Select')]//td[2]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Expenditure Types"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>	
+        </block>
+        <block name="Update_Expenditure">
+			<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW//td[3]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="1"/>			
+        </block>
+
+        <repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="GLOBAL_GO_TO_TASK"/>
+			<executeBlock name="Resource_Classes"/>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<executeBlock name="SCROLLBAR">
+					<parameters>
+						<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Expenditure Types']/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Expenditure Types']//tr)[1]//td[3]"/>
+						<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Expenditure Types']/../../../../../../..//div[contains(@id,'scroller')]"/>
+						<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Expenditure Types']//tr[td[1]//input[@value='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Project Unit"/>'] and td[2]//input[@value='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Expenditure Types"/>'] ]</parameter>
+						<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Define_Expenditure"/>
+						<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Expenditure"/>
+					</parameters>
+				</executeBlock>      
+			</repeat>
+			<findElement by="xpath">//span[text()='Save and Close']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>			
+        </repeat>
+    </fusionNavigation>
+</navigation>

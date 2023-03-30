@@ -1,0 +1,2793 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Asset Locations</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Asset Locations" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Fixed Assets Flexfield Value Sets (Manage Values)"/>
+			<navigation name="Manage Fixed Assets Key Flexfields (Deploy Structure Instances)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Asset Locations - Asset Locations"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Asset Locations - Asset Locations - DFF"/>
+		</parameters>
+		<block name="DFF_FAKE_MAPPER">
+			<findElement by="xpath" isSkipCheckDomError="true">//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Field Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_2" columnName="LOCATION_COLUMN"/>
+			</click>
+		</block>
+		<block name="COLLAPSE_PANE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//a//img[@title='Collapse Pane']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//a//img[@title='Collapse Pane']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="SEARCH_LOCATION">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Search Results']/../..//div[text()='No data to display.']</findElement>
+				</if>
+				<then>
+					<executeBlock name="Check_View"/>
+				</then>
+				<else>
+					<executeBlock name="Input_Find_Location"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Input_Find_Location">
+			<IfThenElse>
+				<if>
+					<evaluateXPATHBoolean>count(//table[@summary='Search Results']/../..//th[contains(@id,'flexSub')])=1</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location1"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+							<parameter name="BUTTON_NAME" value="Search"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<evaluateXPATHBoolean>count(//table[@summary='Search Results']/../..//th[contains(@id,'flexSub')])=2</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location1"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location2"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+							<parameter name="BUTTON_NAME" value="Search"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<evaluateXPATHBoolean>count(//table[@summary='Search Results']/../..//th[contains(@id,'flexSub')])=3</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location1"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location2"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location3"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+							<parameter name="BUTTON_NAME" value="Search"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<evaluateXPATHBoolean>count(//table[@summary='Search Results']/../..//th[contains(@id,'flexSub')])=4</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location1"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location2"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location3"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location4"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+							<parameter name="BUTTON_NAME" value="Search"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<evaluateXPATHBoolean>count(//table[@summary='Search Results']/../..//th[contains(@id,'flexSub')])=5</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[5]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[5]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location1"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//select</findElement>
+					<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+						<valueText>Starts with</valueText>
+					</select>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location2"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location3"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location4"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[5]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[5]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[5]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[5]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location5"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+							<parameter name="BUTTON_NAME" value="Search"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<evaluateXPATHBoolean>count(//table[@summary='Search Results']/../..//th[contains(@id,'flexSub')])=6</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[5]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[5]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[6]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[6]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location1"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location2"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location3"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location4"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[5]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[5]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[5]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[5]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location5"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[6]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[6]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[6]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[6]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location6"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+							<parameter name="BUTTON_NAME" value="Search"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<evaluateXPATHBoolean>count(//table[@summary='Search Results']/../..//th[contains(@id,'flexSub')])=7</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[5]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[5]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[6]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[6]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[7]//span[not(@title)])]/../..//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+								</parameters>
+							</executeBlock>
+							<findElement by="xpath" isSkipCheckDomError="true">//span[text()='Add Fields']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//tr[contains(@id,'addFields')]//td[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[7]//span[not(@title)])]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[1]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location1"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[2]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location2"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[3]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location3"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[4]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location4"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[5]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[5]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[5]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[5]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location5"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[6]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[6]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[6]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[6]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location6"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[7]//span[not(@title)])]/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[7]//span[not(@title)])]/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Starts with</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[7]//span[not(@title)])]/../..//input/..//div//li[text()='Starts with']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()=string(//table[contains(@id,'LocationQuery')]/../../../following-sibling::tr[1]/th[7]//span[not(@title)])]/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location7"/>
+					</sendKeys>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+							<parameter name="BUTTON_NAME" value="Search"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Check_Location">
+			<!-- defineVariable -->
+			<defineVariable name="CHECK_LOC" type="text"/>
+			<setVariable name="CHECK_LOC" append="false">
+				<valueText/>
+			</setVariable>
+			<setVariable name="CHECK_LOC" append="true">//table[@summary='Search Results']//tr[td[</setVariable>
+			<!--1-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location1"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//table[@summary='Search Results']/../..//th[contains(@id,'flexSub')])>=1</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<setVariable name="CHECK_LOC" append="true">1]//*[text()=translate('</setVariable>
+							<setVariable name="CHECK_LOC" append="true">
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location1"/>
+							</setVariable>
+							<setVariable name="CHECK_LOC" append="true">', 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</setVariable>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<!--2-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location2"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//table[@summary='Search Results']/../..//th[contains(@id,'flexSub')])>=2</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<setVariable name="CHECK_LOC" append="true"> and </setVariable>
+							<setVariable name="CHECK_LOC" append="true">td[2]//*[text()=translate('</setVariable>
+							<setVariable name="CHECK_LOC" append="true">
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location2"/>
+							</setVariable>
+							<setVariable name="CHECK_LOC" append="true">', 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</setVariable>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<!--3-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location3"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//table[@summary='Search Results']/../..//th[contains(@id,'flexSub')])>=3</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<setVariable name="CHECK_LOC" append="true"> and </setVariable>
+							<setVariable name="CHECK_LOC" append="true">td[3]//*[text()=translate('</setVariable>
+							<setVariable name="CHECK_LOC" append="true">
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location3"/>
+							</setVariable>
+							<setVariable name="CHECK_LOC" append="true">', 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</setVariable>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<!--4-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location4"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//table[@summary='Search Results']/../..//th[contains(@id,'flexSub')])>=4</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<setVariable name="CHECK_LOC" append="true"> and </setVariable>
+							<setVariable name="CHECK_LOC" append="true">td[4]//*[text()=translate('</setVariable>
+							<setVariable name="CHECK_LOC" append="true">
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location4"/>
+							</setVariable>
+							<setVariable name="CHECK_LOC" append="true">', 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</setVariable>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<!--5-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location5"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//table[@summary='Search Results']/../..//th[contains(@id,'flexSub')])>=5</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<setVariable name="CHECK_LOC" append="true"> and </setVariable>
+							<setVariable name="CHECK_LOC" append="true">td[5]//*[text()=translate('</setVariable>
+							<setVariable name="CHECK_LOC" append="true">
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location6"/>
+							</setVariable>
+							<setVariable name="CHECK_LOC" append="true">', 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</setVariable>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<!--6-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location6"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//table[@summary='Search Results']/../..//th[contains(@id,'flexSub')])>=6</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<setVariable name="CHECK_LOC" append="true"> and </setVariable>
+							<setVariable name="CHECK_LOC" append="true">td[6]//*[text()=translate('</setVariable>
+							<setVariable name="CHECK_LOC" append="true">
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location6"/>
+							</setVariable>
+							<setVariable name="CHECK_LOC" append="true">', 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</setVariable>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<!--7-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location7"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//table[@summary='Search Results']/../..//th[contains(@id,'flexSub')])>=7</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<setVariable name="CHECK_LOC" append="true"> and </setVariable>
+							<setVariable name="CHECK_LOC" append="true">td[7]//*[text()=translate('</setVariable>
+							<setVariable name="CHECK_LOC" append="true">
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location7"/>
+							</setVariable>
+							<setVariable name="CHECK_LOC" append="true">', 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')]</setVariable>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<setVariable name="CHECK_LOC" append="true">]</setVariable>
+			<!-- defineVariable -->
+			<executeBlock name="Check_View"/>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Search Results']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Search Results']/tbody/tr[1]/td[1])[2]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Search Results']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW"><valueVariable name="CHECK_LOC"/></parameter>
+					<parameter name="TEMPLATE_CREATE" value="CREATE_NEW_LOCATION"/>
+					<parameter name="TEMPLATE_UPDATE" value="EDIT_LOCATION"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="EDIT_LOCATION">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW/../../../../../td[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<!-- Effective Start Date -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//label[text()='Effective Start Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Effective Start Date"/>
+				</parameters>
+			</executeBlock>
+			<!-- Effective End Date -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//label[text()='Effective End Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Effective End Date"/>
+				</parameters>
+			</executeBlock>
+			<!-- Enabled -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//input[@type='checkbox']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Enabled"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="1"/>
+		</block>
+		<block name="CREATE_NEW_LOCATION">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Search Results']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Search Results']/../../../../../../..//div[contains(@id,'scroller')]</findElement>
+				</if>
+				<then>
+					<executeBlock name="Scroll_Top" isRepeatUntilBreak="true"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement setFocus="true" by="xpath">//th//span[text()='Location Identifier']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" setFocus="true" by="xpath">//table[@summary='Search Results']//tr//td//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement setFocus="true" by="xpath">//table[@summary='Search Results']/../../../../../../..//div[contains(@id,'scroller')]</findElement>
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Search Results']/../../../../../../..//div[contains(@id,'scroller')]</findElement>
+									<scroll direction="TOP"/>
+									<findElement setFocus="true" by="xpath">//table[@summary='Search Results']//tr//td//input</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<findElement setFocus="true" by="xpath">//table[@summary='Search Results']//tr//td//input</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" setFocus="true" by="xpath">//table[@summary='Search Results']//tr//td[1]//input</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement setFocus="true" by="xpath">//table[@summary='Search Results']/../../../../../../..//div[contains(@id,'scroller')]</findElement>
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Search Results']/../../../../../../..//div[contains(@id,'scroller')]</findElement>
+									<scroll direction="TOP"/>
+									<findElement setFocus="true" by="xpath">//table[@summary='Search Results']//tr//td[1]//input</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<findElement setFocus="true" by="xpath">//table[@summary='Search Results']//tr//td[1]//input</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock name="Location_Details"/>
+		</block>
+		<block name="Location_Details">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Search Results']//tr[contains(@class,'Select')]//td[1]//input</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement setFocus="true" by="xpath">//th//span[text()='Location Identifier']</findElement>
+						</if>
+						<then>
+							<!--1-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location1"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText></valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<!-- 1 Location -->
+									<IfThenElse>
+										<if>
+											<evaluateXPATHBoolean>count(//table[@summary='Search Results']//tr[contains(@class,'Select')]//td/span[contains(@id,'Kff')])>=1</evaluateXPATHBoolean>
+										</if>
+										<then>
+											<executeBlock name="KFF_LOCATION_LINE_INPUT_ZOOM_LOV">
+												<parameters>
+													<parameter name="SEQUENCE_LOCATION" value="1"/>
+													<parameter name="LOCATION_COLUMN" value="Location1"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+							<!--2-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location2"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText></valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<!-- 1 Location -->
+									<IfThenElse>
+										<if>
+											<evaluateXPATHBoolean>count(//table[@summary='Search Results']//tr[contains(@class,'Select')]//td/span[contains(@id,'Kff')])>=2</evaluateXPATHBoolean>
+										</if>
+										<then>
+											<executeBlock name="KFF_LOCATION_LINE_INPUT_ZOOM_LOV">
+												<parameters>
+													<parameter name="SEQUENCE_LOCATION" value="2"/>
+													<parameter name="LOCATION_COLUMN" value="Location2"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+							<!--3-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location3"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText></valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<!-- 3 Location -->
+									<IfThenElse>
+										<if>
+											<evaluateXPATHBoolean>count(//table[@summary='Search Results']//tr[contains(@class,'Select')]//td/span[contains(@id,'Kff')])>=3</evaluateXPATHBoolean>
+										</if>
+										<then>
+											<executeBlock name="KFF_LOCATION_LINE_INPUT_ZOOM_LOV">
+												<parameters>
+													<parameter name="SEQUENCE_LOCATION" value="3"/>
+													<parameter name="LOCATION_COLUMN" value="Location3"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+							<!--4-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location4"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText></valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<!-- 4 Location -->
+									<IfThenElse>
+										<if>
+											<evaluateXPATHBoolean>count(//table[@summary='Search Results']//tr[contains(@class,'Select')]//td/span[contains(@id,'Kff')])>=4</evaluateXPATHBoolean>
+										</if>
+										<then>
+											<executeBlock name="KFF_LOCATION_LINE_INPUT_ZOOM_LOV">
+												<parameters>
+													<parameter name="SEQUENCE_LOCATION" value="4"/>
+													<parameter name="LOCATION_COLUMN" value="Location4"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+							<!--5-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location5"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText></valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<!-- 5 Location -->
+									<IfThenElse>
+										<if>
+											<evaluateXPATHBoolean>count(//table[@summary='Search Results']//tr[contains(@class,'Select')]//td/span[contains(@id,'Kff')])>=5</evaluateXPATHBoolean>
+										</if>
+										<then>
+											<executeBlock name="KFF_LOCATION_LINE_INPUT_ZOOM_LOV">
+												<parameters>
+													<parameter name="SEQUENCE_LOCATION" value="5"/>
+													<parameter name="LOCATION_COLUMN" value="Location5"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+							<!--6-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location6"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText></valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<!-- 6 Location -->
+									<IfThenElse>
+										<if>
+											<evaluateXPATHBoolean>count(//table[@summary='Search Results']//tr[contains(@class,'Select')]//td/span[contains(@id,'Kff')])>=6</evaluateXPATHBoolean>
+										</if>
+										<then>
+											<executeBlock name="KFF_LOCATION_LINE_INPUT_ZOOM_LOV">
+												<parameters>
+													<parameter name="SEQUENCE_LOCATION" value="6"/>
+													<parameter name="LOCATION_COLUMN" value="Location6"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+							<!--7-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location7"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText></valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<!-- 7 Location -->
+									<IfThenElse>
+										<if>
+											<evaluateXPATHBoolean>count(//table[@summary='Search Results']//tr[contains(@class,'Select')]//td/span[contains(@id,'Kff')])>=7</evaluateXPATHBoolean>
+										</if>
+										<then>
+											<executeBlock name="KFF_LOCATION_LINE_INPUT_ZOOM_LOV">
+												<parameters>
+													<parameter name="SEQUENCE_LOCATION" value="7"/>
+													<parameter name="LOCATION_COLUMN" value="Location7"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<!--1-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location1"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText></valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<!-- 1 Location -->
+									<IfThenElse>
+										<if>
+											<evaluateXPATHBoolean>count(//table[@summary='Search Results']//tr[contains(@class,'Select')]//td/span[contains(@id,'Kff')])>=1</evaluateXPATHBoolean>
+										</if>
+										<then>
+											<executeBlock name="KFF_LOCATION_LINE_INPUT_ZOOM_LOV">
+												<parameters>
+													<parameter name="SEQUENCE_LOCATION" value="1"/>
+													<parameter name="LOCATION_COLUMN" value="Location1"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+							<!--2-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location2"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText></valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<!-- 1 Location -->
+									<IfThenElse>
+										<if>
+											<evaluateXPATHBoolean>count(//table[@summary='Search Results']//tr[contains(@class,'Select')]//td/span[contains(@id,'Kff')])>=2</evaluateXPATHBoolean>
+										</if>
+										<then>
+											<executeBlock name="KFF_LOCATION_LINE_INPUT_ZOOM_LOV">
+												<parameters>
+													<parameter name="SEQUENCE_LOCATION" value="2"/>
+													<parameter name="LOCATION_COLUMN" value="Location2"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+							<!--3-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location3"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText></valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<!-- 3 Location -->
+									<IfThenElse>
+										<if>
+											<evaluateXPATHBoolean>count(//table[@summary='Search Results']//tr[contains(@class,'Select')]//td/span[contains(@id,'Kff')])>=3</evaluateXPATHBoolean>
+										</if>
+										<then>
+											<executeBlock name="KFF_LOCATION_LINE_INPUT_ZOOM_LOV">
+												<parameters>
+													<parameter name="SEQUENCE_LOCATION" value="3"/>
+													<parameter name="LOCATION_COLUMN" value="Location3"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+							<!--4-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location4"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText></valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<!-- 4 Location -->
+									<IfThenElse>
+										<if>
+											<evaluateXPATHBoolean>count(//table[@summary='Search Results']//tr[contains(@class,'Select')]//td/span[contains(@id,'Kff')])>=4</evaluateXPATHBoolean>
+										</if>
+										<then>
+											<executeBlock name="KFF_LOCATION_LINE_INPUT_ZOOM_LOV">
+												<parameters>
+													<parameter name="SEQUENCE_LOCATION" value="4"/>
+													<parameter name="LOCATION_COLUMN" value="Location4"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+							<!--5-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location5"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText></valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<!-- 5 Location -->
+									<IfThenElse>
+										<if>
+											<evaluateXPATHBoolean>count(//table[@summary='Search Results']//tr[contains(@class,'Select')]//td/span[contains(@id,'Kff')])>=5</evaluateXPATHBoolean>
+										</if>
+										<then>
+											<executeBlock name="KFF_LOCATION_LINE_INPUT_ZOOM_LOV">
+												<parameters>
+													<parameter name="SEQUENCE_LOCATION" value="5"/>
+													<parameter name="LOCATION_COLUMN" value="Location5"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+							<!--6-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location6"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText></valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<!-- 6 Location -->
+									<IfThenElse>
+										<if>
+											<evaluateXPATHBoolean>count(//table[@summary='Search Results']//tr[contains(@class,'Select')]//td/span[contains(@id,'Kff')])>=6</evaluateXPATHBoolean>
+										</if>
+										<then>
+											<executeBlock name="KFF_LOCATION_LINE_INPUT_ZOOM_LOV">
+												<parameters>
+													<parameter name="SEQUENCE_LOCATION" value="6"/>
+													<parameter name="LOCATION_COLUMN" value="Location6"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+							<!--7-->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="Location7"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText></valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<!-- 7 Location -->
+									<IfThenElse>
+										<if>
+											<evaluateXPATHBoolean>count(//table[@summary='Search Results']//tr[contains(@class,'Select')]//td/span[contains(@id,'Kff')])>=7</evaluateXPATHBoolean>
+										</if>
+										<then>
+											<executeBlock name="KFF_LOCATION_LINE_INPUT_ZOOM_LOV">
+												<parameters>
+													<parameter name="SEQUENCE_LOCATION" value="7"/>
+													<parameter name="LOCATION_COLUMN" value="Location7"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else/>
+									</IfThenElse>
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<!-- Effective Start Date -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//label[text()='Effective Start Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Effective Start Date"/>
+				</parameters>
+			</executeBlock>
+			<!-- Effective End Date -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//label[text()='Effective End Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Effective End Date"/>
+				</parameters>
+			</executeBlock>
+			<!-- Enabled -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Search Results']//tr[contains(@class,'Select')]//input[@type='checkbox']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Enabled"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="1"/>
+		</block>
+		<block name="Scroll_Top">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Search Results']//tr[td[1]//input[not(@value) or not(@title)]]</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Search Results']/../..//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="TOP"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="KFF_LOCATION_LINE_INPUT_ZOOM_LOV">
+			<!-- CASE SELECT LINE -->
+			<!-- NO POPUP LOV CASE SPAN SELECT -->
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" setFocus="true">//table[@summary='Search Results']//tr[contains(@class,'Select')]//tr[td[SEQUENCE_LOCATION]//span[contains(@id,'Kff')]]//td[SEQUENCE_LOCATION]//a</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="LOCATION_COLUMN"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>""</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<executeBlock name="WAITING_LOV_SEARCH" isRepeatUntilBreak="true">
+								<parameters>
+									<parameter name="LABEL_SEARCH_LOV" value="(//table[@summary='Search Results']//tr[contains(@class,'Select')]//td/span[contains(@id,'Kff')])[SEQUENCE_LOCATION]//a"/>
+								</parameters>
+							</executeBlock>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[td[@_afrseparator]]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[td[@_afrseparator]]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isSkipCheckDomError="true">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[td[@_afrseparator]]//following-sibling::tr[1]//td[1]</findElement>
+										</if>
+										<then>
+											<findElement by="xpath" isSkipCheckDomError="true">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[td[@_afrseparator]]//following-sibling::tr[1]//td[1]</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											<findElement by="xpath" isSkipCheckDomError="true">(//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr//td[1])[1]</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">(//table[@summary='Search Results']//tr[contains(@class,'Select')]//td/span[contains(@id,'Kff')])[SEQUENCE_LOCATION]//input[@value='<valueKB inventoryName="MAIN_REPEAT_1" columnName="LOCATION_COLUMN"/>']</findElement>
+								</if>
+								<then/>
+								<else>
+									<executeBlock name="WAITING_LOV_SEARCH" isRepeatUntilBreak="true">
+										<parameters>
+											<parameter name="LABEL_SEARCH_LOV" value="(//table[@summary='Search Results']//tr[contains(@class,'Select')]//td/span[contains(@id,'Kff')])[SEQUENCE_LOCATION]//a"/>
+										</parameters>
+									</executeBlock>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr[//td[1]]//td[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="LOCATION_COLUMN"/>']</findElement>
+										</if>
+										<then>
+											<findElement isDisplayed="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']/..//tr//td[1][text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="LOCATION_COLUMN"/>']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+											<executeBlock name="WAITING_LOV_SEARCH" isRepeatUntilBreak="true">
+												<parameters>
+													<parameter name="LABEL_SEARCH_LOV" value="(//table[@summary='Search Results']//tr[contains(@class,'Select')]//td/span[contains(@id,'Kff')])[SEQUENCE_LOCATION]//a"/>
+												</parameters>
+											</executeBlock>
+											<IfThenElse>
+												<if>
+													<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//a[text()='Search...']</findElement>
+												</if>
+												<then>
+													<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//a[text()='Search...']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+													<pause durationInSecs="2"/>
+												</then>
+												<else>
+													<findElement by="xpath" isSkipCheckDomError="true">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']</findElement>
+													<click waitForPageToFinishRendering="true"/>
+													<pause durationInSecs="2"/>
+												</else>
+											</IfThenElse>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//label[text()='Value']/../..//input</findElement>
+											<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+												<valueKB inventoryName="MAIN_REPEAT_1" columnName="LOCATION_COLUMN"/>
+											</sendKeys>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//button[text()='Search']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//td[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="LOCATION_COLUMN"/>']</findElement>
+												</if>
+												<then>
+													<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//td[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="LOCATION_COLUMN"/>']</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else>
+													<error message="No data to display."/>
+												</else>
+											</IfThenElse>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Search and Select')]/../../../../../../../../..//div[@style='display: none;']/..//button[text()='OK']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<!-- INPUT CASE SPAN -->
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" setFocus="true">//table[@summary='Search Results']//tr[contains(@class,'Select')]//td[SEQUENCE_LOCATION]//span[contains(@id,'Kff')]//input</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" setFocus="true">//table[@summary='Search Results']//tr[contains(@class,'Select')]//td[SEQUENCE_LOCATION]//span[contains(@id,'Kff')]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="LOCATION_COLUMN"/>
+							</sendKeys>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="WAITING_LOV_SEARCH">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//a[text()='Search...']</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//div/div/div/div/table/tbody/tr/td/div/a[text()='Search...']</findElement>
+						</if>
+						<then>
+							<pause durationInSecs="1"/>
+							<break/>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">LABEL_SEARCH_LOV</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Check_View">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//th//*[text()='Location Identifier']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a[text()='View']/../..//div</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//a[text()='View']/../..//div</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[text()='Columns']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[text()='Location Identifier']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 							
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a[text()='View']/../../../../../../../../../../../..</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//a[text()='View']/../../../../../../../../../../../..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+									<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[text()='View']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>														
+									<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[text()='Columns']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 
+									<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[text()='Location Identifier']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 				
+								</then>
+								<else>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Recheck_Enabled_Location">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Input_Find_Location"/>
+			<executeBlock name="Check_Location"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+		</block>
+
+		<executeBlock name="COLLAPSE_PANE"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='###TASK_NAME###']</findElement>
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//a[text()='###TASK_NAME###']</findElement>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock name="SEARCH_LOCATION"/>
+			<executeBlock name="Check_Location"/>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<executeBlock name="GLOBAL_ALL_DFF">
+					<parameters>
+						<parameter name="INV_NAME" value="Manage Asset Locations - Asset Locations - DFF"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<pause durationInSecs="1"/>
+			<executeBlock name="Recheck_Enabled_Location"/>
+		</repeat>
+		<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+	</fusionNavigation>
+</navigation>
+		

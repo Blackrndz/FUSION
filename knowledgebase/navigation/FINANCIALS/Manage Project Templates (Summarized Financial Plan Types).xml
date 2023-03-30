@@ -1,0 +1,235 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Project Templates (Summarized Financial Plan Types)</name>
+	<svn>
+		<xsd:revision>$Revision: 78987 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2022-07-13 12:03:48 +0700 (Wed, 13 Jul 2022) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Project%20Templates%20(Summarized%20Financial%20Plan%20Types).xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Project Templates (Summarized Financial Plan Types).xml 78987 2022-07-13 05:03:48Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation isBatchingBasedOnRootInventoryUniqueRecords="true" hasScope="false" taskName="Manage Project Templates" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Financial Plan Types"/>
+			<navigation name="Manage Financial Plan Types (Budgetary Control Settings)"/>
+			<navigation name="Manage Financial Plan Types (Currency Settings)"/>
+			<navigation name="Manage Financial Plan Types (Export Options)"/>
+			<navigation name="Manage Financial Plan Types (Generation Options)"/>
+			<navigation name="Manage Financial Plan Types (Plan Settings)"/>
+			<navigation name="Manage Financial Plan Types (Planning Currency)"/>
+			<navigation name="Manage Financial Plan Types (Rate Settings)"/>
+			<navigation name="Manage Financial Plan Types (Reporting Options)"/>
+			<navigation name="Manage Financial Plan Types (Set Assignments)"/>
+			<navigation name="Manage Project Templates"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_0" value="Manage Project Templates - Template Information"/>
+			<parameter name="MAIN_REPEAT_1" value="Manage Project Templates - Summarized Financial Plan Types"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//*[text()='<valueKB inventoryName="MAIN_REPEAT_0" columnName="Template Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//*[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Template Name"/>']/../..//input</findElement>
+		</block>
+		<block name="Project_Templates">
+			<findElement by="xpath">//button[text()='Reset']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="1"/>			
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Template Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_0"/>
+					<parameter name="COL_NAME" value="Template Name"/>
+				</parameters>
+			</executeBlock>		
+			<findElement by="xpath">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="1"/>	
+
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Search Results']//*[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Template Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Search Results']//*[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Template Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>										
+				</then>
+				<else>
+					<error message="Please Define data Project Template."/>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<block name="Define_KPI">
+
+			<executeBlock name="GLOBAL_SPECIFY_ADD">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//*[contains(@summary,'Summarized Financial Plan Type')]/../../../.."/>
+				</parameters>
+			</executeBlock>	
+
+
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Summarized Financial Plan Type')]/../../../../../../..//label[text()='Enabled for Use']/../..//input[@disabled]</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>	
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[contains(text(),'Summarized Financial Plan Type')]/../../../../../../..//label[text()='Enabled for Use']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Enabled for Use"/>
+						</parameters>
+					</executeBlock>						
+				</else>
+			</IfThenElse>
+
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Summarized Financial Plan Type')]/../../../../../../..//label[text()='Plan Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Plan Type"/>
+				</parameters>
+			</executeBlock>
+
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Summarized Financial Plan Type')]/../../../../../../..//label[text()='Financial Plan Type Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Financial Plan Type Name"/>
+				</parameters>
+			</executeBlock>
+
+			<findElement by="xpath">//div[contains(text(),'Summarized Financial Plan Type')]/../../../../../../..//span[text()='S']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Update_KPI">
+			<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="1"/>	
+
+			<executeBlock name="GLOBAL_SPECIFY_UPDATE">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//*[contains(@summary,'Summarized Financial Plan Type')]/../../../.."/>
+				</parameters>
+			</executeBlock>	
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(text(),'Summarized Financial Plan Type')]/../../../../../../..//label[text()='Enabled for Use']/../..//input[@disabled]</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<executeBlock name="CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//div[contains(text(),'Summarized Financial Plan Type')]/../../../../../../..//label[text()='Enabled for Use']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Enabled for Use"/>
+						</parameters>
+					</executeBlock>						
+				</else>
+			</IfThenElse>
+
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Summarized Financial Plan Type')]/../../../../../../..//label[text()='Financial Plan Type Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Financial Plan Type Name"/>
+				</parameters>
+			</executeBlock>
+
+			<findElement by="xpath">//div[contains(text(),'Summarized Financial Plan Type')]/../../../../../../..//span[text()='S']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>			
+		</block>		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_0">
+			<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="Project_Templates"/>
+
+			<findElement by="xpath">//img[@title='Go to Reporting Setup Options']</findElement>
+			<click waitForPageToFinishRendering="true"/>	
+
+			<findElement by="xpath">//button[text()='Collapse All']</findElement>
+			<click waitForPageToFinishRendering="true"/>	
+
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//*[text()='Summarized Financial Plan Types']/../../../..//a[@title='Expand Summarized Financial Plan Types']</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//*[text()='Summarized Financial Plan Types']/../../../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>						
+				</then>
+				<else>
+					<break/>
+				</else>
+			</IfThenElse>
+
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//div[contains(text(),'No data to display.')]//table[@summary='Summarized Financial Plan Types']"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Summarized Financial Plan Types']//tr)[1]//td[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Summarized Financial Plan Types']/../../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Summarized Financial Plan Types']//tr//*[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Plan Type"/>']</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Define_KPI"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_KPI"/>
+				</parameters>
+			</executeBlock>
+
+
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Edit Project Template')]/../../../../../../../../../../..//span[text()='o']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[contains(text(),'Edit Project Template')]/../../../../../../../../../../..//span[text()='o']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>				
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse> 			
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//a[@title='Save']</findElement>
+				</if>
+				<then>
+					<executeBlock name="GLOBAL_SAVE"/>	
+					<findElement by="xpath">//a[@title='Save']</findElement>
+					<click waitForPageToFinishRendering="true"/>	
+					<findElement by="xpath">//span[text()='S']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>					
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//span[text()='Save']/../../..//a[not(@onclick)]</findElement>
+						</if>
+						<then>
+							<executeBlock name="GLOBAL_SAVE"/>	
+							<findElement by="xpath">//span[text()='Save']/../../..//a[not(@onclick)]</findElement>
+							<click waitForPageToFinishRendering="true"/>	
+							<findElement by="xpath">//span[text()='S']/..</findElement>
+							<click waitForPageToFinishRendering="true"/>							
+						</then>
+						<else>
+				
+						</else>
+					</IfThenElse> 		
+				</else>
+			</IfThenElse> 				
+		</repeat>
+		</repeat>
+	</fusionNavigation>
+</navigation>

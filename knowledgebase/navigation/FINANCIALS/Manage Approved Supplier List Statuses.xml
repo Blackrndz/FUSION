@@ -1,0 +1,321 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Approved Supplier List Statuses</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Approved Supplier List Statuses"
+        isBatchingAllowed="false" applicationKey="APPLICATION_HOME_PAGE">
+		 <dependencies>
+            <navigation name="Manage Enterprise HCM Information"/>
+        </dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Approved Supplier List Statuses - Approved Supplier List Statuses"/>
+        </parameters>
+        <block name="Save">
+            <findElement by="xpath">//button[text()='Save']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Manage Approved Supplier List Statuses">
+            <executeBlock name="SCROLLBAR_GENERIC_1">
+                <parameters>
+                    <parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//*[@title='Manage Approved Supplier List Statuses']/../../../../../../..//div[contains(text(),'No data to display.')]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//*[@title='Manage Approved Supplier List Statuses']//table[@_rowcount]//tr[1]//td)[1]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//*[@title='Manage Approved Supplier List Statuses']/../..//div[contains(@id,'scroller')]"/>
+                    <parameter
+                            name="SCROLLBAR_GENERIC_1_FIND_ROW">//td[1]/span/input[@value='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Status"/>']
+					</parameter>
+					<parameter
+                            name="SCROLLBAR_GENERIC_2_FIND_ROW">//td[1]/span/span[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Status"/>']
+					</parameter>
+                    <parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_MANAGE_APPROVED_SUPPLIER_LIST_STATUSES"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_MANAGE_APPROVED_SUPPLIER_LIST_STATUSES"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="SCROLLBAR_GENERIC_INNER_1">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+                </if>
+                <then>
+                    <executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+                    <break/>
+                </then>
+                <else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+						</if>
+						<then>
+							<executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+							<break/>
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<IfThenElse>
+								<if>
+									<isEndOfScroll/>
+								</if>
+								<then>
+									<executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+									<break/>
+								</then>
+								<else>
+									<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+									<scroll direction="DOWN"/>
+									<pause durationInSecs="1"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="SCROLLBAR_GENERIC_1">
+            <!-- check if there is no data found returned after the search, if so then we create a new record if applicable -->
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+                </if>
+                <then>
+                    <executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+                </then>
+                <else>
+                    <!-- resetting the scollbar back to the Top because the form remembers where it was even when searching a new record -->
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <scroll direction="TOP"/>
+                    <findElement by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <executeBlock name="SCROLLBAR_GENERIC_INNER_1" isRepeatUntilBreak="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="CREATE_MANAGE_APPROVED_SUPPLIER_LIST_STATUSES">
+            <executeBlock name="GLOBAL_ADD"/>
+            <!-- Status -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Status']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Status"/>
+				</parameters>
+			</executeBlock>	
+            
+            <!-- Description -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+            
+            <!-- Allow Purchase Order Approval -->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//td[4]/span/span/span"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Allow Purchase Order Approval"/>
+				</parameters>
+			</executeBlock>
+          
+            <!-- Allow Document Sourcing -->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//td[5]/span/span/span"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Allow Document Sourcing"/>
+				</parameters>
+			</executeBlock>
+         
+            <!-- End Date -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>
+          
+			<!-- Default Status -->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Default Status"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="Default Status"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//td[1]/span/input[@value='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Status"/>']/../../..//td[3]/img[@title='Yes']</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//button[text()='Set as Default']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+			
+            <executeBlock name="Check_Error"/>
+            <executeBlock name="GLOBAL_SAVE"/>
+			<executeBlock name="Check_Error"/>
+        </block>
+        <block name="UPDATE_MANAGE_APPROVED_SUPPLIER_LIST_STATUSES">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+					
+                </if>
+                <then>
+                    <findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <findElement by="xpath">SCROLLBAR_GENERIC_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+            <!-- Description -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>	
+            
+            <!-- Allow Purchase Order Approval -->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//td[4]/span/span/span"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Allow Purchase Order Approval"/>
+				</parameters>
+			</executeBlock>
+          
+            <!-- Allow Document Sourcing -->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//td[5]/span/span/span"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Allow Document Sourcing"/>
+				</parameters>
+			</executeBlock>
+           
+            <!-- End Date -->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Selected')]//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>	
+			<!-- Default Status -->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Default Status"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_1" columnName="Default Status"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText>Yes</valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">//td[1]/span/input[@value='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Status"/>']/../../..//td[3]/img[@title='Yes']</findElement>
+								</if>
+								<then/>
+								<else>
+									<findElement by="xpath">//button[text()='Set as Default']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+			<executeBlock name="Check_Error"/>
+            <executeBlock name="GLOBAL_SAVE"/>
+			<!--<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>-->
+			<executeBlock name="Check_Error"/>
+        </block>
+		<block name="Check_Error">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Error']</findElement>
+				</if>
+				<then>
+					<error message="Please see error on the application"/>
+				</then>
+				<else/>
+            </IfThenElse>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="MAIN_REPEAT_1">
+            <executeBlock name="Manage Approved Supplier List Statuses"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

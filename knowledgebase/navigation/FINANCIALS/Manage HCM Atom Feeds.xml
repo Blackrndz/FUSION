@@ -1,0 +1,322 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage HCM Atom Feeds</name>
+	<svn>
+		<xsd:revision>$Revision: 77922 $:</xsd:revision>
+		<xsd:author>$Author: phetchinda.ruangwilai $:</xsd:author>
+		<xsd:date>$Date: 2022-02-17 12:15:09 +0700 (Thu, 17 Feb 2022) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20HCM%20Atom%20Feeds.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage HCM Atom Feeds.xml 77922 2022-02-17 05:15:09Z phetchinda.ruangwilai $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" taskName="Manage HCM Atom Feeds" applicationKey="APPLICATION_HOME_PAGE" isBatchingAllowed="true" defaultBatchSize="3">
+		<parameters>
+			<parameter name="INV_1" value="Manage HCM Atom Feeds - Atom Feeds"/>
+			<parameter name="INV_2" value="Manage HCM Atom Feeds - Atom Feeds Source Object"/>
+			<parameter name="INV_3" value="Manage HCM Atom Feeds - Atom Feeds Attributes"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Title"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Title"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_3" columnName="Title"/>']</findElement>
+		</block>
+		
+		<!--REPEAT_1-->
+		<block name="Search_Atom_Feeds">
+			<!--Criteria Option-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Search']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Criteria Option"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//span[contains(@id,'criterionValue1')]/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Title"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Atom Feeds']//span[text()='<valueKB inventoryName="INV_1" columnName="Title"/>']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Atom Feeds']//span[text()='<valueKB inventoryName="INV_1" columnName="Title"/>']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<error message="No data to display."/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Atom_Feeds_Details">
+			<!--Archive-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Archive']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Archive"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_1" columnName="Archive"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Yes</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<!--Archive - Period Type-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="(//label[text()='Period Type'])[1]/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Archive - Period Type"/>
+						</parameters>
+					</executeBlock>
+					<!--Archive - Period Value-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="(//label[text()='Period Value'])[1]/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Archive - Period Value"/>
+						</parameters>
+					</executeBlock>
+					<!--Archive - Apply To-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="(//label[text()='Apply To'])[1]/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Archive - Apply To"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Enabled-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enabled']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Enabled"/>
+				</parameters>
+			</executeBlock>
+			<!--Purge-->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Purge']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Purge"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_1" columnName="Purge"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Yes</valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<!--Purge - Period Type-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="(//label[text()='Period Type'])[2]/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Purge - Period Type"/>
+						</parameters>
+					</executeBlock>
+					<!--Purge - Period Value-->
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="(//label[text()='Period Value'])[2]/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Purge - Period Value"/>
+						</parameters>
+					</executeBlock>
+					<!--Purge - Apply To-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="(//label[text()='Apply To'])[2]/../.."/>
+							<parameter name="INV_NAME" value="INV_1"/>
+							<parameter name="COL_NAME" value="Purge - Apply To"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<!--REPEAT_2-->
+		<block name="Atom_Feeds_Source_Object">
+			<!--SourceObjectName-->
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//td/label[text()='SourceObjectName']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//td/label[text()='SourceObjectName']/../.."/>
+							<parameter name="INV_NAME" value="INV_2"/>
+							<parameter name="COL_NAME" value="SourceObjectName"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<!--REPEAT_3-->
+		<block name="Atom_Feeds_Attributes">
+			<!--Selected Attributes-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Selected Attributes"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//legend[contains(text(),'Selected Attributes')]/..//*[text()='<valueKB inventoryName="INV_3" columnName="Selected Attributes"/>']/..</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" by="xpath">//legend[contains(text(),'Available Attributes')]/..//*[text()='<valueKB inventoryName="INV_3" columnName="Selected Attributes"/>']/..</findElement>
+								</if>
+								<then>
+									<findElement isDisplayed="true" by="xpath">//legend[contains(text(),'Available Attributes')]/..//*[text()='<valueKB inventoryName="INV_3" columnName="Selected Attributes"/>']/..</findElement>
+									<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+									<pause durationInSecs="2"/>
+									<executeBlock name="BUTTON_MOVE"/>
+								</then>
+								<else>
+									<error message="Data doesn't exsite."/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!--Available Attributes-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="INV_3" columnName="Available Attributes"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//legend[contains(text(),'Available Attributes')]/..//*[text()='<valueKB inventoryName="INV_3" columnName="Available Attributes"/>']/..</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" by="xpath">//legend[contains(text(),'Selected Attributes')]/..//*[text()='<valueKB inventoryName="INV_3" columnName="Available Attributes"/>']/..</findElement>
+								</if>
+								<then>
+									<findElement isDisplayed="true" by="xpath">//legend[contains(text(),'Selected Attributes')]/..//*[text()='<valueKB inventoryName="INV_3" columnName="Available Attributes"/>']/..</findElement>
+									<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+									<pause durationInSecs="2"/>
+									<executeBlock name="BUTTON_REMOVE"/>
+								</then>
+								<else>
+									<error message="Data doesn't exsite."/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="BUTTON_MOVE">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">(//a[contains(@title,'Move')])[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">(//a[contains(@title,'Move')])[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="BUTTON_REMOVE">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">(//a[contains(@title,'Remove')])[1]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">(//a[contains(@title,'Remove')])[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="Search_Atom_Feeds"/>
+			<executeBlock name="Atom_Feeds_Details"/>
+			<repeat inventoryName="INV_2">
+				<executeBlock name="Atom_Feeds_Source_Object"/>
+				<pause durationInSecs="2"/>
+				<repeat inventoryName="INV_3">
+					<executeBlock name="Atom_Feeds_Attributes"/>
+				</repeat>
+				<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+				<pause durationInSecs="5"/>
+			</repeat>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<pause durationInSecs="5"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+			<pause durationInSecs="5"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

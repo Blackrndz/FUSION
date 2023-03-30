@@ -1,0 +1,352 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Item Rule Sets</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true" isFailedParentLevelRecordRetry="true"
+        taskName="Manage Item Rule Sets" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<!--<dependencies>
+			<navigation name=""/>    
+		</dependencies>-->
+		
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Item Rule Sets - Rule Sets"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Item Rule Sets - Associations"/>
+		</parameters>
+		<!--RULE_SETS_REPEAT_1-->
+		<block name="SHOW_ALL">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//th//input</findElement>
+				</if>
+				<then/>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a[text()='View']</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//a[text()='View']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Show All']</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Show All']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+								</then>
+								<else/>
+							</IfThenElse>													
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//a[text()='View']/../../../../../../../../../../../..</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//a[text()='View']/../../../../../../../../../../../..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+									<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//a[text()='View']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Show All']</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td[text()='Show All']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+										</then>
+										<else/>
+									</IfThenElse>									
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+        </block>
+		<block name="SEARCH_RULE_SETS">
+			<executeBlock name="GLOBAL_QUERY_BY_EXAMPLE"/>
+			<findElement by="xpath">//a[@title='Clear All']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//th[(string(//span[text()='Internal Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+                </if>
+                <then/>
+                <else>
+					<executeBlock name="SHOW_ALL"/>
+				</else>
+            </IfThenElse>
+			<findElement by="xpath">//th[(string(//span[text()='Display Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_1_MAIN" columnName="Display Name"/>
+            </sendKeys>
+			<findElement by="xpath">//th[(string(//span[text()='Internal Name']/../..//preceding-sibling::*/../../../../../@_d_index))+0]//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="REPEAT_1_MAIN" columnName="Internal Name"/>
+            </sendKeys>
+			<IfThenElse>
+                <if>
+                    <findElement by="xpath">//tr[td/a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Display Name"/>'] and td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Internal Name"/>']]</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//tr[td/a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Display Name"/>'] and td[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Internal Name"/>']]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+					<executeBlock name="GLOBAL_UPDATE"/>
+					<executeBlock name="UPDATE_RULE_SETS"/>
+                </then>
+                <else>
+					<executeBlock name="GLOBAL_CREATE"/>
+					<executeBlock name="CREATE_RULE_SETS"/>
+				</else>
+            </IfThenElse>
+        </block>
+		<block name="CREATE_RULE_SETS">
+			<!--Display Name-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Display Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Display Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Internal Name-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Internal Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Internal Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock name="INPUT_TEXTAREA">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Composite-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Composite']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Composite"/>
+				</parameters>
+			</executeBlock>
+			<!--Type-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Association Type-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Association Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Association Type"/>
+				</parameters>
+			</executeBlock>
+			<!--Association Name-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Association Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Association Name"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Draft-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Draft']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Draft"/>
+				</parameters>
+			</executeBlock>
+        </block>
+		<block name="UPDATE_RULE_SETS">
+			<!--Description-->
+			<executeBlock name="INPUT_TEXTAREA">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Draft-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Draft']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Draft"/>
+				</parameters>
+			</executeBlock>
+        </block>
+		<!--RULES_REPEAT_2-->
+		<block name="BUTTON_ASSOCIATIONS">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[text()='Create Rule Set']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//img[@title='Manage']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="SEARCH_RULES_ASSIGNMENTS">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[text()='Create Rule Set']</findElement>
+				</if>
+				<then>
+					<executeBlock name="BUTTON_ASSOCIATIONS"/>
+					<executeBlock name="SCROLLBAR">
+						<parameters>
+							<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//div[text()='Select Associations']/../../../../../../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//div[text()='Select Associations']/../../../../../../..//table[@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//div[text()='Select Associations']/../../../../../../..//div[contains(@id,'scroller')]"/>
+							<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//div[text()='Select Associations']/../../../../../../..//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Association Name"/>']</parameter>
+							<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="CREATE_ASSOCIATIONS"/>
+							<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_ASSOCIATIONS"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="CREATE_ASSOCIATIONS">
+			<executeBlock name="GLOBAL_SPECIFY_ADD">
+				<parameters>
+					<parameter name="SPECIFY_XPATH" value="//div[text()='Select Associations']/../../../../../../.."/>
+				</parameters>   
+			</executeBlock>
+			<!--Association Name-->
+			<executeBlock name="LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Association Name']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Association Name"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+        </block>
+		<block name="UPDATE_ASSOCIATIONS">
+			<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>
+        </block>
+		<block name="BUTTON_OK">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[text()='Select Associations']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[text()='Select Associations']/../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+        </block>
+		<block name="SAVE_AND_CLOSE">
+			<IfThenElse>
+				<if>					
+					<evaluateXPATHBoolean>count(//span[text()='S'])>1</evaluateXPATHBoolean>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>					
+							<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@id,'ctb')]/..//span[text()='S']/..[@disabled]</findElement>	
+						</if>
+						<then>
+							<error message= "This button cannot be clicked"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>					
+									<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@id,'ctb')]/..//span[text()='S']/..</findElement>
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@id,'ctb')]/..//span[text()='S']/..</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>					
+											<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@id,'commandButton')]/..//span[text()='S']/..[@disabled]</findElement>
+										</if>
+										<then>
+											<error message= "This button cannot be clicked"/>
+										</then>
+										<else>
+											<IfThenElse>
+												<if>					
+													<findElement isDisplayed="true" highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@id,'commandButton')]/..//span[text()='S']/..</findElement>
+												</if>
+												<then>
+													<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@id,'commandButton')]/..//span[text()='S']/..</findElement>
+													<click waitForPageToFinishRendering="true"/>
+												</then>
+												<else/>
+											</IfThenElse>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>					
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//span[text()='S']/..[@disabled]</findElement>	
+						</if>
+						<then>
+							<error message= "This button cannot be clicked"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>					
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//span[text()='S']/..</findElement>	
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//span[text()='S']/..</findElement>	
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else/>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+        </block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="SEARCH_RULE_SETS"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="SEARCH_RULES_ASSIGNMENTS"/>
+			</repeat>
+			<executeBlock name="BUTTON_OK"/>
+			<executeBlock name="SAVE_AND_CLOSE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

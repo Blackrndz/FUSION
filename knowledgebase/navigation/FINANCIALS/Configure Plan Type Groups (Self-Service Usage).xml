@@ -1,0 +1,239 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Configure Plan Type Groups (Self-Service Usage)</name>
+	<svn>
+		<xsd:revision>$Revision: 77332 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2021-11-19 11:17:45 +0700 (Fri, 19 Nov 2021) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Configure%20Plan%20Type%20Groups%20(Self-Service%20Usage).xml $:</xsd:headURL>
+		<xsd:id>$Id: Configure Plan Type Groups (Self-Service Usage).xml 77332 2021-11-19 04:17:45Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Configure Plan Type Groups" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Create Implementation Users"/>
+			<navigation name="Manage Enterprise HCM Information"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Configure Plan Type Groups - Self-Service Usage"/>
+			<parameter name="REPEAT_2_MAIN" value="Configure Plan Type Groups - Configure Rate Column Display"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='Process Name']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="Enrollment Display Name"/>
+			</click>
+			<findElement by="xpath">//label[text()='Process Name']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_2_MAIN" columnName="Enrollment Display Name"/>
+			</click>
+		</block>
+		
+		<block name="Tab_Self_Service_Usage">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Selected')]/div/a[text()='Self-Service Usage']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//div/div/a[text()='Self-Service Usage']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//div/div/a[text()='Self-Service Usage']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<executeBlock name="TAB">
+								<parameters>
+									<parameter name="TAB_NAME" value="Self-Service Usage"/>
+								</parameters>
+							</executeBlock>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Error">
+			<error message="Data issue: no prepared data found. Please check your data." />
+		</block>
+		
+		<block name="Update_Self_Service_Usage">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" highlightTurnedOff="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">TEMPLATE_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'Self-Service Usage')]//tr[contains(@class,'Select')]//tr//td[number(string(//th//span[text()='Display']/../../@_d_index))]//*[@type='checkbox']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Display"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[contains(@summary,'Self-Service Usage')]//tr[contains(@class,'Select')]//tr//td[number(string(//th//span[text()='Show Filters']/../../@_d_index))]//*[@type='checkbox']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Show Filters"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="Self_Service_Usage">
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Self-Service Usage']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Self-Service Usage'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Self-Service Usage']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Self-Service Usage']//td[1]//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Enrollment Display Name"/>']</parameter>
+					<parameter name="TEMPLATE_2_FIND_ROW">//table[@summary='Self-Service Usage']//td[1]//input[@value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Enrollment Display Name"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="Error"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Self_Service_Usage"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="Update_Configure_Rate_Column_Display">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Configure Rate Column Display')]/../../../../../../..//tr//td[contains(@class,'Focus')]/../td[2]//td[1]//input[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Display Name"/>']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Configure Rate Column Display')]/../../../../../../..//tr//td[contains(@class,'Focus')]/../td[2]//td[1]//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="REPEAT_2_MAIN" columnName="Display Name"/>
+					</sendKeys>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Configure Rate Column Display')]/../../../../../../..//tr//td[contains(@class,'Focus')]/..//input[@type='checkbox']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Display"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Configure Rate Column Display')]/../../../../../../..//button[text()='O']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Configure Rate Column Display')]/../../../../../../..//button[text()='O']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Configure Rate Column Display')]/../../../../../../..//button[text()='OK']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Configure Rate Column Display')]/../../../../../../..//button[text()='OK']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Configure Rate Column Display')]/../../../../../../..//*[text()='K']/..</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Configure Rate Column Display')]/../../../../../../..//*[text()='K']/..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Configure_Rate_Column_Display">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[contains(@summary,'Self-Service Usage')]//input[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Enrollment Display Name"/>']/../../..//*[@alt='Manage Rate Headers']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[contains(@summary,'Self-Service Usage')]//input[@value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Enrollment Display Name"/>']/../../..//*[@alt='Manage Rate Headers']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Self-Service Usage')]//span[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Enrollment Display Name"/>']/../../..//*[@alt='Manage Rate Headers']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[contains(@summary,'Configure Rate Column Display')]/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[contains(@summary,'Configure Rate Column Display')][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[contains(@summary,'Configure Rate Column Display')]/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//div[contains(text(),'Configure Rate Column Display')]/../../../../../../..//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Column"/>' or @value='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Column"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="Error"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Configure_Rate_Column_Display"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Tab_Self_Service_Usage"/>
+			<executeBlock name="Self_Service_Usage"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<IfThenElse>
+					<if>
+						<comparisons separator="AND">
+							<comparison operator="NOT_EQUAL">
+								<leftOperand>
+									<valueKB inventoryName="REPEAT_2_MAIN" columnName="Column"/>
+								</leftOperand>
+								<rightOperand>
+									<valueText></valueText>
+								</rightOperand>
+							</comparison>
+						</comparisons>
+					</if>
+					<then>
+						<executeBlock name="Configure_Rate_Column_Display"/>
+					</then>
+					<else>
+
+					</else>
+				</IfThenElse>
+			</repeat>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>
+		
+		
+		
+		
+		

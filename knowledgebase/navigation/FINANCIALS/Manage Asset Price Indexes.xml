@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Asset Price Indexes</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Asset Price Indexes" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <parameters>
+            <parameter name="REPEAT_1_MAIN" value="Manage Asset Price Indexes - Manage Price Indexes"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Asset Price Indexes - Index Values"/>
+        </parameters>
+        <block name="FAKE_INV">
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']/../..//input</findElement>
+        </block>
+		<block name="Search_Price_Indexes">
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Manage Price Indexes']/../..//tr[td//td//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]/td[1]</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Manage Price Indexes']/../..//tr[td//td//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']]/td[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Manage Price Indexes']/../..//*[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_CREATE"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Price_Index">
+			<!--Name-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Calendar Name-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Calendar Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Calendar Name"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Index_Values">
+			<!--Fiscal Year-->
+			<executeBlock name="Fiscal_Year"/>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Index Values']/../..//td[contains(text(),'<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>')]</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Index Values']/../..//td[contains(text(),'<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>')]</findElement>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Index Values']/../..//tr[td//td[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Period Name"/>'] and //*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]/td[1]</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Index Values']/../..//tr[td//td[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Period Name"/>'] and //*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Start Date"/>']]/td[1]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<!--Value-->
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//table[@summary='Index Values']/..//tr[contains(@class,'Selected')]//label[text()='Value']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Value"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else>
+					<error message="Please define value of this fiscal year on task Manage Asset Calendar"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Fiscal_Year">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//label[text()='Fiscal Year']/../..</findElement>
+				</if>
+				<then>
+					<!--Fiscal Year-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Fiscal Year']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Fiscal Year"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Index Values']/../../../.."/>
+						</parameters>
+					</executeBlock>
+					<!--Fiscal Year-->
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Fiscal Year']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Fiscal Year"/>
+						</parameters>
+					</executeBlock>
+					<findElement isSkipCheckDomError="true" by="xpath">//*[text()='x']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</else>
+			</IfThenElse>
+			<!--ERROR-->
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//*[contains(text(),'Error')]</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" isSkipCheckDomError="true" by="xpath">//*[contains(text(),'Error')]</findElement>
+					<findElement isSkipCheckDomError="true" by="xpath">//*[contains(text(),'Error')]/../../../../../../..//*[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<error message="Please define value of this fiscal year on task Manage Asset Calendar"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search_Price_Indexes"/>
+			<executeBlock name="Price_Index"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="Index_Values"/>
+				<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+				<pause durationInSecs="5"/>
+				<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+			</repeat>
+		</repeat>
+    </fusionNavigation>
+</navigation>

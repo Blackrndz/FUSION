@@ -1,0 +1,1871 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Calculation Value Definitions</name>
+	<svn>
+		<xsd:revision>$Revision: 80104 $:</xsd:revision>
+		<xsd:author>$Author: patiya.chunhachai $:</xsd:author>
+		<xsd:date>$Date: 2023-02-03 16:45:08 +0700 (Fri, 03 Feb 2023) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Calculation%20Value%20Definitions.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Calculation Value Definitions.xml 80104 2023-02-03 09:45:08Z patiya.chunhachai $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Calculation Value Definitions" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Inventory Organizations"/>
+			<navigation name="Manage Legislative Data Groups"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Calculation Value Definitions - Calculation Value Definition"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Calculation Value Definitions - Calculation Value Definition Details"/>
+			<parameter name="REPEAT_3_MAIN" value="Manage Calculation Value Definitions - Calculation Values"/>
+			<parameter name="REPEAT_4_MAIN" value="Manage Calculation Value Definitions - Enterable Calculation Values on Calculation Cards"/>
+			<parameter name="REPEAT_5_MAIN" value="Manage Calculation Value Definitions - Usage Rules"/>
+		</parameters>
+		<block name="FAKE_NAV_MAP">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_4_MAIN" columnName="Name"/>']</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_5_MAIN" columnName="Name"/>']</findElement>
+		</block>
+		<block name="Search_Calculation_Value_Definition">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legislative Data Group']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Legislative Data Group"/>
+					<parameter name="SEARCH_1" value="Legislation"/>
+				</parameters>
+			</executeBlock>		
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search Results']/../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="2"/>
+			
+			<defineVariable name="SEARCH_RESULT" type="text"/>
+			<setVariable name="SEARCH_RESULT" append="false">
+				<valueText/>
+			</setVariable>
+			<setVariable name="SEARCH_RESULT" append="true">(//div[@title='Search Results']/../../../../../..//table[@summary='Search Results']//tr[td//a[text()='</setVariable>
+			<setVariable name="SEARCH_RESULT" append="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>
+			</setVariable>
+			<setVariable name="SEARCH_RESULT" append="true">'] and  td[number(//table[@summary='Search Results']/../..//th//span[text()='Effective Start Date']/../../@_d_index)][text()='</setVariable>
+			<setVariable name="SEARCH_RESULT" append="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="Effective Start Date"/>
+			</setVariable>
+			<setVariable name="SEARCH_RESULT" append="true">'] and td//a[@title='Locked']])[1]</setVariable>
+			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true"><valueVariable name="SEARCH_RESULT"/></findElement>
+				</if>
+				<then>
+					<error message="This data in not updatable." />		
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_1_MAIN" columnName="Effective Start Date"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText></valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../../..//td[number(//span[text()='Effective Start Date']/../../@_d_index)][text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Effective Start Date"/>']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../../..//td[number(//span[text()='Effective Start Date']/../../@_d_index)][text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Effective Start Date"/>']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//tr[contains(@class,'Selected')]//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../../..//td[number(//span[text()='Update Status']/../../@_d_index)]//a[@title='Unlocked']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../../..//td[number(//span[text()='Update Status']/../../@_d_index)]//a[@title='Unlocked']/../../../../../../../td[1]</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//tr[contains(@class,'Selected')]//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+										</then>
+										<else>
+											<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+												<parameters>
+													<parameter name="XPATH" value="//table[@summary='Search Results']/../../../..[@class]"/>
+												</parameters>   
+											</executeBlock>
+										</else>
+									</IfThenElse>	
+								</else>
+							</IfThenElse>	
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../../..//td[number(//span[text()='Update Status']/../../@_d_index)]//a[@title='Unlocked']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../../..//td[number(//span[text()='Update Status']/../../@_d_index)]//a[@title='Unlocked']/../../../../../../../td[1]</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//tr[contains(@class,'Selected')]//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+										<parameters>
+											<parameter name="XPATH" value="//table[@summary='Search Results']/../../../..[@class]"/>
+										</parameters>   
+									</executeBlock>
+								</else>
+							</IfThenElse>	
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Search_Calculation_Value_Definition_Details">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legislative Data Group']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Legislative Data Group"/>
+					<parameter name="SEARCH_1" value="Legislation"/>
+				</parameters>
+			</executeBlock>		
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search Results']/../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="1"/>
+			<defineVariable name="SEARCH_RESULT" type="text"/>
+			<setVariable name="SEARCH_RESULT" append="false">
+				<valueText/>
+			</setVariable>
+			<setVariable name="SEARCH_RESULT" append="true">(//div[@title='Search Results']/../../../../../..//table[@summary='Search Results']//tr[td//a[text()='</setVariable>
+			<setVariable name="SEARCH_RESULT" append="true">
+				<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>
+			</setVariable>
+			<setVariable name="SEARCH_RESULT" append="true">'] and  td[number(//table[@summary='Search Results']/../..//th//span[text()='Effective Start Date']/../../@_d_index)][text()='</setVariable>
+			<setVariable name="SEARCH_RESULT" append="true">
+				<valueKB inventoryName="REPEAT_2_MAIN" columnName="Effective Start Date"/>
+			</setVariable>
+			<setVariable name="SEARCH_RESULT" append="true">'] and td//a[@title='Locked']])[1]</setVariable>
+			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true"><valueVariable name="SEARCH_RESULT"/></findElement>
+				</if>
+				<then>
+					<error message="This data in not updatable." />		
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_2_MAIN" columnName="Effective Start Date"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText></valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//a[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']/../../..//td[number(//span[text()='Effective Start Date']/../../@_d_index)][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Effective Start Date"/>']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//a[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']/../../..//td[number(//span[text()='Effective Start Date']/../../@_d_index)][text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Effective Start Date"/>']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//tr[contains(@class,'Selected')]//a[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<break/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//a[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']/../../..//td[number(//span[text()='Update Status']/../../@_d_index)]//a[@title='Unlocked']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//a[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']/../../..//td[number(//span[text()='Update Status']/../../@_d_index)]//a[@title='Unlocked']/../../../../../../../td[1]</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+											<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//tr[contains(@class,'Selected')]//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+											<break/>
+										</then>
+										<else>
+											<pause durationInSecs="1"/>
+										</else>
+									</IfThenElse>	
+								</else>
+							</IfThenElse>	
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//a[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']/../../..//td[number(//span[text()='Update Status']/../../@_d_index)]//a[@title='Unlocked']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//a[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']/../../..//td[number(//span[text()='Update Status']/../../@_d_index)]//a[@title='Unlocked']/../../../../../../../td[1]</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//tr[contains(@class,'Selected')]//a[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<break/>
+								</then>
+								<else>
+									<pause durationInSecs="1"/>
+								</else>
+							</IfThenElse>	
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="New_Calculation_Value_Definition">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>		
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Effective Start Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Effective Start Date"/>
+				</parameters>
+			</executeBlock>					
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Legislative Data Group']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Legislative Data Group"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//label[text()='Use existing value definition group']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//label[text()='Use existing value definition group']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//label[text()='Value Definition Group']/../..//a</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//label[text()='Value Definition Group']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//li[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Value Definition Group"/>']</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//li[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Value Definition Group"/>']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//label[text()='Create new value definition group']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+								<parameters>
+									<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='New Value Definition Group']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Value Definition Group"/>
+								</parameters>
+							</executeBlock>		
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Calculation Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Calculation Type"/>
+				</parameters>
+			</executeBlock>	
+			<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='O']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>	
+		</block>
+		<block name="Calculation_Value_Definition_Details">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[contains(@title,'Calculation Value Definition Details')]/../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>		
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Value Definition Group']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Value Definition Group"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Retrieval Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Retrieval Date"/>
+				</parameters>
+			</executeBlock>		
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Calculation']/../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+					<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_2_MAIN" columnName="Basis of Calculation Values"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//label[text()='Basis of Calculation Values']/../..//input</findElement>
+					<sendKeys isClear="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+						<valueKB inventoryName="REPEAT_2_MAIN" columnName="Basis of Calculation Values"/>
+					</sendKeys>
+				</then>
+				<else/>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='OverrIding Rate Identifier']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="OverrIding Rate Identifier"/>
+					<parameter name="SEARCH_1" value="Database Item Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Currency']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Currency"/>
+					<parameter name="SEARCH_1" value="Currency Code"/>
+				</parameters>
+			</executeBlock>			
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Unit of Measure']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Unit of Measure"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Periodicity']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Periodicity"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Source of Values for Calculation Type']/../../../../.."/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Rate']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Rate"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Flat Amount']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Flat Amount"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Text']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Value"/>
+				</parameters>
+			</executeBlock>		
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Value']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+					<parameter name="COL_NAME" value="Value"/>
+				</parameters>
+			</executeBlock>	
+			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Sub']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_2_MAIN" columnName="Effective End Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Effective End Date']/../..//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Effective End Date"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+								<parameters>
+									<parameter name="XPATH" value="//label[text()='Effective As-of Date']/../.."/>
+									<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+									<parameter name="COL_NAME" value="Effective End Date"/>
+								</parameters>
+							</executeBlock>	
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Effective As-of Date']/../..//input/../../../../..//*[contains(@class,'Error')]//input</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Effective As-of Date']/../..//a</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[contains(@class,'Select')]</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<findElement by="xpath" isSkipCheckDomError="true">//button[text()='ne']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									<findElement by="xpath" isSkipCheckDomError="true">//a/*[text()='Actions']/../..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[text()='End Date']/..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<executeBlock name="End_Date_Warning"/>
+									<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Sub']/..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="VIEW_HISTORY">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Effective Start Date']/../..[@class]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Effective Start Date"/>']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[contains(@title,'Calculation Value Definition Details')]/../../../../..//*[@aria-disabled='true']//*[text()='Edit']/../../..</findElement>
+						</if>
+						<then>
+							<error message="Update is disabled." />
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Calculation Value Definition Details')]/../../../../..//*//*[text()='Edit']/../../..//div/a</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//td[text()='Correct']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Effective As-of Date']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Effective Start Date"/>
+						</parameters>
+					</executeBlock>	
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Effective As-of Date']/../..//input/../../../../..//*[contains(@class,'Error')]//input</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Effective As-of Date']/../..//a</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[contains(@class,'Select')]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//button[text()='ne']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isDisplayed="true" isSkipCheckDomError="true">//div[contains(@title,'Calculation Value Definition Details')]/../../../../..//*[@aria-disabled='true']//*[text()='Edit']/../../..</findElement>
+								</if>
+								<then>
+									<error message="Update is disabled." />
+								</then>
+								<else>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Calculation Value Definition Details')]/../../../../..//*//*[text()='Edit']/../../..//div/a</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//td[text()='Update']/..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<!--REPEAT_3_MAIN-->
+		<block name="Calculation_Value">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Calculation Values']/../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Calculation Values']/../..//*[text()='Calculation Type Override']</findElement>
+				</if>
+				<then>
+					<executeBlock name="Calculation_Type_Override"/>
+				</then>
+				<else>
+					<executeBlock name="Not_Calculation_Type_Override"/>
+				</else>
+			</IfThenElse>
+			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Sub']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+		</block>
+		<block name="New_Calculation_Value">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Effective As-of Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Calculation Values - Effective Start Date"/>
+				</parameters>
+			</executeBlock>	
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Effective As-of Date']/../../../..//input/../../../../..//*[contains(@class,'Error')]//input</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Effective As-of Date']/../..//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[contains(@class,'Selected')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='ancel']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<error message="Data issue: cannot update date. Date is out of range." />
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[text()='K']/..</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[text()='K']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+							<pause durationInSecs="2"/>	
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Calculation Type Override' or @summary='Calculation Values']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Calculation Values']/../../../../..//tr[contains(@class,'Select')]//label[text()='From Value']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="From Value"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Calculation Values']/../../../../..//tr[contains(@class,'Select')]//label[text()='To Value']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="To Value"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_3_MAIN" columnName="Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Calculation Values']/../../../../..//tr[contains(@class,'Select')]//label[text()='DateValue']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+							<parameter name="COL_NAME" value="Date"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Calculation Values']/../../../../..//*[text()='Date' or text()='Value']/../*[@title='Required']</findElement>
+						</if>
+						<then>
+							<error message="Date is required please add date" />
+						</then>
+						<else>
+							
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Select_Row_Calculation_Value">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_3_MAIN" columnName="Calculation Values - Effective Start Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@summary='Calculation Values']//tr//tr[contains(@class,'Selected')][//table[@summary='Calculation Values']//tr[contains(@class,'Selected')]//tr[td[number(//table[@summary='Calculation Values']/../..//th//span[text()='Effective Start Date']/../../@_d_index)][normalize-space(text())='<valueKB inventoryName="REPEAT_3_MAIN" columnName="Calculation Values - Effective Start Date"/>']]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Calculation Values']/../../../..//a/*[text()='Edit']/../../..//div</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='Correct']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Calculation Values']/../../../..//a/*[text()='Edit']/../../..//div</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='Update']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//label[text()='Effective Start Date']/../..</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//label[text()='Effective Start Date']/../..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+									<parameters>
+										<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Effective Start Date']/../.."/>
+										<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+										<parameter name="COL_NAME" value="Calculation Values - Effective Start Date"/>
+									</parameters>
+								</executeBlock>	
+								<IfThenElse>
+									<if>
+										<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//label[text()='Effective Start Date']/../../../..//input/../../../../..//*[contains(@class,'Error')]//input</findElement>
+									</if>
+									<then>
+										<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Effective As-of Date']/../../../..//a</findElement>
+										<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+										<pause durationInSecs="1"/>
+										<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[contains(@class,'Selected')]</findElement>
+										<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+										<pause durationInSecs="1"/>
+										<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='ancel']</findElement>
+										<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+										<pause durationInSecs="1"/>
+										<error message="Data issue: cannot update date. Date is out of range." />
+									</then>
+									<else>
+										<IfThenElse>
+											<if>
+												<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[text()='K']/..</findElement>
+											</if>
+											<then>
+												<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[text()='K']/..</findElement>
+												<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+												<pause durationInSecs="2"/>	
+											</then>
+											<else/>
+										</IfThenElse>
+										<IfThenElse>
+											<if>
+												<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[text()='K']/..</findElement>
+											</if>
+											<then>
+												<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[text()='K']/..</findElement>
+												<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+												<pause durationInSecs="2"/>	
+											</then>
+											<else/>
+										</IfThenElse>
+									</else>
+								</IfThenElse>
+								</then>
+								<else>
+									
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Calculation Values']/../../../..//a/*[text()='Edit']/../../..//div</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Calculation Values']/../../../..//a/*[text()='Edit']/../../..//div</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//table[@style='position: relative;']//*[text()='Correct']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Calculation Values']/../../../../..//tr[contains(@class,'Select')]//label[text()='From Value']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="From Value"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Calculation Values']/../../../../..//tr[contains(@class,'Select')]//label[text()='To Value']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="To Value"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Calculation Values']/../../../../..//tr[contains(@class,'Select')]//label[text()='DateValue']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Date"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Calculation_Type_Override">
+			<defineVariable name="CALCULATION_TYPE_OVERRIDE_1" type="text"/>
+			<setVariable name="CALCULATION_TYPE_OVERRIDE_1" append="false">
+				<valueText/>
+			</setVariable>
+			<setVariable name="CALCULATION_TYPE_OVERRIDE_1" append="true">//table[@summary='Calculation Values']//tr[td[number(//table[@summary='Calculation Values']/../..//th//span[text()='From Value']/../../@_d_index)]//*[translate(text(),',','')=translate('</setVariable>
+			<setVariable name="CALCULATION_TYPE_OVERRIDE_1" append="true">
+				<valueKB inventoryName="REPEAT_3_MAIN" columnName="From Value"/>
+			</setVariable>
+			<setVariable name="CALCULATION_TYPE_OVERRIDE_1" append="true">',',','')]</setVariable>
+			<setVariable name="CALCULATION_TYPE_OVERRIDE_1" append="true"> and </setVariable>
+			<setVariable name="CALCULATION_TYPE_OVERRIDE_1" append="true">td//*[translate(text(),',.','')=translate('</setVariable>
+			<setVariable name="CALCULATION_TYPE_OVERRIDE_1" append="true">
+				<valueKB inventoryName="REPEAT_3_MAIN" columnName="To Value"/>
+			</setVariable>
+			<setVariable name="CALCULATION_TYPE_OVERRIDE_1" append="true">',',','')]</setVariable>
+			<setVariable name="CALCULATION_TYPE_OVERRIDE_1" append="true">]</setVariable>
+			
+			<defineVariable name="CALCULATION_TYPE_OVERRIDE_2" type="text"/>
+			<setVariable name="CALCULATION_TYPE_OVERRIDE_2" append="false">
+				<valueText/>
+			</setVariable>
+			<setVariable name="CALCULATION_TYPE_OVERRIDE_2" append="true">//table[@summary='Calculation Values']//tr[td[number(//table[@summary='Calculation Values']/../..//th//span[text()='From Value']/../../@_d_index)]//input[translate(@value,',','')=translate('</setVariable>
+			<setVariable name="CALCULATION_TYPE_OVERRIDE_2" append="true">
+				<valueKB inventoryName="REPEAT_3_MAIN" columnName="From Value"/>
+			</setVariable>
+			<setVariable name="CALCULATION_TYPE_OVERRIDE_2" append="true">',',','')]</setVariable>
+			<setVariable name="CALCULATION_TYPE_OVERRIDE_2" append="true"> and </setVariable>
+			<setVariable name="CALCULATION_TYPE_OVERRIDE_2" append="true">td//input[translate(@value,',','')=translate('</setVariable>
+			<setVariable name="CALCULATION_TYPE_OVERRIDE_2" append="true">
+				<valueKB inventoryName="REPEAT_3_MAIN" columnName="To Value"/>
+			</setVariable>
+			<setVariable name="CALCULATION_TYPE_OVERRIDE_2" append="true">',',','')]</setVariable>
+			<setVariable name="CALCULATION_TYPE_OVERRIDE_2" append="true">]</setVariable>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Calculation Values']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Calculation Values'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Calculation Values']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW"><valueVariable name="CALCULATION_TYPE_OVERRIDE_1"/></parameter>
+					<parameter name="TEMPLATE_2_FIND_ROW"><valueVariable name="CALCULATION_TYPE_OVERRIDE_2"/></parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_Calculation_Value"/>
+					<parameter name="TEMPLATE_UPDATE" value="Select_Row_Calculation_Value"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Create_Calculation_Type_Override"/>
+		</block>
+		<block name="Create_Calculation_Type_Override">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Calculation Values']/../../../../..//tr[contains(@class,'Select')]//label[text()='From Value']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="From Value"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Calculation Values']/../../../../..//tr[contains(@class,'Select')]//label[text()='To Value']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="To Value"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Calculation Values']/../../../../..//tr[contains(@class,'Select')]//label[text()='Calculation Type Override']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Calculation Type Override"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Calculation Values']/../../../../..//tr[contains(@class,'Select')]//label[text()='Rate']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Rate"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Calculation Values']/../../../../..//tr[contains(@class,'Select')]//label[text()='Flat Amount']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Flat Amount"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Calculation Values']/../../../../..//tr[contains(@class,'Select')]//label[text()='Parameter A']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Parameter A"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Calculation Values']/../../../../..//tr[contains(@class,'Select')]//label[text()='Parameter B']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Parameter B"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Calculation Values']/../../../../..//tr[contains(@class,'Select')]//label[text()='Parameter C']/.."/>
+					<parameter name="INV_NAME" value="REPEAT_3_MAIN"/>
+					<parameter name="COL_NAME" value="Parameter C"/>
+				</parameters>
+			</executeBlock>			
+		</block>
+		<block name="Not_Calculation_Type_Override">
+			<defineVariable name="CALCULATION_VALUE_1" type="text"/>
+			<setVariable name="CALCULATION_VALUE_1" append="false">
+				<valueText/>
+			</setVariable>
+			<setVariable name="CALCULATION_VALUE_1" append="true">//table[@summary='Calculation Values']//tr[td[number(//table[@summary='Calculation Values']/../..//th//span[text()='From Value']/../../@_d_index)]//*[translate(text(),',','')=translate('</setVariable>
+			<setVariable name="CALCULATION_VALUE_1" append="true">
+				<valueKB inventoryName="REPEAT_3_MAIN" columnName="From Value"/>
+			</setVariable>
+			<setVariable name="CALCULATION_VALUE_1" append="true">',',','')]</setVariable>
+			<setVariable name="CALCULATION_VALUE_1" append="true"> and </setVariable>
+			<setVariable name="CALCULATION_VALUE_1" append="true">td//*[translate(text(),',','')=translate('</setVariable>
+			<setVariable name="CALCULATION_VALUE_1" append="true">
+				<valueKB inventoryName="REPEAT_3_MAIN" columnName="To Value"/>
+			</setVariable>
+			<setVariable name="CALCULATION_VALUE_1" append="true">',',','')]</setVariable>
+			<setVariable name="CALCULATION_VALUE_1" append="true">]</setVariable>
+			
+			<defineVariable name="CALCULATION_VALUE_2" type="text"/>
+			<setVariable name="CALCULATION_VALUE_2" append="false">
+				<valueText/>
+			</setVariable>
+			<setVariable name="CALCULATION_VALUE_2" append="true">//table[@summary='Calculation Values']//tr[td[number(//table[@summary='Calculation Values']/../..//th//span[text()='From Value']/../../@_d_index)]//input[translate(@value,',','')=translate('</setVariable>
+			<setVariable name="CALCULATION_VALUE_2" append="true">
+				<valueKB inventoryName="REPEAT_3_MAIN" columnName="From Value"/>
+			</setVariable>
+			<setVariable name="CALCULATION_VALUE_2" append="true">',',','')]</setVariable>
+			<setVariable name="CALCULATION_VALUE_2" append="true"> and </setVariable>
+			<setVariable name="CALCULATION_VALUE_2" append="true">td[//input[translate(@value,',','')=translate('</setVariable>
+			<setVariable name="CALCULATION_VALUE_2" append="true">
+				<valueKB inventoryName="REPEAT_3_MAIN" columnName="To Value"/>
+			</setVariable>
+			<setVariable name="CALCULATION_VALUE_2" append="true">',',','')]</setVariable>
+			<setVariable name="CALCULATION_VALUE_2" append="true">]</setVariable>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Calculation Values']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Calculation Values'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Calculation Values']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW"><valueVariable name="CALCULATION_VALUE_1"/></parameter>
+					<parameter name="TEMPLATE_2_FIND_ROW"><valueVariable name="CALCULATION_VALUE_2"/></parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_Calculation_Value"/>
+					<parameter name="TEMPLATE_UPDATE" value="Select_Row_Calculation_Value"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Right_Update_Status">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Calculation Values']/../..//*[text()='Update Status']</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" setFocus="true" by="xpath">//table[@summary='Calculation Values']//tr[contains(@class,'Selected')]//td[number(//span[text()='Update Status']/../../@_d_index)]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Left_From_Value">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Calculation Values']/../..//*[text()='From Value']</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" setFocus="true" by="xpath">//table[@summary='Calculation Values']//tr[contains(@class,'Selected')]//td[number(//span[text()='From Value']/../../@_d_index)]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<!--REPEAT_4_MAIN-->
+		<block name="Enterable_Calculation_Values_on_Calculation_Cards">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Enterable Calculation Values on Calculation Cards']/../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<defineVariable name="CALCULATION_CARD_1" type="text"/>
+			<setVariable name="CALCULATION_CARD_1" append="false">
+				<valueText/>
+			</setVariable>
+			<defineVariable name="CALCULATION_CARD_2" type="text"/>
+			<setVariable name="CALCULATION_CARD_2" append="false">
+				<valueText/>
+			</setVariable>
+			
+			<setVariable name="CALCULATION_CARD_1" append="true">((//table[@summary='Enterable Calculation Values on Calculation Cards'])[1]//tr[td[number(//table[@summary='Enterable Calculation Values on Calculation Cards']/../..//th//span[text()='Display Value']/../../@_d_index)]//input[@value='</setVariable>
+			<setVariable name="CALCULATION_CARD_1" append="true">
+				<valueKB inventoryName="REPEAT_4_MAIN" columnName="Display Value"/>
+			</setVariable>
+			<setVariable name="CALCULATION_CARD_1" append="true">']</setVariable>
+			
+			<setVariable name="CALCULATION_CARD_2" append="true">((//table[@summary='Enterable Calculation Values on Calculation Cards'])[1]//tr[td[number(//table[@summary='Enterable Calculation Values on Calculation Cards']/../..//th//span[text()='Display Value']/../../@_d_index)]//*[text()='</setVariable>
+			<setVariable name="CALCULATION_CARD_2" append="true">
+				<valueKB inventoryName="REPEAT_4_MAIN" columnName="Display Value"/>
+			</setVariable>
+			<setVariable name="CALCULATION_CARD_2" append="true">']</setVariable>
+			
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_4_MAIN" columnName="Value Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="CALCULATION_CARD_1" append="true"> and td[number(//table[@summary='Enterable Calculation Values on Calculation Cards']/../..//th//span[text()='Value Type']/../../@_d_index)]//input[@title='</setVariable>
+					<setVariable name="CALCULATION_CARD_1" append="true">
+						<valueKB inventoryName="REPEAT_4_MAIN" columnName="Value Type"/>
+					</setVariable>
+					<setVariable name="CALCULATION_CARD_1" append="true">']</setVariable>
+					
+					<setVariable name="CALCULATION_CARD_2" append="true"> and td[number(//table[@summary='Enterable Calculation Values on Calculation Cards']/../..//th//span[text()='Value Type']/../../@_d_index)]//*[text()='</setVariable>
+					<setVariable name="CALCULATION_CARD_2" append="true">
+						<valueKB inventoryName="REPEAT_4_MAIN" columnName="Value Type"/>
+					</setVariable>
+					<setVariable name="CALCULATION_CARD_2" append="true">']</setVariable>
+				</then>
+				<else>
+					<setVariable name="CALCULATION_CARD_1" append="true"> and td[number(//table[@summary='Enterable Calculation Values on Calculation Cards']/../..//th//span[text()='Value Type']/../../@_d_index)]//input[not(@title)]</setVariable>
+					<setVariable name="CALCULATION_CARD_2" append="true"> and td[number(//table[@summary='Enterable Calculation Values on Calculation Cards']/../..//th//span[text()='Value Type']/../../@_d_index)]//*[not(text())]</setVariable>
+				</else>
+			</IfThenElse>
+			<setVariable name="CALCULATION_CARD_1" append="true">])[1]/td[1]</setVariable>
+			<setVariable name="CALCULATION_CARD_2" append="true">])[1]/td[1]</setVariable>
+			
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Enterable Calculation Values on Calculation Cards']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="(//table[@summary='Enterable Calculation Values on Calculation Cards'])[1]/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="((//table[@summary='Enterable Calculation Values on Calculation Cards'])[1][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="(//table[@summary='Enterable Calculation Values on Calculation Cards'])[1]/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW"><valueVariable name="CALCULATION_CARD_1"/></parameter>
+					<parameter name="TEMPLATE_2_FIND_ROW"><valueVariable name="CALCULATION_CARD_2"/></parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_Calculation_Card"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Calculation_Card"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Create_Calculation_Card"/>
+			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Sub']/../..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+			<pause durationInSecs="2"/>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_4_MAIN" columnName="Effective End Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Effective As-of Date']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_4_MAIN"/>
+							<parameter name="COL_NAME" value="Effective End Date"/>
+						</parameters>
+					</executeBlock>	
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Effective As-of Date']/../..//input/../../../../..//*[contains(@class,'Error')]//input</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Effective As-of Date']/../..//a</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[contains(@class,'Select')]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//button[text()='ne']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+						
+						</else>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">(//*[@summary='Enterable Calculation Values on Calculation Cards']/../..)[1]//*[text()='<valueKB inventoryName="REPEAT_4_MAIN" columnName="Display Value"/>']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">(//*[@summary='Enterable Calculation Values on Calculation Cards']/../..)[1]//*[text()='<valueKB inventoryName="REPEAT_4_MAIN" columnName="Display Value"/>']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">(//*[@summary='Enterable Calculation Values on Calculation Cards'])[1]//input[@value='<valueKB inventoryName="REPEAT_4_MAIN" columnName="Display Value"/>']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">(//*[@summary='Enterable Calculation Values on Calculation Cards'])[1]//td[4][text()='<valueKB inventoryName="REPEAT_4_MAIN" columnName="Effective End Date"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">(//*[@summary='Enterable Calculation Values on Calculation Cards'])[1]/../../../..//*[text()='Actions']/../..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[text()='End Date']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<executeBlock name="End_Date_Warning"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Sub']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="New_Calculation_Card">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Effective As-of Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_4_MAIN"/>
+					<parameter name="COL_NAME" value="Enterable Calculation Values on Calculation Cards - Effective Start Date"/>
+				</parameters>
+			</executeBlock>	
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Effective As-of Date']/../../../..//input/../../../../..//*[contains(@class,'Error')]//input</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Effective As-of Date']/../../../..//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[contains(@class,'Selected')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='ancel']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<error message="Data issue: cannot update date. Date is out of range." />
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[text()='K']/..</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[text()='K']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+							<pause durationInSecs="2"/>	
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="(//table[@summary='Enterable Calculation Values on Calculation Cards'])[1]/../../../.."/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Update_Calculation_Card">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">TEMPLATE_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</else>
+			</IfThenElse>
+			<pause durationInSecs="2"/>		
+			<findElement by="xpath" isSkipCheckDomError="true">(//table[@summary='Enterable Calculation Values on Calculation Cards']/../../../..)[1]//div[contains(@id,'edit')]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+			<pause durationInSecs="2"/>	
+		</block>
+		<block name="Create_Calculation_Card">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="(//*[@summary='Enterable Calculation Values on Calculation Cards']/../..)[1]//*[@summary='Enterable Calculation Values on Calculation Cards']//tr[contains(@class,'Select')]//label[text()='Display Value']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_4_MAIN"/>
+					<parameter name="COL_NAME" value="Display Value"/>
+				</parameters>
+			</executeBlock>		
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="(//*[@summary='Enterable Calculation Values on Calculation Cards']/../..)[1]//*[@summary='Enterable Calculation Values on Calculation Cards']//tr[contains(@class,'Select')]//label[text()='Value Type']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_4_MAIN"/>
+					<parameter name="COL_NAME" value="Value Type"/>
+				</parameters>
+			</executeBlock>	
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">(//*[@summary='Enterable Calculation Values on Calculation Cards']/../..)[1]//*[@summary='Enterable Calculation Values on Calculation Cards']//label[text()='Value Type']/../..//input[@value='<valueKB inventoryName="REPEAT_4_MAIN" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="(//*[@summary='Enterable Calculation Values on Calculation Cards']/../..)[1]//*[@summary='Enterable Calculation Values on Calculation Cards']//tr[contains(@class,'Select')]//label[text()='Value Type']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_4_MAIN"/>
+							<parameter name="COL_NAME" value="Value Type"/>
+						</parameters>
+					</executeBlock>	
+				</else>
+			</IfThenElse>
+			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Sub']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+		</block>
+		<!--REPEAT_5_MAIN-->
+		<block name="Calculation_Card_Usage">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[@title='Expand Enterable Calculation Values on Calculation Cards'][contains(@aria-label,'Expand')]</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Enterable Calculation Values on Calculation Cards']/../../../../.."/>
+						</parameters>
+					</executeBlock>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//a[@title='Expand Enterable Calculation Values on Calculation Cards'][contains(@aria-label,'Expand')]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//a[@title='Expand Enterable Calculation Values on Calculation Cards']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>							
+						</then>
+						<else>
+							<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+								<parameters>
+									<parameter name="XPATH" value="//a[@title='Collapse Enterable Calculation Values on Calculation Cards']/../../../../.."/>
+								</parameters>
+							</executeBlock>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+						<parameters>
+							<parameter name="XPATH" value="//a[@title='Collapse Enterable Calculation Values on Calculation Cards']/../../../../.."/>
+						</parameters>
+					</executeBlock>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//div[contains(@title,'Usage Rules')]/../../../../../../div[2]//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//div[contains(@title,'Usage Rules')]/../../../../../../div[2]//*[@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//div[contains(@title,'Usage Rules')]/../../../../../../div[2]/..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">//div[contains(@title,'Usage Rules')]/../../../../../../div[2]//*[text()='<valueKB inventoryName="REPEAT_5_MAIN" columnName="Calculation Card"/>']</parameter>
+					<parameter name="TEMPLATE_2_FIND_ROW">//div[contains(@title,'Usage Rules')]/../../../../../../div[2]//input[@value='<valueKB inventoryName="REPEAT_5_MAIN" columnName="Calculation Card"/>']</parameter>
+					<parameter name="TEMPLATE_CREATE" value="New_Calculation_Card_Usage"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Calculation_Card_Usage"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Create_Calculation_Card_Usage"/>
+			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Sub']/../..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+			<pause durationInSecs="2"/>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_5_MAIN" columnName="Effective End Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Effective As-of Date']/../.."/>
+							<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+							<parameter name="COL_NAME" value="Effective End Date"/>
+						</parameters>
+					</executeBlock>	
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Effective As-of Date']/../..//input/../../../../..//*[contains(@class,'Error')]//input</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Effective As-of Date']/../..//a</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[contains(@class,'Select')]</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//button[text()='ne']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+						
+						</else>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">(//*[@summary='Enterable Calculation Values on Calculation Cards']/../..)[2]//*[text()='<valueKB inventoryName="REPEAT_5_MAIN" columnName="Calculation Card"/>']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">(//*[@summary='Enterable Calculation Values on Calculation Cards']/../..)[2]//*[text()='<valueKB inventoryName="REPEAT_5_MAIN" columnName="Calculation Card"/>']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">(//*[@summary='Enterable Calculation Values on Calculation Cards'])[2]//input[@value='<valueKB inventoryName="REPEAT_5_MAIN" columnName="Calculation Card"/>']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">(//*[@summary='Enterable Calculation Values on Calculation Cards'])[2]//td[5][text()='<valueKB inventoryName="REPEAT_5_MAIN" columnName="Effective End Date"/>']</findElement>
+						</if>
+						<then>
+							
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">(//*[@summary='Enterable Calculation Values on Calculation Cards'])[2]/../../../..//*[text()='Actions']/../..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//tr[contains(@class,'Disabled')]//td[text()='End Date']/..</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Sub']/..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<error message="Effective End Date for Usage Rule is Disabled" />
+								</then>
+								<else>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[@class='AFDetectExpansion']/..//td[text()='End Date']/..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<executeBlock name="End_Date_Warning"/>
+									<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Sub']/..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="New_Calculation_Card_Usage">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Effective As-of Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Usage Rules - Effective Start Date"/>
+				</parameters>
+			</executeBlock>	
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Effective As-of Date']/../../../..//input/../../../../..//*[contains(@class,'Error')]//input</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//label[text()='Effective As-of Date']/../../../..//a</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[contains(@class,'Selected')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='ancel']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<error message="Data issue: cannot update date. Date is out of range." />
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[text()='K']/..</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//*[text()='K']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+							<pause durationInSecs="2"/>	
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@title,'Usage Rules')]/../../../../../../div[2]"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Update_Calculation_Card_Usage">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<findElement by="xpath">TEMPLATE_2_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</else>
+			</IfThenElse>
+			<pause durationInSecs="2"/>		
+			<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Usage Rules')]/../../../../../../div[2]//div[contains(@id,'edit')]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>	
+			<pause durationInSecs="2"/>	
+		</block>
+		<block name="Create_Calculation_Card_Usage">
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Calculation Card']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Calculation Card"/>
+					<parameter name="SEARCH_1" value="Calculation Card' or text()='Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Calculation Component-->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_5_MAIN" columnName="Calculation Component"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//label[text()='Calculation Component']/../..//a</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//label[text()='Calculation Component']/../..//a</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Calculation Component']/../../../../../../../../../..//button[text()='Reset']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Calculation Component']/../..//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true" isSkipCheckDomError="true">
+								<valueKB inventoryName="REPEAT_5_MAIN" columnName="Calculation Component"/>
+							</sendKeys>
+							<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Search and Select')]/../../../../../../..//label[text()='Calculation Component']/../../../../../../../../../..//button[text()='Search']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="1"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Search and Select')]/../../../../../../..//td[text()='<valueKB inventoryName="REPEAT_5_MAIN" columnName="Calculation Component"/>']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//div[contains(text(),'Search and Select')]/../../../../../../..//td[text()='<valueKB inventoryName="REPEAT_5_MAIN" columnName="Calculation Component"/>']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<findElement by="xpath" isSkipCheckDomError="true">(//div[contains(@class,'Expansion')]/..)[2]//button[text()='OK']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									<error message="The perpare data for Calculation Component not found. Please check your data." />
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+							
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(@class,'Expansion')]/..//label[text()='Value Set']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_5_MAIN"/>
+					<parameter name="COL_NAME" value="Value Set"/>
+					<parameter name="SEARCH_1" value="Value Set Code"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='O']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='O']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Sub']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="1"/>
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search_Calculation_Value_Definition"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<IfThenElse>
+					<if>
+						<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Calculation Value Definitions']/../../../../../../../../../../../../../../../../../../../../../../../../../../..//div[@title='Search']/../../../../../..//label[text()='Name']/../..//input</findElement>
+					</if>
+					<then>
+						<IfThenElse>
+							<if>
+								<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//div[text()='Create Calculation Value Definition']</findElement>
+							</if>
+							<then>
+								<executeBlock name="New_Calculation_Value_Definition"/>
+							</then>
+							<else>
+								<executeBlock name="Search_Calculation_Value_Definition_Details" isRepeatUntilBreak="true"/>
+							</else>
+						</IfThenElse>
+					</then>
+					<else/>
+				</IfThenElse>
+				<IfThenElse>
+					<if>
+						<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Calculation Value Definition Overview']</findElement>
+					</if>
+					<then>
+						<IfThenElse>
+							<if>
+								<findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Calculation Value Definition Details')]/../../../../../../..//label[text()='Name']/../..//input</findElement>
+							</if>
+							<then>
+								
+							</then>
+							<else>
+								<executeBlock name="VIEW_HISTORY"/>
+							</else>
+						</IfThenElse>
+					</then>
+					<else/>
+				</IfThenElse>
+				<IfThenElse>
+					<if>
+						<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Calculation Value Definition Overview']</findElement>
+					</if>
+					<then>
+						<executeBlock name="Calculation_Value_Definition_Details"/>
+					</then>
+					<else/>
+				</IfThenElse>
+				<repeat inventoryName="REPEAT_3_MAIN">
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_3_MAIN" columnName="From Value"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText></valueText>
+									</rightOperand>
+								</comparison>
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_3_MAIN" columnName="To Value"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText></valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<executeBlock name="Calculation_Value"/>
+						</then>
+						<else>
+
+						</else>
+					</IfThenElse>
+				</repeat>
+				<repeat inventoryName="REPEAT_4_MAIN">
+					<IfThenElse>
+						<if>
+							<comparisons separator="OR">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_4_MAIN" columnName="Display Value"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText></valueText>
+									</rightOperand>
+								</comparison>
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="REPEAT_4_MAIN" columnName="Value Type"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText></valueText>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<executeBlock name="Enterable_Calculation_Values_on_Calculation_Cards"/>
+						</then>
+						<else>
+
+						</else>
+					</IfThenElse>
+					<repeat inventoryName="REPEAT_5_MAIN">
+						<IfThenElse>
+							<if>
+								<comparisons separator="AND">
+									<comparison operator="NOT_EQUAL">
+										<leftOperand>
+											<valueKB inventoryName="REPEAT_5_MAIN" columnName="Calculation Card"/>
+										</leftOperand>
+										<rightOperand>
+											<valueText></valueText>
+										</rightOperand>
+									</comparison>
+								</comparisons>
+							</if>
+							<then>
+								<executeBlock name="Calculation_Card_Usage"/>
+							</then>
+							<else>
+
+							</else>
+						</IfThenElse>
+					</repeat>
+				</repeat>
+				<IfThenElse>
+					<if>
+						<findElement highlightTurnedOff="true" by="xpath">//a[@title='Collapse Search']/../../../../../..//label[text()='Name']/../..//input</findElement>
+					</if>
+					<then/>
+					<else>
+						<IfThenElse>
+							<if>
+								<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>')]/../../../../../../../../../..//button[text()='ne']</findElement>
+							</if>
+							<then>
+								<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>')]/../../../../../../../../../..//button[text()='ne']</findElement>
+								<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+								<pause durationInSecs="2"/>
+								<IfThenElse>
+									<if>
+										<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//div[text()='Warning']</findElement>
+									</if>
+									<then>
+										<IfThenElse>
+											<if>
+												<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Calculation Value Definition Details')]/../../../../..//*[@aria-disabled='true']//*[text()='Sub']/../../..</findElement>
+											</if>
+											<then>
+												<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='es']</findElement>
+												<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+												<pause durationInSecs="1"/>
+											</then>
+											<else>
+												<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Calculation Value Definition Details')]/../../../../..//*[text()='Sub']/../../..</findElement>
+												<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+												<pause durationInSecs="1"/>
+												<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>')]/../../../../../../../../../..//button[text()='ne']</findElement>
+												<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+												<pause durationInSecs="2"/>
+											</else>
+										</IfThenElse>
+									</then>
+									<else>
+									</else>
+								</IfThenElse>
+							</then>
+							<else>
+								<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Calculation Value Definitions:')]/../../../../../../../../../..//button[text()='ne']</findElement>
+								<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+								<pause durationInSecs="1"/>
+								<IfThenElse>
+									<if>
+										<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//div[text()='Warning']</findElement>
+									</if>
+									<then>
+										<IfThenElse>
+											<if>
+												<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Calculation Value Definition Details')]/../../../../..//*[@aria-disabled='true']//*[text()='Sub']/../../..</findElement>
+											</if>
+											<then>
+												<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@class,'Expansion')]/..//button[text()='es']</findElement>
+												<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+												<pause durationInSecs="1"/>
+											</then>
+											<else>
+												<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Calculation Value Definition Details')]/../../../../..//*[text()='Sub']/../../..</findElement>
+												<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+												<pause durationInSecs="1"/>
+												<findElement by="xpath" isSkipCheckDomError="true">//div[contains(@title,'Calculation Value Definitions:')]/../../../../../../../../../..//button[text()='ne']</findElement>
+												<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+												<pause durationInSecs="2"/>
+											</else>
+										</IfThenElse>
+									</then>
+									<else>
+									</else>
+								</IfThenElse>
+							</else>
+						</IfThenElse>
+					</else>
+				</IfThenElse>
+			</repeat>
+		</repeat>
+	</fusionNavigation>
+</navigation>

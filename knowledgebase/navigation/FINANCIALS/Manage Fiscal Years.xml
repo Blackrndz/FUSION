@@ -1,0 +1,677 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Fiscal Years</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Fiscal Years" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Data Access Set Data Access for Users"/>
+			<navigation name="Manage System Controls"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Fiscal Years - Fiscal Year"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Fiscal Years - Fiscal Year Details"/>
+			<parameter name="MAIN_REPEAT_3" value="Manage Fiscal Years - Fiscal Year Details - DFF"/>
+		</parameters>
+		<block name="GO_TO_TASK">
+			<findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a[@title='Go to Task']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="SAVE_BUTTON">
+			<findElement by="xpath">//span[text()='S']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="DONE_BUTTON">
+			<findElement by="xpath">//span[text()='o']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="CREATE_BUTTON">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//img[@title='Add Row']/../../..//div[contains(@class,'Disabled')]</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1" />
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_CREATE"/>
+					<break/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="CONFIRMATION">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Confirmation']/../../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//div[text()='Confirmation']/../../../../../../../..//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<break/>
+				</else>
+			</IfThenElse>
+		</block>		
+		<block name="CLICK_MAXIMIZE">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//a[text()='View']/../../../../../../../../../../../../..//div[contains(@id,'eoi')]</findElement>
+				</if>
+				<then>
+				
+					<findElement isDisplayed="true" by="xpath">//a[text()='View']/../../../../../../../../../../../../..//div[contains(@id,'eoi')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement isDisplayed="true" by="xpath">//a[text()='View']</findElement>
+					<click waitForPageToFinishRendering="true"/>					
+					<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//td//span[text()='Detach']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//div[@title='View']</findElement>
+						</if>
+						<then>
+							<findElement isDisplayed="true" by="xpath">//a[text()='View']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//td//span[text()='Detach']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>	
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="EDIT_BUTTON">
+			<executeBlock name="GLOBAL_UPDATE"/>
+		</block>
+		<block name="DFF">
+			<findElement
+                    by="xpath">//table[@summary='Fiscal Year']//span[text()='<valueKB
+                    inventoryName="MAIN_REPEAT_3" columnName="Fiscal Year"/>']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+
+		<block name="Fiscal Year">
+			<!-- Name -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//label[text()='Name']/../..//input</findElement>
+							<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+							</sendKeys>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- Description -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_1" columnName="Description"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement by="xpath">//label[text()='Description']/../..//input</findElement>
+					<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+						<valueKB inventoryName="MAIN_REPEAT_1" columnName="Description"/>
+					</sendKeys>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+
+		<block name="SCROLLBAR_TOP">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">((//table[@_startrow='0'][@summary='Fiscal Year']//tr)[1]//td)[1]</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="1"/>
+					<break/>
+				</then>
+				<else>
+					<executeBlock name="CLICK_MAXIMIZE"/>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true"
+                            isDisplayed="true" by="xpath">//div[text()='Detached Table']/../../../../../../..</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement isDisplayed="true" by="xpath">//div[text()='Detached Table']/../../../../../../..//a[text()='View']/../../../../../../../../../../../../..//div[contains(@id,'eoi')]</findElement>
+								</if>
+								<then>
+								
+									<findElement isDisplayed="true" by="xpath">//div[text()='Detached Table']/../../../../../../..//a[text()='View']/../../../../../../../../../../../../..//div[contains(@id,'eoi')]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<findElement isDisplayed="true" by="xpath">//a[text()='View']</findElement>
+									<click waitForPageToFinishRendering="true"/>					
+									<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//td//span[text()='Detach']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement isDisplayed="true" by="xpath">//div[text()='Detached Table']/../../../../../../..//div[@title='View']</findElement>
+										</if>
+										<then>
+											<findElement isDisplayed="true" by="xpath">//div[text()='Detached Table']/../../../../../../..//a[text()='View']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+											<findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//td//span[text()='Detach']</findElement>
+											<click waitForPageToFinishRendering="true"/>
+										</then>
+										<else>
+										</else>
+									</IfThenElse>	
+								</else>
+							</IfThenElse>
+						</then>
+						<else/>
+					</IfThenElse>
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					<scroll direction="TOP"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SCROLLBAR_GENERIC_INNER_1">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+					<IfThenElse>
+						<if>
+							<isEndOfScroll/>
+						</if>
+						<then>
+							<executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+							<break/>
+						</then>
+						<else>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="DOWN"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="SCROLLBAR_GENERIC_1">
+			<!-- check if there is no data found returned after the search, if so then we create a new record if applicable -->
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+				</if>
+				<then>
+					<executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+				</then>
+				<else>
+					<!-- resetting the scollbar back to the Top because the form remembers where it was even when searching a new record -->
+					<executeBlock name="SCROLLBAR_TOP" isRepeatUntilBreak="true"/>
+					<executeBlock name="CLICK_MAXIMIZE"/>
+					<findElement by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<executeBlock name="SCROLLBAR_GENERIC_INNER_1" isRepeatUntilBreak="true"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="FISCAL_DEFINE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+				</if>
+				<then>
+					<executeBlock name="CREATE_BUTTON" isRepeatUntilBreak="true" />
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="TOP"/>
+							<findElement by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<executeBlock name="CREATE_BUTTON" isRepeatUntilBreak="true" />
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="TOP"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else>
+							<findElement by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<executeBlock name="CREATE_BUTTON" isRepeatUntilBreak="true" />
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="TOP"/>
+							<pause durationInSecs="2"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="FISCAL_UPDATE">
+			<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+		</block>
+
+		
+		<block name="DEFINE_YEAR">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+				</if>
+				<then>
+					<executeBlock name="GLOBAL_ADD"/>
+					<executeBlock name="ADD_YEAR"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="TOP"/>
+							<findElement by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<executeBlock name="GLOBAL_ADD"/>
+							<executeBlock name="ADD_YEAR"/>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="TOP"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else>
+							<findElement by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<executeBlock name="GLOBAL_ADD"/>
+							<executeBlock name="ADD_YEAR"/>
+							<findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+							<scroll direction="TOP"/>
+							<pause durationInSecs="2"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<block name="UPDATE_YEAR">
+			<pause durationInSecs="1"/>
+			<findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<executeBlock name="UP_YEAR"/>
+		</block>
+
+		<block name="ADD_YEAR">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Fiscal Year']//tbody//tr[2]</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@summary='Fiscal Year']//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Fiscal Year"/>']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Fiscal Year']//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Fiscal Year"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<!-- End Date -->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_2" columnName="End Date"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<findElement by="xpath">//table[@summary='Fiscal Year']//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Fiscal Year"/>']/../../../../../../..//label[text()='End Date']/..//input</findElement>
+									<sendKeys isClear="true">
+										<valueKB inventoryName="MAIN_REPEAT_2" columnName="End Date"/>
+									</sendKeys>
+								</then>
+								<else/>
+							</IfThenElse>
+							<!-- Mid Year Start Date -->
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="NOT_EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_REPEAT_2" columnName="Mid Year Start Date"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText/>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<!-- <findElement by="xpath">//table[@summary='Fiscal Year']//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Fiscal Year"/>']/../../../../../../..//label[text()='Mid Year Start Date']/..//input</findElement> -->
+									<findElement by="xpath">//table[@summary='Fiscal Year']//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Fiscal Year"/>']/../../../td[4]//input</findElement>
+									<sendKeys isClear="true">
+										<valueKB inventoryName="MAIN_REPEAT_2" columnName="Mid Year Start Date"/>
+									</sendKeys>
+								</then>
+								<else/>
+							</IfThenElse>
+						</then>
+						<else>
+							<error message="The field 'Fiscal Year' doesn't exist."/>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<!-- Fiscal Year -->
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_2" columnName="Fiscal Year"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Fiscal Year']//label[text()='Fiscal Year']/../..//input</findElement>
+							<sendKeys isClear="true">
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Fiscal Year"/>
+							</sendKeys>
+						</then>
+						<else/>
+					</IfThenElse>
+					<!-- Start Date -->
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Fiscal Year']//label[text()='Start Date']/../..//input</findElement>
+							<sendKeys isClear="true">
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>
+							</sendKeys>
+						</then>
+						<else/>
+					</IfThenElse>
+					<!-- End Date -->
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_2" columnName="End Date"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Fiscal Year']//label[text()='End Date']/../..//input</findElement>
+							<sendKeys isClear="true">
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="End Date"/>
+							</sendKeys>
+						</then>
+						<else/>
+					</IfThenElse>
+					<!-- Mid Year Start Date -->
+					<IfThenElse>
+						<if>
+							<comparisons separator="AND">
+								<comparison operator="NOT_EQUAL">
+									<leftOperand>
+										<valueKB inventoryName="MAIN_REPEAT_2" columnName="Mid Year Start Date"/>
+									</leftOperand>
+									<rightOperand>
+										<valueText/>
+									</rightOperand>
+								</comparison>
+							</comparisons>
+						</if>
+						<then>
+							<!-- <findElement by="xpath">//table[@summary='Fiscal Year']//label[text()='Mid Year Start Date']/../..//input</findElement> -->
+							<findElement by="xpath">//table[@summary='Fiscal Year']/tbody/tr/td[2]/div/table/tbody/tr/td[4]//input </findElement>
+							<sendKeys isClear="true">
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Mid Year Start Date"/>
+							</sendKeys>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<block name="UP_YEAR">
+			<!-- Mid Year Start Date -->
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Mid Year Start Date"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<findElement setFocus="true" by="xpath">//table[@summary='Fiscal Year']//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Fiscal Year"/>']/../../../td[4]//input</findElement>
+					<sendKeys isClear="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Mid Year Start Date"/>
+					</sendKeys>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="SEARCH_FISCAL_YEARS">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title="Clear All"]/../../../../..//input</findElement>
+				</if>
+				<then/>
+				<else>
+					<findElement by="xpath">//a[text()='View']/../..//div</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//td[text()='Query By Example']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</else>
+			</IfThenElse>
+			<findElements by="xpath" returnElementAtPosition="1">//a[@title='Clear All']/../../../../..//input</findElements>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>
+			</sendKeys>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+                            by="xpath">//a[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true"
+                            by="xpath">//a[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<executeBlock name="CREATE_BUTTON"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="SEARCH_FISCAL_YEARS"/>
+			<executeBlock name="Fiscal Year"/>
+			<executeBlock name="GLOBAL_SAVE"/>
+			<executeBlock name="CONFIRMATION"/>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<IfThenElse>
+					<if>
+						<findElement isDisplayed="true" by="xpath">//*[contains(text(),'Edit Fiscal Year')]</findElement>
+					</if>
+					<then>
+						<executeBlock name="SCROLLBAR_GENERIC_1">
+							<parameters>
+								<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Fiscal Year']/../..//div[contains(text(),'No data to display.')]"/>
+								<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="((//table[@summary='Fiscal Year']//tr[1]//td))[1]"/>
+								<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Fiscal Year']/../../../../..//div[contains(@id,'scroller')]"/>
+								<parameter
+										name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Fiscal Year']//span[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Fiscal Year"/>']</parameter>
+								<parameter
+									name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="DEFINE_YEAR"/>
+								<parameter
+									name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="UPDATE_YEAR"/>
+							</parameters>
+						</executeBlock>
+						<repeat inventoryName="MAIN_REPEAT_3">
+							<executeBlock name="GLOBAL_ALL_DFF">
+								<parameters>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+								</parameters>
+							</executeBlock>
+
+							<!--<executeBlock
+								navigationName="Manage Enterprise HCM Information" name="BLOCK_LINE_ALL_SESSION_DFF">
+								<parameters>
+									<parameter name="LINE_GENERIC_DFF_BLOCK" value="//table[@summary='Fiscal Year']"/>
+									<parameter
+										name="LINE_NO_SELECT_GENERIC_DFF_BLOCK" value="//tr[td[2]//a[@title='Collapse']]"/>
+									<parameter name="REPEAT_ALL_INV_DFF" value="MAIN_REPEAT_3"/>
+								</parameters>
+							</executeBlock>-->
+						</repeat>
+						<IfThenElse>
+							<if>
+								<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//div[text()='Detached Table']</findElement>
+							</if>
+							<then>
+								<IfThenElse>
+									<if>
+										<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='View']</findElement>
+									</if>
+									<then>
+										<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='View']</findElement>
+										<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+										<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td//span[text()='Attach']</findElement>
+										<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 	  					
+									</then>
+									<else>
+										<IfThenElse>
+											<if>
+												<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='View']/../../../../../../../../../../../..</findElement>
+											</if>
+											<then>
+												<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@class,'Expansion')]/..//a[text()='View']/../../../../../../../../../../../..</findElement>
+												<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+												<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//a[text()='View']</findElement>
+												<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+												<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//td//span[text()='Attach']</findElement>
+												<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   	  		
+											</then>
+											<else/>
+										</IfThenElse>
+									</else>
+								</IfThenElse>
+								<pause durationInSecs="1"/>
+							</then>
+							<else/>
+						</IfThenElse>						
+					</then>
+					<else>
+						<executeBlock name="GLOBAL_ADD"/>
+						<executeBlock name="ADD_YEAR"/>						
+						<repeat inventoryName="MAIN_REPEAT_3">
+						<executeBlock name="GLOBAL_ALL_DFF">
+								<parameters>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+								</parameters>
+							</executeBlock>
+
+							<!--<executeBlock
+								navigationName="Manage Enterprise HCM Information" name="BLOCK_LINE_ALL_SESSION_DFF">
+								<parameters>
+									<parameter name="LINE_GENERIC_DFF_BLOCK" value="//table[@summary='Fiscal Year']"/>
+									<parameter
+										name="LINE_NO_SELECT_GENERIC_DFF_BLOCK" value="//tr[td[2]//a[@title='Collapse']]"/>
+									<parameter name="REPEAT_ALL_INV_DFF" value="MAIN_REPEAT_3"/>
+								</parameters>
+							</executeBlock>-->
+						</repeat>						
+					</else>
+				</IfThenElse>
+				<executeBlock name="GLOBAL_SAVE"/>
+				<executeBlock name="CONFIRMATION"/>
+			</repeat>
+			<executeBlock name="SAVE_BUTTON"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

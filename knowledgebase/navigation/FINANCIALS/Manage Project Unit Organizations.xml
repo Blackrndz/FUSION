@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Project Unit Organizations</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        taskName="Manage Project Unit Organizations"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Departments"/>
+			<navigation name="Manage Create Divisions"/>
+			<navigation name="Manage Create Business Unit"/>
+		</dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Project Unit Organizations - Project Unit Organizations"/>
+        </parameters>
+        <block name="Expand">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//*[text()='Search']/../../..//a[@title='Collapse Search']</findElement>
+                </if>
+                <then>
+                    <break/>
+                </then>
+                <else>
+                    <findElement by="xpath">//*[text()='Search']/../../..//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <pause durationInSecs="1"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="MAIN_REPEAT_1">
+            <executeBlock name="Expand" isRepeatUntilBreak="true"/>
+            <findElement by="xpath">//button[text()='Reset']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <executeBlock name="Expand" isRepeatUntilBreak="true"/>
+            <findElement by="xpath">//label[text()='Code']/../..//input</findElement>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Code"/>
+            </sendKeys>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//a[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Code"/>']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//a[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Code"/>']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                    <executeBlock name="GLOBAL_CREATE"/>
+                    <executeBlock name="INPUT">
+                        <parameters>
+                            <parameter name="XPATH" value="//label[text()='Code']/../.."/>
+                            <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                            <parameter name="COL_NAME" value="Code"/>
+                        </parameters>
+                    </executeBlock>
+                    <executeBlock name="INPUT">
+                        <parameters>
+                            <parameter name="XPATH" value="//label[text()='Name']/../.."/>
+                            <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                            <parameter name="COL_NAME" value="Name"/>
+                        </parameters>
+                    </executeBlock>
+                </else>
+            </IfThenElse>
+            <executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

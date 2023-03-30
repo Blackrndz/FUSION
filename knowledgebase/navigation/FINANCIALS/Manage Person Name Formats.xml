@@ -1,0 +1,398 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Person Name Formats</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" taskName="Manage Person Name Formats" isBatchingBasedOnRootInventoryUniqueRecords="true" isFailedParentLevelRecordRetry="true" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Create Business Unit"/>
+			<navigation name="Manage Legislative Data Groups"/>
+        </dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Person Name Formats - Name Format"/>
+            <parameter name="MAIN_REPEAT_2" value="Manage Person Name Formats - Components"/>
+        </parameters>
+		<block name="DFF_FAKE_MAPPER">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Country"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Country"/>']/../..//input</findElement>
+		</block>
+		
+		<block name="FIND_ROW_TOP">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//table[@summary='Available Name Components']//*[text()='First Name']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" setFocus="true" isSkipCheckDomError="true">//table[@summary='Available Name Components']//*[text()='First Name']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Available Name Components']/../..//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="TOP"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="SEARCH_NAME_FORMATS">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../../.."/>
+				</parameters>
+			</executeBlock>		
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Country']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Country"/>
+					<parameter name="SEARCH_1" value="Country"/>
+				</parameters>
+			</executeBlock>				
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Format Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Format Type"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Scope']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Scope"/>
+				</parameters>
+			</executeBlock>				
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Search Results']/../../../..//*[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Country"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Search Results']/../../../..//*[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Country"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<!-- <executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_UPDATE">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Search Results']/../../../.."/>
+						</parameters>   
+					</executeBlock> -->
+					<error message="Update Existing Record is currently not support" />
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_CREATE">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Search Results']/../../../.."/>
+						</parameters>   
+					</executeBlock>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Country']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Country"/>
+							<parameter name="SEARCH_1" value="Country"/>
+						</parameters>
+					</executeBlock>				
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Format Type']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Format Type"/>
+						</parameters>
+					</executeBlock>	
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Scope']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Scope"/>
+						</parameters>
+					</executeBlock>						
+				</else>
+			</IfThenElse>			
+		</block>
+		
+		<block name="CREATE_NAME_FORMAT">
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Country']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Country"/>
+					<parameter name="SEARCH_1" value="Country"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Format Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Format Type"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Scope']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Scope"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		
+		<block name="ERROR_DATA">
+			<error message="NO SELECT DATA" />
+		</block>
+		
+		<block name="CLICK_SELECTED_COMPONENT_FROM_AVAILABLE">
+			<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Available Name Components']/../../../../../../..//*[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Selected Component"/>']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[@title='Move to Other List']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[@title='Move to Other List']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath" isSkipCheckDomError="true">//*[contains(@src,'shuttleright_16_ena')]/..</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isSkipCheckDomError="true">//*[contains(@src,'shuttleright_16_ena')]/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else>
+							<findElement by="xpath" isSkipCheckDomError="true">//img[@title='Move to Other List']/..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+							<pause durationInSecs="2"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="WARNING">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='Warning']/../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//button[@accesskey='Y']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="OK_AFTER_WARNING">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[text()='Confirmation']/../../../../../../../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Confirmation']/../../../../../../../..//span[text()='K']/../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+
+		<block name="OK_BUTTON">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//div[text()='Confirmation']/../../../../../../../..//div[contains(@id,'activeCommandToolbar')]//*[text()='K']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[text()='Confirmation']/../../../../../../../..//div[contains(@id,'activeCommandToolbar')]//*[text()='K']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>		
+					<pause durationInSecs="2"/>	
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+
+		<block name="SELECT_COMPONENT">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Selected Component"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<evaluateXPATHBoolean>count(//table[@summary='Selected Name Components']/../../div[2]/table/tbody/tr)=2</evaluateXPATHBoolean>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Selected Name Components']//td[text()='----------']/../../../../../../tr[last()]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+							<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+								<parameters>
+									<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Available Name Components']/../..//div[contains(text(),'No data to display.')]"/>
+									<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Available Name Components'][@_rowcount]//tr[1]//td)[1]"/>
+									<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Available Name Components']/../..//div[contains(@id,'scroller')]"/>
+									<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Available Name Components']/..//*[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Selected Component"/>']</parameter>
+									<parameter name="TEMPLATE_CREATE" value="ERROR_DATA"/>
+									<parameter name="TEMPLATE_UPDATE" value="CLICK_SELECTED_COMPONENT_FROM_AVAILABLE"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<evaluateXPATHBoolean>count(//table[@summary='Selected Name Components']/../../div[2]/table/tbody/tr)=3</evaluateXPATHBoolean>
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" by="xpath">(//table[@summary='Selected Name Components']/../..//tr[count(//table[@summary='Selected Name Components']/../../div[2]/table/tbody/tr)-1])[2]</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+									<pause durationInSecs="1"/>
+									<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+										<parameters>
+											<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Available Name Components']/../..//div[contains(text(),'No data to display.')]"/>
+											<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Available Name Components'][@_rowcount]//tr[1]//td)[1]"/>
+											<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Available Name Components']/../..//div[contains(@id,'scroller')]"/>
+											<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Available Name Components']/..//*[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Selected Component"/>']</parameter>
+											<parameter name="TEMPLATE_CREATE" value="ERROR_DATA"/>
+											<parameter name="TEMPLATE_UPDATE" value="CLICK_SELECTED_COMPONENT_FROM_AVAILABLE"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Selected Name Components']/../..//tr[count(//table[@summary='Selected Name Components']/../../div[2]/table/tbody/tr)-1]</findElement>
+										</if>
+										<then>
+											<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Selected Name Components']/../..//tr[count(//table[@summary='Selected Name Components']/../../div[2]/table/tbody/tr)-1]</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+											<pause durationInSecs="1"/>
+											<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+												<parameters>
+													<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Available Name Components']/../..//div[contains(text(),'No data to display.')]"/>
+													<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Available Name Components'][@_rowcount]//tr[1]//td)[1]"/>
+													<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Available Name Components']/../..//div[contains(@id,'scroller')]"/>
+													<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Available Name Components']/..//*[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Selected Component"/>']</parameter>
+													<parameter name="TEMPLATE_CREATE" value="ERROR_DATA"/>
+													<parameter name="TEMPLATE_UPDATE" value="CLICK_SELECTED_COMPONENT_FROM_AVAILABLE"/>
+												</parameters>
+											</executeBlock>
+										</then>
+										<else>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>	
+				</then>
+				<else>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="WARNING_Y">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//*[text()='Warning']/../../../../../../..//*[text()='Y']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//*[text()='Warning']/../../../../../../..//*[text()='Y']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="ERROR_MESSAGE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//div[text()='Error']/../../../../../../../..</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>	
+					<error message="Please check on application error"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="UPDATE_Selected_Name_Components">
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="SEARCH_NAME_FORMATS"/>	
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Create Name Format']</findElement>
+				</if>
+				<then>
+					<executeBlock name="CREATE_NAME_FORMAT"/>	
+				</then>
+				<else/>
+			</IfThenElse>
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<executeBlock name="SELECT_COMPONENT"/>
+				<!-- <executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Selected Name Components']/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Selected Name Components'][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Selected Name Components']/../..//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Selected Name Components']/..//*[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Selected Component"/>']</parameter>
+						<parameter name="TEMPLATE_CREATE" value="SELECT_COMPONENT"/>
+						<parameter name="TEMPLATE_UPDATE" value="UPDATE_Selected_Name_Components"/>
+					</parameters>
+				</executeBlock> -->
+			</repeat>
+			<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//span[text()='Save']/..</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<!-- <executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/> -->
+			<executeBlock name="WARNING_Y"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_CONFIRMATION"/>
+			<!-- <executeBlock name="ERROR_MESSAGE"/>							 -->
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+			<executeBlock name="OK_BUTTON"/>		
+		</repeat>
+	</fusionNavigation>
+</navigation>

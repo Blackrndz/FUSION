@@ -1,0 +1,262 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Journal Sources</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Journal Sources" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Enterprise HCM Information"/>
+			<navigation name="Create Implementation Users"/>
+		</dependencies>
+        <block name="Go To Task">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//*[contains(text(),'Manage Journal Sources')]/../../div</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a[@title='Go to Task']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Save Button">
+            <findElement by="xpath">//button[text()='Save']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Confirmation">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//div[contains(text(),'Confirmation')]</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//button[text()='OK']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Search Name">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true" by="xpath">//a[@title="Clear All"]/../../../../..//input</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement by="xpath">//img[@title="Query By Example"]</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+            <findElements by="xpath" returnElementAtPosition="1">//a[@title='Clear All']/../../../../..//input</findElements>
+            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                <valueKB
+                    inventoryName="Manage Journal Sources - Manage Journal Sources" columnName="Name"/>
+            </sendKeys>
+        </block>
+        <block name="Expand">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//tr[contains(@class,'Select')]//a[@title='Expand']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//tr[contains(@class,'Select')]//a[@title='Expand']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Collapse">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//tr[contains(@class,'Select')]//a[@title='Collapse']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//tr[contains(@class,'Select')]//a[@title='Collapse']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Manage Journal Sources">
+			<IfThenElse>
+                <if>
+                    <findElement
+                            by="xpath">//table[@summary='Manage Journal Sources']//tr//td[3]//span[text()='<valueKB
+                            inventoryName="Manage Journal Sources - Manage Journal Sources" columnName="Name"/>']</findElement>
+                </if>
+                <then>
+                    <findElement
+                            by="xpath">//table[@summary='Manage Journal Sources']//tr//td[3]//span[text()='<valueKB
+                            inventoryName="Manage Journal Sources - Manage Journal Sources" columnName="Name"/>']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+                   <IfThenElse>
+						<if>
+							<findElement
+									by="xpath">//table[@summary='Manage Journal Sources']//tr//td[3]//input[@value='<valueKB
+                            inventoryName="Manage Journal Sources - Manage Journal Sources" columnName="Name"/>']</findElement>
+						</if>
+						<then>
+							<findElement
+									by="xpath">//table[@summary='Manage Journal Sources']//tr//td[3]//input[@value='<valueKB
+                            inventoryName="Manage Journal Sources - Manage Journal Sources" columnName="Name"/>']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</then>
+						<else>
+										<executeBlock name="GLOBAL_ADD"/>
+										<pause durationInSecs="2"/>
+						</else>
+					</IfThenElse>
+                </else>
+            </IfThenElse>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="Manage Journal Sources - Manage Journal Sources"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB
+                                    inventoryName="Manage Journal Sources - Manage Journal Sources" columnName="Source Key"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement
+                                    by="xpath">//td[4]//span[text()='<valueKB
+                                    inventoryName="Manage Journal Sources - Manage Journal Sources" columnName="Source Key"/>']</findElement>
+                        </if>
+                        <then/>
+                        <else>
+                            <IfThenElse>
+                                <if>
+                                    <findElement by="xpath">//tr[contains(@class,'Select')]//td[string(//span[text()='Source Key']/../..//@_d_index)+1]//input</findElement>
+                                </if>
+                                <then>
+                                    <findElement by="xpath">//tr[contains(@class,'Select')]//td[string(//span[text()='Source Key']/../..//@_d_index)+1]//input</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <findElement by="xpath">//tr[contains(@class,'Select')]//td[string(//span[text()='Source Key']/../..//@_d_index)+1]//input</findElement>
+                                    <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="Manage Journal Sources - Manage Journal Sources" columnName="Source Key"/>
+                                    </sendKeys>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                        </else>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//td[string(//span[text()='Description']/../..//@_d_index)+1]"/>
+					<parameter name="INV_NAME" value="Manage Journal Sources - Manage Journal Sources"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//td[string(//span[text()='Freeze Journals']/../..//@_d_index)+1]"/>
+					<parameter name="INV_NAME" value="Manage Journal Sources - Manage Journal Sources"/>
+					<parameter name="COL_NAME" value="Freeze Journals"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//td[string(//span[text()='Accounting Date Rule']/../..//@_d_index)+1]"/>
+					<parameter name="INV_NAME" value="Manage Journal Sources - Manage Journal Sources"/>
+					<parameter name="COL_NAME" value="Accounting Date Rule"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//td[string(//span[text()='Import Journal References']/../..//@_d_index)+1]"/>
+					<parameter name="INV_NAME" value="Manage Journal Sources - Manage Journal Sources"/>
+					<parameter name="COL_NAME" value="Import Journal References"/>
+				</parameters>
+			</executeBlock>
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//div[contains(text(),'Warning')][contains(@id,'dialog1')]</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//div[contains(text(),'Warning')][contains(@id,'dialog1')]/../../../../../../../..//button[text()='Yes']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//td[string(//span[text()='Require Journal Approval']/../..//@_d_index)+1]"/>
+					<parameter name="INV_NAME" value="Manage Journal Sources - Manage Journal Sources"/>
+					<parameter name="COL_NAME" value="Require Journal Approval"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//tr[contains(@class,'Select')]//td[string(//span[text()='Import Using Key']/../..//@_d_index)+1]"/>
+					<parameter name="INV_NAME" value="Manage Journal Sources - Manage Journal Sources"/>
+					<parameter name="COL_NAME" value="Import Using Key"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//div[contains(text(),'Warning')][contains(@id,'dialog2')]</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//div[contains(text(),'Warning')][contains(@id,'dialog2')]/../../../../../../../..//button[text()='Yes']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="FAKE_DFF">
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="Manage Journal Sources - Manage Journal Sources - DFF" columnName="Field Name"/>']/../..//input</findElement>
+            <click isCheckbox="true" waitForPageToFinishRendering="true">
+                <valueKB inventoryName="Manage Journal Sources - Manage Journal Sources - DFF" columnName="Field Value"/>
+            </click>
+        </block>
+        <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="Manage Journal Sources - Manage Journal Sources">
+            <executeBlock name="Search Name"/>
+            <executeBlock name="Manage Journal Sources"/>
+            <repeat inventoryName="Manage Journal Sources - Manage Journal Sources - DFF">
+                <executeBlock name="Expand"/>
+				<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+					<parameters>
+						<parameter name="DFF_NAME" value="Manage Journal Sources - Manage Journal Sources - DFF"/>
+					</parameters>
+				</executeBlock>	
+            </repeat>
+            <executeBlock name="Collapse"/>
+        </repeat>
+        <executeBlock name="Save Button"/>
+        <executeBlock name="Confirmation"/>
+    </fusionNavigation>
+</navigation>

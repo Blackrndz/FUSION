@@ -1,0 +1,229 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Lot Grades</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Lot Grades" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Inventory Organizations"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Lot Grades - Lot Grades"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Lot Grades - Lot Grades - DFF"/>
+		</parameters>
+		<block name="Save_And_Close">
+			<findElement by="xpath">//a//span[text()='S']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Save">
+			<findElement by="xpath">//button[text()='Save']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="OK">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//span[text()='K']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//span[text()='K']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Additional_Information">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Search Results']//tr[contains(@class,'Select')]//img</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Search Results']//tr[contains(@class,'Select')]//img</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Search">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<findElement highlightTurnedOff="true" by="xpath">//button[text()='Reset']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<findElement by="xpath">//*[text()='Search']/../../../../../../..//label[text()='Grade']/../..//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_1_MAIN" columnName="Grade"/>
+			</sendKeys>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath">//a[@title='Expand Search']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<IfThenElse>
+				<if>
+					<findElement
+                            by="xpath">//table[@summary='Search Results']//td[1]//span[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Grade"/>']</findElement>
+				</if>
+				<then>
+					<findElement
+                            by="xpath">//table[@summary='Search Results']//td[1]//span[text()='<valueKB
+                            inventoryName="REPEAT_1_MAIN" columnName="Grade"/>']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<executeBlock name="Lot_Grades"/>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_ADD"/>
+					<executeBlock name="Lot_Grades"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Lot_Grades">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Grade"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@summary='Search Results']//tr[contains(@class,'Select')]//td[1]//input</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Search Results']//tr[contains(@class,'Select')]//td[1]//input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Grade"/>
+							</sendKeys>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Description"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//table[@summary='Search Results']//tr[contains(@class,'Select')]//td[2]/span/input</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//table[@summary='Search Results']//tr[contains(@class,'Select')]//td[2]/span/input</findElement>
+							<sendKeys isClear="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Description"/>
+							</sendKeys>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Active"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//table[@summary='Search Results']//tr[contains(@class,'Select')]//td[3]//input</findElement>
+						</if>
+						<then>
+							<findElement by="xpath" isDisplayed="true">//table[@summary='Search Results']//tr[contains(@class,'Select')]//td[3]//input</findElement>
+							<click isCheckbox="true" waitForPageToFinishRendering="true">
+								<valueKB inventoryName="REPEAT_1_MAIN" columnName="Active"/>
+							</click>
+						</then>
+						<else/>
+					</IfThenElse>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="DFF_FAKE">
+			<findElement by="xpath">//label[text()='<valueKB
+                    inventoryName="REPEAT_2_MAIN" columnName="Field Name"/>']/../..//input</findElement>
+			<click isCheckbox="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="REPEAT_2_MAIN" columnName="Field Value"/>
+			</click>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="Search"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="Additional_Information"/>
+				<executeBlock name="GLOBAL_ALL_DFF">
+					<parameters>
+						<parameter name="INV_NAME" value="Manage Lot Grades - Lot Grades - DFF"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<executeBlock name="OK"/>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+		</repeat>
+		<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE_AND_CLOSE"/>
+	</fusionNavigation>
+</navigation>

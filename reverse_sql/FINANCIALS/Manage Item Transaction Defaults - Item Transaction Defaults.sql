@@ -1,0 +1,56 @@
+/* ****************************************************************************
+ * $Revision: 60928 $:
+ * $Author: pisan.jariyasettachok $:
+ * $Date: 2017-02-06 17:14:01 +0700 (Mon, 06 Feb 2017) $:
+ * $HeadURL: http://svn01.rapidesuite.com:999/svn/a/dev/rapidesuite/controldata/FUSION_11.1.9/trunk/core/reverse_sql/FINANCIALS/Complete%20Primary%20to%20Secondary%20Ledger%20Mapping%20-%20Journal%20Conversion%20Rules.sql $:
+ * $Id: Complete Primary to Secondary Ledger Mapping - Journal Conversion Rules.sql 60928 2017-02-06 10:14:01Z pisan.jariyasettachok $:
+ * ****************************************************************************
+ * Description:
+ * ************************************************************************** */
+ 
+ 
+SELECT (SELECT ORGANIZATION_CODE
+	FROM INV_ORG_PARAMETERS
+	WHERE ORGANIZATION_ID = ItemTrxDefaultE0.ORGANIZATION_ID
+	) RES_ORGANIZATION
+,(SELECT ITEM_NUMBER
+	FROM EGP_SYSTEM_ITEMS_B
+	WHERE INVENTORY_ITEM_ID = ItemTrxDefaultE0.INVENTORY_ITEM_ID 
+	AND ORGANIZATION_ID = ItemTrxDefaultE0.ORGANIZATION_ID 
+	) RES_ITEM
+,(SELECT DESCRIPTION
+	FROM EGP_SYSTEM_ITEMS_TL
+	WHERE INVENTORY_ITEM_ID = ItemTrxDefaultE0.INVENTORY_ITEM_ID 
+	AND ORGANIZATION_ID = ItemTrxDefaultE0.ORGANIZATION_ID 
+	AND LANGUAGE = USERENV('LANG')
+	) RES_ITEM_DESCRIPTION
+,(SELECT MEANING
+	FROM FND_LOOKUPS
+	WHERE LOOKUP_TYPE = 'INV_ITEM_TXN_DEFAULTS_TYPE'
+	AND LOOKUP_CODE = ItemTrxDefaultE0.DEFAULT_TYPE
+	) RES_DEFAULT_FOR
+,ItemTrxDefaultE0.SUBINVENTORY_CODE RES_SUBINVENTORY
+,FND_FLEX_EXT.GET_SEGS(APPLICATION_SHORT_NAME => 'INV'
+	,KEY_FLEX_CODE => 'MTLL'
+	,STRUCTURE_NUMBER => invLocatorsE0.STRUCTURE_INSTANCE_NUMBER
+	,COMBINATION_ID => ItemTrxDefaultE0.LOCATOR_ID
+	,DATA_SET_NUMBER => invLocatorsE0.SUBINVENTORY_ID
+	) RES_LOCATOR
+,ItemTrxDefaultE0.LAST_UPDATED_BY RSC_LAST_UPDATED_BY
+,ItemTrxDefaultE0.LAST_UPDATE_DATE RSC_LAST_UPDATE_DATE
+,ItemTrxDefaultE0.CREATED_BY RSC_CREATED_BY
+,ItemTrxDefaultE0.CREATION_DATE RSC_CREATION_DATE
+,NULL RSC_LEDGER_ID
+,NULL RSC_CHART_OF_ACCOUNTS_ID
+,NULL RSC_BUSINESS_UNIT_ID
+,NULL RSC_LEGAL_ENTITY_ID
+,ItemTrxDefaultE0.ORGANIZATION_ID RSC_ORGANIZATION_ID
+,NULL RSC_BUSINESS_GROUP_ID
+,NULL RSC_ENTERPRISE_ID
+,NULL RSC_COUNTRY_ID
+FROM INV_ITEM_LOC_DEFAULTS ItemTrxDefaultE0
+,INV_ITEM_LOCATIONS invLocatorsE0
+WHERE ItemTrxDefaultE0.LOCATOR_ID = invLocatorsE0.INVENTORY_LOCATION_ID(+)
+AND ItemTrxDefaultE0.ORGANIZATION_ID = invLocatorsE0.ORGANIZATION_ID(+)
+AND ItemTrxDefaultE0.SUBINVENTORY_CODE = invLocatorsE0.SUBINVENTORY_CODE(+)
+ORDER BY 1,2

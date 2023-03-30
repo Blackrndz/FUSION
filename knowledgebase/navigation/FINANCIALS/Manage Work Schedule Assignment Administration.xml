@@ -1,0 +1,525 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Work Schedule Assignment Administration</name>
+	<svn>
+		<xsd:revision>$Revision: 79043 $:</xsd:revision>
+		<xsd:author>$Author: kullada.somtragool $:</xsd:author>
+		<xsd:date>$Date: 2022-07-23 14:06:07 +0700 (Sat, 23 Jul 2022) $:</xsd:date>
+		<xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Work%20Schedule%20Assignment%20Administration.xml $:</xsd:headURL>
+		<xsd:id>$Id: Manage Work Schedule Assignment Administration.xml 79043 2022-07-23 07:06:07Z kullada.somtragool $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Work Schedule Assignment Administration" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Departments"/>
+			<navigation name="Manage Job"/>
+			<navigation name="Manage Positions"/>
+			<navigation name="Manage Users"/>
+			<navigation name="Manage Work Schedules"/>
+			<navigation name="Manage Eligibility Profiles"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Work Schedule Assignment Administration - Work Schedules"/>			
+			<parameter name="MAIN_REPEAT_2" value="Manage Work Schedule Assignment Administration - Resource Assignments"/>
+			<parameter name="MAIN_REPEAT_3" value="Manage Work Schedule Assignment Administration - Exceptions"/>			
+		</parameters>
+		<block name="DFF_FAKE">
+			<findElement by="xpath">//*[contains(text(),'<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>')]</findElement>
+			<findElement by="xpath">//*[contains(text(),'<valueKB inventoryName="MAIN_REPEAT_2" columnName="Name"/>')]</findElement>
+			<findElement by="xpath">//*[contains(text(),'<valueKB inventoryName="MAIN_REPEAT_3" columnName="Name"/>')]</findElement>
+		</block>
+		<block name="Search_Work_Schedule">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../../.."/>
+				</parameters>
+			</executeBlock>		
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>				
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Work Schedules']//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table[@summary='Work Schedules']//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true"/>							
+				</then>
+				<else>
+					<error message= "Please define data from task 'Manage Work Schedules' or 'Manage Facility Schedules'. "/>
+				</else>
+			</IfThenElse>		
+		</block>		
+		<block name="Resource_Assignments">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Resource Assignments']//tr[contains(@class,'Select')]//tr//td[1]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Resource Assignments']//tr[contains(@class,'Select')]//tr//td[2]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>			
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Resource Assignments']//tr[contains(@class,'Select')]//tr//td[3]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Resource Type"/>
+				</parameters>
+			</executeBlock>	
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//table[@summary='Resource Assignments']//tr[contains(@class,'Select')]//tr//td[3]//*[@title='Assignment' or @value='Assignment']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_2_ADV_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//table[@summary='Resource Assignments']//tr[contains(@class,'Select')]//tr//td[4]"/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+							<parameter name="COL_1_NAME" value="Resource Name"/>
+							<parameter name="COL_2_NAME" value="Resource Number"/>
+							<parameter name="SEARCH_1_LABEL" value="Name"/>
+							<parameter name="SEARCH_2_LABEL" value="Assignment Number"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//table[@summary='Resource Assignments']//tr[contains(@class,'Select')]//tr//td[3]//*[@title='Position' or @value='Position']</findElement>
+						</if>
+						<then>
+							<executeBlock navigationName="TemplateLOV" name="TEMPLATE_3_ADV_LOV">
+								<parameters>
+									<parameter name="XPATH" value="//table[@summary='Resource Assignments']//tr[contains(@class,'Select')]//tr//td[4]"/>
+									<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+									<parameter name="COL_1_NAME" value="Resource Name"/>
+									<parameter name="COL_2_NAME" value="Resource Code"/>
+									<parameter name="COL_3_NAME" value="Resource Business Unit"/>
+									<parameter name="SEARCH_1_LABEL" value="Name"/>
+									<parameter name="SEARCH_2_LABEL" value="Code"/>
+									<parameter name="SEARCH_3_LABEL" value="Organization"/>
+								</parameters>
+							</executeBlock>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//table[@summary='Resource Assignments']//tr[contains(@class,'Select')]//tr//td[3]//*[@title='Employment term' or @value='Employment term']</findElement>
+								</if>
+								<then>
+									<executeBlock navigationName="TemplateLOV" name="TEMPLATE_2_ADV_LOV">
+										<parameters>
+											<parameter name="XPATH" value="//table[@summary='Resource Assignments']//tr[contains(@class,'Select')]//tr//td[4]"/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+											<parameter name="COL_1_NAME" value="Resource Name"/>
+											<parameter name="COL_2_NAME" value="Resource Number"/>
+											<parameter name="SEARCH_1_LABEL" value="Assignment Name"/>
+											<parameter name="SEARCH_2_LABEL" value="Assignment Number"/>
+										</parameters>
+									</executeBlock>
+								</then>
+								<else>
+									<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+										<parameters>
+											<parameter name="XPATH" value="//table[@summary='Resource Assignments']//tr[contains(@class,'Select')]//tr//td[4]"/>
+											<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+											<parameter name="COL_NAME" value="Resource Name"/>
+											<parameter name="SEARCH_1" value="Name"/>
+										</parameters>
+									</executeBlock>					
+								</else>
+							</IfThenElse>				
+						</else>
+					</IfThenElse>					
+				</else>
+			</IfThenElse>			
+
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Resource Assignments']//tr[contains(@class,'Select')]//tr//td[5]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Primary"/>
+				</parameters>
+			</executeBlock>			
+
+
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Resource Assignments']//tr[contains(@class,'Select')]/td[1]</findElement>
+			<click waitForPageToFinishRendering="true"/>		
+			<pause durationInSecs="2"/>				
+		</block>			
+		<block name="Search_Resource_Assignments">
+
+			<defineVariable name="VALUE_RESOURCE" type="text"/>
+			<setVariable name="VALUE_RESOURCE" append="false">
+				<valueText/>
+			</setVariable>
+			<setVariable name="VALUE_RESOURCE" append="true">//table[@summary='Resource Assignments']//tr//tr[td[1]//*[@value='</setVariable>
+			<setVariable name="VALUE_RESOURCE" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_2" columnName="Start Date"/>
+			</setVariable>
+			<setVariable name="VALUE_RESOURCE" append="true">'] and td[2]//*[@value='</setVariable>
+			<setVariable name="VALUE_RESOURCE" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_2" columnName="End Date"/>
+			</setVariable>
+			<setVariable name="VALUE_RESOURCE" append="true">'] and td[3]//*[@value='</setVariable>
+			<setVariable name="VALUE_RESOURCE" append="true">
+				<valueKB inventoryName="MAIN_REPEAT_2" columnName="Resource Type"/>
+			</setVariable>
+			<setVariable name="VALUE_RESOURCE" append="true">']</setVariable>								
+			<IfThenElse>
+				<if>
+					<comparisons separator="OR">
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Resource Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Assignment</valueText>
+							</rightOperand>
+						</comparison>
+						<comparison operator="EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="MAIN_REPEAT_2" columnName="Resource Type"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText>Employment term</valueText>
+							</rightOperand>
+						</comparison>							
+					</comparisons>
+				</if>
+				<then>
+					<setVariable name="VALUE_RESOURCE" append="true"> and td[4]//*[@value='</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Resource Number"/>
+					</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">'] ]</setVariable>							
+				</then>
+				<else>
+					<setVariable name="VALUE_RESOURCE" append="true"> and td[4]//*[@value='</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">
+						<valueKB inventoryName="MAIN_REPEAT_2" columnName="Resource Name"/>
+					</setVariable>
+					<setVariable name="VALUE_RESOURCE" append="true">'] ]</setVariable>						
+				</else>
+			</IfThenElse>
+
+			<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+				<parameters>
+					<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Resource Assignments']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Resource Assignments']//tr)[1]//td[1]"/>
+					<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Resource Assignments']/../../../../../../..//div[contains(@id,'scroller')]"/>
+					<parameter name="TEMPLATE_1_FIND_ROW">
+						<valueVariable name="VALUE_RESOURCE"/>
+					</parameter>
+					<parameter name="TEMPLATE_CREATE" value="Create_Resource_Assignments"/>
+					<parameter name="TEMPLATE_UPDATE" value="Update_Resource_Assignments"/>
+				</parameters>
+			</executeBlock>	
+		</block>
+		<block name="Create_Resource_Assignments">
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Resource Assignments']/../../../../.."/>
+				</parameters>   
+			</executeBlock>			
+		</block>		
+		<block name="Update_Resource_Assignments">
+			<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW/../../../../../td[1]</findElement>
+			<click waitForPageToFinishRendering="true"/>		
+			<pause durationInSecs="2"/>						
+		</block>				
+		<block name="Exceptions">
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//*[contains(@summary,'Exceptions')]//tr[contains(@class,'Select')]//tr//td[number(//*[contains(@summary,'Exceptions')]/../..//th//span[text()='Type']/..//../@_d_index)]"/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Exception Type"/>
+				</parameters>
+			</executeBlock>				
+			<pause durationInSecs="2"/>	
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//*[contains(@summary,'Exceptions')]//tr[contains(@class,'Select')]//tr//td[number(//*[contains(@summary,'Exceptions')]/../..//th//span[text()='Type']/..//../@_d_index)]//*[@value='Calendar event category' or @title='Calendar event category']</findElement>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(@summary,'Exceptions')]//tr[contains(@class,'Select')]//tr//td[number(//*[contains(@summary,'Exceptions')]/../..//th//span[text()='Name']/..//../@_d_index)]"/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Exception Name"/>
+						</parameters>
+					</executeBlock>					
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//*[contains(@summary,'Exceptions')]//tr[contains(@class,'Select')]//tr//td[number(//*[contains(@summary,'Exceptions')]/../..//th//span[text()='Name']/..//../@_d_index)]"/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+							<parameter name="COL_NAME" value="Exception Name"/>
+							<parameter name="SEARCH_1" value="Name"/>
+						</parameters>
+					</executeBlock>					
+				</else>
+			</IfThenElse>					
+		</block>
+		<block name="Show_All">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+                        isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//a[text()='View']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath" isDisplayed="true">//table[contains(@summary,'Exceptions')]/../../../../..//a[text()='View']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<findElement isSkipCheckDomError="true" by="xpath" isDisplayed="true">//table[@style='position: relative;']//td[text()='Columns']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<findElement isSkipCheckDomError="true" by="xpath" isDisplayed="true">//table[@style='position: relative;']//td[text()='Show All']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>					
+
+				</then>
+				<else>
+					<findElement isSkipCheckDomError="true" by="xpath" isDisplayed="true">//table[contains(@summary,'Exceptions')]/../../../../..//a[text()='View']/../../../../../../../../../../../..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<findElement isSkipCheckDomError="true" by="xpath" isDisplayed="true">//table[@style='position: relative;']//a[text()='View']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<findElement isSkipCheckDomError="true" by="xpath" isDisplayed="true">//table[@style='position: relative;']//td[text()='Columns']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<findElement isSkipCheckDomError="true" by="xpath" isDisplayed="true">//table[@style='position: relative;']//td[text()='Show All']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>						
+
+				</else>
+			</IfThenElse>
+		</block>		
+		<block name="Create_Exceptions">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[@title='Add' or text()='Add']</findElement>
+				</if>
+				<then>
+					<findElement isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[@title='Add' or text()='Add']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[@title='Add' or text()='Add']/../../../../../../../..</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[@title='Add' or text()='Add']/../../../../../../../..</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[@title='Add' or text()='Add']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>						
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[@title='Add Row' or text()='Add Row']</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[@title='Add Row' or text()='Add Row']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[@title='Add Row' or text()='Add Row']/../../../../../../../..</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[@title='Add Row' or text()='Add Row']/../../../../../../../..</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+											<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[@title='Add Row' or text()='Add Row']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>						
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[@title='New' or text()='New']</findElement>
+												</if>
+												<then>
+													<findElement isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[@title='New' or text()='New']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+												</then>
+												<else>
+													<IfThenElse>
+														<if>
+															<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[@title='New' or text()='New']/../../../../../../../..</findElement>
+														</if>
+														<then>
+															<findElement isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[@title='New' or text()='New']/../../../../../../../..</findElement>
+															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+															<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[@title='New' or text()='New']</findElement>
+															<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>						
+														</then>
+														<else>
+															<IfThenElse>
+																<if>
+																	<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[@title='Select and Add' or text()='Select and Add']</findElement>
+																</if>
+																<then>
+																	<findElement isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[@title='Select and Add' or text()='Select and Add']</findElement>
+																	<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+																</then>
+																<else>
+																	<IfThenElse>
+																		<if>
+																			<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[@title='Select and Add' or text()='Select and Add']/../../../../../../../..</findElement>
+																		</if>
+																		<then>
+																			<findElement isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[@title='Select and Add' or text()='Select and Add']/../../../../../../../..</findElement>
+																			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+																			<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[@title='Select and Add' or text()='Select and Add']</findElement>
+																			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>						
+																		</then>
+																		<else>
+																			<IfThenElse>
+																				<if>
+																					<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[contains(@src,'func_add')]</findElement>
+																				</if>
+																				<then>
+																					<findElement isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[contains(@src,'func_add')]</findElement>
+																					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>   					
+																				</then>
+																				<else>
+																					<IfThenElse>
+																						<if>
+																							<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[contains(@src,'func_add')]/../../../../../../../..</findElement>
+																						</if>
+																						<then>
+																							<findElement isSkipCheckDomError="true" by="xpath">//table[contains(@summary,'Exceptions')]/../../../../..//*[contains(@src,'func_add')]/../../../../../../../..</findElement>
+																							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>  
+																							<findElement isSkipCheckDomError="true" by="xpath">//table[@style='position: relative;']//*[contains(@src,'func_add')]</findElement>
+																							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>						
+																						</then>
+																						<else>
+
+																						</else>
+																					</IfThenElse>
+																				</else>
+																			</IfThenElse>	
+																		</else>
+																	</IfThenElse>
+																</else>
+															</IfThenElse>		
+														</else>
+													</IfThenElse>
+												</else>
+											</IfThenElse>														
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>	
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>				
+			<findElement by="xpath" isSkipCheckDomError="true">//*[contains(@summary,'Exceptions')]//tr/td[1]</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+			<pause durationInSecs="2"/>	
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//div[text()='Error']/../../../../../../../..//*[text()='OK']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Error']/../../../../../../../..//*[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+					<pause durationInSecs="2"/>	
+				</then>
+				<else/>
+			</IfThenElse>				
+		</block>
+		<block name="Update_Exceptions">
+			<findElement by="xpath" isSkipCheckDomError="true">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true"/>		
+			<pause durationInSecs="2"/>						
+		</block>		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="Search_Work_Schedule"/>
+
+			<repeat inventoryName="MAIN_REPEAT_2">
+
+				<executeBlock name="Search_Resource_Assignments"/>
+
+				<executeBlock name="Resource_Assignments"/>
+
+
+				<repeat inventoryName="MAIN_REPEAT_3">
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//table[contains(@summary,'Exceptions')]/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[contains(@summary,'Exceptions')]//tr)[1]//td[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[contains(@summary,'Exceptions')]/../..//div[contains(@id,'scroller')]"/>
+														<parameter name="TEMPLATE_1_FIND_ROW">//table[contains(@summary,'Exceptions')]//tr//tr[td[number(//*[contains(@summary,'Exceptions')]/../..//th//span[text()='Name']/..//../@_d_index)]//*[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Exception Name"/>' or @title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Exception Name"/>'] and td[number(//*[contains(@summary,'Exceptions')]/../..//th//span[text()='Type']/..//../@_d_index)]//*[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Exception Type"/>' or @title='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Exception Type"/>']]/../../../../../td[1]</parameter>
+							<parameter name="TEMPLATE_CREATE" value="Create_Exceptions"/>
+							<parameter name="TEMPLATE_UPDATE" value="Update_Exceptions"/>
+						</parameters>
+					</executeBlock>	
+					<pause durationInSecs="2"/>	
+					<executeBlock name="Exceptions"/>						
+				</repeat>
+
+			</repeat>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//*[contains(text(),'Edit Work Schedule Assignment Administration')]/../../../../../../../../../../..//*[text()='m']/../..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Edit Work Schedule Assignment Administration')]/../../../../../../../../../../..//*[text()='m']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>		
+					<pause durationInSecs="2"/>		
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[contains(text(),'Edit Work Schedule Assignment Administration')]/../../../../../../../../../../..//*[text()='m']/../..</findElement>
+					<click waitForPageToFinishRendering="true"/>		
+					<pause durationInSecs="2"/>						
+				</else>
+			</IfThenElse>			
+
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//div[text()='Confirmation']/../../../../../../../..//*[text()='OK']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Confirmation']/../../../../../../../..//*[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>		
+					<pause durationInSecs="2"/>	
+				</then>
+				<else/>
+			</IfThenElse>				
+		</repeat>
+
+
+	</fusionNavigation>
+</navigation>

@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Compensation History</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Configure Compensation History" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Legislative Data Groups"/>
+			<navigation name="Manage Element Classifications"/>
+		</dependencies>
+		
+		<parameters>
+			<parameter name="INV_1" value="Manage Compensation History - Compensation History"/>
+		</parameters>
+		
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Name"/>']</findElement>
+		</block>
+		
+		<block name="Search_Compensation_History">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//span[text()='Search']/../..//label[text()='Name']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+					<parameter name="SEARCH_1" value="Payroll Element"/>
+				</parameters>
+			</executeBlock>
+			<pause durationInSecs="5"/>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//span[text()='Search']/../../..//td[4]/div</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//span[text()='Search']/../../..//td[4]/div/a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="5"/>
+				</then>
+				<else>
+					<executeBlock name="Search_Button"/>
+				</else>
+			</IfThenElse>			
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table[@summary='Configure Compensation History']/../..//input[@value='<valueKB inventoryName="INV_1" columnName="Name"/>']/../../..</findElement>
+				</if>
+				<then>
+					<executeBlock name="Create_Compensation_History"/>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_CONFIRMATION"/>
+				</then>
+				<else>
+					<executeBlock name="MANUAL_NEW"/>
+					<executeBlock name="Create_Compensation_History"/>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+					<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_CONFIRMATION"/>
+				</else>
+			</IfThenElse>
+		</block>		
+		
+		<block name="Create_Compensation_History">
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Configure Compensation History']/../..//label[text()='Name']/../../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+					<parameter name="SEARCH_1" value="Payroll Element"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Configure Compensation History']/tbody/tr/td[2]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Country"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Configure Compensation History']/tbody/tr/td[3]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Legislative Data Group"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Configure Compensation History']/tbody/tr/td[4]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Reporting Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Configure Compensation History']/../..//label[text()='Input Value']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Input Value"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Configure Compensation History']/tbody/tr/td[6]"/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="History Category"/>
+				</parameters>
+			</executeBlock>
+		</block>
+
+		<block name="MANUAL_NEW">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[@title='New']/a</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[@title='New']/a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="5"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Search_Button">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[@title='Collapse Search']/../../../../../..//a[contains(@id,'search_icon')]/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[@title='Collapse Search']/../../../../../..//a[contains(@id,'search_icon')]/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="5"/>
+				</then>
+				<else>
+					<findElement by="xpath">//a[@title='Collapse Search']/../../../../../..//a[@title='Search']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="5"/>
+				</else>
+			</IfThenElse>
+		</block>		
+		
+		<block name="DONE">
+			<findElement by="xpath">//button[@title='Done']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		
+		<repeat inventoryName="INV_1">
+			<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+			<executeBlock name="Search_Compensation_History"/>
+			<executeBlock name="DONE"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

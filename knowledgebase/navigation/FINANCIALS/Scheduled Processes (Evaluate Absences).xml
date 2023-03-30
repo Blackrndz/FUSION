@@ -1,0 +1,286 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Scheduled Processes (Evaluate Absences)</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isIgnoreTaskSearchNavigation="true" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Scheduled Processes" isBatchingAllowed="false" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Administrator Profile Values"/>
+		</dependencies> 
+		<parameters>
+			<parameter name="Repeat 1" value="Scheduled Processes - Evaluate Absences"/>
+		</parameters>
+
+		<block name="Submit">
+			<findElement by="xpath">//span[text()='m']/../..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="2"/>
+		</block>
+		<block name="Warning">
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//table[contains(@id,'confirmationPopup')]</findElement>
+				</if>
+				<then>
+					<findElement isDisplayed="true" by="xpath">//table[contains(@id,'confirmationPopup')]//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		<block name="Schedule New Process Button">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//a[text()='Actions']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='Actions']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<findElement by="xpath">//table[@style='position: relative;']//td[text()='Schedule New Process']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse>
+			<!-- <IfThenElse>
+				<if>
+					<findElement by="xpath">//span[text()='Schedule New Process']/..</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//span[text()='Schedule New Process']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+				</then>
+				<else/>
+			</IfThenElse> -->
+		</block>
+		<block name="OK">
+			<findElement by="xpath">//div[contains(@data-afr-popupid,'scheduleRequest')]//button[text()='OK']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+
+		<!-- Processing Section -->
+		<block name="Schedule New Process">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="Repeat 1" columnName="Name"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText/>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Type']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Type"/>
+						</parameters>
+					</executeBlock>
+					
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Name"/>
+							<parameter name="SEARCH_1" value="Item"/>
+						</parameters>
+					</executeBlock>
+					
+					<findElement by="xpath">//div[contains(@data-afr-popupid,'scheduleRequest')]//button[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="5"/>
+					
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Effective Date']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Effective Date"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Run as test']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Run as test"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Include trace statements in audit log']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Include trace statements in audit log"/>
+						</parameters>
+					</executeBlock>					
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Increment effective date']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Increment effective date"/>
+						</parameters>
+					</executeBlock>
+					
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_2_ADV_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Population Filters']/../../../../../../..//label[text()='Person']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_1_NAME" value="Person Name"/>
+							<parameter name="COL_2_NAME" value="Person Number"/>
+							<parameter name="SEARCH_1_LABEL" value="Name"/>
+							<parameter name="SEARCH_2_LABEL" value="Person Number"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_2_ADV_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//*[text()='Population Filters']/../../../../../../..//label[text()='Type']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_1_NAME" value="Absence Type"/>
+							<parameter name="COL_2_NAME" value="Absence Entry"/>
+							<parameter name="SEARCH_1_LABEL" value="Type"/>
+							<parameter name="SEARCH_2_LABEL" value="AbsenceEntry"/>
+						</parameters>
+					</executeBlock>
+					
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Business Unit']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Business Unit"/>
+							<parameter name="SEARCH_1" value="Business Unit"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Legal Employer']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Legal Employer"/>
+							<parameter name="SEARCH_1" value="Item"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Person Selection Rule']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Person Selection Rule"/>
+							<parameter name="SEARCH_1" value="Formula Name"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Payroll']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Payroll"/>
+							<parameter name="SEARCH_1" value="Payroll"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Legislative Data Group']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Legislative Data Group"/>
+							<parameter name="SEARCH_1" value="Legislative Data Group"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Work Schedule Rule']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Work Schedule Rule"/>
+						</parameters>
+					</executeBlock>
+					<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Record Selection']/../.."/>
+							<parameter name="INV_NAME" value="Repeat 1"/>
+							<parameter name="COL_NAME" value="Record Selection"/>
+						</parameters>
+					</executeBlock>
+				</then>
+				<else>
+					<error message="'Name' is required."/>
+				</else>
+			</IfThenElse>		
+		</block>
+		<block name="Serach_Page">
+			<findElement by="xpath">//a[contains(@id,'UIShome')]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement isDisplayed="true" by="xpath">//div[@data-afr-dsp-child='grid']//div[@data-afr-dsp-child='layerWrapper']</findElement>
+				</if>
+				<then>
+					<executeBlock name="Serach_Task_Layer"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//div[@data-afr-dsp-child='grid']</findElement>
+						</if>
+						<then>
+							<executeBlock name="Serach_Task_Grid"/>
+						</then>
+						<else/>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Serach_Task_Layer">
+			<findElement by="xpath">//a[@title='Navigator']</findElement>
+			<click waitForPageToFinishRendering="true" />
+			<findElement setFocus="true" by="xpath">//span[text()='Tools']</findElement>
+			<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+			<findElement by="xpath">//span[text()='Scheduled Processes']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+		</block>
+		<block name="Serach_Task_Grid">
+			<findElement setFocus="true" by="xpath">//div[@title='Tools']</findElement>
+			<click waitForPageToFinishRendering="true" />
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[@title='Scheduled Processes']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//div[@title='Scheduled Processes']</findElement>
+					<click waitForPageToFinishRendering="true" />
+				</then>
+				<else>
+					<executeBlock name="Personalize_Springboard"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Personalize_Springboard">
+			<findElement setFocus="true" by="xpath">//img[@title='Personalize Springboard']</findElement>
+			<click waitForPageToFinishRendering="true" />
+			<findElement by="xpath">//div[contains(@class,'Expansion')]/..//label[text()='Scheduled Processes']/../..//div</findElement>
+			<click waitForPageToFinishRendering="true" isJavaScript="true"/>
+			<findElement by="xpath">//span[text()='OK']/..</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement setFocus="true" by="xpath">//div[@title='Tools']</findElement>
+			<click waitForPageToFinishRendering="true" />
+			<findElement by="xpath">//div[@title='Scheduled Processes']</findElement>
+			<click waitForPageToFinishRendering="true" />
+		</block>
+		<!--BEGIN REPEAT-->
+		<executeBlock name="Serach_Page"/>
+		<repeat inventoryName="Repeat 1">
+			<executeBlock name="Schedule New Process Button"/>
+			<executeBlock name="Schedule New Process"/>
+			<executeBlock name="Submit"/>
+			<executeBlock name="Warning"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

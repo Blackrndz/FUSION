@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Legal Entity (Spain)</name>
+	<svn>
+		<revision xmlns="http://xsdutility.configurator.erapidsuite.com">$Revision: $:</revision>
+		<author xmlns="http://xsdutility.configurator.erapidsuite.com">$Author: $:</author>
+		<date xmlns="http://xsdutility.configurator.erapidsuite.com">$Date: $:</date>
+		<headURL xmlns="http://xsdutility.configurator.erapidsuite.com">$HeadURL: $:</headURL>
+		<id xmlns="http://xsdutility.configurator.erapidsuite.com">$Id: $:</id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isIgnoreTaskSearchNavigation="true" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Legal Entity" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+
+		<dependencies>
+			<navigation name="Manage Legal Addresses (Spain)"/>
+			<navigation name="Manage Legal Entity Configurator Descriptive Flexfield"/>
+			<navigation name="Manage Legal Jurisdictions"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Legal Entity (Spain) - Manage Legal Entities"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Legal Entity (Spain) - Manage Legal Entities - DFF"/>
+		</parameters>
+
+		<block name="DFF_FAKE">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Name"/>']/../..//input</findElement>		
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Name"/>']/../..//input</findElement>
+		</block>	
+		<block name="ADDITIONAL">
+			<!-- NIF -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//input[contains(@id,'RegCodeLe')]/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="NIF"/>
+				</parameters>
+			</executeBlock>	
+
+			<!-- CUIT -->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//input[contains(@id,'RegCodeEtb')]/.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="CUIT"/>
+				</parameters>
+			</executeBlock>			
+		</block>		
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock navigationName="Manage Legal Entity (United States)" name="MANUAL_SEARCH_TASK"/>
+			<executeBlock navigationName="Manage Legal Entity (United States)" name="CASE_2_LEGAL_ENTITY">
+				<parameters>
+					<parameter name="MAIN_REPEAT_1" value="REPEAT_1_MAIN"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock name="ADDITIONAL"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock navigationName="TemplateDFF" name="TEMPLATE_DFF">
+					<parameters>
+						<parameter name="DFF_NAME" value="REPEAT_2_MAIN"/>
+					</parameters>
+				</executeBlock>	
+			</repeat>
+			<executeBlock name="GLOBAL_SAVE"/>
+			<IfThenElse>
+				<if>
+					<findElement isSkipCheckDomError="true" highlightTurnedOff="true" by="xpath" setFocus="true">//div[text()='Confirmation']/../../../../../../..//*[text()='OK']</findElement>
+				</if>
+				<then>	
+					<findElement by="xpath" isSkipCheckDomError="true">//div[text()='Confirmation']/../../../../../../..//*[text()='OK']</findElement>
+					<click waitForPageToFinishRendering="false" isSkipCheckDomError="true" isSkipBrowserTitleChange="true" />				
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>			
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</repeat>
+			
+	</fusionNavigation>
+</navigation>

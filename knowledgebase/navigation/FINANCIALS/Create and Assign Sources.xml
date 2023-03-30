@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Create and Assign Sources</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Create and Assign Sources"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <!-- <dependencies>
+            <navigation name=""/>
+        </dependencies> -->
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Create and Assign Sources - Create and Assign Sources"/>
+        </parameters>
+        <block name="Go_To_Task_Synchronization">
+            <findElements by="xpath" returnElementAtPosition="1">//span[text()='###TASK_NAME###']/../../../..//a</findElements>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Submit_Synchronization">
+            <findElement by="xpath">//span[text()='m']/../..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Warning_Synchronization">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//table[contains(@id,'confirmationPopup')]</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true" by="xpath">//table[contains(@id,'confirmationPopup')]//button[text()='OK']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+		
+		
+        <repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="GLOBAL_GO_TO_TASK"/>
+ 			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Subledger Application']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Subledger Application"/>
+				</parameters>
+			</executeBlock>           
+           <executeBlock name="Submit_Synchronization"/>
+            <pause durationInSecs="2"/>
+            <executeBlock name="Warning_Synchronization"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

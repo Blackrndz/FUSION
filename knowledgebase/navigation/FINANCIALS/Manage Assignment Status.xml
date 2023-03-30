@@ -1,0 +1,301 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Assignment Status</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Assignment Status" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Create Implementation Users"/>
+		</dependencies>
+		<parameters>
+			<parameter name="REPEAT_1_MAIN" value="Manage Assignment Status - Assignment Status"/>
+			<parameter name="REPEAT_2_MAIN" value="Manage Assignment Status - Country"/>
+		</parameters>
+		
+		<block name="GOTO_ASSIGNMENT_STATUS">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//div[@title='Assignment Status']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='Assignment Statuses']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//div[@title='Workforce Structures']</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//label[text()='Search for tasks']/..//input</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//label[text()='Search for tasks']/..//input</findElement>
+							<sendKeys isClear="true">
+								<valueText>Assignment Statuses</valueText>
+							</sendKeys>
+							<findElement by="xpath">//a[@title='Search for tasks']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+							<IfThenElse>
+								<if>
+									<findElement by="xpath">(//a[@title='Assignment Statuses'])[2]</findElement>
+								</if>
+								<then>
+									<findElement by="xpath">(//a[@title='Assignment Statuses'])[2]</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="1"/>
+								</then>
+								<else>
+									<findElement by="xpath">//a[@title='Assignment Statuses']</findElement>
+									<click waitForPageToFinishRendering="true"/>
+									<pause durationInSecs="1"/>								
+								</else>
+							</IfThenElse>
+						</then>
+						<else>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Search_Assignment_Status">
+			<executeBlock name="SCROLLBAR">
+				<parameters>
+					<parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Assignment Status' or @summary='Assignment Statuses']/../..//div[contains(text(),'No data to display.')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Assignment Status' or @summary='Assignment Statuses'][@_rowcount]//tr[1]//td)[1]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Assignment Status' or @summary='Assignment Statuses']/../..//div[contains(@id,'scroller')]"/>
+					<parameter name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Assignment Status' or @summary='Assignment Statuses']//tr[td/span/span[text()='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Status"/>']]</parameter>
+					<parameter name="SCROLLBAR_GENERIC_2_FIND_ROW">//table[@summary='Assignment Status' or @summary='Assignment Statuses']//tr[td/span/input[@value='<valueKB inventoryName="REPEAT_1_MAIN" columnName="Status"/>']]</parameter>
+					<parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Assignment_Status"/>
+					<parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Assignment_Status"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="FIND_INPUT_ROW">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath">//table[@summary='Assignment Status' or @summary='Assignment Statuses']//tr//td//input</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Assignment Status' or @summary='Assignment Statuses']//tr//td//input</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>	
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Assignment Status' or @summary='Assignment Statuses']/../..//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="TOP"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>	
+		</block>	
+
+		<block name="SEARCH_STATUS">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT_ENTER">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Configure Actions']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Status"/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath">//table//a[contains(text(),'<valueKB inventoryName="REPEAT_1_MAIN" columnName="Status"/>')]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//table//a[contains(text(),'<valueKB inventoryName="REPEAT_1_MAIN" columnName="Status"/>')]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<findElement by="xpath">//div[@title='Assignment Status']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>		
+		<block name="ASSIGNMENT_STATUS">
+			<!--Status-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Status']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Status"/>
+				</parameters>
+			</executeBlock>
+			<!--Code-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Code']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Code"/>
+				</parameters>
+			</executeBlock>
+			<!--HR Status-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='HR Status']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="HR Status"/>
+				</parameters>
+			</executeBlock>
+			<!--Pay Status-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Pay Status']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Pay Status"/>
+				</parameters>
+			</executeBlock>
+			<!--Start Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>
+			<!--End Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>
+			<!--Default-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Default']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Default"/>
+				</parameters>
+			</executeBlock>
+
+			<!--Original Status-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Original Status']/../.."/>
+					<parameter name="INV_NAME" value="REPEAT_1_MAIN"/>
+					<parameter name="COL_NAME" value="Original Status"/>
+				</parameters>
+			</executeBlock>
+		</block>
+		<block name="Warning">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//div[contains(@class,'Expansion')]/..//div[text()='Warning']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//div[text()='Warning']/../../../../../../../..//span[text()='K']/..</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+
+		<block name="COUNTRY">
+			<IfThenElse>
+				<if>
+					<comparisons separator="AND">
+						<comparison operator="NOT_EQUAL">
+							<leftOperand>
+								<valueKB inventoryName="REPEAT_2_MAIN" columnName="Country"/>
+							</leftOperand>
+							<rightOperand>
+								<valueText></valueText>
+							</rightOperand>
+						</comparison>
+					</comparisons>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" by="xpath">//div[contains(@id,'ctry')]//table[@aria-rowcount]</findElement>
+						</if>
+						<then>
+
+						</then>
+						<else>
+							<findElement by="xpath">//label[text()='Country']/../..//a[not(@title)]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+						</else>
+					</IfThenElse>
+					<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+						<parameters>
+							<parameter name="XPATH">//div[contains(@id,'ctry')]//table[@aria-rowcount]//*[text()='<valueKB inventoryName="REPEAT_2_MAIN" columnName="Country"/>']/../..</parameter>
+							<parameter name="INV_NAME" value="REPEAT_2_MAIN"/>
+							<parameter name="COL_NAME" value="Enable"/>
+						</parameters>
+					</executeBlock>	
+				</then>
+				<else>
+
+				</else>
+			</IfThenElse>
+		</block>
+
+	
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="REPEAT_1_MAIN">
+			<executeBlock name="GOTO_ASSIGNMENT_STATUS"/>
+			<executeBlock name="SEARCH_STATUS"/>
+			<executeBlock name="ASSIGNMENT_STATUS"/>
+			<repeat inventoryName="REPEAT_2_MAIN">
+				<executeBlock name="COUNTRY"/>
+			</repeat>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//span[text()='Submit']/..</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//span[text()='Submit']/..</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//button[text()='Submit']</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//button[text()='Submit']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//*[text()='m']/../..</findElement>
+								</if>
+								<then>
+									<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//*[text()='m']/../..</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+								</then>
+								<else>
+									<findElement highlightTurnedOff="true" isDisplayed="true" isSkipCheckDomError="true" by="xpath">//*[text()='Submit']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>						
+								</else>
+							</IfThenElse>						
+						</else>
+					</IfThenElse>					
+				
+				</else>
+			</IfThenElse>
+		</repeat>
+	</fusionNavigation>
+</navigation>

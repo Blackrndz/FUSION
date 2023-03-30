@@ -1,0 +1,337 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>TemplateTASK</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" taskName="N/A" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<parameters>
+			<parameter name="INV_NAME" value="RSC - Template"/>
+			<parameter name="TASK_NAME" value="RSC - Template"/>
+			<parameter name="IMPLEMENTATION_PROJECT" value="RSC - Template"/>
+		</parameters>	
+		<block name="TemplateTASK">
+			<findElement by="xpath">//label[text()='Template']/../..//input</findElement>
+			<sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+				<valueKB inventoryName="INV_NAME" columnName="Template"/>
+			</sendKeys>			
+			<executeBlock name="TEMPLATE_SELECT_SCOPE">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="RSC - Template"/>
+					<parameter name="COL_NAME" value="Template"/>
+				</parameters>
+			</executeBlock>				
+		</block>
+		<block name="TEMPLATE_GO_TO_TASK">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//span[text()='Welcome to Identity Manager Self Service']</findElement> 
+				</if>
+				<then/>
+				<else>
+					<!-- Check Task: active or not active -->
+					<IfThenElse>
+						<if>
+							<findElement isDisplayed="true" by="xpath">//*[text()='###TASK_NAME###'][contains(@class,'Disabled')]</findElement>
+						</if>
+						<then>
+							<error message="Unable to access task : Please check role and privilege"/>
+						</then>
+						<else>
+							<IfThenElse>
+								<if>
+									<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//span[text()='###TASK_NAME###']/../../../../../..//img[@title='Go to Task']</findElement>
+								</if>
+								<then>
+									<findElement by="xpath" isSkipCheckDomError="true">//span[text()='###TASK_NAME###']/../../../../../..//img[@title='Go to Task']</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>    
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//td[text()='Financials']/../../../../../../..//a[text()='###TASK_NAME###']</findElement>
+										</if>
+										<then>
+											<findElement by="xpath" isSkipCheckDomError="true">//td[text()='Financials']/../../../../../../..//a[text()='###TASK_NAME###']</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 
+										</then>
+										<else>
+											<IfThenElse>
+												<if>
+													<evaluateXPATHBoolean>count(//a[text()='###TASK_NAME###'])=1</evaluateXPATHBoolean>
+												</if>
+												<then>
+													<findElement by="xpath" isSkipCheckDomError="true">//a[text()='###TASK_NAME###']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 
+												</then>
+												<else>
+													<findElement by="xpath" isSkipCheckDomError="true">//*[@summary="Search Results"]//*[text()='Task']/..//a[text()='###TASK_NAME###']</findElement>
+													<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/> 
+												</else>
+											</IfThenElse>
+										</else>
+									</IfThenElse>							
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>				
+		</block>
+		<block name="TEMPLATE_DASHBOARD_GO_TO_TASK">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath" >//span[text()='Welcome to Identity Manager Self Service']</findElement> 
+				</if>
+				<then/>
+				<else>
+
+					<findElement isSkipCheckDomError="true" by="xpath" >//img[@title='Tasks']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" />
+
+					<findElement isSkipCheckDomError="true" by="xpath" >//a[text()='Manage Implementation Projects']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>			
+
+
+					<findElement isSkipCheckDomError="true" by="xpath" >//tr[td/label = 'Name']//input</findElement>
+					<sendKeys isClear="true">
+						<valueText>###IMPLEMENTATION_PROJECT###</valueText>
+					</sendKeys>
+
+					<findElement isSkipCheckDomError="true" by="xpath" >//button[text()='Search']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+
+					<findElement isSkipCheckDomError="true" by="xpath" >//a[normalize-space(text())=normalize-space('###IMPLEMENTATION_PROJECT###')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+
+					<findElement isSkipCheckDomError="true" by="xpath" >//tr[td/label = 'Task']//input</findElement>
+					<sendKeys isClear="true">
+						<valueText>###TASK_NAME###</valueText>
+					</sendKeys>
+
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" by="xpath">//tr[td/label = 'Task']/../../../..//img[@title='Search']</findElement>
+						</if>
+						<then>
+						</then>
+						<else>
+							<findElement isSkipCheckDomError="true" by="xpath" >//img[@title='Search']/..</findElement>
+						</else>
+					</IfThenElse>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" />
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Search Results'][@_rowcount='1']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='###TASK_NAME###']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//a[text()='Manage Primary Ledgers']</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Search Results']//tr[td[1]//a[text()='###TASK_NAME###'] and td/table/tbody/tr//td[text()='Financials'] and td/table/tbody/tr//td[text()='Define Accounting Configurations']]//a[text()='###TASK_NAME###']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+						</then>
+						<else>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Search Results']//tr[td[1]//a[text()='###TASK_NAME###']  and td/table/tbody/tr//td[text()='Financials'] and td/table/tbody/tr//td[text()='Define Secondary Ledgers']]//a[text()='###TASK_NAME###']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>		
+		</block>		
+		<block name="TEMPLATE_MANUAL_GO_TO_TASK">
+			<!--<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">//a[text()='Manage Implementation Projects']</findElement>
+				</if>
+				<then>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//a[text()='Setup and Maintenance']</findElement>
+						</if>
+						<then/>
+						<else>
+							<findElement by="xpath">//img[contains(@src,'menuarrow_ena.png')]/..</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<findElement by="xpath">//a[text()='Setup and Maintenance...']</findElement>
+							<click waitForPageToFinishRendering="true"/>
+						</else>
+					</IfThenElse>					
+					<findElement by="xpath">//a[text()='Manage Implementation Projects']</findElement>
+					<click waitForPageToFinishRendering="true"/>    
+				</then>
+				<else>
+					<findElement by="xpath">//span[text()='Implementation Projects']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>  
+				</else>
+			</IfThenElse>
+			
+			<findElement by="xpath" >//tr[td/label = 'Name']//input</findElement>
+			<sendKeys isClear="true">
+				<valueText>###IMPLEMENTATION_PROJECT###</valueText>
+			</sendKeys>
+
+			<findElement by="xpath" >//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true" />
+			
+			<findElement by="xpath">//a[text()='###IMPLEMENTATION_PROJECT###']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<findElement by="xpath">//tr[td/label = 'Task']//input</findElement>
+			<sendKeys isClear="true">
+				<valueText>###TASK_NAME###</valueText>
+			</sendKeys>
+			
+			<findElement by="xpath" >//tr[td[2]//label[text()='Task']] //td[4]//a/img[@title='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>-->
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath" >//span[text()='Welcome to Identity Manager Self Service']</findElement> 
+				</if>
+				<then/>
+				<else>
+
+					<findElement isSkipCheckDomError="true" by="xpath" >//img[@title='Tasks']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" />
+
+					<findElement isSkipCheckDomError="true" by="xpath" >//a[text()='Manage Implementation Projects']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>			
+
+
+					<findElement isSkipCheckDomError="true" by="xpath" >//tr[td/label = 'Name']//input</findElement>
+					<sendKeys isClear="true">
+						<valueText>###IMPLEMENTATION_PROJECT###</valueText>
+					</sendKeys>
+
+					<findElement isSkipCheckDomError="true" by="xpath" >//button[text()='Search']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>		
+
+					<findElement isSkipCheckDomError="true" by="xpath" >//a[normalize-space(text())=normalize-space('###IMPLEMENTATION_PROJECT###')]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+
+					<findElement isSkipCheckDomError="true" by="xpath" >//tr[td/label = 'Task']//input</findElement>
+					<sendKeys isClear="true">
+						<valueText>###TASK_NAME###</valueText>
+					</sendKeys>
+
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" by="xpath">//tr[td/label = 'Task']/../../../..//img[@title='Search']</findElement>
+						</if>
+						<then>
+						</then>
+						<else>
+							<findElement isSkipCheckDomError="true" by="xpath" >//img[@title='Search']/..</findElement>
+						</else>
+					</IfThenElse>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true" />
+				</else>
+			</IfThenElse>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//table[@summary='Search Results'][@_rowcount='1']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[text()='###TASK_NAME###']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//a[text()='Manage Primary Ledgers']</findElement>
+						</if>
+						<then>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Search Results']//tr[td[1]//a[text()='###TASK_NAME###'] and td/table/tbody/tr//td[text()='Financials'] and td/table/tbody/tr//td[text()='Define Accounting Configurations']]//a[text()='###TASK_NAME###']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+						</then>
+						<else>
+							<findElement isSkipCheckDomError="true" by="xpath">//table[@summary='Search Results']//tr[td[1]//a[text()='###TASK_NAME###']  and td/table/tbody/tr//td[text()='Financials'] and td/table/tbody/tr//td[text()='Define Secondary Ledgers']]//a[text()='###TASK_NAME###']</findElement>
+							<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+						</else>
+					</IfThenElse>
+				</else>
+			</IfThenElse>		
+		</block>		
+		<block name="TEMPLATE_SELECT_SCOPE">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isSkipCheckDomError="true" by="xpath">//div[text()='###TASK_NAME###']</findElement>
+				</if>
+				<then>
+					<!--Version 11-->
+					<IfThenElse>
+						<if>
+							<findElement isSkipCheckDomError="true" by="xpath">//div[text()='###TASK_NAME###']/../../td[(string(//span[text()='Selected Scope']/../../@_d_index))+0]/a</findElement>
+						</if>
+						<then>
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" by="xpath">//div[text()='###TASK_NAME###']/../..//a[normalize-space(text())='<valueKB inventoryName="INV_NAME" columnName="COL_NAME"/>']</findElement>
+								</if>
+								<then>
+									<findElement isSkipCheckDomError="true" by="xpath" >//div[text()='###TASK_NAME###']/../..//a</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>        
+								</then>
+								<else>
+									<findElements isSkipCheckDomError="true" by="xpath" returnElementAtPosition="2">//div[text()='###TASK_NAME###']/../..//a</findElements>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+								</else>
+							</IfThenElse>  
+						</then>
+						<else>
+							<!--Version 9-->
+							<IfThenElse>
+								<if>
+									<findElement isSkipCheckDomError="true" by="xpath">//div[text()='###TASK_NAME###']/../../td[(string(//div[text()='Selected Scope']/../@_d_index))+0]/a</findElement>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement isSkipCheckDomError="true" by="xpath">//div[text()='###TASK_NAME###']/../..//a[normalize-space(text())='<valueKB inventoryName="INV_NAME" columnName="COL_NAME"/>']</findElement>
+										</if>
+										<then>
+											<findElement isSkipCheckDomError="true" by="xpath" >//div[text()='###TASK_NAME###']/../..//a</findElement>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>        
+										</then>
+										<else>
+											<findElements isSkipCheckDomError="true" by="xpath" returnElementAtPosition="2">//div[text()='###TASK_NAME###']/../..//a</findElements>
+											<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+										</else>
+									</IfThenElse>  
+								</then>
+								<else>
+									<findElement isSkipCheckDomError="true" by="xpath" >//div[text()='###TASK_NAME###']/../..//a</findElement>
+									<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+								</else>
+							</IfThenElse> 
+						</else>
+					</IfThenElse> 
+				</then>
+				<else>
+					<error message="The task doesn't exist."/>
+				</else>
+			</IfThenElse>
+		</block>
+		<repeat inventoryName="INV_NAME">
+			<executeBlock name="TemplateTASK"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

@@ -1,0 +1,469 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Project Templates</name>
+	<svn>
+		<xsd:revision>$Revision$:</xsd:revision>
+		<xsd:author>$Author$:</xsd:author>
+		<xsd:date>$Date$:</xsd:date>
+		<xsd:headURL>$HeadURL$:</xsd:headURL>
+		<xsd:id>$Id$:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Project Templates" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		<dependencies>
+			<navigation name="Manage Project Types"/>
+			<navigation name="Manage Project Unit Organizations"/>
+			<navigation name="Manage Project Statuses"/>
+			<navigation name="Manage Project Roles"/>
+			<navigation name="Configure Project Accounting Business Function"/>
+			<navigation name="Configure Project Numbering"/>	
+			<navigation name="Configure Project Numbering (Override Configuration)"/>
+		</dependencies>
+		<parameters>
+			<parameter name="MAIN_REPEAT_1" value="Manage Project Templates - Template Information"/>
+			<parameter name="MAIN_REPEAT_2" value="Manage Project Templates - Setup Options"/>
+			<parameter name="MAIN_REPEAT_3" value="Manage Project Templates - Quick Entries"/>
+		</parameters>
+		<block name="Search_Project_Template">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Template Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Template Name"/>
+				</parameters>
+			</executeBlock>	
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_BUTTON">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../../../../../.."/>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Search Results']/../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//table[@summary='Search Results']//tr[td//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Template Name"/>']]</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Search Results']/../../../../../..//table[@summary='Search Results']//tr[td//a[text()='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Template Name"/>']]/td[1]</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+					<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_UPDATE"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//button[text()='Create Template']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Project_Templates">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Template Name"/>
+				</parameters>
+			</executeBlock>
+			
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Number']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Template Number"/>
+				</parameters>
+			</executeBlock>
+			
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Business Unit']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Business Unit"/>
+					<parameter name="SEARCH_1" value="Business Unit"/>
+				</parameters>
+			</executeBlock>
+			
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Project Unit']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Project Unit"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+			
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Organization']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Organization"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legal Entity']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Legal Entity"/>
+					<parameter name="SEARCH_1" value="Legal Entity"/>
+				</parameters>
+			</executeBlock>
+
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Project Type']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Project Type"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>
+
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Initial Project Status']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Initial Project Status"/>
+				</parameters>
+			</executeBlock>			
+
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='From Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="From Date"/>
+				</parameters>
+			</executeBlock>	
+
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='To Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="To Date"/>
+				</parameters>
+			</executeBlock>	
+
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enable project space for document management']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Enable project space for document management"/>
+				</parameters>
+			</executeBlock>
+			
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Create Project Template']/../../../../../../../../../..//*[text()='Save and Continue']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Create Project Template']/../../../../../../../../../..//*[text()='Save and Continue']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//*[text()='Save']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Expand_Setup_Options">
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Expand Setup Options']/../../../../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Setup Options']//tr[td//a[text()='Setup']]//a[@title='Expand']</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Setup Options']//tr[td//a[text()='Setup']]//a[@title='Expand']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>			
+				</then>
+				<else>
+					<pause durationInSecs="2"/>		
+					<break/>				
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Expand_Project">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Setup Options']//tr[td//a[text()='Project']]//a[@title='Expand']</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Setup Options']//tr[td//a[text()='Project']]//a[@title='Expand']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>			
+				</then>
+				<else>
+					<pause durationInSecs="2"/>		
+					<break/>				
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Collapse_Setup_Options">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//a[text()='Project']/../../../..//td[2]//a</findElement>
+				</if>
+				<then>
+					<pause durationInSecs="2"/>		
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//*[text()='Setup Options']/../../../..//a</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>				
+				</else>
+			</IfThenElse>			
+		</block>		
+		<block name="Define_Setup_Options"/>
+		<block name="Update_Setup_Options">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>		
+
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Setup Options']//tr[contains(@class,'Select')]//input[@type='checkbox']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_2"/>
+					<parameter name="COL_NAME" value="Display"/>
+				</parameters>
+			</executeBlock>		
+		</block>
+		
+		<block name="TOP_Quick_Entries">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Quick Entries']//tr[td[1]//select]</findElement>
+				</if>
+				<then>
+					<break/>
+				</then>
+				<else>
+					<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Quick Entries']/../../../../../../..//div[contains(@id,'scroller')]</findElement>
+					<scroll direction="TOP"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>		
+		<block name="Define_Quick_Entries">
+
+			<executeBlock navigationName="TemplateCREATE_UPDATE" name="TEMPLATE_SPECIFY_ADD_ROW">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Quick Entries']/../../../.."/>
+				</parameters>
+			</executeBlock>
+
+			<executeBlock name="TOP_Quick_Entries" isRepeatUntilBreak="true"/>
+
+			<findElement highlightTurnedOff="true" by="xpath" isSkipCheckDomError="true">//table[@summary='Quick Entries']//tr[td[1]//select]/td[1]</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<pause durationInSecs="1"/>
+
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Quick Entries']//tr[contains(@class,'Select')]//label[text()='Prompt']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Field Name"/>
+				</parameters>
+			</executeBlock>	
+
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Quick Entries']//tr[contains(@class,'Select')]//label[text()='Specification']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Specification"/>
+					<parameter name="SEARCH_1" value="Name"/>
+				</parameters>
+			</executeBlock>			
+
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Quick Entries']//tr[contains(@class,'Select')]//label[text()='Display Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Prompt"/>
+				</parameters>
+			</executeBlock>	
+
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Quick Entries']//tr[contains(@class,'Select')]//input[@type='checkbox']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Required"/>
+				</parameters>
+			</executeBlock>
+
+
+		</block>
+		<block name="Update_Quick_Entries">
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true" by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">TEMPLATE_2_FIND_ROW</findElement>
+						</if>
+						<then>
+							<findElement highlightTurnedOff="true" by="xpath">TEMPLATE_2_FIND_ROW</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="2"/>
+						</then>
+						<else>
+
+						</else>
+					</IfThenElse>			
+				</else>
+			</IfThenElse>
+			
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//table[@summary='Quick Entries']//tr[contains(@class,'Select')]//input[@type='checkbox']/.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_3"/>
+					<parameter name="COL_NAME" value="Required"/>
+				</parameters>
+			</executeBlock>	
+		</block>		
+		<executeBlock navigationName="TemplateTASK" name="TEMPLATE_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_REPEAT_1">
+			<executeBlock name="Search_Project_Template"/>
+			<executeBlock name="Project_Templates"/>
+			<executeBlock name="GLOBAL_SAVE"/>
+			<executeBlock name="Expand_Setup_Options" isRepeatUntilBreak="true"/>	
+			<executeBlock name="Expand_Project" isRepeatUntilBreak="true"/>			
+			<repeat inventoryName="MAIN_REPEAT_2">
+				<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Setup Options']/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Setup Options'][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Setup Options']/../../../../../../..//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Setup Options']//tr[td//a[text()='<valueKB inventoryName="MAIN_REPEAT_2" columnName="Option"/>']]/td[1]/div/span/img[1]</parameter>
+						<parameter name="TEMPLATE_CREATE" value="Define_Setup_Options"/>
+						<parameter name="TEMPLATE_UPDATE" value="Update_Setup_Options"/>
+					</parameters>
+				</executeBlock> 
+				<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+				<pause durationInSecs="1"/>
+			</repeat>
+			<executeBlock name="Collapse_Setup_Options" isRepeatUntilBreak="true"/>	
+			<repeat inventoryName="MAIN_REPEAT_3">
+				<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Quick Entries']/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Quick Entries'][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Quick Entries']/../../../../../../..//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Quick Entries']//tr[td[1]//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>'] and td[2]//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Specification"/>'] and td[3]//*[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Prompt"/>']]/td[1]</parameter>
+						<parameter name="TEMPLATE_2_FIND_ROW">//table[@summary='Quick Entries']//tr[td[1]//*[text()='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Field Name"/>'] and td[2]//*[not(@title)] and td[3]//*[@value='<valueKB inventoryName="MAIN_REPEAT_3" columnName="Prompt"/>']]/td[1]</parameter>
+						<parameter name="TEMPLATE_CREATE" value="Define_Quick_Entries"/>
+						<parameter name="TEMPLATE_UPDATE" value="Update_Quick_Entries"/>
+					</parameters>
+				</executeBlock>   
+				<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+				<pause durationInSecs="1"/>
+			</repeat>	
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//label[text()='Number']/../..//input[@value='<valueKB inventoryName="MAIN_REPEAT_1" columnName="Template Number"/>']</findElement>
+				</if>
+				<then>
+					
+				</then>
+				<else>
+					<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+						<parameters>
+							<parameter name="XPATH" value="//label[text()='Number']/../.."/>
+							<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+							<parameter name="COL_NAME" value="Template Number"/>
+						</parameters>
+					</executeBlock>						
+				</else>
+			</IfThenElse> 			
+
+			<executeBlock navigationName="TemplateUTILITY" name="TEMPLATE_SAVE"/>
+			<pause durationInSecs="1"/>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//a[@title='Save']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath">//a[@title='Save']</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+					<findElement by="xpath">//span[text()='S']/..</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" isDisplayed="true" by="xpath" isSkipCheckDomError="true">//span[text()='Save']/../../..//a[not(@onclick)]</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//span[text()='Save']/../../..//a[not(@onclick)]</findElement>
+							<click waitForPageToFinishRendering="true"/>
+							<pause durationInSecs="1"/>
+							<findElement by="xpath">//span[text()='S']/..</findElement>
+							<click waitForPageToFinishRendering="true"/>							
+						</then>
+						<else/>
+					</IfThenElse> 		
+				</else>
+			</IfThenElse> 
+		</repeat>
+	</fusionNavigation>
+</navigation>

@@ -1,0 +1,396 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Legal Jurisdictions</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Legal Jurisdictions" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Legal Entity Configurator Descriptive Flexfield (Deploy Flexfield)"/>
+			<navigation name="Create Implementation Users"/>
+			<navigation name="Manage Legislative Data Groups"/>
+        </dependencies>
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Manage Legal Jurisdictions - Manage Legal Jurisdictions"/>
+            <parameter name="MAIN_REPEAT_2" value="Manage Legal Jurisdictions - Legal Functions"/>
+        </parameters>
+        <block name="Go_To_Task">
+            <findElement by="xpath">//span[text()='###TASK_NAME###']/../../../..//a[@title='Go to Task']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Save">
+            <executeBlock name="GLOBAL_SAVE"/>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//div[text()='Confirmation']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//div[text()='Confirmation']/../../../../../../..//button[text()='OK']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Save and Close">
+            <findElement by="xpath">(//span[text()='S'])[2]</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Reset">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//a[@title='Expand Search']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <findElement by="xpath">//button[text()='Reset']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Search">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//a[@title='Expand Search']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legislative Category']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Legislative Category"/>
+				</parameters>
+			</executeBlock>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//a[@title='Expand Search']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <executeBlock name="LOV">
+                <parameters>
+                    <parameter name="XPATH" value="//*[text()='Search']/../..//div/../../../../../..//label[text()='Territory']/../.."/>
+                    <parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+                    <parameter name="COL_NAME" value="Territory"/>
+                    <parameter name="SEARCH_1" value="Territory"/>
+                </parameters>
+            </executeBlock>
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//a[@title='Expand Search']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//a[@title='Expand Search']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+            <findElement by="xpath">//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <executeBlock name="Search_Name"/>
+        </block>
+        <block name="SCROLLBAR_GENERIC_INNER_1">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+                </if>
+                <then>
+                    <executeBlock name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK"/>
+                    <break/>
+                </then>
+                <else>
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <IfThenElse>
+                        <if>
+                            <isEndOfScroll/>
+                        </if>
+                        <then>
+                            <executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+                            <break/>
+                        </then>
+                        <else>
+                            <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                            <scroll direction="DOWN"/>
+                            <pause durationInSecs="1"/>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="SCROLLBAR_GENERIC_1">
+            <!-- check if there is no data found returned after the search, if so then we create a new record if applicable -->
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">SCROLLBAR_GENERIC_1_NO_DATA</findElement>
+                </if>
+                <then>
+                    <executeBlock name="SCROLLBAR_GENERIC_1_CREATE_BLOCK"/>
+                </then>
+                <else>
+                    <!-- resetting the scrollbar back to the Top because the form remembers where it was even when searching a new record -->
+                    <findElement highlightTurnedOff="true" by="xpath">SCROLLBAR_GENERIC_1_SCROLLER</findElement>
+                    <scroll direction="TOP"/>
+                    <findElement by="xpath">SCROLLBAR_GENERIC_1_FIRST_ROW</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <executeBlock name="SCROLLBAR_GENERIC_INNER_1" isRepeatUntilBreak="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Search_Name">
+            <executeBlock name="SCROLLBAR">
+                <parameters>
+                    <parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Search Results']/../..//div[contains(text(),'No data to display.')]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="(//table[@summary='Search Results']/..//tr)[2]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Search Results']/../..//div[contains(@id,'scroller')]"/>
+                    <parameter
+                            name="SCROLLBAR_GENERIC_1_FIND_ROW">(//table[@summary='Search Results']/..//tr[td[2][text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1"
+                            columnName="Legislative Category"/>'] and td[3][text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Territory"/>']]/../../../../..)/td[1]</parameter>
+                    <parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Search...Territory">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                </if>
+                <then>
+                    <pause durationInSecs="2"/>
+                    <break/>
+                </then>
+                <else>
+                    <pause durationInSecs="2"/>
+                    <findElement isDisplayed="true" by="xpath" isSkipCheckDomError="true">//label[text()='Territory']/../..//span/a</findElement>
+                    <click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+                    <pause durationInSecs="1"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Create">
+            <executeBlock name="GLOBAL_CREATE"/>
+        </block>
+        <block name="Update">
+            <findElement by="xpath">SCROLLBAR_GENERIC_1_FIND_ROW</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <executeBlock name="GLOBAL_UPDATE"/>
+        </block>
+        <block name="Legal Jurisdiction">
+            <!--Name-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+            <!--Territory-->
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Territory"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">//label[text()='Territory']/../..//input</findElement>
+                        </if>
+                        <then>
+                            <executeBlock name="Search...Territory"/>
+                            <findElement by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                            <IfThenElse>
+                                <if>
+                                    <findElement isDisplayed="true"
+                                    highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+                                </if>
+                                <then>
+                                    <findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                            <findElement by="xpath">//div[contains(text(),'Territory')]/../../../../../../..//label[text()='Territory']/../..//input</findElement>
+                            <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Territory"/>
+                            </sendKeys>
+                            <IfThenElse>
+                                <if>
+                                    <findElement isDisplayed="true"
+                                    highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+                                </if>
+                                <then>
+                                    <findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                            <IfThenElse>
+                                <if>
+                                    <findElement
+                                    highlightTurnedOff="true" by="xpath">//div[contains(text(),'Territory')]/../../../../../../..//label[text()='Territory']/../..//input[not(@title)]</findElement>
+                                </if>
+                                <then>
+                                    <findElement by="xpath">//div[contains(text(),'Territory')]/../../../../../../..//label[text()='Territory']/../..//input</findElement>
+                                    <sendKeys isClear="true"
+                                    isENTERKey="true" waitForPageToFinishRendering="true">
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Territory"/>
+                                    </sendKeys>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                            <IfThenElse>
+                                <if>
+                                    <findElement isDisplayed="true"
+                                    highlightTurnedOff="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+                                </if>
+                                <then>
+                                    <findElement isDisplayed="true" by="xpath">//div[contains(text(),'Search and Select')]/../../../../../../..//*[text()='Search']/../..//div/../..//a[contains(@title,'Expand')]</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                </then>
+                                <else/>
+                            </IfThenElse>
+                            <findElement by="xpath">//button[text()='Search']</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                            <IfThenElse>
+                                <if>
+                                    <findElement
+                                    by="xpath">//div[contains(text(),'Territory')]/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Territory"/>']</findElement>
+                                </if>
+                                <then>
+                                    <findElement
+                                    by="xpath">//div[contains(text(),'Territory')]/../../../../../../..//td[text()='<valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Territory"/>']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                    <findElement by="xpath">//div[contains(text(),'Territory')]/../../../../../../..//button[text()='OK']</findElement>
+                                    <click waitForPageToFinishRendering="true"/>
+                                </then>
+                                <else>
+                                    <error message="This 'Territory' doesn't exist"/>
+                                </else>
+                            </IfThenElse>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <!--Legislative Category-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legislative Category']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Legislative Category"/>
+				</parameters>
+			</executeBlock>
+            <!--Identifying-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Identifying']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Identifying"/>
+				</parameters>
+			</executeBlock>
+            <!--Start Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Start Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Start Date"/>
+				</parameters>
+			</executeBlock>
+            <!--End Date-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='End Date']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="End Date"/>
+				</parameters>
+			</executeBlock>
+            <!--Legal Entity Registration Code-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legal Entity Registration Code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Legal Entity Registration Code"/>
+				</parameters>
+			</executeBlock>
+            <!--Legal Reporting Unit Registration Code-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Legal Reporting Unit Registration Code']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_REPEAT_1"/>
+					<parameter name="COL_NAME" value="Legal Reporting Unit Registration Code"/>
+				</parameters>
+			</executeBlock>
+        </block>
+        <block name="Legal Functions">
+            <executeBlock name="SCROLLBAR_GENERIC_1">
+                <parameters>
+                    <parameter name="SCROLLBAR_GENERIC_1_NO_DATA" value="//table[@summary='Details']/../..//div[contains(text(),'No data to display.')]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_FIRST_ROW" value="((//table[@summary='Details']//tr)[1]//td)[1]"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_SCROLLER" value="//table[@summary='Details']/../..//div[contains(@id,'scroller')]"/>
+                    <parameter
+                            name="SCROLLBAR_GENERIC_1_FIND_ROW">//table[@summary='Details']//*[@title='<valueKB
+                            inventoryName="MAIN_REPEAT_2" columnName="Legal Function"/>']</parameter>
+                    <parameter name="SCROLLBAR_GENERIC_1_CREATE_BLOCK" value="Create_Legal Functions"/>
+                    <parameter name="SCROLLBAR_GENERIC_1_UPDATE_BLOCK" value="Update_Legal Functions"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="Create_Legal Functions">
+            <executeBlock name="GLOBAL_ADD"/>
+            <findElement by="xpath">//table[@summary='Details']//tr[contains(@class,'Select')]//select</findElement>
+            <select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+                <valueKB inventoryName="MAIN_REPEAT_2" columnName="Legal Function"/>
+            </select>
+        </block>
+        <block name="Update_Legal Functions"/>
+        <repeat inventoryName="MAIN_REPEAT_1">
+            <executeBlock name="GLOBAL_GO_TO_TASK"/>
+            <executeBlock name="Reset"/>
+            <executeBlock name="Search"/>
+            <executeBlock name="Legal Jurisdiction"/>
+            <executeBlock name="Save"/>
+            <repeat inventoryName="MAIN_REPEAT_2">
+                <executeBlock name="Legal Functions"/>
+                <executeBlock name="Save"/>
+            </repeat>
+            <executeBlock name="Save and Close"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

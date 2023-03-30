@@ -1,0 +1,201 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Run User and Roles Synchronization Process</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Run User and Roles Synchronization Process"
+        isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <!-- <dependencies>
+            <navigation name=""/>
+        </dependencies> -->
+        <parameters>
+            <parameter name="MAIN_REPEAT_1" value="Run User and Roles Synchronization Process - Run User and Roles Synchronization Process"/>
+        </parameters>
+        <block name="Go_To_Task_Synchronization">
+            <findElements by="xpath" returnElementAtPosition="1">//span[text()='###TASK_NAME###']/../../../..//a</findElements>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Submit_Synchronization">
+            <findElement by="xpath">//span[text()='m']/../..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Warning_Synchronization">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//table[contains(@id,'confirmationPopup')]</findElement>
+                </if>
+                <then>
+                    <findElement isDisplayed="true" by="xpath">//table[contains(@id,'confirmationPopup')]//button[text()='OK']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Advance_Synchronization">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//span[text()='Advanced']/..</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//span[text()='Advanced']/..</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Tab_Schedule_Synchronization">
+            <IfThenElse>
+                <if>
+                    <findElement highlightTurnedOff="true"
+                        isDisplayed="true" by="xpath">//a[text()='Schedule'][contains(@class,'Select')]</findElement>
+                </if>
+                <then/>
+                <else>
+                    <findElement by="xpath">//a[text()='Schedule']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <pause durationInSecs="1"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="Run_Using_a_schedule_Synchronization">
+            <findElement by="xpath">//label[text()='Using a schedule']/..//input</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <pause durationInSecs="1"/>
+        </block>
+        <block name="FAKE_SCHEDULE">
+            <findElement by="xpath">//label[text()='Start Date']/../..//input</findElement>
+            <sendKeys isClear="true" waitForPageToFinishRendering="true">
+                <valueKB
+                    inventoryName="Run User and Roles Synchronization Process - Schedule" columnName="Start Date"/>
+            </sendKeys>
+        </block>
+        <repeat inventoryName="MAIN_REPEAT_1">
+            <executeBlock name="GLOBAL_GO_TO_TASK"/>
+            <IfThenElse>
+                <if>
+                    <comparisons separator="AND">
+                        <comparison operator="NOT_EQUAL">
+                            <leftOperand>
+                                <valueKB inventoryName="MAIN_REPEAT_1" columnName="Schedule"/>
+                            </leftOperand>
+                            <rightOperand>
+                                <valueText/>
+                            </rightOperand>
+                        </comparison>
+                    </comparisons>
+                </if>
+                <then>
+                    <IfThenElse>
+                        <if>
+                            <comparisons separator="AND">
+                                <comparison operator="EQUAL">
+                                    <leftOperand>
+                                    <valueKB
+                                    inventoryName="MAIN_REPEAT_1" columnName="Schedule"/>
+                                    </leftOperand>
+                                    <rightOperand>
+                                    <valueText>Using a schedule</valueText>
+                                    </rightOperand>
+                                </comparison>
+                            </comparisons>
+                        </if>
+                        <then>
+                            <repeat inventoryName="Run User and Roles Synchronization Process - Schedule">
+                                <executeBlock
+                                    navigationName="Run Optimization" name="Advance"/>
+                                <executeBlock
+                                    navigationName="Run Optimization" name="Tab Schedule"/>
+                                <executeBlock
+                                    navigationName="Run Optimization" name="Run Using a schedule"/>
+                                <executeBlock
+                                    navigationName="Run Optimization" name="Frequency">
+                                    <parameters>
+                                    <parameter name="MAIN_REPEAT_2" value="Run User and Roles Synchronization Process - Schedule"/>
+                                    </parameters>
+                                </executeBlock>
+                                <executeBlock
+                                    navigationName="Run Optimization" name="Frequency - Once">
+                                    <parameters>
+                                    <parameter name="MAIN_REPEAT_2" value="Run User and Roles Synchronization Process - Schedule"/>
+                                    </parameters>
+                                </executeBlock>
+                                <executeBlock
+                                    navigationName="Run Optimization" name="Frequency - Hourly/Minute">
+                                    <parameters>
+                                    <parameter name="MAIN_REPEAT_2" value="Run User and Roles Synchronization Process - Schedule"/>
+                                    </parameters>
+                                </executeBlock>
+                                <executeBlock
+                                    navigationName="Run Optimization" name="Frequency - Daily">
+                                    <parameters>
+                                    <parameter name="MAIN_REPEAT_2" value="Run User and Roles Synchronization Process - Schedule"/>
+                                    </parameters>
+                                </executeBlock>
+                                <executeBlock
+                                    navigationName="Run Optimization" name="Frequency - Weekly">
+                                    <parameters>
+                                    <parameter name="MAIN_REPEAT_2" value="Run User and Roles Synchronization Process - Schedule"/>
+                                    </parameters>
+                                </executeBlock>
+                                <executeBlock
+                                    navigationName="Run Optimization" name="Frequency - Monthly">
+                                    <parameters>
+                                    <parameter name="MAIN_REPEAT_2" value="Run User and Roles Synchronization Process - Schedule"/>
+                                    </parameters>
+                                </executeBlock>
+                                <executeBlock
+                                    navigationName="Run Optimization" name="Frequency - Yearly">
+                                    <parameters>
+                                    <parameter name="MAIN_REPEAT_2" value="Run User and Roles Synchronization Process - Schedule"/>
+                                    </parameters>
+                                </executeBlock>
+                                <executeBlock
+                                    navigationName="Run Optimization" name="Frequency - Custom">
+                                    <parameters>
+                                    <parameter name="MAIN_REPEAT_2" value="Run User and Roles Synchronization Process - Schedule"/>
+                                    </parameters>
+                                </executeBlock>
+                                <executeBlock
+                                    navigationName="Run Optimization" name="Frequency - Use a Saved Schedule">
+                                    <parameters>
+                                    <parameter name="MAIN_REPEAT_2" value="Run User and Roles Synchronization Process - Schedule"/>
+                                    </parameters>
+                                </executeBlock>
+                            </repeat>
+                        </then>
+                        <else/>
+                    </IfThenElse>
+                </then>
+                <else/>
+            </IfThenElse>
+            <IfThenElse>
+                <if>
+                    <findElement
+                            by="xpath">//label[text()='Name']/../../..//span[text()='<valueKB
+                            inventoryName="MAIN_REPEAT_1" columnName="Name"/>']</findElement>
+                </if>
+                <then/>
+                <else>
+                    <error message="The field 'Name' doesn't exist."/>
+                </else>
+            </IfThenElse>
+            <executeBlock name="Submit_Synchronization"/>
+            <pause durationInSecs="2"/>
+            <executeBlock name="Warning_Synchronization"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

@@ -1,0 +1,236 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Payment Options</name>
+    <svn>
+        <xsd:revision>$Revision: 80336 $:</xsd:revision>
+        <xsd:author>$Author: tachaporn.t $:</xsd:author>
+        <xsd:date>$Date: 2023-02-28 15:08:05 +0700 (Tue, 28 Feb 2023) $:</xsd:date>
+        <xsd:headURL>$HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/knowledgebase/navigation/FINANCIALS/Manage%20Payment%20Options.xml $:</xsd:headURL>
+        <xsd:id>$Id: Manage Payment Options.xml 80336 2023-02-28 08:08:05Z tachaporn.t $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="true" defaultBatchSize="3"
+        taskName="Manage Payment Options" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+        <dependencies>
+            <navigation name="Manage Common Options for Payables and Procurement"/>
+        </dependencies>
+		<parameters>
+			<parameter name="INV_1" value="Manage Payment Options - Manage Payment Options"/>
+		</parameters>
+		<block name="FAKE_INV">
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Business Unit"/>']/../..//input</findElement>
+		</block>
+        <block name="SEARCH_BUSINESS_UNIT">
+            <IfThenElse>
+                <if>
+                   <findElement by="xpath">//label[text()='Business Unit']/../..//select[title='<valueKB inventoryName="INV_1" columnName="Business Unit"/>']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//button[text()='Apply and Go to Task']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else>
+					<IfThenElse>
+						<if>
+							<findElement by="xpath">//label[text()='Business Unit']/../..//select</findElement>
+						</if>
+						<then>
+							<findElement by="xpath">//label[text()='Business Unit']/../..//select</findElement>
+							<select by="selectByVisibleText" isPageLoadingOnSelectValue="true">
+								<valueText>Select and Add</valueText>
+							</select>
+						</then>
+						<else>
+							<findElement by="xpath">//label[text()='Business Unit']/../..//input/..//div//li[text()='Select and Add']</findElement>
+							<click waitForPageToFinishRendering="true" isJavaScript="true" />
+						</else>
+					</IfThenElse>
+                    <findElement by="xpath">//button[text()='Apply and Go to Task']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <findElement by="xpath">//div[contains(text(),'Select and Add:')]/../../../../../../../..//label[text()='Name']/../..//input</findElement>
+                    <sendKeys isClear="true" isENTERKey="true" waitForPageToFinishRendering="true">
+                        <valueKB
+                            inventoryName="INV_1" columnName="Business Unit"/>
+                    </sendKeys>
+                    <findElement by="xpath">//div[contains(text(),'Select and Add:')]/../../../../../../..//button[text()='Search']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                    <IfThenElse>
+                        <if>
+                            <findElement by="xpath">//table[@summary='Business Units']//a[text()='<valueKB inventoryName="INV_1" columnName="Business Unit"/>']/../../../../../../../td[1]</findElement>
+                        </if>
+                        <then>
+                            <findElement by="xpath">//table[@summary='Business Units']//a[text()='<valueKB inventoryName="INV_1" columnName="Business Unit"/>']/../../../../../../../td[1]</findElement>
+                            <click waitForPageToFinishRendering="true"/>
+                            <executeBlock name="SAVE_AND_CLOSE_BUSINESS_UNIT"/>
+                        </then>
+                        <else>
+                            <error message="The field 'Business Unit Name' doesn't exist"/>
+                        </else>
+                    </IfThenElse>
+                </else>
+            </IfThenElse>
+        </block>
+		<block name="SELECT_SCOPE">
+			<findElement by="xpath">//*[normalize-space(text())=normalize-space('###TASK_NAME###')]/../../../td[(string(//span[text()='Selected Scope']/../../@_d_index))+0]/a</findElement>
+            <click waitForPageToFinishRendering="true"/>
+            <executeBlock name="SEARCH_BUSINESS_UNIT"/>
+        </block>
+        <block name="SAVE_AND_CLOSE_BUSINESS_UNIT">
+            <findElement by="xpath">//div[contains(text(),'Select and Add:')]/../../../../../../../../..//span[text()='S']/..</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="SAVE">
+            <executeBlock name="GLOBAL_SAVE"/>
+        </block>
+        <block name="SAVE_AND_CLOSE">
+            <executeBlock name="GLOBAL_SPECIFY_SAVE_AND_CLOSE">
+                <parameters>
+                    <parameter name="SPECIFY_XPATH" value="//*[contains(text(),'Manage Payment Options')]/../../../../../../../../../../..//td[3]"/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="DONE">
+            <findElement by="xpath">//span[text()='o']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="CREATE_BUTTON">
+            <executeBlock name="GLOBAL_SPECIFY_ADD">
+                <parameters>
+                    <parameter name="SPECIFY_XPATH" value="//img[contains(@title,'Select and Add')]/../../../../../../.."/>
+                </parameters>
+            </executeBlock>
+        </block>
+        <block name="SEARCH_BUTTON">
+            <findElement by="xpath">//button[text()='Search']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="SAVE_AND_EDIT">
+            <findElement by="xpath">//button[text()='Save and Edit Task List']</findElement>
+            <click waitForPageToFinishRendering="true"/>
+        </block>
+        <block name="Search...Column_Conversion Rate Type">
+            <IfThenElse>
+                <if>
+                    <findElement isDisplayed="true" by="xpath">//table/tbody/tr/td/div/a[text()='Search...']</findElement>
+                </if>
+                <then>
+                    <pause durationInSecs="1"/>
+                    <break/>
+                </then>
+                <else>
+                    <findElement isDisplayed="true" by="xpath">//label[text()='Conversion Rate Type']/../..//a</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </else>
+            </IfThenElse>
+        </block>
+        <block name="INFORMATION_BUTTON">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//div[text()='Information']/../../../../../../..//button[text()='OK']</findElement>
+                </if>
+                <then>
+                    <findElement by="xpath">//div[text()='Information']/../../../../../../..//button[text()='OK']</findElement>
+                    <click waitForPageToFinishRendering="true"/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+        <block name="Payment Accounting and Overrides">
+            <!-- Payment Accounting and Overrides - Allow payment date before the system date -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allow payment date before the system date']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Payment Accounting and Overrides - Allow payment date before the system date"/>
+				</parameters>
+			</executeBlock>
+            <!-- Payment Accounting and Overrides - Allow override of supplier site bank account -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allow override of supplier site bank account']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Payment Accounting and Overrides - Allow override of supplier site bank account"/>
+				</parameters>
+			</executeBlock>
+            <!-- Payment Accounting and Overrides - Allow document category override -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allow document category override']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Payment Accounting and Overrides - Allow document category override"/>
+				</parameters>
+			</executeBlock>
+            <!-- Payment Accounting and Overrides - Allow payee override for third-party payments -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allow payee override for third-party payments']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Payment Accounting and Overrides - Allow payee override for third-party payments"/>
+				</parameters>
+			</executeBlock>
+            <!--Account for Payment-->
+			<executeBlock navigationName="TemplateRADIO" name="TEMPLATE_RADIO">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Account for Payment']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Payment Accounting and Overrides - Account for Payment"/>
+				</parameters>
+			</executeBlock>
+            <executeBlock name="INFORMATION_BUTTON"/>
+        </block>
+        <block name="Currency Conversion">
+            <!-- Currency Conversion - Require conversion rate entry -->
+			<executeBlock navigationName="TemplateCHECKBOX" name="TEMPLATE_CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Require conversion rate entry']/.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Currency Conversion - Require conversion rate entry"/>
+				</parameters>
+			</executeBlock>
+			<!--Currency Conversion - Conversion Rate Type-->
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Conversion Rate Type']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Currency Conversion - Conversion Rate Type"/>
+					<parameter name="SEARCH_1" value="Conversion Rate Type"/>
+				</parameters>
+			</executeBlock>
+        </block>
+        <block name="BANK_CHARGES">
+			<!--Bank Charges - Bank Charge Deduction Type-->
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Bank Charge Deduction Type']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Bank Charges - Bank Charge Deduction Type"/>
+				</parameters>
+			</executeBlock>
+        </block>
+        <block name="ERROR_CANNOT_NAVIGATE">
+            <IfThenElse>
+                <if>
+                    <findElement by="xpath">//td[text()='You cannot navigate to this task because the payment business function is not assigned to this business unit.']</findElement>
+                </if>
+                <then>
+                    <error message="You cannot navigate to this task because the payment business function is not assigned to this business unit."/>
+                </then>
+                <else/>
+            </IfThenElse>
+        </block>
+       <executeBlock name="GLOBAL_GO_TO_TASK"/>
+        <repeat inventoryName="INV_1">
+            <executeBlock name="SELECT_SCOPE"/>
+            <executeBlock name="ERROR_CANNOT_NAVIGATE"/>
+            <executeBlock name="Payment Accounting and Overrides"/>
+            <executeBlock name="Currency Conversion"/>
+            <executeBlock name="BANK_CHARGES"/>
+            <executeBlock name="SAVE_AND_CLOSE"/>
+        </repeat>
+    </fusionNavigation>
+</navigation>

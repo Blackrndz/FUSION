@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+	<name>Manage Picking Rules</name>
+	<svn>
+		<xsd:revision>$Revision: $:</xsd:revision>
+		<xsd:author>$Author: $:</xsd:author>
+		<xsd:date>$Date: $:</xsd:date>
+		<xsd:headURL>$HeadURL: $:</xsd:headURL>
+		<xsd:id>$Id:  $:</xsd:id>
+	</svn>
+	<description/>
+	<type>FUSION</type>
+	<engine_type>SELENIUM</engine_type>
+	<modules/>
+	<mapper_use_type>UNDEFINED</mapper_use_type>
+	<validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+	<fusionNavigation hasScope="false"
+        isBatchingBasedOnRootInventoryUniqueRecords="true"
+        taskName="Manage Picking Rules" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+		 <dependencies>
+            <navigation name="Manage Enterprise HCM Information"/>
+        </dependencies>
+		<parameters>
+			<parameter name="MAIN_1_REPEAT" value="Manage Picking Rules - Picking Rule"/>
+		</parameters>
+		<block name="Save_And_Close">
+			<executeBlock name="GLOBAL_SAVE_AND_CLOSE"/>
+		</block>
+		<block name="Find_Picking Rule">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//*[text()='Search']/../../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<findElement isDisplayed="true" by="xpath">//button[text()='Search']</findElement>
+			<click waitForPageToFinishRendering="true"/>
+			<IfThenElse>
+				<if>
+					<findElement highlightTurnedOff="true"
+                            by="xpath">//table[@summary='Search Results']//td//a[text()='<valueKB
+                            inventoryName="MAIN_1_REPEAT" columnName="Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement highlightTurnedOff="true"
+                            by="xpath">(//table[@summary='Search Results']//td//a[text()='<valueKB
+                            inventoryName="MAIN_1_REPEAT" columnName="Name"/>']/../../../../../../..//td)[1]</findElement>
+					<click waitForPageToFinishRendering="true"/>
+					<IfThenElse>
+						<if>
+							<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Search Results']//tr[contains(@class,'Select')]//td[2][text()='System']</findElement>
+						</if>
+						<then/>
+						<else>
+							<IfThenElse>
+								<if>
+									<comparisons separator="AND">
+										<comparison operator="EQUAL">
+											<leftOperand>
+												<valueKB inventoryName="MAIN_1_REPEAT" columnName="Active"/>
+											</leftOperand>
+											<rightOperand>
+												<valueText>Yes</valueText>
+											</rightOperand>
+										</comparison>
+									</comparisons>
+								</if>
+								<then>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Search Results']//tr[contains(@class,'Select')]//td[4]//img[@title='Active']</findElement>
+										</if>
+										<then/>
+										<else>
+											<executeBlock name="GLOBAL_UPDATE"/>
+											<executeBlock name="Picking Rule"/>
+										</else>
+									</IfThenElse>
+								</then>
+								<else>
+									<IfThenElse>
+										<if>
+											<findElement highlightTurnedOff="true" by="xpath">//table[@summary='Search Results']//tr[contains(@class,'Select')]//td[4]//img[@title='Active']</findElement>
+										</if>
+										<then/>
+										<else>
+											<executeBlock name="GLOBAL_UPDATE"/>
+											<executeBlock name="Picking Rule"/>
+										</else>
+									</IfThenElse>
+								</else>
+							</IfThenElse>
+						</else>
+					</IfThenElse>
+				</then>
+				<else>
+					<executeBlock name="GLOBAL_CREATE"/>
+					<executeBlock name="Picking Rule"/>
+				</else>
+			</IfThenElse>
+		</block>
+		<block name="Picking Rule">
+			<!--Name-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Name']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Name"/>
+				</parameters>
+			</executeBlock>
+			<!--Description-->
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Description']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Description"/>
+				</parameters>
+			</executeBlock>
+			<!--Allow partial picking-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Allow partial picking']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Allow partial picking"/>
+				</parameters>
+			</executeBlock>
+			<!--Shelf Life Days-->
+			<executeBlock name="INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Shelf Life Days']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Shelf Life Days"/>
+				</parameters>
+			</executeBlock>
+			<!--Enforce single lot-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Enforce single lot']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Enforce single lot"/>
+				</parameters>
+			</executeBlock>
+			<!--Priority 1-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Priority 1']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Priority 1"/>
+				</parameters>
+			</executeBlock>
+			<!--Priority 2-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Priority 2']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Priority 2"/>
+				</parameters>
+			</executeBlock>
+			<!--Priority 3-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Priority 3']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Priority 3"/>
+				</parameters>
+			</executeBlock>
+			<!--Priority 4-->
+			<executeBlock name="SELECT_KB">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Priority 4']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Priority 4"/>
+				</parameters>
+			</executeBlock>
+			<!--Active-->
+			<executeBlock name="CHECKBOX">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Active']/../.."/>
+					<parameter name="INV_NAME" value="MAIN_1_REPEAT"/>
+					<parameter name="COL_NAME" value="Active"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="Save_And_Close"/>
+		</block>
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="MAIN_1_REPEAT">
+			<executeBlock name="Find_Picking Rule"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>

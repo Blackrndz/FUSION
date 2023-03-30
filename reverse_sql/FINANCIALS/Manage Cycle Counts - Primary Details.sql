@@ -1,0 +1,42 @@
+/* ****************************************************************************
+ * $Revision: 78539 $:
+ * $Author: tanawat.wongjan $:
+ * $Date: 2022-05-19 17:23:23 +0700 (Thu, 19 May 2022) $:
+ * $HeadURL: https://svn03.rapid4cloud.com/svn/a/dev/rapidesuite/controldata/FUSION_11.1.13/trunk/core/reverse_sql/FINANCIALS/Manage%20Cycle%20Counts%20-%20Primary%20Details.sql $:
+ * $Id: Manage Cycle Counts - Primary Details.sql 78539 2022-05-19 10:23:23Z tanawat.wongjan $:
+ * ****************************************************************************
+ * Description:
+ * ************************************************************************** */
+ 
+--RSC_PREREQUISITE_OBJECTS=INV_CYCLE_COUNT_HEADERS
+
+
+SELECT (SELECT ORGANIZATION_CODE 
+	FROM INV_ORG_PARAMETERS
+	WHERE ORGANIZATION_ID = CycleCountHE0.ORGANIZATION_ID
+	) RES_ORGANIZATION
+,CycleCountHE0.CYCLE_COUNT_HEADER_NAME RES_COUNT_NAME
+,CycleCountHE0.DESCRIPTION RES_DESCRIPTION
+,DECODE(CycleCountHE0.COUNT_BY_CATEGORY_FLAG,1,'Yes','No') RES_CYCLE_COUNT_BY_ITEM_CATEGO
+,(SELECT ASSIGNMENT_GROUP_NAME
+	FROM INV_ABC_ASSIGNMENT_GROUPS
+	WHERE ASSIGNMENT_GROUP_ID = CycleCountHE0.ABC_ASSIGNMENT_GROUP_ID
+	) RES_ABC_ASSIGNMENT_GROUP
+,'' RES_SYNCHRONIZATION_MODE
+,'' RES_SYNCHRONIZE_ABC_ASSOCIATIO
+,'' RES_DELETE_ADDITIONAL_ITEMS
+,CycleCountHE0.LAST_UPDATED_BY  RSC_LAST_UPDATED_BY
+,CycleCountHE0.LAST_UPDATE_DATE  RSC_LAST_UPDATE_DATE
+,CycleCountHE0.CREATED_BY  RSC_CREATED_BY
+,CycleCountHE0.CREATION_DATE  RSC_CREATION_DATE
+,null RSC_LEDGER_ID
+,null RSC_CHART_OF_ACCOUNTS_ID
+,null RSC_BUSINESS_UNIT_ID
+,null RSC_LEGAL_ENTITY_ID
+,CycleCountHE0.ORGANIZATION_ID RSC_ORGANIZATION_ID
+,null RSC_BUSINESS_GROUP_ID
+,NULL RSC_ENTERPRISE_ID
+,NULL RSC_COUNTRY_ID
+   
+FROM INV_CYCLE_COUNT_HEADERS CycleCountHE0
+ORDER BY 1,2

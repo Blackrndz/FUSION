@@ -1,0 +1,289 @@
+<?xml version="1.0"?>
+<navigation xmlns="http://navigation0005.configurator.erapidsuite.com" xmlns:xsd="http://xsdutility.configurator.erapidsuite.com">
+    <name>Manage Resource Teams</name>
+    <svn>
+        <xsd:revision>$Revision: $:</xsd:revision>
+        <xsd:author>$Author: $:</xsd:author>
+        <xsd:date>$Date: $:</xsd:date>
+        <xsd:headURL>$HeadURL: $:</xsd:headURL>
+        <xsd:id>$Id:  $:</xsd:id>
+    </svn>
+    <description/>
+    <type>FUSION</type>
+    <engine_type>SELENIUM</engine_type>
+    <modules/>
+    <mapper_use_type>UNDEFINED</mapper_use_type>
+    <validate_parent_child_relationships_for_mapped_data>true</validate_parent_child_relationships_for_mapped_data>
+    <fusionNavigation hasScope="false" isBatchingBasedOnRootInventoryUniqueRecords="true" taskName="Manage Resource Teams" isBatchingAllowed="true" applicationKey="APPLICATION_HOME_PAGE">
+       <parameters>
+			<parameter name="INV_1" value="Manage Resource Teams - Resource Teams"/>
+            <parameter name="INV_2" value="Manage Resource Teams - Usages"/>
+			<parameter name="INV_3" value="Manage Resource Teams - Resource Members"/>
+			<parameter name="INV_4" value="Manage Resource Teams - Roles"/>
+            <parameter name="INV_5" value="Manage Resource Teams - Organization Members"/>
+        </parameters>
+		
+		<block name="FAKE_INV">
+            <findElement by="xpath">//label[text()='<valueKB inventoryName="INV_1" columnName="Team Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_2" columnName="Team Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_3" columnName="Team Name"/>']/../..//input</findElement>
+			<findElement by="xpath">//label[text()='<valueKB inventoryName="INV_4" columnName="Team Name"/>']/../..//input</findElement>
+        </block>
+		
+		<block name="Search">
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search']/../.."/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Reset"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Team Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Team Name"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="BUTTON">
+				<parameters>
+					<parameter name="BUTTON_NAME" value="Search"/>
+				</parameters>
+			</executeBlock>
+			<executeBlock name="GLOBAL_EXPAND">
+				<parameters>
+					<parameter name="XPATH" value="//a[@title='Collapse Search Results']/../.."/>
+				</parameters>
+			</executeBlock>
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[text()='<valueKB inventoryName="INV_1" columnName="Team Name"/>']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//a[text()='<valueKB inventoryName="INV_1" columnName="Team Name"/>']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</then>
+				<else>
+					<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Create']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="1"/>
+				</else>
+			</IfThenElse>
+		</block>
+		
+		<block name="Create_Team">
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Team Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Team Name"/>
+				</parameters>
+			</executeBlock> 
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Team Description']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="Team Description"/>
+				</parameters>
+			</executeBlock> 	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='From Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="From Date"/>
+				</parameters>
+			</executeBlock> 	
+			<executeBlock navigationName="TemplateINPUT" name="TEMPLATE_INPUT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='To Date']/../.."/>
+					<parameter name="INV_NAME" value="INV_1"/>
+					<parameter name="COL_NAME" value="To Date"/>
+				</parameters>
+			</executeBlock> 	
+		</block>
+		
+		<block name="New_Usage">
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Usages']/../../../..//div[@title='Add Row']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Usage']/.."/>
+					<parameter name="INV_NAME" value="INV_2"/>
+					<parameter name="COL_NAME" value="Usage"/>
+				</parameters>
+			</executeBlock> 
+		</block>
+		
+		<block name="Update_Usage">
+			
+		</block>
+				
+		<block name="New_Resource_Member">
+			<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Add Resource Member']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			 <executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//div[contains(text(),'Resource Member')]/../../../../../../..//label[text()='Resource']/../.."/>
+					<parameter name="INV_NAME" value="INV_3"/>
+					<parameter name="COL_NAME" value="Resource"/>
+					<parameter name="SEARCH_1" value="Resource Name"/>
+				</parameters>
+			</executeBlock>  
+		</block>
+		
+		<block name="Update_Resource_Member">
+			<findElement by="xpath">TEMPLATE_1_FIND_ROW</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Resource Members']/../../../..//div[@title='Edit']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+		</block>
+		
+		<block name="New_Role">
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Roles']/../../../..//div[@title='Add Row']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			<executeBlock navigationName="TemplateSELECT" name="TEMPATE_SELECT">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Role Name']/../.."/>
+					<parameter name="INV_NAME" value="INV_4"/>
+					<parameter name="COL_NAME" value="Role Name"/>
+				</parameters>
+			</executeBlock>  
+		</block>
+		
+		<block name="Update_Role">
+			
+		</block>
+				
+		<block name="Resource_OK_Button">
+			<findElement by="xpath" isSkipCheckDomError="true">//div[@title='Roles']/../../../../../../../../../../..//button[text()='O']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+		</block>
+		
+		<block name="New_Organization_Members">
+			<findElement by="xpath" isSkipCheckDomError="true">//table[@summary='Organization Members']/../../../..//div[@title='Add Row']</findElement>
+			<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+			<pause durationInSecs="2"/>
+			<executeBlock navigationName="TemplateLOV" name="TEMPLATE_LOV">
+				<parameters>
+					<parameter name="XPATH" value="//label[text()='Organization']/../../.."/>
+					<parameter name="INV_NAME" value="INV_5"/>
+					<parameter name="COL_NAME" value="Organization"/>
+					<parameter name="SEARCH_1" value="Organization"/>
+				</parameters>
+			</executeBlock>   
+		</block>
+		
+		<block name="Update_Organization_Members">
+			
+		</block>
+				
+		<block name="Save">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//button[text()='Save']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//button[text()='Save']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<block name="Save_and_Close">
+			<IfThenElse>
+				<if>
+					<findElement by="xpath" isSkipCheckDomError="true">//button[text()='ave and Close']</findElement>
+				</if>
+				<then>
+					<findElement by="xpath" isSkipCheckDomError="true">//button[text()='ave and Close']</findElement>
+					<click waitForPageToFinishRendering="true" isSkipCheckDomError="true"/>
+					<pause durationInSecs="2"/>
+				</then>
+				<else/>
+			</IfThenElse>
+		</block>
+		
+		<executeBlock name="GLOBAL_GO_TO_TASK"/>
+		<repeat inventoryName="INV_1">
+			<executeBlock name="Search"/>
+			<executeBlock name="Create_Team"/>
+			<repeat inventoryName="INV_2">
+				<executeBlock name="GLOBAL_EXPAND">
+					<parameters>
+						<parameter name="XPATH" value="//a[@title='Collapse Usages']/../../../../.."/>
+					</parameters>
+				</executeBlock>
+				<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Usages']/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Usages'][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Usages']/../..//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Usages']/../..//*[text()='<valueKB inventoryName="INV_2" columnName="Usage"/>']</parameter>
+						<parameter name="TEMPLATE_CREATE" value="New_Usage"/>
+						<parameter name="TEMPLATE_UPDATE" value="Update_Usage"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<repeat inventoryName="INV_3">
+				<executeBlock name="GLOBAL_EXPAND">
+					<parameters>
+						<parameter name="XPATH" value="//a[@title='Collapse Resource Members']/../../../../.."/>
+					</parameters>
+				</executeBlock>
+				<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Resource Members']/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Resource Members'][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Resource Members']/../..//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Resource Members']/../..//a[text()='<valueKB inventoryName="INV_3" columnName="Resource"/>']/../..</parameter>
+						<parameter name="TEMPLATE_CREATE" value="New_Resource_Member"/>
+						<parameter name="TEMPLATE_UPDATE" value="Update_Resource_Member"/>
+					</parameters>
+				</executeBlock>
+				<repeat inventoryName="INV_4">
+					<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+						<parameters>
+							<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Roles']/../..//div[contains(text(),'No data to display.')]"/>
+							<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Roles'][@_rowcount]//tr[1]//td)[1]"/>
+							<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Roles']/../..//div[contains(@id,'scroller')]"/>
+							<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Roles']/../..//a[text()='<valueKB inventoryName="INV_4" columnName="Role Name"/>']/../..</parameter>
+							<parameter name="TEMPLATE_CREATE" value="New_Role"/>
+							<parameter name="TEMPLATE_UPDATE" value="Update_Role"/>
+						</parameters>
+					</executeBlock>
+				</repeat>
+				<executeBlock name="Resource_OK_Button"/>
+			</repeat>
+			<repeat inventoryName="INV_5">
+				<executeBlock name="GLOBAL_EXPAND">
+					<parameters>
+						<parameter name="XPATH" value="//a[@title='Collapse Organization Members']/../../../../.."/>
+					</parameters>
+				</executeBlock>
+				<executeBlock navigationName="TemplateSCROLLBAR" name="TEMPLATE_SCROLLBAR">
+					<parameters>
+						<parameter name="TEMPLATE_NO_DATA" value="//table[@summary='Organization Members']/../..//div[contains(text(),'No data to display.')]"/>
+						<parameter name="TEMPLATE_FIRST_ROW" value="(//table[@summary='Organization Members'][@_rowcount]//tr[1]//td)[1]"/>
+						<parameter name="TEMPLATE_SCROLLER" value="//table[@summary='Organization Members']/../..//div[contains(@id,'scroller')]"/>
+						<parameter name="TEMPLATE_1_FIND_ROW">//table[@summary='Organization Members']/../..//a[text()='<valueKB inventoryName="INV_5" columnName="Organization"/>']/../..</parameter>
+						<parameter name="TEMPLATE_CREATE" value="New_Organization_Members"/>
+						<parameter name="TEMPLATE_UPDATE" value="Update_Organization_Members"/>
+					</parameters>
+				</executeBlock>
+			</repeat>
+			<executeBlock name="Save"/>
+			<executeBlock name="Save_and_Close"/>
+		</repeat>
+	</fusionNavigation>
+</navigation>
